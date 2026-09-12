@@ -2,7 +2,7 @@
 
 A collection of invitation templates by **Premium E-Invitation**, featuring three invitation formats:
 
-- **For free cards;-** https://premiumeinvitations.vercel.app/
+- **For free cards:-** https://premiumeinvitations.vercel.app/
 - 💌 **Digital Invitations** — static invitation card designs
 - 🎬 **Animated Invitations** — motion-based invitation designs
 - 🌐 **Web Invitations** — interactive invitation websites
