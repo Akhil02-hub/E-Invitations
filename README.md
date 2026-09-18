@@ -3,7 +3,7 @@
 A collection of invitation templates by **Premium E-Invitation**, featuring three invitation formats:
 
 - **For free cards:-** https://premiumeinvitations.cc.cd/
-- 💌 **Digital Invitations (Free)** — static invitation card designs
+- 💌 **Digital Invitations (₹9 only)** — static invitation card designs
 - 🎬 **Animated Invitations** — motion-based invitation designs
 - 🌐 **Web Invitations** — interactive invitation websites
 
