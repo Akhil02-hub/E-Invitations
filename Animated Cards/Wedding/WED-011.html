@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f6f4ee">
+    <meta name="description"
+        content="A photographic wedding invitation, beautifully brought to life in 3D. Unfold, explore, and personalize your own keepsake.">
+    <title>Vow & Vellum — Your story, beautifully unfolded.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --background: #f6f4ee;
+            --ink: #354035;
+            --muted: #83877c;
+            --line: #dedfd4;
+            --accent: #65755b;
+            --accent-light: #e9ece3;
+            --serif: "Cormorant Garamond", Georgia, serif;
+            --sans: "Manrope", sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--background);
+            font-family: var(--sans);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            pointer-events: none;
+            opacity: .035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23000' filter='url(%23n)' opacity='.6' d='M0 0h160v160H0z'/%3E%3C/svg%3E");
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button,
+        a,
+        label[for="photoInput"] {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button {
+            color: inherit;
+            cursor: pointer;
+        }
+
+        button:focus-visible,
+        a:focus-visible,
+        input:focus-visible,
+        label:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 5px;
+        }
+
+        button {
+            transition: background .22s, color .22s, border-color .22s, transform .22s;
+        }
+
+        svg.icon {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        .symbols {
+            position: absolute;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .site-header {
+            max-width: 1512px;
+            height: 94px;
+            margin: 0 auto;
+            padding: 0 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            position: relative;
+        }
+
+        .site-header::after {
+            content: "";
+            position: absolute;
+            left: 52px;
+            right: 52px;
+            bottom: 0;
+            height: 1px;
+            background: var(--line);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            text-decoration: none;
+            color: var(--ink);
+        }
+
+        .brand-mark {
+            width: 32px;
+            height: 39px;
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 1;
+        }
+
+        .brand-name {
+            font-family: var(--serif);
+            font-size: 29px;
+            font-weight: 500;
+            letter-spacing: -1px;
+            white-space: nowrap;
+        }
+
+        .brand-name span {
+            font-style: italic;
+            font-size: 26px;
+        }
+
+        .header-note {
+            font-size: 9px;
+            letter-spacing: 2.5px;
+            color: var(--muted);
+            padding-right: 35px;
+        }
+
+        .save-button {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            background: transparent;
+            border: 1px solid #d3d6c9;
+            padding: 11px 17px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .save-button:hover {
+            background: #eaece3;
+            border-color: #a5ae99;
+        }
+
+        .workspace {
+            max-width: 1512px;
+            min-height: calc(100svh - 168px);
+            margin: 0 auto;
+            padding: 26px 34px 22px 64px;
+            display: grid;
+            grid-template-columns: minmax(260px, 310px) minmax(0, 1fr);
+            grid-template-rows: 1fr 1fr;
+            column-gap: 22px;
+            align-items: center;
+        }
+
+        .intro {
+            grid-column: 1;
+            grid-row: 1;
+            align-self: end;
+            padding-bottom: 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 9px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .eyebrow svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        h1 {
+            font-family: var(--serif);
+            font-size: clamp(55px, 4.9vw, 75px);
+            font-weight: 400;
+            line-height: .99;
+            letter-spacing: -2.5px;
+            margin: 25px 0 23px;
+        }
+
+        h1 em {
+            font-weight: 400;
+            color: var(--accent);
+        }
+
+        .intro-copy {
+            font-size: 12px;
+            line-height: 1.95;
+            color: #7b8174;
+            max-width: 265px;
+            margin: 0;
+        }
+
+        .configuration {
+            grid-column: 1;
+            grid-row: 2;
+            align-self: start;
+            max-width: 274px;
+            padding-top: 2px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .palette-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--line);
+            padding-top: 24px;
+        }
+
+        .small-label {
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 1.6px;
+        }
+
+        .palette-name {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 18px;
+            color: #7d8475;
+        }
+
+        .swatches {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin: 14px 0 26px;
+        }
+
+        .swatch {
+            width: 37px;
+            height: 37px;
+            padding: 4px;
+            border-radius: 50%;
+            border: 1px solid transparent;
+            background: transparent;
+            position: relative;
+        }
+
+        .swatch span {
+            display: block;
+            width: 27px;
+            height: 27px;
+            border-radius: 50%;
+            background: var(--swatch);
+            border: 1px solid #00000008;
+        }
+
+        .swatch[aria-pressed="true"] {
+            border-color: var(--swatch);
+        }
+
+        .swatch[aria-pressed="true"]::after {
+            content: "";
+            position: absolute;
+            width: 6px;
+            height: 3px;
+            left: 15px;
+            top: 15px;
+            border-bottom: 1px solid #fff;
+            border-left: 1px solid #fff;
+            transform: rotate(-45deg);
+        }
+
+        .swatch:hover {
+            transform: translateY(-2px);
+            border-color: var(--swatch);
+        }
+
+        .palette-caption {
+            font-size: 9px;
+            letter-spacing: .1px;
+            color: #929587;
+            padding-left: 5px;
+        }
+
+        .primary-button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            border: 1px solid var(--accent);
+            border-radius: 3px;
+            background: var(--accent);
+            color: #fcfbf7;
+            padding: 16px 19px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .3px;
+        }
+
+        .primary-button:hover {
+            filter: brightness(.93);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px #35403512;
+        }
+
+        .details-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            margin: 16px auto 0;
+            padding: 4px;
+            font-size: 10px;
+            background: none;
+            border: 0;
+            color: #7d8275;
+        }
+
+        .details-button:hover {
+            color: var(--ink);
+        }
+
+        .details-button svg {
+            width: 13px;
+            height: 13px;
+        }
+
+        .personal-note {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 34px;
+            font-size: 9px;
+            letter-spacing: .1px;
+            color: #95988b;
+        }
+
+        .personal-note svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .viewer {
+            grid-column: 2;
+            grid-row: 1 / 3;
+            position: relative;
+            height: clamp(570px, calc(100svh - 180px), 790px);
+            min-width: 0;
+            isolation: isolate;
+            background: radial-gradient(ellipse at 51% 46%, #e9e5d944 0%, #eeeae23b 38%, transparent 68%);
+        }
+
+        .stage-orbit {
+            position: absolute;
+            width: 82%;
+            height: 64%;
+            top: 14%;
+            left: 8%;
+            border: 1px solid #dadbcf70;
+            border-radius: 50%;
+            transform: rotate(-18deg);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .stage-orbit::after {
+            content: "";
+            position: absolute;
+            top: 20%;
+            left: 7%;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #b9c0ae;
+            box-shadow: 0 0 0 5px var(--background);
+        }
+
+        #scene {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            inset: 0;
+            outline: 0;
+            touch-action: none;
+            cursor: grab;
+        }
+
+        #scene:active {
+            cursor: grabbing;
+        }
+
+        .preview-top {
+            position: absolute;
+            left: 22px;
+            right: 22px;
+            top: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            gap: 16px;
+        }
+
+        .suite-label {
+            font-size: 8px;
+            letter-spacing: 1.7px;
+            color: #8b8f81;
+            font-weight: 500;
+        }
+
+        .suite-label span {
+            color: #a8ad9d;
+            margin-right: 10px;
+        }
+
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 8px;
+            letter-spacing: 1.2px;
+            color: #7e8972;
+            white-space: nowrap;
+        }
+
+        .live-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #8c9b7d;
+            box-shadow: 0 0 0 3px #8c9b7d12;
+        }
+
+        .preview-bottom {
+            position: absolute;
+            bottom: 16px;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            pointer-events: none;
+        }
+
+        .scene-caption {
+            font-family: var(--serif);
+            font-size: 16px;
+            font-style: italic;
+            color: #909582;
+            margin: 0 0 1px;
+        }
+
+        .scene-toolbar {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            padding: 6px;
+            background: #ffffffc9;
+            backdrop-filter: blur(12px);
+            border: 1px solid #fff;
+            border-radius: 40px;
+            box-shadow: 0 6px 25px #4246320b, 0 1px 4px #42463205;
+        }
+
+        .tool-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            border: 0;
+            border-radius: 24px;
+            background: none;
+            min-width: 38px;
+            height: 36px;
+            padding: 0 10px;
+            color: #6d7862;
+            font-size: 10px;
+        }
+
+        .tool-button:hover,
+        .tool-button[aria-pressed="true"] {
+            background: #e9ede3;
+            color: #4d6043;
+        }
+
+        .tool-button.fold {
+            padding: 0 15px 0 12px;
+        }
+
+        .tool-divider {
+            width: 1px;
+            height: 18px;
+            margin: 0 4px;
+            background: #e0e3d9;
+        }
+
+        .interaction-hint {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 9px;
+            color: #999c90;
+            letter-spacing: .2px;
+        }
+
+        .interaction-hint svg {
+            width: 13px;
+            height: 13px;
+        }
+
+        .interaction-hint i {
+            font-style: normal;
+            color: #bcc0b2;
+            margin: 0 2px;
+        }
+
+        .loading {
+            position: absolute;
+            inset: 48px 0 130px;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 18px;
+            background: var(--background);
+            transition: opacity .7s, visibility .7s;
+        }
+
+        .loading.done {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loading-flower {
+            width: 38px;
+            height: 38px;
+            border: 1px solid #d7decc;
+            border-top-color: #7c8d6e;
+            border-radius: 50%;
+            animation: spin 1.6s linear infinite;
+        }
+
+        .loading span {
+            font-family: var(--serif);
+            font-size: 20px;
+            font-style: italic;
+            color: #87917b;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .site-footer {
+            min-height: 74px;
+            max-width: 1408px;
+            margin: 0 auto;
+            padding: 21px 0;
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-motto {
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: #929888;
+        }
+
+        .footer-features {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .footer-feature {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 9px;
+            color: #8b9280;
+            white-space: nowrap;
+        }
+
+        .footer-feature svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .photo-credit {
+            color: #969b8b;
+            font-size: 9px;
+            text-decoration: none;
+        }
+
+        .photo-credit:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 26px;
+            transform: translate(-50%, 16px);
+            padding: 13px 20px;
+            border: 1px solid #ffffff44;
+            background: #47583e;
+            box-shadow: 0 8px 35px #25311e22;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 11px;
+            opacity: 0;
+            pointer-events: none;
+            transition: .3s;
+            z-index: 100;
+            max-width: calc(100vw - 32px);
+            text-align: center;
+        }
+
+        .toast.visible {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        dialog {
+            border: 1px solid #dedfd4;
+            border-radius: 8px;
+            background: #faf8f2;
+            color: var(--ink);
+            width: min(480px, calc(100% - 32px));
+            max-height: calc(100svh - 40px);
+            padding: 35px;
+            box-shadow: 0 25px 100px #26351c29;
+        }
+
+        dialog::backdrop {
+            background: #35402b4d;
+            backdrop-filter: blur(7px);
+        }
+
+        .dialog-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            border: 0;
+            background: transparent;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            color: #8a907d;
+        }
+
+        .dialog-close:hover {
+            background: #e9ecdf;
+        }
+
+        .dialog-eyebrow {
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin: 0 0 12px;
+        }
+
+        dialog h2 {
+            font-family: var(--serif);
+            font-size: 38px;
+            font-weight: 400;
+            letter-spacing: -.8px;
+            line-height: 1.07;
+            margin: 0 0 10px;
+        }
+
+        .dialog-copy {
+            font-size: 11px;
+            line-height: 1.8;
+            color: #8a8f7f;
+            margin: 0 0 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .field {
+            margin-bottom: 16px;
+            min-width: 0;
+        }
+
+        .field label {
+            display: block;
+            font-size: 9px;
+            margin-bottom: 7px;
+            color: #76816b;
+        }
+
+        .field input {
+            color: var(--ink);
+            background: #fffdf8;
+            border: 1px solid #dfe2d5;
+            border-radius: 3px;
+            padding: 11px 12px;
+            width: 100%;
+            min-width: 0;
+            font-size: 12px;
+        }
+
+        .field input:focus {
+            border-color: #95a285;
+            outline: 1px solid #95a285;
+        }
+
+        .upload-label {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 12px;
+            border: 1px dashed #cbd2bf;
+            border-radius: 3px;
+            cursor: pointer;
+            margin: 2px 0 22px;
+            transition: background .2s;
+        }
+
+        .upload-label:hover {
+            background: #edf0e7;
+        }
+
+        .upload-preview {
+            height: 51px;
+            width: 44px;
+            object-fit: cover;
+            border-radius: 2px;
+            background: #e2e6d9;
+        }
+
+        .upload-copy {
+            flex: 1;
+        }
+
+        .upload-copy strong {
+            display: block;
+            font-size: 10px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .upload-copy span {
+            font-size: 9px;
+            color: #939a86;
+        }
+
+        .upload-label>svg {
+            color: #8a977c;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .privacy-note {
+            font-size: 8px;
+            text-align: center;
+            color: #959c8a;
+            margin: 12px 0 0;
+            line-height: 1.7;
+        }
+
+        .spec-list {
+            margin: 23px 0;
+        }
+
+        .spec {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e4d9;
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        .spec span:first-child {
+            color: #939a87;
+        }
+
+        .spec span:last-child {
+            text-align: right;
+        }
+
+        .detail-note {
+            padding: 14px 16px;
+            background: #e9ede2;
+            color: #748269;
+            font-size: 10px;
+            line-height: 1.85;
+            border-radius: 3px;
+        }
+
+        .fallback {
+            position: absolute;
+            inset: 60px 25px 145px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            gap: 20px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .fallback img {
+            width: 180px;
+            height: 240px;
+            object-fit: cover;
+            border: 12px solid #fff;
+            border-radius: 95px 95px 0 0;
+            box-shadow: 0 15px 25px #4450361c;
+        }
+
+        @media (min-width: 1550px) {
+            .workspace {
+                grid-template-columns: 335px minmax(0, 1fr);
+                column-gap: 55px;
+            }
+        }
+
+        @media (max-width: 1512px) {
+            .site-footer {
+                margin-left: 52px;
+                margin-right: 52px;
+            }
+        }
+
+        @media (max-width: 1050px) {
+            .site-header {
+                padding: 0 32px;
+            }
+
+            .site-header::after {
+                left: 32px;
+                right: 32px;
+            }
+
+            .workspace {
+                padding-left: 36px;
+                padding-right: 14px;
+                grid-template-columns: 245px minmax(0, 1fr);
+                column-gap: 6px;
+            }
+
+            h1 {
+                font-size: 60px;
+            }
+
+            .configuration {
+                max-width: 234px;
+            }
+
+            .intro-copy {
+                max-width: 226px;
+                font-size: 11px;
+            }
+
+            .viewer {
+                height: 620px;
+            }
+
+            .preview-top {
+                left: 15px;
+                right: 15px;
+            }
+
+            .suite-label {
+                font-size: 7px;
+                letter-spacing: 1px;
+            }
+
+            .live-badge {
+                font-size: 7px;
+                letter-spacing: .6px;
+            }
+
+            .site-footer {
+                margin-left: 32px;
+                margin-right: 32px;
+            }
+
+            .footer-features {
+                gap: 16px;
+            }
+
+            .header-note {
+                padding: 0;
+                font-size: 8px;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .site-header {
+                height: 78px;
+                padding: 0 23px;
+            }
+
+            .site-header::after {
+                left: 23px;
+                right: 23px;
+            }
+
+            .brand-name {
+                font-size: 26px;
+            }
+
+            .brand-mark {
+                width: 27px;
+                height: 33px;
+            }
+
+            .header-note {
+                display: none;
+            }
+
+            .save-button {
+                padding: 10px 12px;
+                font-size: 10px;
+            }
+
+            .save-button svg {
+                width: 15px;
+                height: 15px;
+            }
+
+            .workspace {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                padding: 35px 20px 35px;
+                min-height: 0;
+            }
+
+            .intro {
+                grid-column: 1;
+                grid-row: 1;
+                text-align: center;
+                padding-bottom: 0;
+            }
+
+            .eyebrow {
+                justify-content: center;
+                font-size: 8px;
+            }
+
+            h1 {
+                margin: 19px 0 14px;
+                font-size: clamp(49px, 8.6vw, 67px);
+                line-height: .99;
+                letter-spacing: -1.6px;
+            }
+
+            .desktop-break {
+                display: none;
+            }
+
+            .intro-copy {
+                margin: 0 auto;
+                max-width: 310px;
+                font-size: 11px;
+                line-height: 1.8;
+            }
+
+            .viewer {
+                grid-column: 1;
+                grid-row: 2;
+                height: 475px;
+                margin: 18px -15px 5px;
+            }
+
+            .preview-top {
+                left: 20px;
+                right: 20px;
+                top: 13px;
+            }
+
+            .preview-bottom {
+                bottom: 6px;
+                gap: 11px;
+            }
+
+            .scene-caption {
+                font-size: 14px;
+            }
+
+            .stage-orbit {
+                top: 12%;
+                height: 63%;
+            }
+
+            .configuration {
+                grid-column: 1;
+                grid-row: 3;
+                width: 100%;
+                max-width: 420px;
+                margin: 22px auto 0;
+            }
+
+            .palette-header {
+                padding-top: 19px;
+            }
+
+            .swatches {
+                margin: 10px 0 18px;
+            }
+
+            .personal-note {
+                justify-content: center;
+                margin-top: 22px;
+            }
+
+            .primary-button {
+                padding: 15px 18px;
+            }
+
+            .site-footer {
+                margin: 0 24px;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 23px 0;
+                gap: 17px;
+            }
+
+            .footer-motto {
+                width: 100%;
+                text-align: center;
+                font-size: 7px;
+            }
+
+            .footer-feature {
+                font-size: 8px;
+            }
+
+            .footer-features {
+                gap: 18px;
+            }
+
+            .photo-credit {
+                font-size: 8px;
+            }
+        }
+
+        @media (max-width: 390px) {
+            .viewer {
+                height: 425px;
+            }
+
+            .live-badge {
+                letter-spacing: 0;
+            }
+
+            .save-button span {
+                display: none;
+            }
+
+            dialog {
+                padding: 29px 22px;
+            }
+
+            .scene-caption {
+                display: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+
+<body>
+    <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <symbol id="i-arrow" viewBox="0 0 24 24">
+            <path d="M4 12h15m-6-6 6 6-6 6" />
+        </symbol>
+        <symbol id="i-download" viewBox="0 0 24 24">
+            <path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4" />
+        </symbol>
+        <symbol id="i-book" viewBox="0 0 24 24">
+            <path d="M12 6c-3-2-6-2-9-2v14c3 0 6 0 9 2m0-14c3-2 6-2 9-2v14c-3 0-6 0-9 2V6Z" />
+        </symbol>
+        <symbol id="i-orbit" viewBox="0 0 24 24">
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-28 12 12)" />
+            <path d="m15 3 3 .7-.8 3M6 17l-.8 3 3 .6" />
+            <circle cx="12" cy="12" r="2.3" />
+        </symbol>
+        <symbol id="i-reset" viewBox="0 0 24 24">
+            <path d="M4 10a8 8 0 1 1 1 7M4 4v6h6" />
+        </symbol>
+        <symbol id="i-sparkle" viewBox="0 0 24 24">
+            <path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z" />
+        </symbol>
+        <symbol id="i-photo" viewBox="0 0 24 24">
+            <rect x="5" y="3" width="16" height="16" rx="1.5" />
+            <path d="M17 22H3V8m3 7 4-4 3 3 3-5 5 7" />
+            <circle cx="10" cy="7" r="1" />
+        </symbol>
+        <symbol id="i-hand" viewBox="0 0 24 24">
+            <path
+                d="M8 12V5a1.5 1.5 0 0 1 3 0v7-9a1.5 1.5 0 0 1 3 0v9-7a1.5 1.5 0 0 1 3 0v7-4a1.5 1.5 0 0 1 3 0v7c0 4-2 7-6 7h-1c-2 0-4-1-5-3l-4-6c-1-2 1-3 2-2l2 1Z" />
+        </symbol>
+        <symbol id="i-close" viewBox="0 0 24 24">
+            <path d="m6 6 12 12M6 18 18 6" />
+        </symbol>
+        <symbol id="i-plus" viewBox="0 0 24 24">
+            <path d="M12 5v14M5 12h14" />
+        </symbol>
+        <symbol id="i-leaf" viewBox="0 0 24 24">
+            <path d="M5 20c1-6 6-11 12-15M8 15C1 6 12 2 21 3c0 10-5 18-13 12Z" />
+        </symbol>
+        <symbol id="i-info" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 11v6m0-10v.5" />
+        </symbol>
+    </svg>
+
+    <header class="site-header">
+        <a class="brand" href="./" aria-label="Vow and Vellum home">
+            <svg class="brand-mark" viewBox="0 0 34 42" aria-hidden="true">
+                <path d="M17 3c-8 8-15 12-12 21 2 7 12 11 12 15 0-4 10-8 12-15C32 15 25 11 17 3Z" />
+                <path d="M17 3v36M5 18c5 0 9 5 12 10M29 18c-5 0-9 5-12 10M10 10c3 5 5 8 7 9m7-9c-3 5-5 8-7 9" />
+            </svg>
+            <span class="brand-name">vow <span>&</span> vellum</span>
+        </a>
+        <span class="header-note">THE ART OF INVITING</span>
+        <button class="save-button" id="savePreview" type="button" title="Download your 3D invitation as a picture">
+            <svg class="icon">
+                <use href="#i-download" />
+            </svg><span>Save preview</span>
+        </button>
+    </header>
+
+    <main class="workspace">
+        <section class="intro" aria-labelledby="pageTitle">
+            <div class="eyebrow"><svg class="icon">
+                    <use href="#i-sparkle" />
+                </svg>AN INVITATION TO FOREVER</div>
+            <h1 id="pageTitle">Your story,<br>beautifully<span class="desktop-break"><br></span> <em>unfolded.</em></h1>
+            <p class="intro-copy">A little paper. A favorite photograph. The beginning of your forever.<br>A keepsake as
+                beautiful as your love story.</p>
+        </section>
+
+        <section class="configuration" aria-label="Personalize your invitation">
+            <div class="palette-header">
+                <span class="small-label">THE PAPER PALETTE</span>
+                <span class="palette-name" id="paletteName">Sage garden</span>
+            </div>
+            <div class="swatches" role="group" aria-label="Invitation color palette">
+                <button class="swatch" style="--swatch:#859078" data-theme="sage" aria-label="Sage garden palette"
+                    aria-pressed="true" title="Sage garden"><span></span></button>
+                <button class="swatch" style="--swatch:#bb978c" data-theme="rose" aria-label="Blush romance palette"
+                    aria-pressed="false" title="Blush romance"><span></span></button>
+                <button class="swatch" style="--swatch:#c3b297" data-theme="linen" aria-label="Golden linen palette"
+                    aria-pressed="false" title="Golden linen"><span></span></button>
+                <span class="palette-caption">Three ways to say forever.</span>
+            </div>
+            <button class="primary-button" id="personalize" type="button">Make it yours<svg class="icon">
+                    <use href="#i-arrow" />
+                </svg></button>
+            <button class="details-button" id="showDetails" type="button"><svg class="icon">
+                    <use href="#i-info" />
+                </svg>Explore the little details</button>
+            <div class="personal-note"><svg class="icon">
+                    <use href="#i-photo" />
+                </svg>Real photographs. Really, truly you.</div>
+        </section>
+
+        <section class="viewer" id="viewer" aria-label="Interactive 3D wedding invitation">
+            <div class="stage-orbit" aria-hidden="true"></div>
+            <canvas id="scene"
+                aria-label="A photo-lined wedding invitation with a sage envelope, gold wax seal, and olive branch. Drag to rotate and scroll to zoom. Use the buttons below to open or close it."></canvas>
+            <div class="preview-top">
+                <span class="suite-label"><span>01 /</span> THE GARDEN SUITE</span>
+                <span class="live-badge"><span class="live-dot"></span>LIVE 3D PREVIEW</span>
+            </div>
+            <div class="loading" id="loading" role="status">
+                <div class="loading-flower"></div>
+                <span>Gathering your little details…</span>
+            </div>
+            <div class="fallback" id="fallback">
+                <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=500&q=80"
+                    alt="A romantic wedding photograph">
+                <span>This keepsake needs a WebGL-enabled browser.<br>You can still explore and personalize the
+                    details.</span>
+            </div>
+            <div class="preview-bottom">
+                <p class="scene-caption" id="sceneCaption">Olivia & James · a love, beautifully kept.</p>
+                <div class="scene-toolbar" aria-label="3D camera and invitation controls">
+                    <button class="tool-button fold" id="foldButton" type="button" aria-expanded="true"
+                        title="Open or close the invitation">
+                        <svg class="icon">
+                            <use href="#i-book" />
+                        </svg><span id="foldLabel">Close invitation</span>
+                    </button>
+                    <span class="tool-divider"></span>
+                    <button class="tool-button" id="rotateButton" type="button" aria-label="Start automatic rotation"
+                        aria-pressed="false" title="Auto-rotate"><svg class="icon">
+                            <use href="#i-orbit" />
+                        </svg></button>
+                    <button class="tool-button" id="resetButton" type="button" aria-label="Reset camera view"
+                        title="Reset view"><svg class="icon">
+                            <use href="#i-reset" />
+                        </svg></button>
+                </div>
+                <div class="interaction-hint"><svg class="icon">
+                        <use href="#i-hand" />
+                    </svg>Drag to turn<i>·</i>Scroll to zoom<i>·</i>Tap to unfold</div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <span class="footer-motto">FOR YOUR ONCE IN A LIFETIME.</span>
+        <div class="footer-features">
+            <span class="footer-feature"><svg class="icon">
+                    <use href="#i-orbit" />
+                </svg>Every beautiful angle</span>
+            <span class="footer-feature"><svg class="icon">
+                    <use href="#i-leaf" />
+                </svg>Thoughtfully crafted</span>
+            <a class="photo-credit" href="https://unsplash.com/s/photos/wedding" target="_blank"
+                rel="noopener noreferrer">Photography via Unsplash ↗</a>
+        </div>
+    </footer>
+
+    <dialog id="personalizeDialog" aria-labelledby="personalizeTitle">
+        <button class="dialog-close" type="button" data-close="personalizeDialog"
+            aria-label="Close personalization"><svg class="icon">
+                <use href="#i-close" />
+            </svg></button>
+        <p class="dialog-eyebrow">THE NEXT CHAPTER IS YOURS</p>
+        <h2 id="personalizeTitle">Make room for your story.</h2>
+        <p class="dialog-copy">Your names, your day, your favorite moment. Watch the little details come to life.</p>
+        <form id="personalizeForm">
+            <div class="form-row">
+                <div class="field"><label for="firstName">Your name</label><input id="firstName" name="firstName"
+                        maxlength="22" value="Olivia" required autocomplete="off"></div>
+                <div class="field"><label for="secondName">Your partner’s name</label><input id="secondName"
+                        name="secondName" maxlength="22" value="James" required autocomplete="off"></div>
+            </div>
+            <div class="form-row">
+                <div class="field"><label for="weddingDate">The special day</label><input id="weddingDate"
+                        name="weddingDate" type="date" value="2026-06-20" min="1900-01-01" max="2100-12-31" required>
+                </div>
+                <div class="field"><label for="venue">The venue</label><input id="venue" name="venue" maxlength="35"
+                        value="Villa Balbiano" required></div>
+            </div>
+            <div class="field"><label for="location">Somewhere beautiful</label><input id="location" name="location"
+                    maxlength="40" value="Lake Como, Italy" required></div>
+            <input class="visually-hidden" type="file" id="photoInput" accept="image/*">
+            <label class="upload-label" for="photoInput" tabindex="0">
+                <img class="upload-preview" id="uploadPreview"
+                    src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=150&q=70"
+                    alt="Current invitation photograph">
+                <span class="upload-copy"><strong id="uploadTitle">Add your own photograph</strong><span>A real moment,
+                        made into a keepsake · up to 12 MB</span></span>
+                <svg class="icon">
+                    <use href="#i-plus" />
+                </svg>
+            </label>
+            <button class="primary-button" type="submit">Apply to invitation<svg class="icon">
+                    <use href="#i-arrow" />
+                </svg></button>
+            <p class="privacy-note">Your photo stays in your browser. Nothing is uploaded or stored.</p>
+        </form>
+    </dialog>
+
+    <dialog id="detailsDialog" aria-labelledby="detailsTitle">
+        <button class="dialog-close" type="button" data-close="detailsDialog" aria-label="Close suite details"><svg
+                class="icon">
+                <use href="#i-close" />
+            </svg></button>
+        <p class="dialog-eyebrow">NO. 01 — THE GARDEN SUITE</p>
+        <h2 id="detailsTitle">Little details.<br>Lasting impressions.</h2>
+        <p class="dialog-copy">An arched photographic cover opens to a full-page memory and an elegantly typeset
+            invitation. Finished with a matching envelope, a monogrammed wax seal, and a little touch of nature.</p>
+        <div class="spec-list">
+            <div class="spec"><span>The invitation</span><span>125 × 185 mm · folded</span></div>
+            <div class="spec"><span>The finish</span><span>Textured, warm-white paper</span></div>
+            <div class="spec"><span>The keepsakes</span><span>Photo print & gold-toned wax seal</span></div>
+            <div class="spec"><span>The personal touches</span><span>Your names, date, venue & photograph</span></div>
+        </div>
+        <p class="detail-note">This is an interactive digital concept, not a physical product order. Drag to explore the
+            3D model, tap the invitation to fold it, and save a picture of your favorite angle.</p>
+        <button class="primary-button" id="detailsPersonalize" type="button">Tell your story<svg class="icon">
+                <use href="#i-arrow" />
+            </svg></button>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+        const $ = id => document.getElementById(id);
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const PHOTO_URL = 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1400&q=85';
+        const SECOND_PHOTO_URL = 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85';
+        const themes = {
+            sage: { name: 'Sage garden', accent: '#65755b', ink: '#42513e', paper: '#f7f3e8', envelope: '#88947a', foliage: '#79886c' },
+            rose: { name: 'Blush romance', accent: '#9b766d', ink: '#75564f', paper: '#faf0e7', envelope: '#bc958a', foliage: '#80876a' },
+            linen: { name: 'Golden linen', accent: '#978264', ink: '#766046', paper: '#faf4e7', envelope: '#bcaa8d', foliage: '#858a6b' }
+        };
+        const state = {
+            first: 'Olivia', second: 'James', date: '2026-06-20',
+            venue: 'Villa Balbiano', location: 'Lake Como, Italy',
+            theme: 'sage', photo: null, secondPhoto: null, customPhoto: false, open: true
+        };
+        let renderer, scene, camera, controls, coverPivot, composition;
+        let innerFace, coverFront, coverBack, polaroidFace, monogramFace, paperBump;
+        let currentAngle = reducedMotion ? 2.94 : 2.35;
+        let resetInProgress = false;
+        let webglAvailable = true;
+        let draftPhoto = null;
+        let draftPhotoURL = null;
+        let currentPhotoURL = PHOTO_URL;
+        let toastTimer;
+        const coloredMaterials = [];
+        const plantLeaves = [];
+        const invitationMeshes = [];
+        const homePosition = new THREE.Vector3(.35, 9, 7);
+        const homeTarget = new THREE.Vector3(-.1, .03, 0);
+        const W = 1024, H = 1516;
+        const cardWidth = 2.48, cardHeight = 3.672;
+        const serif = '"Cormorant Garamond", Georgia, serif';
+        const sans = '"Manrope", sans-serif';
+
+        function toast(message) {
+            $('toast').textContent = message;
+            $('toast').classList.add('visible');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => $('toast').classList.remove('visible'), 3300);
+        }
+
+        function loadImage(url, timeout = 12000) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                const timer = setTimeout(() => {
+                    img.onload = img.onerror = null;
+                    reject(new Error('Image timed out'));
+                }, timeout);
+                img.onload = () => { clearTimeout(timer); resolve(img); };
+                img.onerror = () => { clearTimeout(timer); reject(new Error('Image unavailable')); };
+                img.src = url;
+            });
+        }
+
+        const noiseCanvas = document.createElement('canvas');
+        noiseCanvas.width = noiseCanvas.height = 192;
+        const noiseContext = noiseCanvas.getContext('2d');
+        const noiseData = noiseContext.createImageData(192, 192);
+        let seed = 12345;
+        function random() {
+            seed = (seed * 16807) % 2147483647;
+            return (seed - 1) / 2147483646;
+        }
+        for (let i = 0; i < noiseData.data.length; i += 4) {
+            const v = 180 + Math.floor(random() * 75);
+            noiseData.data[i] = noiseData.data[i + 1] = noiseData.data[i + 2] = v;
+            noiseData.data[i + 3] = 255;
+        }
+        noiseContext.putImageData(noiseData, 0, 0);
+
+        function paperCanvas(width = W, height = H) {
+            const canvas = document.createElement('canvas');
+            canvas.width = width; canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = themes[state.theme].paper;
+            ctx.fillRect(0, 0, width, height);
+            ctx.save();
+            ctx.globalAlpha = .12;
+            ctx.globalCompositeOperation = 'multiply';
+            ctx.fillStyle = ctx.createPattern(noiseCanvas, 'repeat');
+            ctx.fillRect(0, 0, width, height);
+            ctx.restore();
+            return { canvas, ctx };
+        }
+
+        function makeTexture(canvas) {
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.colorSpace = THREE.SRGBColorSpace;
+            texture.anisotropy = renderer ? Math.min(8, renderer.capabilities.getMaxAnisotropy()) : 4;
+            return texture;
+        }
+
+        function spacedText(ctx, text, x, y, size, spacing, color) {
+            ctx.save();
+            ctx.fillStyle = color;
+            ctx.font = `500 ${size}px ${sans}`;
+            ctx.textAlign = 'left';
+            const chars = Array.from(text);
+            const width = chars.reduce((sum, char) => sum + ctx.measureText(char).width, 0) + Math.max(0, chars.length - 1) * spacing;
+            let left = x - width / 2;
+            for (const char of chars) {
+                ctx.fillText(char, left, y);
+                left += ctx.measureText(char).width + spacing;
+            }
+            ctx.restore();
+        }
+
+        function fitText(ctx, text, x, y, size, maxWidth, color, italic = false) {
+            ctx.save();
+            ctx.textAlign = 'center';
+            ctx.fillStyle = color;
+            let currentSize = size;
+            do {
+                ctx.font = `${italic ? 'italic ' : ''}400 ${currentSize}px ${serif}`;
+                if (ctx.measureText(text).width <= maxWidth) break;
+                currentSize -= 2;
+            } while (currentSize > 20);
+            ctx.fillText(text, x, y);
+            ctx.restore();
+        }
+
+        function drawSprig(ctx, cx, cy, size, color) {
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.scale(size, size);
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 1.6;
+            ctx.beginPath();
+            ctx.moveTo(-100, 20);
+            ctx.bezierCurveTo(-30, -12, 45, 4, 100, -22);
+            ctx.stroke();
+            for (let i = 0; i < 9; i++) {
+                const x = -82 + i * 20;
+                const y = 6 - i * 2.1;
+                for (const side of [-1, 1]) {
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.rotate(side === 1 ? -.66 : -2.2);
+                    ctx.beginPath();
+                    ctx.ellipse(14, 0, 17, 5.4, 0, 0, Math.PI * 2);
+                    ctx.globalAlpha = .55;
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
+                    ctx.stroke();
+                    ctx.restore();
+                }
+            }
+            ctx.restore();
+        }
+
+        function archPath(ctx, x, y, width, height) {
+            const r = width / 2;
+            ctx.beginPath();
+            ctx.moveTo(x, y + height);
+            ctx.lineTo(x, y + r);
+            ctx.arc(x + r, y + r, r, Math.PI, 0);
+            ctx.lineTo(x + width, y + height);
+            ctx.closePath();
+        }
+
+        function drawPhoto(ctx, image, x, y, width, height, arched = false) {
+            ctx.save();
+            if (arched) archPath(ctx, x, y, width, height);
+            else { ctx.beginPath(); ctx.rect(x, y, width, height); }
+            ctx.clip();
+            if (image) {
+                const iw = image.naturalWidth || image.width;
+                const ih = image.naturalHeight || image.height;
+                const scale = Math.max(width / iw, height / ih);
+                const sw = width / scale, sh = height / scale;
+                const sx = (iw - sw) * .5;
+                const sy = (ih - sh) * .42;
+                ctx.filter = 'saturate(0.73) contrast(0.96) brightness(1.025)';
+                ctx.drawImage(image, sx, sy, sw, sh, x, y, width, height);
+                ctx.filter = 'none';
+                ctx.fillStyle = 'rgba(229, 214, 180, 0.085)';
+                ctx.fillRect(x, y, width, height);
+            } else {
+                ctx.fillStyle = '#dfe3d5';
+                ctx.fillRect(x, y, width, height);
+                drawSprig(ctx, x + width / 2, y + height * .40, 1.25, '#8a987e');
+                fitText(ctx, 'Your beautiful moment', x + width / 2, y + height * .55, 51, width - 80, '#7d8a71', true);
+                spacedText(ctx, 'A PHOTOGRAPH TO CHERISH', x + width / 2, y + height * .61, 14, 2.5, '#8e9a82');
+            }
+            ctx.restore();
+        }
+
+        function dateInfo() {
+            const date = new Date(state.date + 'T12:00:00');
+            return {
+                day: date.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase(),
+                numeric: `${String(date.getDate()).padStart(2, '0')} . ${String(date.getMonth() + 1).padStart(2, '0')} . ${date.getFullYear()}`,
+                long: date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+            };
+        }
+
+        function invitationTexture() {
+            const { canvas, ctx } = paperCanvas();
+            const t = themes[state.theme];
+            const d = dateInfo();
+            ctx.strokeStyle = t.accent + '60';
+            ctx.lineWidth = 1.4;
+            archPath(ctx, 57, 63, W - 114, H - 127);
+            ctx.stroke();
+            drawSprig(ctx, W / 2, 247, 1.15, t.accent);
+            spacedText(ctx, 'TOGETHER WITH THEIR FAMILIES', W / 2, 358, 16, 3.0, t.ink);
+            fitText(ctx, state.first, W / 2, 540, 155, 820, t.ink);
+            fitText(ctx, '&', W / 2, 642, 92, 200, t.accent, true);
+            fitText(ctx, state.second, W / 2, 774, 155, 820, t.ink);
+            fitText(ctx, 'invite you to celebrate', W / 2, 874, 37, 800, t.ink, true);
+            fitText(ctx, 'their wedding', W / 2, 917, 37, 800, t.ink, true);
+            ctx.strokeStyle = t.accent + '85';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(471, 970); ctx.lineTo(553, 970); ctx.stroke();
+            spacedText(ctx, d.day, W / 2, 1030, 18, 4.5, t.ink);
+            fitText(ctx, d.numeric, W / 2, 1112, 64, 820, t.ink);
+            spacedText(ctx, 'FOUR O’CLOCK IN THE AFTERNOON', W / 2, 1170, 13, 2.1, t.accent);
+            fitText(ctx, state.venue, W / 2, 1280, 51, 820, t.ink);
+            spacedText(ctx, state.location.toUpperCase(), W / 2, 1326, state.location.length > 28 ? 12 : 14, 2.4, t.accent);
+            drawSprig(ctx, W / 2, 1400, .48, t.accent);
+            return makeTexture(canvas);
+        }
+
+        function coverTexture() {
+            const { canvas, ctx } = paperCanvas();
+            const t = themes[state.theme];
+            drawPhoto(ctx, state.photo, 66, 68, 892, 980, true);
+            spacedText(ctx, 'THE WEDDING OF', W / 2, 1124, 16, 4.2, t.accent);
+            fitText(ctx, `${state.first} & ${state.second}`, W / 2, 1250, 113, 886, t.ink);
+            spacedText(ctx, dateInfo().long.toUpperCase(), W / 2, 1332, 18, 3.2, t.accent);
+            drawSprig(ctx, W / 2, 1420, .6, t.accent);
+            return makeTexture(canvas);
+        }
+
+        function insidePhotoTexture() {
+            const { canvas, ctx } = paperCanvas();
+            const t = themes[state.theme];
+            drawPhoto(ctx, state.photo, 52, 62, W - 104, 1195, true);
+            fitText(ctx, 'The beginning of forever.', W / 2, 1360, 63, 920, t.ink, true);
+            spacedText(ctx, 'OUR VERY FAVORITE CHAPTER', W / 2, 1431, 13, 3, t.accent);
+            return makeTexture(canvas);
+        }
+
+        function photoPrintTexture() {
+            const { canvas, ctx } = paperCanvas(700, 900);
+            drawPhoto(ctx, state.secondPhoto || state.photo, 34, 34, 632, 724, false);
+            fitText(ctx, 'a love like ours', 350, 833, 55, 610, themes[state.theme].ink, true);
+            return makeTexture(canvas);
+        }
+
+        function monogramTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#76623e';
+            ctx.font = `500 97px ${serif}`;
+            ctx.fillText((state.first[0] || 'O') + (state.second[0] || 'J'), 128, 156);
+            ctx.strokeStyle = '#e1cc9f';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(89, 184); ctx.lineTo(167, 184); ctx.stroke();
+            return makeTexture(canvas);
+        }
+
+        function updateMap(material, texture) {
+            if (!material) { texture.dispose(); return; }
+            if (material.map) material.map.dispose();
+            material.map = texture;
+            material.needsUpdate = true;
+        }
+
+        function updateTextures() {
+            if (!webglAvailable) return;
+            updateMap(innerFace, invitationTexture());
+            updateMap(coverFront, coverTexture());
+            updateMap(coverBack, insidePhotoTexture());
+            updateMap(polaroidFace, photoPrintTexture());
+            updateMap(monogramFace, monogramTexture());
+        }
+
+        function paperMaterial(map) {
+            return new THREE.MeshStandardMaterial({
+                map, color: '#ffffff', roughness: .94,
+                bumpMap: paperBump, bumpScale: .004,
+                metalness: 0, envMapIntensity: .23
+            });
+        }
+
+        function themedMaterial(lightness = 0) {
+            const base = new THREE.Color(themes[state.theme].envelope);
+            base.lerp(new THREE.Color(lightness > 0 ? '#ffffff' : '#313c29'), Math.abs(lightness));
+            const material = new THREE.MeshStandardMaterial({
+                color: base, roughness: .91, metalness: 0,
+                bumpMap: paperBump, bumpScale: .007, side: THREE.DoubleSide, envMapIntensity: .3
+            });
+            coloredMaterials.push({ material, lightness, target: base.clone() });
+            return material;
+        }
+
+        function triangle(points, material, z = 0) {
+            const shape = new THREE.Shape();
+            shape.moveTo(points[0][0], points[0][1]);
+            points.slice(1).forEach(p => shape.lineTo(p[0], p[1]));
+            shape.closePath();
+            const mesh = new THREE.Mesh(new THREE.ShapeGeometry(shape), material);
+            mesh.position.z = z;
+            mesh.receiveShadow = true;
+            mesh.castShadow = true;
+            return mesh;
+        }
+
+        function createEnvelope() {
+            const group = new THREE.Group();
+            group.position.set(1.08, -.79, -.09);
+            group.rotation.z = -.12;
+            const ew = 3.6, eh = 2.8;
+            const base = new THREE.Mesh(new THREE.BoxGeometry(ew, eh, .035), themedMaterial());
+            base.castShadow = base.receiveShadow = true;
+            group.add(base);
+            group.add(triangle([[-ew / 2, -eh / 2], [-ew / 2, eh / 2], [.1, -.15]], themedMaterial(.065), .021));
+            group.add(triangle([[ew / 2, -eh / 2], [0, -.15], [ew / 2, eh / 2]], themedMaterial(-.045), .024));
+            group.add(triangle([[-ew / 2, -eh / 2], [ew / 2, -eh / 2], [0, .14]], themedMaterial(.035), .026));
+            group.add(triangle([[-ew / 2, eh / 2], [ew / 2, eh / 2], [0, -.35]], themedMaterial(.09), .029));
+
+            const seamGeometry = new THREE.BufferGeometry().setFromPoints([
+                new THREE.Vector3(-ew / 2, -eh / 2, .031), new THREE.Vector3(0, .14, .031), new THREE.Vector3(ew / 2, -eh / 2, .031)
+            ]);
+            const seam = new THREE.Line(seamGeometry, new THREE.LineBasicMaterial({ color: '#f4eed9', transparent: true, opacity: .2 }));
+            group.add(seam);
+
+            const ribbon = new THREE.Mesh(
+                new THREE.BoxGeometry(.115, 3.01, .009),
+                new THREE.MeshPhysicalMaterial({ color: '#d3c7a9', roughness: .48, metalness: .08, sheen: .6, sheenColor: new THREE.Color('#eee4cb'), sheenRoughness: .65 })
+            );
+            ribbon.position.set(-1.03, -.03, .043);
+            ribbon.rotation.z = .035;
+            ribbon.castShadow = ribbon.receiveShadow = true;
+            group.add(ribbon);
+
+            const seal = new THREE.Group();
+            seal.position.set(.98, -1.17, .08);
+            const waxMaterial = new THREE.MeshStandardMaterial({ color: '#c4ab77', roughness: .47, metalness: .27 });
+            const waxGeometry = new THREE.CylinderGeometry(.237, .25, .055, 64);
+            const waxPositions = waxGeometry.attributes.position;
+            for (let i = 0; i < waxPositions.count; i++) {
+                const x = waxPositions.getX(i), z = waxPositions.getZ(i);
+                const angle = Math.atan2(z, x);
+                const r = 1 + .017 * Math.sin(angle * 9) + .011 * Math.sin(angle * 13);
+                waxPositions.setX(i, x * r); waxPositions.setZ(i, z * r);
+            }
+            waxGeometry.computeVertexNormals();
+            const wax = new THREE.Mesh(waxGeometry, waxMaterial);
+            wax.rotation.x = Math.PI / 2;
+            wax.castShadow = wax.receiveShadow = true;
+            seal.add(wax);
+            const rim = new THREE.Mesh(new THREE.TorusGeometry(.19, .012, 8, 64), waxMaterial);
+            rim.position.z = .03;
+            seal.add(rim);
+            monogramFace = new THREE.MeshStandardMaterial({
+                map: monogramTexture(), transparent: true, roughness: .65,
+                metalness: .15, depthWrite: false, envMapIntensity: .35
+            });
+            const monogram = new THREE.Mesh(new THREE.PlaneGeometry(.33, .33), monogramFace);
+            monogram.position.z = .031;
+            seal.add(monogram);
+            group.add(seal);
+            composition.add(group);
+        }
+
+        function createInvitation() {
+            const edge = new THREE.MeshStandardMaterial({ color: '#e7e0d1', roughness: 1, envMapIntensity: .2 });
+            innerFace = paperMaterial(invitationTexture());
+            const leaf = new THREE.Mesh(
+                new THREE.BoxGeometry(cardWidth, cardHeight, .031),
+                [edge, edge, edge, edge, innerFace, edge]
+            );
+            leaf.position.set(cardWidth / 2, 0, .035);
+            leaf.castShadow = leaf.receiveShadow = true;
+            composition.add(leaf);
+            invitationMeshes.push(leaf);
+
+            const crease = new THREE.Mesh(
+                new THREE.BoxGeometry(.028, cardHeight - .015, .017),
+                new THREE.MeshStandardMaterial({ color: '#d9d4c4', roughness: 1 })
+            );
+            crease.position.set(.012, 0, .055);
+            crease.receiveShadow = true;
+            composition.add(crease);
+
+            coverPivot = new THREE.Group();
+            coverPivot.position.set(0, 0, .071);
+            coverPivot.rotation.y = -currentAngle;
+            coverFront = paperMaterial(coverTexture());
+            coverBack = paperMaterial(insidePhotoTexture());
+            const cover = new THREE.Mesh(
+                new THREE.BoxGeometry(cardWidth, cardHeight, .031),
+                [edge, edge, edge, edge, coverFront, coverBack]
+            );
+            cover.position.x = cardWidth / 2;
+            cover.castShadow = cover.receiveShadow = true;
+            coverPivot.add(cover);
+            composition.add(coverPivot);
+            invitationMeshes.push(cover);
+        }
+
+        function createPhotoPrint() {
+            const edge = new THREE.MeshStandardMaterial({ color: '#eee8da', roughness: .9 });
+            polaroidFace = paperMaterial(photoPrintTexture());
+            const print = new THREE.Mesh(
+                new THREE.BoxGeometry(1.52, 1.954, .019),
+                [edge, edge, edge, edge, polaroidFace, edge]
+            );
+            print.position.set(2.03, 1.59, -.053);
+            print.rotation.z = -.22;
+            print.castShadow = print.receiveShadow = true;
+            composition.add(print);
+        }
+
+        function leafGeometry() {
+            const positions = [], indices = [], uvs = [];
+            const steps = 16;
+            for (let i = 0; i <= steps; i++) {
+                const t = i / steps;
+                const width = .142 * Math.pow(Math.sin(t * Math.PI), .82);
+                const y = t * .62;
+                const z = .047 * Math.sin(t * Math.PI) + .045 * t * t;
+                positions.push(-width, y, z, 0, y, z + .034 * Math.sin(t * Math.PI), width, y, z);
+                uvs.push(0, t, .5, t, 1, t);
+                if (i < steps) {
+                    const a = i * 3;
+                    indices.push(a, a + 3, a + 1, a + 1, a + 3, a + 4, a + 1, a + 4, a + 2, a + 2, a + 4, a + 5);
+                }
+            }
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+            geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+            geometry.setIndex(indices); geometry.computeVertexNormals();
+            return geometry;
+        }
+
+        function createOliveBranch() {
+            const branch = new THREE.Group();
+            branch.position.set(-2.46, -1.85, -.10);
+            branch.rotation.z = .36;
+            const stemMaterial = new THREE.MeshStandardMaterial({ color: '#8b8060', roughness: .97 });
+            const mainCurve = new THREE.CatmullRomCurve3([
+                new THREE.Vector3(0, 0, 0), new THREE.Vector3(.03, .6, .045),
+                new THREE.Vector3(-.05, 1.3, .07), new THREE.Vector3(.07, 2.15, .105)
+            ]);
+            const stem = new THREE.Mesh(new THREE.TubeGeometry(mainCurve, 30, .012, 6, false), stemMaterial);
+            stem.castShadow = true;
+            branch.add(stem);
+            const geometry = leafGeometry();
+            const leafColors = ['#7b886a', '#8a967a', '#697d5e', '#a0aa8a'];
+            for (let i = 0; i < 7; i++) {
+                const t = .16 + i * .112;
+                const position = mainCurve.getPoint(t);
+                for (const side of [-1, 1]) {
+                    const tip = position.clone().add(new THREE.Vector3(side * (.1 + random() * .07), .10, .015));
+                    const twigCurve = new THREE.QuadraticBezierCurve3(position, position.clone().add(new THREE.Vector3(side * .07, .08, .01)), tip);
+                    const twig = new THREE.Mesh(new THREE.TubeGeometry(twigCurve, 7, .006, 5, false), stemMaterial);
+                    twig.castShadow = true;
+                    branch.add(twig);
+                    const material = new THREE.MeshStandardMaterial({
+                        color: leafColors[(i + (side > 0 ? 1 : 0)) % leafColors.length],
+                        roughness: .89, side: THREE.DoubleSide, metalness: 0, envMapIntensity: .4
+                    });
+                    const leaf = new THREE.Mesh(geometry, material);
+                    leaf.position.copy(tip);
+                    leaf.rotation.set((random() - .5) * .5, side * .32, -side * (.75 + random() * .35));
+                    leaf.scale.setScalar(.76 + random() * .3);
+                    leaf.castShadow = leaf.receiveShadow = true;
+                    const veinPoints = [];
+                    for (let v = 0; v <= 14; v++) {
+                        const a = v / 14;
+                        veinPoints.push(new THREE.Vector3(0, a * .6, .083 * Math.sin(a * Math.PI) + .046 * a * a + .002));
+                    }
+                    const vein = new THREE.Line(
+                        new THREE.BufferGeometry().setFromPoints(veinPoints),
+                        new THREE.LineBasicMaterial({ color: '#bec5a8', transparent: true, opacity: .42 })
+                    );
+                    leaf.add(vein);
+                    plantLeaves.push({ leaf, angle: leaf.rotation.x, phase: random() * Math.PI * 2 });
+                    branch.add(leaf);
+                }
+            }
+            composition.add(branch);
+        }
+
+        function initScene() {
+            try {
+                renderer = new THREE.WebGLRenderer({ canvas: $('scene'), alpha: true, antialias: true, powerPreference: 'high-performance' });
+            } catch (error) {
+                webglAvailable = false;
+                $('loading').classList.add('done');
+                $('fallback').style.display = 'flex';
+                document.querySelector('.scene-toolbar').style.display = 'none';
+                return;
+            }
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setClearColor(0x000000, 0);
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.12;
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+            scene = new THREE.Scene();
+            camera = new THREE.OrthographicCamera(-4, 4, 3.2, -3.2, .1, 60);
+            camera.position.copy(homePosition);
+            camera.lookAt(homeTarget);
+
+            const pmrem = new THREE.PMREMGenerator(renderer);
+            const room = new RoomEnvironment();
+            const environment = pmrem.fromScene(room, .04);
+            scene.environment = environment.texture;
+            room.dispose();
+            pmrem.dispose();
+
+            const hemisphere = new THREE.HemisphereLight('#fffbef', '#b5b6a5', 1.45);
+            scene.add(hemisphere);
+            const sun = new THREE.DirectionalLight('#fff4db', 2.6);
+            sun.position.set(-3.5, 8, 5);
+            sun.castShadow = true;
+            sun.shadow.mapSize.set(2048, 2048);
+            Object.assign(sun.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, near: .5, far: 22 });
+            sun.shadow.bias = -.00025;
+            sun.shadow.normalBias = .016;
+            sun.shadow.radius = 4;
+            scene.add(sun);
+            const fill = new THREE.DirectionalLight('#f2f5ff', .65);
+            fill.position.set(4, 5, -3);
+            scene.add(fill);
+
+            const ground = new THREE.Mesh(
+                new THREE.PlaneGeometry(100, 100),
+                new THREE.ShadowMaterial({ color: '#655e45', opacity: .23 })
+            );
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.y = -.16;
+            ground.receiveShadow = true;
+            scene.add(ground);
+
+            paperBump = new THREE.CanvasTexture(noiseCanvas);
+            paperBump.wrapS = paperBump.wrapT = THREE.RepeatWrapping;
+            paperBump.repeat.set(4, 6);
+
+            composition = new THREE.Group();
+            composition.rotation.x = -Math.PI / 2;
+            composition.rotation.z = -.12;
+            scene.add(composition);
+            createEnvelope();
+            createPhotoPrint();
+            createInvitation();
+            createOliveBranch();
+
+            controls = new OrbitControls(camera, $('scene'));
+            controls.target.copy(homeTarget);
+            controls.enableDamping = true;
+            controls.dampingFactor = .065;
+            controls.enablePan = false;
+            controls.rotateSpeed = .48;
+            controls.zoomSpeed = .75;
+            controls.minZoom = .72;
+            controls.maxZoom = 1.9;
+            controls.minPolarAngle = .16;
+            controls.maxPolarAngle = 1.2;
+            controls.autoRotateSpeed = .65;
+            controls.addEventListener('start', () => {
+                resetInProgress = false;
+                setAutoRotate(false);
+            });
+            controls.update();
+
+            function resize() {
+                const width = $('viewer').clientWidth, height = $('viewer').clientHeight;
+                if (!width || !height) return;
+                const aspect = width / height;
+                const viewHeight = Math.max(6.4, 7.8 / aspect);
+                camera.left = -viewHeight * aspect / 2;
+                camera.right = viewHeight * aspect / 2;
+                camera.top = viewHeight / 2;
+                camera.bottom = -viewHeight / 2;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height, false);
+            }
+            new ResizeObserver(resize).observe($('viewer'));
+            resize();
+
+            const raycaster = new THREE.Raycaster();
+            const pointer = new THREE.Vector2();
+            let pointerStart = null;
+            let gestureMultiTouch = false;
+            const activePointers = new Set();
+            $('scene').addEventListener('pointerdown', event => {
+                activePointers.add(event.pointerId);
+                if (activePointers.size > 1) gestureMultiTouch = true;
+                else { gestureMultiTouch = false; pointerStart = { x: event.clientX, y: event.clientY }; }
+            });
+            $('scene').addEventListener('pointerup', event => {
+                activePointers.delete(event.pointerId);
+                if (gestureMultiTouch || !pointerStart || event.button !== 0) return;
+                const distance = Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y);
+                pointerStart = null;
+                if (distance > 6) return;
+                const rect = $('scene').getBoundingClientRect();
+                pointer.set((event.clientX - rect.left) / rect.width * 2 - 1, -(event.clientY - rect.top) / rect.height * 2 + 1);
+                raycaster.setFromCamera(pointer, camera);
+                if (raycaster.intersectObjects(invitationMeshes).length) setOpen(!state.open);
+            });
+            $('scene').addEventListener('pointercancel', event => {
+                activePointers.delete(event.pointerId);
+                pointerStart = null;
+            });
+
+            const clock = new THREE.Clock();
+            renderer.setAnimationLoop(() => {
+                const dt = Math.min(clock.getDelta(), .05);
+                if (document.hidden) return;
+                const time = clock.elapsedTime;
+                const target = state.open ? 2.94 : .008;
+                currentAngle = reducedMotion ? target : THREE.MathUtils.damp(currentAngle, target, 6, dt);
+                coverPivot.rotation.y = -currentAngle - (!reducedMotion && state.open ? Math.sin(time * .65) * .004 : 0);
+                composition.position.x = THREE.MathUtils.lerp(-.58, 0, Math.sin(currentAngle / 2));
+                for (const item of coloredMaterials) item.material.color.lerp(item.target, 1 - Math.exp(-dt * 7));
+                if (!reducedMotion) {
+                    for (const item of plantLeaves) item.leaf.rotation.x = item.angle + Math.sin(time * .7 + item.phase) * .012;
+                }
+                if (resetInProgress) {
+                    const alpha = reducedMotion ? 1 : 1 - Math.exp(-dt * 7);
+                    camera.position.lerp(homePosition, alpha);
+                    controls.target.lerp(homeTarget, alpha);
+                    camera.zoom = THREE.MathUtils.lerp(camera.zoom, 1, alpha);
+                    camera.updateProjectionMatrix();
+                    if (camera.position.distanceTo(homePosition) < .008 && Math.abs(camera.zoom - 1) < .002) resetInProgress = false;
+                }
+                controls.update();
+                renderer.render(scene, camera);
+            });
+        }
+
+        function setOpen(open) {
+            state.open = open;
+            $('foldLabel').textContent = open ? 'Close invitation' : 'Open invitation';
+            $('foldButton').setAttribute('aria-expanded', String(open));
+        }
+
+        function setAutoRotate(enabled) {
+            if (controls) controls.autoRotate = enabled;
+            $('rotateButton').setAttribute('aria-pressed', String(enabled));
+            $('rotateButton').setAttribute('aria-label', enabled ? 'Stop automatic rotation' : 'Start automatic rotation');
+            $('rotateButton').title = enabled ? 'Stop rotation' : 'Auto-rotate';
+        }
+
+        function selectTheme(key) {
+            state.theme = key;
+            const theme = themes[key];
+            document.documentElement.style.setProperty('--accent', theme.accent);
+            $('paletteName').textContent = theme.name;
+            document.querySelectorAll('[data-theme]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.theme === key)));
+            for (const item of coloredMaterials) {
+                item.target.set(theme.envelope);
+                item.target.lerp(new THREE.Color(item.lightness > 0 ? '#ffffff' : '#313c29'), Math.abs(item.lightness));
+            }
+            updateTextures();
+            toast(`${theme.name} — a beautiful choice.`);
+        }
+
+        function openPersonalization() {
+            $('firstName').value = state.first;
+            $('secondName').value = state.second;
+            $('weddingDate').value = state.date;
+            $('venue').value = state.venue;
+            $('location').value = state.location;
+            $('photoInput').value = '';
+            $('uploadPreview').src = currentPhotoURL;
+            $('uploadTitle').textContent = 'Add your own photograph';
+            if (draftPhotoURL) URL.revokeObjectURL(draftPhotoURL);
+            draftPhotoURL = null;
+            draftPhoto = null;
+            $('personalizeDialog').showModal();
+        }
+
+        $('personalize').addEventListener('click', openPersonalization);
+        $('showDetails').addEventListener('click', () => $('detailsDialog').showModal());
+        $('detailsPersonalize').addEventListener('click', () => { $('detailsDialog').close(); openPersonalization(); });
+        document.querySelectorAll('[data-close]').forEach(button => button.addEventListener('click', () => $(button.dataset.close).close()));
+        document.querySelectorAll('dialog').forEach(dialog => dialog.addEventListener('click', event => {
+            const rect = dialog.getBoundingClientRect();
+            if (event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) dialog.close();
+        }));
+        document.querySelectorAll('[data-theme]').forEach(button => button.addEventListener('click', () => selectTheme(button.dataset.theme)));
+        $('foldButton').addEventListener('click', () => setOpen(!state.open));
+        $('rotateButton').addEventListener('click', () => {
+            resetInProgress = false;
+            setAutoRotate(!(controls && controls.autoRotate));
+        });
+        $('resetButton').addEventListener('click', () => {
+            setAutoRotate(false);
+            resetInProgress = true;
+            toast('Back to your favorite angle.');
+        });
+        document.querySelector('.upload-label').addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); $('photoInput').click(); }
+        });
+
+        let uploadSequence = 0;
+        $('photoInput').addEventListener('change', async event => {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) { toast('Please choose a photograph or image file.'); return; }
+            if (file.size > 12 * 1024 * 1024) { toast('Please choose a photograph smaller than 12 MB.'); return; }
+            const sequence = ++uploadSequence;
+            const objectURL = URL.createObjectURL(file);
+            try {
+                const image = await loadImage(objectURL);
+                if (sequence !== uploadSequence) { URL.revokeObjectURL(objectURL); return; }
+                if (draftPhotoURL) URL.revokeObjectURL(draftPhotoURL);
+                draftPhotoURL = objectURL;
+                draftPhoto = image;
+                $('uploadPreview').src = objectURL;
+                $('uploadTitle').textContent = 'Your moment is ready';
+            } catch {
+                URL.revokeObjectURL(objectURL);
+                toast('This image could not be opened. Try a JPG, PNG, or WebP.');
+            }
+        });
+
+        $('personalizeForm').addEventListener('submit', event => {
+            event.preventDefault();
+            const first = $('firstName').value.trim();
+            const second = $('secondName').value.trim();
+            const venue = $('venue').value.trim();
+            const location = $('location').value.trim();
+            if (!first || !second || !venue || !location) { toast('Add your names and a beautiful place first.'); return; }
+            state.first = first;
+            state.second = second;
+            state.date = $('weddingDate').value;
+            state.venue = venue;
+            state.location = location;
+            if (draftPhoto) {
+                if (currentPhotoURL.startsWith('blob:')) URL.revokeObjectURL(currentPhotoURL);
+                state.photo = draftPhoto;
+                state.customPhoto = true;
+                currentPhotoURL = draftPhotoURL;
+                draftPhotoURL = null;
+                draftPhoto = null;
+            }
+            updateTextures();
+            $('sceneCaption').textContent = `${state.first} & ${state.second} · a love, beautifully kept.`;
+            $('personalizeDialog').close();
+            setOpen(true);
+            toast('Your story looks beautiful on paper.');
+        });
+
+        $('savePreview').addEventListener('click', () => {
+            if (!renderer || !webglAvailable) { toast('Saving a 3D preview requires a WebGL-enabled browser.'); return; }
+            try {
+                renderer.render(scene, camera);
+                const capture = document.createElement('canvas');
+                capture.width = renderer.domElement.width;
+                capture.height = renderer.domElement.height;
+                const ctx = capture.getContext('2d');
+                ctx.fillStyle = '#f6f4ee';
+                ctx.fillRect(0, 0, capture.width, capture.height);
+                const gradient = ctx.createRadialGradient(capture.width * .5, capture.height * .45, 0, capture.width * .5, capture.height * .45, capture.width * .55);
+                gradient.addColorStop(0, '#eae6dc');
+                gradient.addColorStop(1, '#f6f4ee');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, capture.width, capture.height);
+                ctx.drawImage(renderer.domElement, 0, 0);
+                const scale = capture.width / 900;
+                ctx.fillStyle = themes[state.theme].ink;
+                ctx.textAlign = 'center';
+                ctx.font = `italic ${30 * scale}px ${serif}`;
+                ctx.fillText(`${state.first} & ${state.second}`, capture.width / 2, capture.height - 67 * scale);
+                ctx.font = `${10 * scale}px ${sans}`;
+                ctx.fillStyle = '#8b937d';
+                ctx.fillText(`${dateInfo().long.toUpperCase()}  ·  VOW & VELLUM`, capture.width / 2, capture.height - 40 * scale);
+                capture.toBlob(blob => {
+                    if (!blob) { toast('The preview could not be saved. Please try again.'); return; }
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `${state.first}-${state.second}-wedding-invitation.png`.replace(/[^a-z0-9._-]/gi, '-');
+                    link.click();
+                    setTimeout(() => URL.revokeObjectURL(url), 10000);
+                    toast('A little keepsake, saved for you.');
+                }, 'image/png');
+            } catch {
+                toast('The preview could not be saved. Please try again once the photos load.');
+            }
+        });
+
+        initScene();
+
+        const fontsReady = Promise.race([
+            Promise.all([
+                document.fonts.load('400 80px "Cormorant Garamond"'),
+                document.fonts.load('italic 400 60px "Cormorant Garamond"'),
+                document.fonts.load('500 20px "Manrope"')
+            ]),
+            new Promise(resolve => setTimeout(resolve, 4000))
+        ]);
+
+        const primaryPhotoReady = loadImage(PHOTO_URL)
+            .catch(() => loadImage('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80', 7000))
+            .then(image => { if (!state.customPhoto) state.photo = image; })
+            .catch(() => toast('Add your own photograph to make this invitation complete.'));
+
+        Promise.all([fontsReady, primaryPhotoReady]).then(() => {
+            updateTextures();
+            $('loading').classList.add('done');
+        });
+
+        loadImage(SECOND_PHOTO_URL).then(image => {
+            state.secondPhoto = image;
+            if (webglAvailable) updateMap(polaroidFace, photoPrintTexture());
+        }).catch(() => {
+            primaryPhotoReady.then(() => {
+                if (webglAvailable) updateMap(polaroidFace, photoPrintTexture());
+            });
+        });
+
+        document.fonts.ready.then(() => updateTextures());
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,635 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>🎈 3D Birthday Invitation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500;700;900&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            background: #fdf3e7;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        #hint {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 7px 16px;
+            border-radius: 999px;
+            font-size: 12px;
+            color: #a08cb0;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        @media (max-width:560px) {
+            #hint {
+                font-size: 10.5px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+    <script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+
+<body>
+
+    <div id="hint">Drag to orbit • Scroll to zoom • Click the card to open / close</div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        /* ============ ✏️ EDIT ME — party details & photo URLs ============ */
+        const CONFIG = {
+            kidName: 'Emma',
+            age: 5,
+            date: 'Saturday, June 15th',
+            time: '3:00 PM – 6:00 PM',
+            venue: 'Sunshine Park, Pavilion 2',
+            rsvp: 'RSVP: (555) 123-4567',
+            // Replace these with URLs of YOUR real photos:
+            familyPhotoURL: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=900&q=80',
+            kidPhotoURL: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=700&q=80',
+        };
+        /* ================================================================= */
+
+        let kidImg = null, familyImg = null;
+
+        /* ---------- renderer / scene / camera ---------- */
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(innerWidth, innerHeight);
+        renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.12;
+        document.body.appendChild(renderer.domElement);
+        const maxAniso = renderer.capabilities.getMaxAnisotropy();
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xfdf3e7);
+        scene.fog = new THREE.Fog(0xfdf3e7, 15, 32);
+
+        const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 0.1, 100);
+        camera.position.set(0, 1.9, 10.2);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.target.set(0, 0.8, 0);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.06;
+        controls.enablePan = false;
+        controls.minDistance = 4.5;
+        controls.maxDistance = 16;
+        controls.minPolarAngle = 0.35;
+        controls.maxPolarAngle = 1.62;
+
+        /* ---------- lights ---------- */
+        scene.add(new THREE.HemisphereLight(0xfff6e8, 0xe6d2c0, 1.0));
+        const sun = new THREE.DirectionalLight(0xffffff, 2.1);
+        sun.position.set(6, 9, 7);
+        sun.castShadow = true;
+        sun.shadow.mapSize.set(2048, 2048);
+        sun.shadow.camera.left = -10; sun.shadow.camera.right = 10;
+        sun.shadow.camera.top = 10; sun.shadow.camera.bottom = -10;
+        sun.shadow.camera.near = 1; sun.shadow.camera.far = 30;
+        sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
+        scene.add(sun);
+        const fill = new THREE.DirectionalLight(0xffe0ec, 0.55);
+        fill.position.set(-6, 4, -5);
+        scene.add(fill);
+        const warm = new THREE.PointLight(0xffd9a0, 14, 22, 2);
+        warm.position.set(-3, 3.5, 4.5);
+        scene.add(warm);
+
+        /* ---------- ground & decor ---------- */
+        const GROUND_Y = -1.6;
+        const ground = new THREE.Mesh(
+            new THREE.CircleGeometry(18, 64),
+            new THREE.MeshStandardMaterial({ color: 0xf5e9d8, roughness: 1 })
+        );
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = GROUND_Y;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        const rug = new THREE.Mesh(
+            new THREE.CircleGeometry(3.1, 64),
+            new THREE.MeshStandardMaterial({ color: 0xf6dfe0, roughness: 1 })
+        );
+        rug.rotation.x = -Math.PI / 2;
+        rug.position.y = GROUND_Y + 0.012;
+        rug.receiveShadow = true;
+        scene.add(rug);
+
+        function makeGift(w, h, d, color, ribbon) {
+            const g = new THREE.Group();
+            const box = new THREE.Mesh(new THREE.BoxGeometry(w, h, d),
+                new THREE.MeshStandardMaterial({ color, roughness: 0.5 }));
+            box.castShadow = true; box.receiveShadow = true;
+            const rMat = new THREE.MeshStandardMaterial({ color: ribbon, roughness: 0.3, metalness: 0.25 });
+            const r1 = new THREE.Mesh(new THREE.BoxGeometry(w * 1.03, h * 1.03, d * 0.2), rMat);
+            const r2 = new THREE.Mesh(new THREE.BoxGeometry(w * 0.2, h * 1.03, d * 1.03), rMat);
+            const bow = new THREE.Mesh(new THREE.TorusGeometry(w * 0.15, w * 0.055, 10, 24), rMat);
+            bow.position.y = h / 2 + w * 0.04; bow.rotation.x = Math.PI / 2; bow.castShadow = true;
+            g.add(box, r1, r2, bow);
+            return g;
+        }
+        const gift1 = makeGift(0.62, 0.5, 0.62, 0xf6c6d3, 0xd4af37);
+        gift1.position.set(-2.75, GROUND_Y + 0.25, 1.95); gift1.rotation.y = 0.45;
+        const gift2 = makeGift(0.5, 0.42, 0.5, 0xc2e0d2, 0xe86a92);
+        gift2.position.set(2.85, GROUND_Y + 0.21, 2.05); gift2.rotation.y = -0.5;
+        scene.add(gift1, gift2);
+
+        /* ---------- balloons ---------- */
+        const balloons = [];
+        function makeBalloon(color, x, y, z, s) {
+            const g = new THREE.Group();
+            const mat = new THREE.MeshPhysicalMaterial({ color, roughness: 0.15, clearcoat: 1, clearcoatRoughness: 0.12 });
+            const body = new THREE.Mesh(new THREE.SphereGeometry(0.55, 32, 32), mat);
+            body.scale.set(1, 1.18, 1); body.castShadow = true;
+            const knot = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.15, 16), mat);
+            knot.position.y = -0.68; knot.rotation.x = Math.PI;
+            const curve = new THREE.QuadraticBezierCurve3(
+                new THREE.Vector3(0, -0.72, 0), new THREE.Vector3(0.14, -1.45, 0.07), new THREE.Vector3(0, -2.2, 0));
+            const string = new THREE.Mesh(new THREE.TubeGeometry(curve, 20, 0.012, 6),
+                new THREE.MeshBasicMaterial({ color: 0xb8a284 }));
+            g.add(body, knot, string);
+            g.position.set(x, y, z);
+            g.scale.setScalar(s);
+            scene.add(g);
+            balloons.push({ g, baseX: x, baseY: y, phase: Math.random() * 6.28, speed: 0.55 + Math.random() * 0.5 });
+        }
+        const balloonCols = [0xf8a5b8, 0xa8d8c8, 0x9fc5e8, 0xcbb7e8, 0xf8c8a0, 0xf2d38a, 0xf6b8d0, 0xb5d8f0];
+        [[-4.7, 2.3, -2.6, 1.05], [-5.7, 3.1, -1.2, 0.9], [-4.0, 3.5, -3.6, 1.15],
+        [4.7, 2.5, -2.3, 1.0], [5.7, 3.3, -1.0, 1.1], [4.1, 3.7, -3.3, 0.9],
+        [-4.4, 1.1, 1.6, 0.85], [4.5, 1.0, 1.7, 0.8]].forEach((p, i) =>
+            makeBalloon(balloonCols[i % balloonCols.length], p[0], p[1], p[2], p[3]));
+
+        /* ---------- sparkles ---------- */
+        const spkGeo = new THREE.BufferGeometry();
+        const spkPos = new Float32Array(140 * 3);
+        for (let i = 0; i < 140; i++) {
+            const a = Math.random() * 6.28, r = 3 + Math.random() * 4.5;
+            spkPos[i * 3] = Math.cos(a) * r;
+            spkPos[i * 3 + 1] = -0.5 + Math.random() * 5.5;
+            spkPos[i * 3 + 2] = Math.sin(a) * r;
+        }
+        spkGeo.setAttribute('position', new THREE.BufferAttribute(spkPos, 3));
+        const spkMat = new THREE.PointsMaterial({
+            color: 0xf2c14e, size: 0.07, transparent: true,
+            opacity: 0.75, blending: THREE.AdditiveBlending, depthWrite: false
+        });
+        const sparkles = new THREE.Points(spkGeo, spkMat);
+        scene.add(sparkles);
+
+        /* ---------- confetti (instanced) ---------- */
+        const CONFETTI = 320;
+        const confettiMesh = new THREE.InstancedMesh(
+            new THREE.PlaneGeometry(0.1, 0.065),
+            new THREE.MeshLambertMaterial({ side: THREE.DoubleSide }), CONFETTI);
+        confettiMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+        scene.add(confettiMesh);
+        const palette = [0xf7a8b8, 0xa8d8c8, 0x9fc5e8, 0xcbb7e8, 0xf8c8a0, 0xf2d38a, 0xe86a92, 0xd4af37]
+            .map(c => new THREE.Color(c));
+        const cPos = [], cVel = [], cRot = [], cRV = [], cPhase = [];
+        const dummy = new THREE.Object3D();
+        for (let i = 0; i < CONFETTI; i++) {
+            cPos.push(new THREE.Vector3((Math.random() - 0.5) * 14, Math.random() * 8 - 1, (Math.random() - 0.5) * 10));
+            cVel.push(new THREE.Vector3(0, -0.4 - Math.random() * 0.5, 0));
+            cRot.push(new THREE.Euler(Math.random() * 6.28, Math.random() * 6.28, Math.random() * 6.28));
+            cRV.push(new THREE.Vector3((Math.random() - 0.5) * 4, (Math.random() - 0.5) * 4, (Math.random() - 0.5) * 4));
+            cPhase.push(Math.random() * 6.28);
+            confettiMesh.setColorAt(i, palette[i % palette.length]);
+        }
+        confettiMesh.instanceColor.needsUpdate = true;
+        function burst(origin, n = 130) {
+            for (let k = 0; k < n; k++) {
+                const i = Math.floor(Math.random() * CONFETTI);
+                cPos[i].set(origin.x + (Math.random() - 0.5) * 0.8, origin.y + Math.random() * 0.5, origin.z + (Math.random() - 0.5) * 0.8);
+                const a = Math.random() * Math.PI * 2, sp = 1 + Math.random() * 2.5;
+                cVel[i].set(Math.cos(a) * sp, 2.5 + Math.random() * 3, Math.sin(a) * sp);
+            }
+        }
+
+        /* ---------- canvas textures for the card ---------- */
+        const CW = 768, CH = 1056;
+        function makeCanvasTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = CW; canvas.height = CH;
+            const tex = new THREE.CanvasTexture(canvas);
+            tex.colorSpace = THREE.SRGBColorSpace;
+            tex.anisotropy = maxAniso;
+            return { canvas, ctx: canvas.getContext('2d'), tex };
+        }
+        const frontCover = makeCanvasTexture();
+        const insideLeft = makeCanvasTexture();
+        const insideRight = makeCanvasTexture();
+        const backCover = makeCanvasTexture();
+
+        /* drawing helpers */
+        function rr(ctx, x, y, w, h, r) {
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.arcTo(x + w, y, x + w, y + h, r);
+            ctx.arcTo(x + w, y + h, x, y + h, r);
+            ctx.arcTo(x, y + h, x, y, r);
+            ctx.arcTo(x, y, x + w, y, r);
+            ctx.closePath();
+        }
+        function dots(ctx, w, h, color) {
+            ctx.fillStyle = color;
+            let row = 0;
+            for (let y = 34; y < h; y += 72, row++)
+                for (let x = row % 2 ? 34 : 70; x < w; x += 72) {
+                    ctx.beginPath(); ctx.arc(x, y, 5, 0, 7); ctx.fill();
+                }
+        }
+        function border(ctx, w, h) {
+            ctx.strokeStyle = '#cfa14a';
+            ctx.lineWidth = 9; rr(ctx, 24, 24, w - 48, h - 48, 26); ctx.stroke();
+            ctx.lineWidth = 2; rr(ctx, 42, 42, w - 84, h - 84, 18); ctx.stroke();
+        }
+        function bunting(ctx, w) {
+            const cols = ['#f7a8b8', '#a8d8c8', '#9fc5e8', '#cbb7e8', '#f8c8a0', '#f2d38a'];
+            ctx.strokeStyle = '#c9a227'; ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(30, 66); ctx.quadraticCurveTo(w / 2, 152, w - 30, 66); ctx.stroke();
+            for (let i = 0; i <= 9; i++) {
+                const t = i / 9, u = 1 - t;
+                const x = u * u * 30 + 2 * u * t * (w / 2) + t * t * (w - 30);
+                const y = u * u * 66 + 2 * u * t * 152 + t * t * 66;
+                ctx.fillStyle = cols[i % cols.length];
+                ctx.beginPath(); ctx.moveTo(x - 23, y); ctx.lineTo(x + 23, y); ctx.lineTo(x, y + 46); ctx.closePath(); ctx.fill();
+            }
+        }
+        function star(ctx, cx, cy, r, color) {
+            ctx.fillStyle = color; ctx.beginPath();
+            for (let i = 0; i < 8; i++) {
+                const a = i * Math.PI / 4, rad = i % 2 === 0 ? r : r * 0.35;
+                ctx[i ? 'lineTo' : 'moveTo'](cx + Math.cos(a) * rad, cy + Math.sin(a) * rad);
+            }
+            ctx.closePath(); ctx.fill();
+        }
+        function heart(ctx, cx, cy, s, color) {
+            ctx.fillStyle = color; ctx.beginPath();
+            ctx.moveTo(cx, cy + s * 0.9);
+            ctx.bezierCurveTo(cx - s * 1.2, cy, cx - s * 0.6, cy - s * 0.9, cx, cy - s * 0.25);
+            ctx.bezierCurveTo(cx + s * 0.6, cy - s * 0.9, cx + s * 1.2, cy, cx, cy + s * 0.9);
+            ctx.fill();
+        }
+        function flourish(ctx, cx, y, w) {
+            ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(cx - w / 2, y); ctx.lineTo(cx - 26, y);
+            ctx.moveTo(cx + 26, y); ctx.lineTo(cx + w / 2, y); ctx.stroke();
+            ctx.save(); ctx.translate(cx, y); ctx.rotate(Math.PI / 4);
+            ctx.fillStyle = '#d4af37'; ctx.fillRect(-7, -7, 14, 14); ctx.restore();
+        }
+        function drawImageCover(ctx, img, x, y, w, h) {
+            const ir = img.width / img.height, r = w / h;
+            let sw, sh, sx, sy;
+            if (ir > r) { sh = img.height; sw = sh * r; sx = (img.width - sw) / 2; sy = 0; }
+            else { sw = img.width; sh = sw / r; sx = 0; sy = (img.height - sh) / 2; }
+            ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
+        }
+        function figure(ctx, cx, baseY, h, color) {
+            ctx.fillStyle = color;
+            const hr = h * 0.17;
+            ctx.beginPath(); ctx.arc(cx, baseY - h + hr, hr, 0, 7); ctx.fill();
+            rr(ctx, cx - h * 0.2, baseY - h + hr * 2.1, h * 0.4, h - hr * 2.1, h * 0.16); ctx.fill();
+        }
+        function drawKidPlaceholder(ctx, x, y, w, h) {
+            const g = ctx.createLinearGradient(x, y, x, y + h);
+            g.addColorStop(0, '#fdeef3'); g.addColorStop(1, '#e9f1fc');
+            ctx.fillStyle = g; ctx.fillRect(x, y, w, h);
+            ctx.textAlign = 'center';
+            ctx.font = '110px serif';
+            ctx.fillText('🧸', x + w / 2, y + h / 2 + 12);
+            ctx.font = '600 26px "Poppins", sans-serif';
+            ctx.fillStyle = '#9b89ad';
+            ctx.fillText("kid's photo", x + w / 2, y + h / 2 + 74);
+        }
+        function drawFamilyPlaceholder(ctx, x, y, w, h) {
+            const g = ctx.createLinearGradient(x, y, x, y + h);
+            g.addColorStop(0, '#fdeef3'); g.addColorStop(1, '#e9f1fc');
+            ctx.fillStyle = g; ctx.fillRect(x, y, w, h);
+            const base = y + h * 0.74;
+            figure(ctx, x + w * 0.29, base, h * 0.42, '#c9a8d4');
+            figure(ctx, x + w * 0.68, base, h * 0.47, '#a8bcd4');
+            figure(ctx, x + w * 0.485, base, h * 0.27, '#e8a8bc');
+            ctx.setLineDash([16, 12]); ctx.strokeStyle = '#c3b0d6'; ctx.lineWidth = 4;
+            rr(ctx, x + 18, y + 18, w - 36, h - 36, 18); ctx.stroke(); ctx.setLineDash([]);
+            ctx.textAlign = 'center';
+            ctx.font = '56px serif';
+            ctx.fillText('📷', x + w / 2, y + h * 0.28);
+            ctx.font = '600 30px "Poppins", sans-serif'; ctx.fillStyle = '#8d7b9e';
+            ctx.fillText('Family photo', x + w / 2, y + h * 0.28 + 54);
+        }
+
+        /* the four card faces */
+        function drawFrontCover() {
+            const { ctx, canvas, tex } = frontCover, w = canvas.width, h = canvas.height;
+            ctx.fillStyle = '#fff9f0'; ctx.fillRect(0, 0, w, h);
+            dots(ctx, w, h, 'rgba(243,190,205,0.4)');
+            border(ctx, w, h);
+            bunting(ctx, w);
+            ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+            ctx.fillStyle = '#c98436';
+            ctx.font = '400 84px "Great Vibes", "Snell Roundhand", cursive';
+            ctx.fillText("You're Invited", w / 2, 268);
+            star(ctx, 122, 250, 14, '#e8c26a'); star(ctx, w - 122, 250, 14, '#e8c26a');
+            const cx = w / 2, cy = 508, r = 168;
+            ctx.save();
+            ctx.beginPath(); ctx.arc(cx, cy, r, 0, 7); ctx.clip();
+            if (kidImg) drawImageCover(ctx, kidImg, cx - r, cy - r, r * 2, r * 2);
+            else drawKidPlaceholder(ctx, cx - r, cy - r, r * 2, r * 2);
+            ctx.restore();
+            ctx.lineWidth = 10; ctx.strokeStyle = '#d4af37';
+            ctx.beginPath(); ctx.arc(cx, cy, r + 8, 0, 7); ctx.stroke();
+            ctx.lineWidth = 3; ctx.strokeStyle = '#ffffff';
+            ctx.beginPath(); ctx.arc(cx, cy, r + 1, 0, 7); ctx.stroke();
+            const name = CONFIG.kidName.toUpperCase();
+            let size = 100;
+            ctx.font = `900 ${size}px "Playfair Display", Georgia, serif`;
+            while (ctx.measureText(name).width > 640 && size > 42) {
+                size -= 4; ctx.font = `900 ${size}px "Playfair Display", Georgia, serif`;
+            }
+            ctx.fillStyle = '#7c4d6e';
+            ctx.fillText(name, w / 2, 812);
+            ctx.font = '600 34px "Poppins", sans-serif';
+            ctx.fillStyle = '#a08cb0';
+            ctx.fillText('is turning', w / 2, 866);
+            ctx.font = '900 150px "Playfair Display", Georgia, serif';
+            const grad = ctx.createLinearGradient(0, 880, 0, 1010);
+            grad.addColorStop(0, '#f28bab'); grad.addColorStop(1, '#e86a92');
+            ctx.fillStyle = grad;
+            ctx.fillText(String(CONFIG.age), w / 2, 1008);
+            star(ctx, w / 2 - 125, 940, 12, '#e8c26a'); star(ctx, w / 2 + 125, 940, 12, '#e8c26a');
+            tex.needsUpdate = true;
+        }
+        function drawInsideLeft() {
+            const { ctx, canvas, tex } = insideLeft, w = canvas.width, h = canvas.height;
+            ctx.fillStyle = '#fff9f0'; ctx.fillRect(0, 0, w, h);
+            dots(ctx, w, h, 'rgba(200,214,240,0.45)');
+            border(ctx, w, h);
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#c98436';
+            const heading = `${CONFIG.kidName}'s Big Day`;
+            let hs = 66;
+            ctx.font = `400 ${hs}px "Great Vibes", cursive`;
+            while (ctx.measureText(heading).width > 620 && hs > 36) {
+                hs -= 3; ctx.font = `400 ${hs}px "Great Vibes", cursive`;
+            }
+            ctx.fillText(heading, w / 2, 130);
+            ctx.fillStyle = '#ffffff';
+            rr(ctx, 70, 168, w - 140, 716, 22); ctx.fill();
+            ctx.lineWidth = 5; ctx.strokeStyle = '#d4af37';
+            rr(ctx, 70, 168, w - 140, 716, 22); ctx.stroke();
+            ctx.save();
+            rr(ctx, 88, 186, w - 176, 680, 14); ctx.clip();
+            if (familyImg) drawImageCover(ctx, familyImg, 88, 186, w - 176, 680);
+            else drawFamilyPlaceholder(ctx, 88, 186, w - 176, 680);
+            ctx.restore();
+            const caption = `Love, ${CONFIG.kidName} & family`;
+            ctx.font = '600 32px "Poppins", sans-serif';
+            ctx.fillStyle = '#8a7a96';
+            ctx.fillText(caption, w / 2, 958);
+            const cw = ctx.measureText(caption).width;
+            heart(ctx, w / 2 - cw / 2 - 36, 948, 12, '#e86a92');
+            heart(ctx, w / 2 + cw / 2 + 36, 948, 12, '#e86a92');
+            tex.needsUpdate = true;
+        }
+        function drawInsideRight() {
+            const { ctx, canvas, tex } = insideRight, w = canvas.width, h = canvas.height;
+            ctx.fillStyle = '#fff9f0'; ctx.fillRect(0, 0, w, h);
+            dots(ctx, w, h, 'rgba(243,190,205,0.4)');
+            border(ctx, w, h);
+            ctx.textAlign = 'center';
+            ctx.font = '700 62px "Playfair Display", Georgia, serif';
+            ctx.fillStyle = '#7c4d6e';
+            ctx.fillText('Party Details', w / 2, 152);
+            flourish(ctx, w / 2, 192, 330);
+            const rows = [
+                ['📅', CONFIG.date], ['🕒', CONFIG.time], ['📍', CONFIG.venue],
+                ['🎂', 'Cake, games & fun!'], ['✉️', CONFIG.rsvp],
+            ];
+            ctx.textAlign = 'left';
+            rows.forEach((row, i) => {
+                const y = 302 + i * 108;
+                ctx.font = '44px serif';
+                ctx.fillText(row[0], 104, y);
+                ctx.font = '600 33px "Poppins", sans-serif';
+                ctx.fillStyle = '#5a4a66';
+                ctx.fillText(row[1], 184, y);
+            });
+            ctx.textAlign = 'center';
+            ctx.font = '400 56px "Great Vibes", cursive';
+            ctx.fillStyle = '#c98436';
+            ctx.fillText("We can't wait to see you!", w / 2, 928);
+            heart(ctx, 152, 985, 11, '#f0a5b8'); heart(ctx, w - 152, 985, 11, '#f0a5b8');
+            star(ctx, w / 2, 985, 10, '#e8c26a');
+            tex.needsUpdate = true;
+        }
+        function drawBackCover() {
+            const { ctx, canvas, tex } = backCover, w = canvas.width, h = canvas.height;
+            ctx.fillStyle = '#fff9f0'; ctx.fillRect(0, 0, w, h);
+            dots(ctx, w, h, 'rgba(212,175,55,0.18)');
+            border(ctx, w, h);
+            heart(ctx, 150, 200, 14, '#f0a5b8'); heart(ctx, w - 150, 200, 14, '#f0a5b8');
+            heart(ctx, 150, 850, 14, '#f0a5b8'); heart(ctx, w - 150, 850, 14, '#f0a5b8');
+            star(ctx, w - 160, 330, 12, '#e8c26a'); star(ctx, 160, 700, 12, '#e8c26a');
+            ctx.textAlign = 'center';
+            ctx.font = '400 96px "Great Vibes", cursive';
+            ctx.fillStyle = '#d4a24a';
+            ctx.fillText('Happy', w / 2, 470);
+            ctx.fillText('Birthday!', w / 2, 590);
+            ctx.font = '64px serif';
+            ctx.fillText('🎈', w / 2, 720);
+            ctx.font = '400 26px "Poppins", sans-serif';
+            ctx.fillStyle = '#b3a1c0';
+            ctx.fillText('made with ♥', w / 2, 950);
+            tex.needsUpdate = true;
+        }
+        function drawAll() { drawFrontCover(); drawInsideLeft(); drawInsideRight(); drawBackCover(); }
+        drawAll();
+
+        /* ---------- build the 3D card ---------- */
+        const W = 3.2, H = 4.4, T = 0.035;
+        const cardGroup = new THREE.Group();
+        scene.add(cardGroup);
+        const edgeMat = new THREE.MeshStandardMaterial({ color: 0xecd9b9, roughness: 0.55, metalness: 0.1 });
+        const coverMat = t => new THREE.MeshStandardMaterial({ map: t, roughness: 0.5, metalness: 0.08 });
+
+        const backPanel = new THREE.Mesh(new THREE.BoxGeometry(W, H, T),
+            [edgeMat, edgeMat, edgeMat, edgeMat, coverMat(insideRight.tex), coverMat(backCover.tex)]);
+        backPanel.position.set(W / 2, 0, 0);
+        backPanel.castShadow = true;
+        cardGroup.add(backPanel);
+
+        const frontPivot = new THREE.Group();
+        cardGroup.add(frontPivot);
+        const frontPanel = new THREE.Mesh(new THREE.BoxGeometry(W, H, T),
+            [edgeMat, edgeMat, edgeMat, edgeMat, coverMat(frontCover.tex), coverMat(insideLeft.tex)]);
+        frontPanel.position.set(W / 2, 0, 0.045);
+        frontPanel.castShadow = true;
+        frontPivot.add(frontPanel);
+
+        const pickMeshes = [frontPanel, backPanel];
+
+        /* ---------- open / close logic ---------- */
+        let openTarget = 0, openAmount = 0;
+        const _v = new THREE.Vector3();
+        function cardTop() { cardGroup.getWorldPosition(_v); _v.y += 1.3; return _v; }
+        function setOpen(v, withBurst = true) {
+            if (openTarget === v) return;
+            openTarget = v;
+            if (v && withBurst) setTimeout(() => burst(cardTop()), 380);
+        }
+        function toggleCard() { setOpen(openTarget ? 0 : 1); }
+
+        /* ---------- photo loading ---------- */
+        function loadImage(url) {
+            return new Promise(resolve => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.referrerPolicy = 'no-referrer';
+                img.onload = () => resolve(img);
+                img.onerror = () => resolve(null);
+                img.src = url;
+            });
+        }
+        loadImage(CONFIG.familyPhotoURL).then(img => { familyImg = img; drawInsideLeft(); });
+        loadImage(CONFIG.kidPhotoURL).then(img => { kidImg = img; drawFrontCover(); });
+
+        /* ---------- pointer interaction (click vs drag) ---------- */
+        const raycaster = new THREE.Raycaster();
+        const pointer = new THREE.Vector2();
+        let downX = 0, downY = 0, hovered = false, hoverCheck = false, curScale = 1;
+        renderer.domElement.addEventListener('pointerdown', e => { downX = e.clientX; downY = e.clientY; });
+        renderer.domElement.addEventListener('pointerup', e => {
+            if (Math.hypot(e.clientX - downX, e.clientY - downY) > 6) return;
+            pointer.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+            raycaster.setFromCamera(pointer, camera);
+            if (raycaster.intersectObjects(pickMeshes, false).length) toggleCard();
+        });
+        renderer.domElement.addEventListener('pointermove', e => {
+            pointer.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+            hoverCheck = true;
+        });
+
+        /* ---------- resize ---------- */
+        addEventListener('resize', () => {
+            camera.aspect = innerWidth / innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(innerWidth, innerHeight);
+        });
+
+        /* ---------- redraw with fancy fonts once loaded ---------- */
+        Promise.all([
+            document.fonts.load('400 80px "Great Vibes"'),
+            document.fonts.load('900 100px "Playfair Display"'),
+            document.fonts.load('700 60px "Playfair Display"'),
+            document.fonts.load('600 30px "Poppins"'),
+        ]).then(drawAll).catch(() => { });
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawAll);
+
+        /* ---------- animation loop ---------- */
+        const clock = new THREE.Clock();
+        function animate() {
+            requestAnimationFrame(animate);
+            const dt = Math.min(clock.getDelta(), 0.05);
+            const t = clock.elapsedTime;
+
+            // card open / float / sway
+            openAmount += (openTarget - openAmount) * (1 - Math.exp(-dt * 5));
+            frontPivot.rotation.y = -openAmount * (Math.PI + 0.04);
+            frontPanel.position.z = THREE.MathUtils.lerp(0.045, -0.002, openAmount);
+            cardGroup.position.x = THREE.MathUtils.lerp(-W / 2, 0, openAmount);
+            cardGroup.position.y = 0.78 + Math.sin(t * 0.9) * 0.07;
+            cardGroup.rotation.y = Math.sin(t * 0.35) * 0.05;
+            cardGroup.rotation.z = Math.sin(t * 0.5) * 0.015;
+
+            // hover feedback
+            if (hoverCheck) {
+                raycaster.setFromCamera(pointer, camera);
+                hovered = raycaster.intersectObjects(pickMeshes, false).length > 0;
+                document.body.style.cursor = hovered ? 'pointer' : '';
+                hoverCheck = false;
+            }
+            curScale = THREE.MathUtils.lerp(curScale, hovered ? 1.035 : 1, 1 - Math.exp(-dt * 8));
+            cardGroup.scale.setScalar(curScale);
+
+            // balloons
+            for (const b of balloons) {
+                b.g.position.y = b.baseY + Math.sin(t * b.speed + b.phase) * 0.28;
+                b.g.position.x = b.baseX + Math.sin(t * 0.5 + b.phase * 1.7) * 0.15;
+                b.g.rotation.z = Math.sin(t * 0.6 + b.phase) * 0.07;
+                b.g.rotation.x = Math.cos(t * 0.45 + b.phase) * 0.05;
+            }
+
+            // sparkles
+            sparkles.rotation.y = t * 0.03;
+            spkMat.opacity = 0.5 + 0.3 * Math.sin(t * 2);
+
+            // confetti
+            for (let i = 0; i < CONFETTI; i++) {
+                const p = cPos[i], v = cVel[i];
+                v.y -= 3.2 * dt;
+                v.multiplyScalar(Math.max(0, 1 - 1.6 * dt));
+                if (v.y < -1.1) v.y = -1.1;
+                p.addScaledVector(v, dt);
+                p.x += Math.sin(t * 2.1 + cPhase[i]) * 0.35 * dt;
+                const r = cRot[i], rv = cRV[i];
+                r.x += rv.x * dt; r.y += rv.y * dt; r.z += rv.z * dt;
+                if (p.y < GROUND_Y + 0.06) {
+                    p.set((Math.random() - 0.5) * 14, 6 + Math.random() * 3, (Math.random() - 0.5) * 10);
+                    v.set(0, -0.4 - Math.random() * 0.6, 0);
+                }
+                dummy.position.copy(p);
+                dummy.rotation.copy(r);
+                dummy.updateMatrix();
+                confettiMesh.setMatrixAt(i, dummy.matrix);
+            }
+            confettiMesh.instanceMatrix.needsUpdate = true;
+
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        /* welcome: card opens itself once, with a confetti pop */
+        setTimeout(() => setOpen(1), 1600);
+    </script>
+</body>
+
+</html>

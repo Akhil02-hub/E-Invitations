@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sharma Villa • Griha Pravesh Invitation</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --gold2: #f5d76e;
+            --gold-dark: #8a6d1b;
+            --maroon: #6d0f0f;
+            --maroon2: #8e1a1a;
+            --cream: #fff8e7;
+            --cream2: #ffefd0;
+            --brown: #3d2314;
+            --glass: rgba(20, 8, 8, .55);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background: #120404;
+            font-family: 'Poppins', sans-serif;
+            color: var(--brown)
+        }
+
+        #scene {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 0
+        }
+
+        #confetti {
+            position: fixed;
+            inset: 0;
+            z-index: 70;
+            pointer-events: none
+        }
+
+        #vignette {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 55%, rgba(20, 0, 0, .45) 100%)
+        }
+
+        #film-grain {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: .06;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+        }
+
+        /* LOADER */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: radial-gradient(circle at 50% 35%, #3b0f0f, #120404 70%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold2);
+            transition: opacity .8s, visibility .8s
+        }
+
+        #loader.hide {
+            opacity: 0;
+            visibility: hidden
+        }
+
+        .mandala-spin {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            animation: spin 2s linear infinite;
+            box-shadow: 0 0 40px rgba(212, 175, 55, .5), inset 0 0 20px rgba(212, 175, 55, .3);
+            position: relative
+        }
+
+        .mandala-spin::after {
+            content: 'ॐ';
+            position: absolute;
+            animation: spinRev 2s linear infinite;
+            color: var(--gold2);
+            text-shadow: 0 0 20px var(--gold)
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        @keyframes spinRev {
+            to {
+                transform: rotate(-360deg)
+            }
+        }
+
+        #loader h2 {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 3px;
+            margin: 22px 0 6px;
+            font-size: 22px
+        }
+
+        #loader p {
+            opacity: .7;
+            font-size: 13px;
+            letter-spacing: 1px
+        }
+
+        .load-bar {
+            width: 220px;
+            height: 4px;
+            background: rgba(212, 175, 55, .2);
+            border-radius: 10px;
+            margin-top: 16px;
+            overflow: hidden
+        }
+
+        .load-bar i {
+            display: block;
+            height: 100%;
+            width: 30%;
+            background: linear-gradient(90deg, var(--gold), #fff);
+            border-radius: 10px;
+            animation: load 1.2s ease-in-out infinite alternate
+        }
+
+        @keyframes load {
+            to {
+                width: 95%;
+                margin-left: 5%
+            }
+        }
+
+        /* ENVELOPE OVERLAY */
+        #envelope-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 150;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 50% 30%, rgba(120, 20, 20, .92), rgba(10, 2, 2, .96)), url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.08'%3E%3Cpath d='M40 40l8-16 16 8-8 16zM40 40l-8 16-16-8 8-16z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            backdrop-filter: blur(8px);
+            transition: opacity 1s, visibility 1s;
+            padding: 20px
+        }
+
+        #envelope-overlay.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none
+        }
+
+        .envelope-scene {
+            text-align: center;
+            max-width: 520px;
+            width: 100%;
+            animation: fadeUp 1s ease
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .env-glow {
+            position: absolute;
+            left: 50%;
+            top: 38%;
+            width: 420px;
+            height: 420px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(245, 215, 110, .25), transparent 65%);
+            pointer-events: none
+        }
+
+        .envelope {
+            position: relative;
+            width: min(360px, 86vw);
+            height: 240px;
+            margin: 0 auto 18px;
+            perspective: 800px;
+            filter: drop-shadow(0 20px 50px rgba(0, 0, 0, .6))
+        }
+
+        .env-back {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #7a1010, #4a0808);
+            border-radius: 12px;
+            border: 2px solid var(--gold)
+        }
+
+        .env-letter {
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            top: 12px;
+            bottom: 12px;
+            background: linear-gradient(180deg, #fffaf0, #ffecd0);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform .9s cubic-bezier(.2, .8, .2, 1);
+            border: 1px solid var(--gold);
+            padding: 10px
+        }
+
+        .envelope.open .env-letter {
+            transform: translateY(-110px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .4)
+        }
+
+        .mini-mandala {
+            color: var(--maroon);
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 13px
+        }
+
+        .env-letter h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--maroon);
+            margin: 6px 0 2px;
+            letter-spacing: 4px;
+            font-size: 20px
+        }
+
+        .env-letter p {
+            margin: 0;
+            font-size: 12px;
+            color: #7a5a2a
+        }
+
+        .mini-house {
+            font-size: 42px;
+            margin-top: 6px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .3))
+        }
+
+        .env-front {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(122, 16, 16, .98), rgba(74, 8, 8, .98));
+            border-radius: 12px;
+            clip-path: polygon(0 35%, 50% 62%, 100% 35%, 100% 100%, 0 100%);
+            border: 2px solid var(--gold)
+        }
+
+        .env-flap {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 52%;
+            background: linear-gradient(180deg, #a31616, #6d0f0f);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top;
+            border: 2px solid var(--gold);
+            border-bottom: none;
+            border-radius: 12px 12px 0 0;
+            transition: transform .8s ease, opacity .5s;
+            z-index: 3
+        }
+
+        .envelope.open .env-flap {
+            transform: rotateX(180deg);
+            opacity: .2;
+            z-index: 0
+        }
+
+        #seal-btn {
+            position: absolute;
+            left: 50%;
+            top: 46%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            width: 78px;
+            height: 78px;
+            border-radius: 50%;
+            border: 3px solid #fff2c0;
+            background: radial-gradient(circle at 30% 30%, #ffe9a0, var(--gold) 45%, #7a5a12 100%);
+            cursor: pointer;
+            box-shadow: 0 0 0 6px rgba(212, 175, 55, .3), 0 0 30px rgba(255, 220, 100, .8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #4a0808;
+            font-weight: 800;
+            transition: transform .3s;
+            animation: sealPulse 2s infinite
+        }
+
+        #seal-btn:hover {
+            transform: translate(-50%, -50%) scale(1.1)
+        }
+
+        @keyframes sealPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 6px rgba(212, 175, 55, .3), 0 0 30px rgba(255, 220, 100, .7)
+            }
+
+            50% {
+                box-shadow: 0 0 0 12px rgba(212, 175, 55, .15), 0 0 50px rgba(255, 220, 100, 1)
+            }
+        }
+
+        #seal-btn span:first-child {
+            font-size: 28px;
+            line-height: 1
+        }
+
+        #seal-btn small {
+            font-size: 8px;
+            letter-spacing: 1px
+        }
+
+        .overlay-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(44px, 8vw, 72px);
+            color: var(--gold2);
+            margin: 8px 0 0;
+            text-shadow: 0 0 30px rgba(212, 175, 55, .6), 0 4px 0 #4a0808
+        }
+
+        .overlay-sub {
+            color: #ffdf9e;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 12px;
+            margin: 4px 0
+        }
+
+        .overlay-names {
+            margin-top: 12px;
+            display: inline-block;
+            padding: 8px 22px;
+            border: 1px solid var(--gold);
+            border-radius: 30px;
+            color: #fff;
+            background: rgba(212, 175, 55, .15);
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px
+        }
+
+        #skip-btn {
+            margin-top: 14px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, .5);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 12px
+        }
+
+        /* TOPBAR */
+        #topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 20;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            background: linear-gradient(180deg, rgba(10, 2, 2, .75), transparent);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: .8s .2s;
+            pointer-events: none
+        }
+
+        body.opened #topbar {
+            opacity: 1;
+            transform: none;
+            pointer-events: auto
+        }
+
+        .brand {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: rgba(20, 5, 5, .6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, .4);
+            border-radius: 14px;
+            padding: 7px 14px 7px 10px;
+            color: #fff
+        }
+
+        .brand-icon {
+            font-size: 28px;
+            background: linear-gradient(135deg, var(--gold2), var(--gold-dark));
+            border-radius: 10px;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .brand strong {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+            font-size: 16px;
+            color: var(--gold2);
+            display: block;
+            line-height: 1
+        }
+
+        .brand small {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffdf9e
+        }
+
+        .top-right {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        #countdown {
+            display: flex;
+            gap: 6px;
+            background: rgba(20, 5, 5, .6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, .4);
+            border-radius: 12px;
+            padding: 6px 10px;
+            color: #fff
+        }
+
+        #countdown div {
+            text-align: center;
+            min-width: 44px
+        }
+
+        #countdown b {
+            display: block;
+            font-size: 16px;
+            color: var(--gold2);
+            line-height: 1
+        }
+
+        #countdown span {
+            font-size: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: .7
+        }
+
+        .icon-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, .4);
+            background: rgba(20, 5, 5, .6);
+            backdrop-filter: blur(12px);
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            transition: .3s
+        }
+
+        .icon-btn:hover {
+            background: var(--gold);
+            color: #2a1000;
+            transform: translateY(-2px)
+        }
+
+        .icon-btn.active {
+            background: var(--gold);
+            color: #2a1000;
+            box-shadow: 0 0 18px rgba(212, 175, 55, .7)
+        }
+
+        /* MAIN CARD */
+        #main-ui {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity .8s .4s
+        }
+
+        body.opened #main-ui {
+            opacity: 1
+        }
+
+        #tilt-wrap {
+            position: absolute;
+            left: 22px;
+            top: 78px;
+            bottom: 96px;
+            width: 410px;
+            max-width: calc(100vw - 44px);
+            perspective: 1200px;
+            pointer-events: auto;
+            transition: transform .6s cubic-bezier(.2, .8, .2, 1), opacity .6s
+        }
+
+        #tilt-wrap.hidden-card {
+            transform: translateX(-120%);
+            opacity: 0;
+            pointer-events: none
+        }
+
+        #invite-card {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border-radius: 22px;
+            background: linear-gradient(180deg, #fffdf5, #fff3d6 60%, #ffe9b8);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .6), 0 0 0 2px var(--gold), 0 0 0 6px #4a0808, 0 0 60px rgba(212, 175, 55, .35);
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform .15s ease-out;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold) transparent
+        }
+
+        #invite-card::-webkit-scrollbar {
+            width: 6px
+        }
+
+        #invite-card::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px
+        }
+
+        .card-shine {
+            position: sticky;
+            top: 0;
+            height: 0;
+            z-index: 5;
+            pointer-events: none
+        }
+
+        .card-shine::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -60%;
+            width: 50%;
+            height: 600px;
+            background: linear-gradient(105deg, transparent, rgba(255, 255, 255, .45), transparent);
+            transform: skewX(-20deg);
+            animation: shine 6s infinite
+        }
+
+        @keyframes shine {
+            0% {
+                left: -60%
+            }
+
+            40%,
+            100% {
+                left: 130%
+            }
+        }
+
+        .card-border {
+            padding: 10px;
+            background:
+                radial-gradient(circle at 10px 10px, var(--gold) 2px, transparent 2px) 0 0/22px 22px,
+                radial-gradient(circle at 10px 10px, var(--gold) 2px, transparent 2px) 11px 11px/22px 22px, linear-gradient(135deg, #7a1010, #b81f1f, #7a1010);
+            border-radius: 18px;
+            margin: 10px
+        }
+
+        .card-inner {
+            background: linear-gradient(180deg, #fffdf6, #fff4d8);
+            border-radius: 12px;
+            padding: 18px 18px 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .card-inner::before {
+            content: '❁';
+            position: absolute;
+            font-size: 220px;
+            left: 50%;
+            top: 8%;
+            transform: translateX(-50%);
+            opacity: .05;
+            pointer-events: none
+        }
+
+        .om {
+            font-size: 12px;
+            color: var(--maroon);
+            font-weight: 600;
+            letter-spacing: 1px
+        }
+
+        .ganesha {
+            font-size: 34px;
+            margin: 4px 0;
+            line-height: 1;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .3))
+        }
+
+        .bless {
+            font-size: 11px;
+            color: #7a5a2a;
+            margin: 4px 0;
+            line-height: 1.5
+        }
+
+        .bless span {
+            font-weight: 600;
+            color: var(--maroon)
+        }
+
+        .ceremony {
+            font-family: 'Playfair Display', serif;
+            font-size: 34px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            margin: 8px 0 0;
+            background: linear-gradient(180deg, #a31616, #6d0f0f 60%, #c9970d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.1
+        }
+
+        .sub-ceremony {
+            font-family: 'Great Vibes', cursive;
+            font-size: 22px;
+            color: #8a6d1b;
+            margin: 0
+        }
+
+        .divider {
+            color: var(--gold-dark);
+            letter-spacing: 8px;
+            margin: 8px 0;
+            font-size: 14px
+        }
+
+        .owners {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 6px 0
+        }
+
+        .owner {
+            flex: 1
+        }
+
+        .owner img {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--gold);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+            background: #eee
+        }
+
+        .owner h4 {
+            margin: 6px 0 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            color: var(--maroon);
+            line-height: 1.2
+        }
+
+        .owner small {
+            font-size: 10px;
+            color: #8a6d1b
+        }
+
+        .and {
+            font-family: 'Great Vibes', cursive;
+            font-size: 32px;
+            color: var(--gold-dark)
+        }
+
+        .invite-text {
+            font-size: 12.5px;
+            color: #5a3a1a;
+            margin: 8px 0
+        }
+
+        .invite-text strong {
+            color: var(--maroon)
+        }
+
+        .house-frame {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 3px solid var(--gold);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .3);
+            margin: 10px 0
+        }
+
+        .house-frame img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            display: block;
+            transition: transform .6s
+        }
+
+        .house-frame:hover img {
+            transform: scale(1.06)
+        }
+
+        .house-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(20, 5, 0, .85));
+            color: #fff;
+            padding: 28px 10px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .5px
+        }
+
+        .house-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(135deg, var(--gold2), var(--gold));
+            color: #4a0808;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .3)
+        }
+
+        #gallery-open {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, .6);
+            backdrop-filter: blur(6px);
+            color: #fff;
+            border: 1px solid var(--gold2);
+            border-radius: 20px;
+            font-size: 10px;
+            padding: 5px 12px;
+            cursor: pointer
+        }
+
+        #gallery-open:hover {
+            background: var(--gold);
+            color: #000
+        }
+
+        .details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 12px 0;
+            text-align: left
+        }
+
+        .details>div {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            background: rgba(212, 175, 55, .12);
+            border: 1px solid rgba(212, 175, 55, .35);
+            border-radius: 12px;
+            padding: 9px 12px
+        }
+
+        .details span {
+            font-size: 20px
+        }
+
+        .details strong {
+            font-size: 13px;
+            color: var(--maroon);
+            display: block
+        }
+
+        .details small {
+            font-size: 11px;
+            color: #6b4a1f
+        }
+
+        .schedule {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            margin: 8px 0
+        }
+
+        .schedule div {
+            background: #4a0808;
+            color: #ffe9a0;
+            border-radius: 10px;
+            padding: 8px 4px;
+            font-size: 10px;
+            line-height: 1.4
+        }
+
+        .schedule b {
+            display: block;
+            font-size: 11px;
+            color: #fff
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            margin: 12px 0 6px
+        }
+
+        .actions button {
+            flex: 1;
+            border: none;
+            border-radius: 12px;
+            padding: 11px 6px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            transition: .3s;
+            font-family: 'Poppins', sans-serif
+        }
+
+        #rsvp-btn {
+            background: linear-gradient(135deg, #a31616, #6d0f0f);
+            color: #ffe9a0;
+            border: 1px solid var(--gold);
+            box-shadow: 0 6px 18px rgba(109, 15, 15, .4)
+        }
+
+        #rsvp-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(109, 15, 15, .5)
+        }
+
+        #map-btn,
+        #cal-btn {
+            background: linear-gradient(135deg, #fff, var(--gold2));
+            color: #4a0808;
+            border: 1px solid var(--gold-dark)
+        }
+
+        #map-btn:hover,
+        #cal-btn:hover {
+            transform: translateY(-2px)
+        }
+
+        .card-footer {
+            font-size: 10px;
+            color: #8a6d1b;
+            border-top: 1px dashed rgba(138, 109, 27, .4);
+            padding-top: 8px;
+            margin-top: 8px;
+            line-height: 1.6
+        }
+
+        /* CONTROLS */
+        #controls {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            z-index: 20;
+            display: flex;
+            gap: 8px;
+            background: rgba(15, 4, 4, .72);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, .45);
+            border-radius: 20px;
+            padding: 10px 12px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, .5);
+            transition: .8s .6s;
+            max-width: calc(100vw - 20px);
+            overflow-x: auto
+        }
+
+        body.opened #controls {
+            transform: translateX(-50%)
+        }
+
+        .ctl-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            min-width: 62px;
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(212, 175, 55, .25);
+            border-radius: 14px;
+            color: #ffe9a0;
+            padding: 8px 6px;
+            cursor: pointer;
+            transition: .3s;
+            font-family: 'Poppins', sans-serif
+        }
+
+        .ctl-btn i {
+            font-size: 20px;
+            font-style: normal
+        }
+
+        .ctl-btn small {
+            font-size: 9px;
+            letter-spacing: .5px;
+            text-transform: uppercase
+        }
+
+        .ctl-btn:hover {
+            background: rgba(212, 175, 55, .25);
+            transform: translateY(-3px)
+        }
+
+        .ctl-btn.active {
+            background: linear-gradient(135deg, var(--gold2), var(--gold));
+            color: #3a0a0a;
+            border-color: #fff;
+            box-shadow: 0 0 20px rgba(212, 175, 55, .6)
+        }
+
+        #view-presets {
+            position: fixed;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%) translateX(100px);
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: .8s .7s
+        }
+
+        body.opened #view-presets {
+            transform: translateY(-50%)
+        }
+
+        .view-btn {
+            background: rgba(15, 4, 4, .72);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, .4);
+            color: #ffe9a0;
+            border-radius: 12px;
+            padding: 9px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .3s;
+            white-space: nowrap
+        }
+
+        .view-btn:hover {
+            background: var(--gold);
+            color: #000
+        }
+
+        #hint {
+            position: fixed;
+            bottom: 92px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 19;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(8px);
+            color: #ffe9a0;
+            font-size: 11px;
+            padding: 7px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, .3);
+            letter-spacing: .5px;
+            transition: opacity .6s;
+            white-space: nowrap;
+            max-width: calc(100vw - 20px);
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        #hint.hide {
+            opacity: 0
+        }
+
+        #show-card-btn {
+            position: fixed;
+            left: 16px;
+            bottom: 16px;
+            z-index: 21;
+            background: linear-gradient(135deg, var(--gold2), var(--gold));
+            border: none;
+            color: #3a0a0a;
+            font-weight: 700;
+            border-radius: 14px;
+            padding: 12px 18px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
+            font-size: 13px;
+            display: none
+        }
+
+        body.opened #show-card-btn.show {
+            display: block
+        }
+
+        /* MODALS */
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, .7);
+            backdrop-filter: blur(6px);
+            opacity: 0;
+            visibility: hidden;
+            transition: .4s;
+            padding: 16px
+        }
+
+        .modal.open {
+            opacity: 1;
+            visibility: visible
+        }
+
+        .modal-box {
+            background: linear-gradient(180deg, #fffdf5, #ffe9b8);
+            border-radius: 20px;
+            border: 3px solid var(--gold);
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 24px;
+            position: relative;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .6);
+            animation: popIn .4s cubic-bezier(.2, 1.4, .4, 1)
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(.85);
+                opacity: 0
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        .modal-box h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--maroon);
+            margin: 0 0 4px;
+            text-align: center
+        }
+
+        .modal-box .sub {
+            text-align: center;
+            font-size: 12px;
+            color: #8a6d1b;
+            margin: 0 0 16px
+        }
+
+        .close-x {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: var(--maroon);
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px
+        }
+
+        .form-row {
+            margin-bottom: 12px;
+            text-align: left
+        }
+
+        .form-row label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--maroon);
+            display: block;
+            margin-bottom: 4px
+        }
+
+        .form-row input,
+        .form-row select,
+        .form-row textarea {
+            width: 100%;
+            border: 1px solid rgba(138, 109, 27, .4);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            background: #fff
+        }
+
+        .form-row input:focus,
+        .form-row select:focus {
+            outline: 2px solid var(--gold)
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #a31616, #6d0f0f);
+            color: #ffe9a0;
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            padding: 13px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer
+        }
+
+        .submit-btn:hover {
+            filter: brightness(1.15)
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid var(--gold);
+            cursor: pointer;
+            transition: .3s
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.03)
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 160px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            z-index: 120;
+            background: linear-gradient(135deg, #2a1000, #4a0808);
+            color: var(--gold2);
+            border: 1px solid var(--gold);
+            padding: 12px 22px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 0;
+            transition: .4s;
+            pointer-events: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
+            max-width: calc(100vw - 32px);
+            text-align: center
+        }
+
+        #toast.show {
+            opacity: 1;
+            transform: translateX(-50%)
+        }
+
+        #night-badge {
+            position: fixed;
+            top: 78px;
+            right: 14px;
+            z-index: 20;
+            background: rgba(10, 5, 30, .7);
+            border: 1px solid rgba(150, 150, 255, .4);
+            color: #cdd6ff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            display: none;
+            backdrop-filter: blur(8px)
+        }
+
+        #night-badge.show {
+            display: block
+        }
+
+        @media(max-width:900px) {
+            #tilt-wrap {
+                left: 12px;
+                right: 12px;
+                width: auto;
+                top: auto;
+                bottom: 86px;
+                max-height: 52vh
+            }
+
+            #invite-card {
+                max-height: 52vh
+            }
+
+            .ceremony {
+                font-size: 26px
+            }
+
+            #countdown div {
+                min-width: 36px
+            }
+
+            #countdown b {
+                font-size: 14px
+            }
+
+            .brand small {
+                display: none
+            }
+
+            #view-presets {
+                top: auto;
+                bottom: 152px;
+                right: 10px;
+                transform: translateX(100px)
+            }
+
+            body.opened #view-presets {
+                transform: none
+            }
+
+            .view-btn {
+                padding: 7px 10px;
+                font-size: 10px
+            }
+
+            #controls {
+                bottom: 10px;
+                padding: 8px;
+                gap: 6px
+            }
+
+            .ctl-btn {
+                min-width: 54px;
+                padding: 6px 4px
+            }
+
+            .ctl-btn i {
+                font-size: 17px
+            }
+
+            #hint {
+                bottom: auto;
+                top: 70px;
+                font-size: 10px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="scene"></canvas>
+    <canvas id="confetti"></canvas>
+    <div id="vignette"></div>
+    <div id="film-grain"></div>
+
+    <div id="loader">
+        <div class="mandala-spin"></div>
+        <h2>SHARMA VILLA</h2>
+        <p>Decorating the house for you…</p>
+        <div class="load-bar"><i></i></div>
+    </div>
+
+    <div id="envelope-overlay">
+        <div class="envelope-scene">
+            <div class="env-glow"></div>
+            <div class="envelope" id="envelope">
+                <div class="env-back"></div>
+                <div class="env-letter">
+                    <div class="mini-mandala">॥ ॐ श्री ॥</div>
+                    <h3>GRIHA PRAVESH</h3>
+                    <p>Rajesh & Priya Sharma invite you</p>
+                    <div class="mini-house">🏠</div>
+                </div>
+                <div class="env-front"></div>
+                <div class="env-flap"></div>
+                <button id="seal-btn" aria-label="Open invitation"><span>ॐ</span><small>TAP TO OPEN</small></button>
+            </div>
+            <h1 class="overlay-title">You're Invited!</h1>
+            <p class="overlay-sub">✦ Housewarming Ceremony ✦</p>
+            <div><span class="overlay-names">Rajesh ❤ Priya Sharma & Family</span></div>
+            <br><button id="skip-btn">Enter without animation →</button>
+        </div>
+    </div>
+
+    <header id="topbar">
+        <div class="brand">
+            <div class="brand-icon">🛕</div>
+            <div><strong>Sharma Villa</strong><small>Griha Pravesh • Jaipur</small></div>
+        </div>
+        <div class="top-right">
+            <div id="countdown">
+                <div><b id="cd-d">00</b><span>Days</span></div>
+                <div><b id="cd-h">00</b><span>Hrs</span></div>
+                <div><b id="cd-m">00</b><span>Min</span></div>
+                <div><b id="cd-s">00</b><span>Sec</span></div>
+            </div>
+            <button class="icon-btn" id="music-btn" title="Festive Music">🔔</button>
+            <button class="icon-btn" id="invite-toggle" title="Show/Hide Card">💌</button>
+        </div>
+    </header>
+
+    <div id="night-badge">🌙 Night Aarti Mode • Diyas Lit 🪔</div>
+
+    <main id="main-ui">
+        <div id="tilt-wrap">
+            <article id="invite-card">
+                <div class="card-shine"></div>
+                <div class="card-border">
+                    <div class="card-inner">
+                        <div class="om">॥ श्री गणेशाय नमः ॥</div>
+                        <div class="ganesha">🙏</div>
+                        <p class="bless">With the divine blessings of<br><span>Late Shri Rameshwar Sharma & Smt. Meena
+                                Sharma</span><br>and Smt. Kamla Verma</p>
+                        <h2 class="ceremony">GRIHA PRAVESH</h2>
+                        <p class="sub-ceremony">Housewarming Ceremony</p>
+                        <div class="divider">❁ ─ ❁ ─ ❁</div>
+                        <div class="owners">
+                            <div class="owner">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rajesh Sharma"
+                                    onerror="this.src='https://ui-avatars.com/api/?name=Rajesh+Sharma&background=6d0f0f&color=fff&size=150'">
+                                <h4>Rajesh Kumar Sharma</h4><small>S/o Late Shri Rameshwarji</small>
+                            </div>
+                            <div class="and">&</div>
+                            <div class="owner">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Priya Sharma"
+                                    onerror="this.src='https://ui-avatars.com/api/?name=Priya+Sharma&background=8e1a1a&color=fff&size=150'">
+                                <h4>Priya Sharma</h4><small>D/o Shri Mohan Vermaji</small>
+                            </div>
+                        </div>
+                        <p class="invite-text">along with <b>Aarav & Diya</b> request the honour of your gracious
+                            presence to bless our <strong>New Sweet Home</strong> 🏡</p>
+                        <div class="house-frame">
+                            <span class="house-badge">✦ OUR NEW HOME ✦</span>
+                            <button id="gallery-open">📷 Photos</button>
+                            <img id="main-house-img"
+                                src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80"
+                                alt="Sharma Villa - Our New House"
+                                onerror="this.src='https://picsum.photos/seed/sharmavilla/800/500'">
+                            <div class="house-caption">Sunshine Villa • 3BHK Dream Home • Jaipur</div>
+                        </div>
+                        <div class="details">
+                            <div><span>📅</span>
+                                <div><strong>Sunday, 12th October 2026</strong><small>10:00 AM onwards • Havan & Pooja
+                                        at 11:00 AM • Lunch 1 PM</small></div>
+                            </div>
+                            <div><span>📍</span>
+                                <div><strong>Sunshine Villa, Plot 42, Green Park Colony</strong><small>Near Central
+                                        Park, C-Scheme, Jaipur, Rajasthan 302001</small></div>
+                            </div>
+                            <div><span>📞</span>
+                                <div><strong>+91 98290 12345 • +91 94140 67890</strong><small>Rajesh & Priya • Kindly
+                                        RSVP by Oct 8th</small></div>
+                            </div>
+                        </div>
+                        <div class="schedule">
+                            <div><b>🪔 10:00 AM</b>Kalash Sthapna & Ganesh Pooja</div>
+                            <div><b>🔥 11:00 AM</b>Havan & Vastu Shanti</div>
+                            <div><b>🍛 1:00 PM</b>Bhandara & Lunch</div>
+                        </div>
+                        <div class="actions">
+                            <button id="rsvp-btn">💌 RSVP Now</button>
+                            <button id="map-btn">📍 Directions</button>
+                            <button id="cal-btn">📅 Save Date</button>
+                        </div>
+                        <p class="card-footer">With love & regards • <b>Sharma & Verma Families</b><br>Tip: Drag the 3D
+                            house • Click the door • Try Night Mode 🌙</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <button id="show-card-btn">💌 View Invitation</button>
+
+    <div id="hint">🖱️ Drag to Orbit • Scroll to Zoom • Click Door, Gifts & Diyas • Try Night Mode 🌙</div>
+
+    <div id="controls">
+        <button class="ctl-btn" id="dayNightBtn"><i>🌙</i><small>Night</small></button>
+        <button class="ctl-btn" id="doorBtn"><i>🚪</i><small>Door</small></button>
+        <button class="ctl-btn" id="fireBtn"><i>🎆</i><small>Celebrate</small></button>
+        <button class="ctl-btn active" id="petalBtn"><i>🌸</i><small>Petals</small></button>
+        <button class="ctl-btn" id="rotateBtn"><i>🔄</i><small>Orbit</small></button>
+        <button class="ctl-btn" id="photoBtn"><i>🏠</i><small>House</small></button>
+    </div>
+
+    <div id="view-presets">
+        <button class="view-btn" data-view="front">🏠 Front</button>
+        <button class="view-btn" data-view="porch">🚪 Porch</button>
+        <button class="view-btn" data-view="aerial">🦅 Aerial</button>
+        <button class="view-btn" data-view="garden">🌳 Garden</button>
+    </div>
+
+    <div class="modal" id="rsvp-modal">
+        <div class="modal-box">
+            <button class="close-x" data-close="rsvp-modal">✕</button>
+            <h2>💌 RSVP</h2>
+            <p class="sub">Sharma Family awaits your blessings</p>
+            <form id="rsvp-form">
+                <div class="form-row"><label>Your Name *</label><input required id="r-name"
+                        placeholder="e.g. Anil & Sunita Gupta"></div>
+                <div class="form-row"><label>Phone</label><input id="r-phone" placeholder="+91 ..."></div>
+                <div class="form-row"><label>Will you attend? *</label><select id="r-attend">
+                        <option>Yes, with blessings! 🙏</option>
+                        <option>Yes, with family (mention count)</option>
+                        <option>Sorry, can't make it</option>
+                    </select></div>
+                <div class="form-row"><label>Guests</label><select id="r-guests">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5+</option>
+                    </select></div>
+                <div class="form-row"><label>Blessings / Message</label><textarea id="r-msg" rows="2"
+                        placeholder="Shubhkamnayein..."></textarea></div>
+                <button class="submit-btn" type="submit">Send RSVP to Sharma Family 🙏</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="gallery-modal">
+        <div class="modal-box">
+            <button class="close-x" data-close="gallery-modal">✕</button>
+            <h2>🏠 Our Dream Home</h2>
+            <p class="sub">Sunshine Villa • A glimpse of our new house</p>
+            <div class="gallery-grid">
+                <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=600&q=70"
+                    alt="Front" onerror="this.src='https://picsum.photos/seed/h1/600/400'">
+                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=70"
+                    alt="Villa" onerror="this.src='https://picsum.photos/seed/h2/600/400'">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=70"
+                    alt="Home" onerror="this.src='https://picsum.photos/seed/h3/600/400'">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=70"
+                    alt="Interior" onerror="this.src='https://picsum.photos/seed/h4/600/400'">
+            </div>
+            <p style="text-align:center;font-size:11px;color:#8a6d1b;margin:12px 0 0">Proud Owners: <b>Rajesh & Priya
+                    Sharma</b> • Griha Pravesh Oct 12, 2026</p>
+        </div>
+    </div>
+
+    <div id="toast"></div>
+
+    <script>
+        (function () {
+            const $ = id => document.getElementById(id);
+            window.showToast = function (msg, ms = 2600) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), ms); };
+            // Loader
+            let sceneReady = false, loadHidden = false;
+            function hideLoader() { if (loadHidden) return; loadHidden = true; $('loader').classList.add('hide'); }
+            window.addEventListener('sceneReady', () => { sceneReady = true; setTimeout(hideLoader, 600); });
+            setTimeout(hideLoader, 5000);
+            // Countdown
+            const target = new Date('2026-10-12T10:00:00+05:30').getTime();
+            function tick() {
+                let d = target - Date.now(); if (d < 0) d = 0; const days = Math.floor(d / 864e5), h = Math.floor(d / 36e5) % 24, m = Math.floor(d / 6e4) % 60, s = Math.floor(d / 1e3) % 60;
+                $('cd-d').textContent = String(days).padStart(2, '0'); $('cd-h').textContent = String(h).padStart(2, '0'); $('cd-m').textContent = String(m).padStart(2, '0'); $('cd-s').textContent = String(s).padStart(2, '0');
+            }
+            setInterval(tick, 1000); tick();
+            // Confetti 2D
+            const cv = $('confetti'), ctx = cv.getContext('2d'); let parts = [];
+            function sizeCv() { cv.width = innerWidth; cv.height = innerHeight; } addEventListener('resize', sizeCv); sizeCv();
+            const cols = ['#d4af37', '#f5d76e', '#ff6b6b', '#ff9f43', '#a31616', '#ffdf9e', '#7bed9f', '#70a1ff', '#eccc68', '#ff7f50'];
+            window.launchConfetti = function (n = 150, ox = null, oy = null) { for (let i = 0; i < n; i++) { parts.push({ x: ox ?? Math.random() * cv.width, y: oy ?? -20 - Math.random() * 80, vx: (Math.random() - .5) * 6, vy: Math.random() * 4 + 2, s: Math.random() * 8 + 4, c: cols[(Math.random() * cols.length) | 0], r: Math.random() * Math.PI, vr: (Math.random() - .5) * .3, l: 1, shape: Math.random() > .4 ? 'r' : 'c' }); } if (parts.length > 900) parts = parts.slice(-900); };
+            (function loop() {
+                ctx.clearRect(0, 0, cv.width, cv.height); parts = parts.filter(p => p.y < cv.height + 30 && p.l > 0);
+                for (const p of parts) {
+                    p.x += p.vx + Math.sin(p.y * .02) * 1.2; p.y += p.vy; p.vy += .06; p.r += p.vr; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c; ctx.globalAlpha = Math.min(1, p.l);
+                    if (p.shape === 'r') ctx.fillRect(-p.s / 2, -p.s / 3, p.s, p.s * .66); else { ctx.beginPath(); ctx.arc(0, 0, p.s / 2, 0, 7); ctx.fill(); } ctx.restore();
+                }
+                requestAnimationFrame(loop);
+            })();
+            // Audio - bells & drone
+            let actx = null, musicOn = false, drone = [], bellTimer = null;
+            function ensureCtx() { if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { } } if (actx && actx.state === 'suspended') actx.resume(); return actx; }
+            window.playBell = function (f = 740, dur = 2.2, vol = .22) {
+                if (!ensureCtx()) return; const t = actx.currentTime;
+                [[f, 1], [f * 2.01, .35], [f * 2.94, .18], [f * 4.2, .08]].forEach(([fr, g]) => { const o = actx.createOscillator(), gn = actx.createGain(); o.type = 'sine'; o.frequency.value = fr; gn.gain.setValueAtTime(0, t); gn.gain.linearRampToValueAtTime(vol * g, t + .02); gn.gain.exponentialRampToValueAtTime(.0001, t + dur); o.connect(gn).connect(actx.destination); o.start(t); o.stop(t + dur + .1); });
+            };
+            window.playPop = function () { if (!ensureCtx()) return; const t = actx.currentTime, o = actx.createOscillator(), g = actx.createGain(); o.type = 'triangle'; o.frequency.setValueAtTime(300, t); o.frequency.exponentialRampToValueAtTime(1200, t + .12); g.gain.setValueAtTime(.25, t); g.gain.exponentialRampToValueAtTime(.001, t + .3); o.connect(g).connect(actx.destination); o.start(t); o.stop(t + .35); };
+            function startMusic() {
+                ensureCtx(); if (!actx || musicOn) return; musicOn = true; $('music-btn').classList.add('active'); $('music-btn').textContent = '🎵';
+                const g = actx.createGain(); g.gain.value = .05; const f = actx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 600; g.connect(f).connect(actx.destination);
+                [136.1, 204.2, 272.2].forEach(fr => { const o = actx.createOscillator(); o.type = 'sawtooth'; o.frequency.value = fr; o.detune.value = (Math.random() - .5) * 8; o.connect(g); o.start(); drone.push(o); });
+                const seq = [523.25, 587.33, 659.25, 783.99, 880, 783.99, 659.25, 587.33]; let i = 0;
+                const bell = () => window.playBell(seq[i++ % seq.length], 3, .12); bell(); bellTimer = setInterval(bell, 2800);
+                showToast('🎵 Festive Shehnai ambience playing');
+            }
+            function stopMusic() { musicOn = false; $('music-btn').classList.remove('active'); $('music-btn').textContent = '🔔'; drone.forEach(o => { try { o.stop() } catch (e) { } }); drone = []; clearInterval(bellTimer); }
+            $('music-btn').onclick = () => musicOn ? stopMusic() : startMusic();
+            // Envelope open
+            let opened = false;
+            function openInvite() {
+                if (opened) return; opened = true; $('envelope').classList.add('open'); ensureCtx(); window.playBell(880, 2.5, .3); setTimeout(() => window.playBell(660, 3, .25), 300);
+                setTimeout(() => {
+                    $('envelope-overlay').classList.add('hide'); document.body.classList.add('opened'); window.launchConfetti(260); window.dispatchEvent(new Event('invitationOpened'));
+                    showToast('🙏 Welcome! Sharma Family invites you • शुभ स्वागतम्'); setTimeout(() => $('hint').classList.add('hide'), 9000);
+                }, 1250);
+            }
+            $('seal-btn').onclick = openInvite; $('skip-btn').onclick = openInvite;
+            // Tilt
+            const wrap = $('tilt-wrap'), card = $('invite-card');
+            if (matchMedia('(pointer:fine)').matches) {
+                document.addEventListener('mousemove', e => {
+                    if (!document.body.classList.contains('opened')) return; const r = wrap.getBoundingClientRect(); if (e.clientX < r.left - 200 || e.clientX > r.right + 200) return;
+                    const x = (e.clientX - (r.left + r.width / 2)) / r.width, y = (e.clientY - (r.top + r.height / 2)) / r.height; card.style.transform = `rotateY(${x * 7}deg) rotateX(${-y * 5}deg)`;
+                });
+            }
+            // Card toggle
+            const showBtn = $('show-card-btn');
+            function setCardVisible(v) { wrap.classList.toggle('hidden-card', !v); showBtn.classList.toggle('show', !v); $('invite-toggle').classList.toggle('active', v); }
+            setCardVisible(true);
+            $('invite-toggle').onclick = () => setCardVisible(wrap.classList.contains('hidden-card'));
+            showBtn.onclick = () => setCardVisible(true);
+            if (innerWidth < 900) setTimeout(() => {/* keep visible initially on mobile */ }, 1000);
+            // Modals
+            function openM(id) { $(id).classList.add('open'); } function closeM(id) { $(id).classList.remove('open'); }
+            document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => closeM(b.dataset.close));
+            document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); }));
+            $('rsvp-btn').onclick = () => openM('rsvp-modal');
+            $('gallery-open').onclick = () => openM('gallery-modal');
+            $('rsvp-form').onsubmit = e => {
+                e.preventDefault(); closeM('rsvp-modal'); window.launchConfetti(220); window.playBell(784, 2.5, .3);
+                const n = $('r-name').value || 'Guest'; showToast(`🙏 Dhanyavaad ${n}! RSVP received. See you Oct 12!`); if (window.ThreeCelebrate) window.ThreeCelebrate();
+            };
+            $('map-btn').onclick = () => window.open('https://www.google.com/maps/search/?api=1&query=Green+Park+C-Scheme+Jaipur+Rajasthan', '_blank');
+            $('cal-btn').onclick = () => {
+                const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VEVENT', 'UID:griha-pravesh-sharma-2026', 'DTSTAMP:20260909T000000Z', 'DTSTART:20261012T043000Z', 'DTEND:20261012T083000Z', 'SUMMARY:Griha Pravesh - Sharma Villa Housewarming', 'DESCRIPTION:Havan & Pooja at Sunshine Villa\\, Green Park Colony\\, Jaipur. Hosts: Rajesh & Priya Sharma (+91 98290 12345)', 'LOCATION:Sunshine Villa\\, Plot 42\\, Green Park Colony\\, Jaipur', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+                const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'Sharma-Villa-Griha-Pravesh.ics'; a.click(); showToast('📅 Date saved! Oct 12, 2026 • 10 AM');
+            };
+        })();
+    </script>
+
+    <script type="importmap">
+{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}
+</script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        const $ = id => document.getElementById(id);
+        const toast = m => { if (window.showToast) window.showToast(m); };
+        const canvas = $('scene');
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+        renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+        renderer.setSize(innerWidth, innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.05;
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x9fd8ff);
+        scene.fog = new THREE.Fog(0xcfe9ff, 70, 220);
+
+        const camera = new THREE.PerspectiveCamera(48, innerWidth / innerHeight, .1, 1000);
+        camera.position.set(34, 20, 38);
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.target.set(0, 3.2, 0);
+        controls.enableDamping = true; controls.dampingFactor = .06;
+        controls.minDistance = 5; controls.maxDistance = 60;
+        controls.maxPolarAngle = Math.PI * .495;
+        controls.autoRotate = false; controls.autoRotateSpeed = 1.2;
+
+        // ---------- helpers ----------
+        function cnv(w, h, fn) { const c = document.createElement('canvas'); c.width = w; c.height = h; fn(c.getContext('2d'), w, h); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; }
+        const flameTex = cnv(128, 128, (g) => { const r = g.createRadialGradient(64, 80, 4, 64, 64, 60); r.addColorStop(0, 'rgba(255,255,220,1)'); r.addColorStop(.25, 'rgba(255,220,80,1)'); r.addColorStop(.55, 'rgba(255,140,20,.9)'); r.addColorStop(1, 'rgba(255,60,0,0)'); g.fillStyle = r; g.fillRect(0, 0, 128, 128); });
+        const smokeTex = cnv(128, 128, (g) => { const r = g.createRadialGradient(64, 64, 5, 64, 64, 60); r.addColorStop(0, 'rgba(255,255,255,.85)'); r.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = r; g.fillRect(0, 0, 128, 128); });
+        const petalTex = cnv(64, 64, (g) => { g.fillStyle = '#fff'; g.beginPath(); g.ellipse(32, 32, 22, 14, 0.6, 0, 7); g.fill(); const r = g.createRadialGradient(32, 32, 2, 32, 32, 24); r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(1, 'rgba(255,255,255,.2)'); g.fillStyle = r; g.fill(); });
+        const glowTex = cnv(128, 128, (g) => { const r = g.createRadialGradient(64, 64, 2, 64, 64, 62); r.addColorStop(0, 'rgba(255,240,180,1)'); r.addColorStop(.4, 'rgba(255,200,80,.55)'); r.addColorStop(1, 'rgba(255,160,0,0)'); g.fillStyle = r; g.fillRect(0, 0, 128, 128); });
+        const rangoliTex = cnv(512, 512, (g) => {
+            g.clearRect(0, 0, 512, 512); const cx = 256, cy = 256; g.translate(cx, cy);
+            const ring = (r, c, w = 6) => { g.beginPath(); g.arc(0, 0, r, 0, 7); g.strokeStyle = c; g.lineWidth = w; g.stroke(); };
+            ring(240, '#d4af37', 10); ring(225, '#a31616', 4);
+            for (let i = 0; i < 16; i++) {
+                g.save(); g.rotate(i / 16 * Math.PI * 2); g.fillStyle = i % 2 ? '#ff6b35' : '#f7c948'; g.beginPath(); g.ellipse(0, -180, 26, 60, 0, 0, 7); g.fill(); g.strokeStyle = '#fff'; g.lineWidth = 3; g.stroke();
+                g.fillStyle = i % 2 ? '#a31616' : '#6d0f0f'; g.beginPath(); g.arc(0, -180, 14, 0, 7); g.fill(); g.restore();
+            }
+            for (let i = 0; i < 8; i++) { g.save(); g.rotate(i / 8 * Math.PI * 2 + .2); g.fillStyle = ['#e84393', '#00cec9', '#6c5ce7', '#00b894'][i % 4]; g.beginPath(); g.arc(0, -105, 30, 0, 7); g.fill(); g.strokeStyle = '#fff'; g.lineWidth = 3; g.stroke(); g.restore(); }
+            g.fillStyle = '#fff'; g.beginPath(); g.arc(0, 0, 52, 0, 7); g.fill(); g.strokeStyle = '#d4af37'; g.lineWidth = 6; g.stroke();
+            g.fillStyle = '#a31616'; g.font = 'bold 44px serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('ॐ', 0, 2);
+        });
+        const nameTex = cnv(512, 160, (g, w, h) => {
+            const gr = g.createLinearGradient(0, 0, w, 0); gr.addColorStop(0, '#8a6d1b'); gr.addColorStop(.5, '#f5d76e'); gr.addColorStop(1, '#8a6d1b'); g.fillStyle = gr; g.fillRect(0, 0, w, h); g.strokeStyle = '#4a0808'; g.lineWidth = 10; g.strokeRect(6, 6, w - 12, h - 12);
+            g.fillStyle = '#4a0808'; g.font = '900 64px Georgia'; g.textAlign = 'center'; g.fillText('SHARMA VILLA', w / 2, 78); g.font = '600 26px Georgia'; g.fillText('॥ शुभ गृह प्रवेश ॥  •  PLOT 42', w / 2, 122);
+        });
+        const signTex = cnv(1024, 220, (g, w, h) => {
+            g.fillStyle = '#4a0808'; g.fillRect(0, 0, w, h); g.strokeStyle = '#f5d76e'; g.lineWidth = 10; g.strokeRect(10, 10, w - 20, h - 20);
+            g.fillStyle = '#f5d76e'; g.font = '900 92px Georgia'; g.textAlign = 'center'; g.fillText('✦  OUR NEW HOME  ✦', w / 2, 120); g.font = 'italic 44px Georgia'; g.fillStyle = '#fff'; g.fillText('Rajesh  ♥  Priya  Sharma', w / 2, 180);
+        });
+        const titleTex = cnv(1024, 260, (g, w, h) => {
+            g.clearRect(0, 0, w, h); g.textAlign = 'center'; g.shadowColor = 'rgba(212,175,55,.9)'; g.shadowBlur = 30;
+            const gr = g.createLinearGradient(0, 40, 0, 160); gr.addColorStop(0, '#fff3c4'); gr.addColorStop(.5, '#f5d76e'); gr.addColorStop(1, '#b8860b'); g.fillStyle = gr; g.font = '900 110px Georgia'; g.fillText('GRIHA PRAVESH', w / 2, 130);
+            g.font = 'italic 600 52px Georgia'; g.fillStyle = '#fff'; g.shadowBlur = 12; g.fillText('॥  शुभ गृह प्रवेश  ॥', w / 2, 200);
+        });
+
+        // ---------- lights ----------
+        const hemi = new THREE.HemisphereLight(0xbfe3ff, 0x8a7a5a, .9); scene.add(hemi);
+        const sun = new THREE.DirectionalLight(0xfff2d0, 2.0); sun.position.set(22, 32, 16); sun.castShadow = true;
+        sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -32; sun.shadow.camera.right = 32; sun.shadow.camera.top = 32; sun.shadow.camera.bottom = -32; sun.shadow.camera.far = 120; sun.shadow.bias = -.0004; scene.add(sun);
+        const moonLight = new THREE.DirectionalLight(0x8fa8ff, .0); moonLight.position.set(-18, 26, -12); scene.add(moonLight);
+        const porchLight = new THREE.PointLight(0xffb84d, 0, 20, 1.8); porchLight.position.set(0, 4.6, 5.5); porchLight.castShadow = false; scene.add(porchLight);
+        const houseGlow = new THREE.PointLight(0xffc766, .4, 18, 1.6); houseGlow.position.set(0, 3, 0); scene.add(houseGlow);
+        const diyaLightA = new THREE.PointLight(0xff9a2e, 0, 10, 2); diyaLightA.position.set(2.5, .8, 8.5); scene.add(diyaLightA);
+        const diyaLightB = new THREE.PointLight(0xff9a2e, 0, 10, 2); diyaLightB.position.set(-2.5, .8, 8.5); scene.add(diyaLightB);
+        const spot = new THREE.SpotLight(0xffe9a0, 0, 60, .5, .4, 1.2); spot.position.set(0, 18, 22); spot.target.position.set(0, 3, 0); scene.add(spot, spot.target);
+
+        // ---------- sky ----------
+        const skyUni = { top: { value: new THREE.Color(0x2f9bf0) }, bot: { value: new THREE.Color(0xd8f0ff) } };
+        const sky = new THREE.Mesh(new THREE.SphereGeometry(320, 24, 16), new THREE.ShaderMaterial({
+            side: THREE.BackSide, depthWrite: false, fog: false, uniforms: skyUni,
+            vertexShader: `varying vec3 vP;void main(){vP=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+            fragmentShader: `uniform vec3 top,bot;varying vec3 vP;void main(){float h=normalize(vP).y*.5+.5;gl_FragColor=vec4(mix(bot,top,pow(max(h,0.),.7)),1.);}`
+        }));
+        scene.add(sky);
+        const dayTop = new THREE.Color(0x2f9bf0), dayBot = new THREE.Color(0xd8f0ff), nightTop = new THREE.Color(0x03071e), nightBot = new THREE.Color(0x3b1d5e);
+        const dayFog = new THREE.Color(0xcfe9ff), nightFog = new THREE.Color(0x150f2e);
+        // stars
+        const starGeo = new THREE.BufferGeometry(); { const p = new Float32Array(900 * 3); for (let i = 0; i < 900; i++) { const r = 290, th = Math.random() * Math.PI * 2, ph = Math.random() * Math.PI * .48; const y = Math.sin(ph) * r + .2 * r * .2; const rr = Math.cos(ph) * r; p[i * 3] = Math.cos(th) * rr; p[i * 3 + 1] = Math.abs(y) + 5; p[i * 3 + 2] = Math.sin(th) * rr; } starGeo.setAttribute('position', new THREE.BufferAttribute(p, 3)); }
+        const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 1.6, transparent: true, opacity: 0, fog: false, depthWrite: false });
+        scene.add(new THREE.Points(starGeo, starMat));
+        // sun & moon meshes
+        const sunMesh = new THREE.Mesh(new THREE.SphereGeometry(9, 24, 24), new THREE.MeshBasicMaterial({ color: 0xffdf6b, fog: false }));
+        sunMesh.position.set(90, 110, 60); scene.add(sunMesh);
+        const sunGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xffdf6b, transparent: true, opacity: .9, fog: false, depthWrite: false })); sunGlow.scale.set(46, 46, 1); sunGlow.position.copy(sunMesh.position); scene.add(sunGlow);
+        const moonMesh = new THREE.Mesh(new THREE.SphereGeometry(7, 24, 24), new THREE.MeshBasicMaterial({ color: 0xf4f6ff, fog: false })); moonMesh.position.set(-90, 110, -60); moonMesh.visible = false; scene.add(moonMesh);
+        const moonGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xbdc8ff, transparent: true, opacity: 0, fog: false, depthWrite: false })); moonGlow.scale.set(40, 40, 1); moonGlow.position.copy(moonMesh.position); scene.add(moonGlow);
+        // clouds
+        const clouds = []; for (let i = 0; i < 9; i++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: smokeTex, color: 0xffffff, transparent: true, opacity: .85, depthWrite: false })); s.position.set((Math.random() - .5) * 220, 42 + Math.random() * 30, (Math.random() - .5) * 220); const sc = 18 + Math.random() * 22; s.scale.set(sc, sc * .55, 1); s.userData.v = .4 + Math.random() * .8; scene.add(s); clouds.push(s); }
+
+        // ---------- ground ----------
+        const grassMat = new THREE.MeshStandardMaterial({ color: 0x6fbf4a, roughness: 1 });
+        const ground = new THREE.Mesh(new THREE.CircleGeometry(75, 64), grassMat); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+        const lawn2 = new THREE.Mesh(new THREE.CircleGeometry(26, 48), new THREE.MeshStandardMaterial({ color: 0x7ed957, roughness: 1 })); lawn2.rotation.x = -Math.PI / 2; lawn2.position.y = .02; lawn2.receiveShadow = true; scene.add(lawn2);
+        const road = new THREE.Mesh(new THREE.PlaneGeometry(10, 60), new THREE.MeshStandardMaterial({ color: 0x9a9a9a, roughness: .9 })); road.rotation.x = -Math.PI / 2; road.position.set(0, .03, 34); road.receiveShadow = true; scene.add(road);
+        // path stones
+        const stoneMat = new THREE.MeshStandardMaterial({ color: 0xe8dcc3, roughness: .8 });
+        for (let i = 0; i < 7; i++) { const st = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 1.2, .18, 8), stoneMat); st.position.set(Math.sin(i * .5) * .4, .09, 6.5 + i * 2.1); st.receiveShadow = true; st.castShadow = true; scene.add(st); }
+        // rangoli
+        const rangoli = new THREE.Mesh(new THREE.CircleGeometry(2.3, 48), new THREE.MeshStandardMaterial({ map: rangoliTex, transparent: true, roughness: .6 })); rangoli.rotation.x = -Math.PI / 2; rangoli.position.set(0, .06, 7.6); scene.add(rangoli);
+
+        // ---------- HOUSE ----------
+        const H = new THREE.Group(); scene.add(H);
+        const wallMat = new THREE.MeshStandardMaterial({ color: 0xfff1d6, roughness: .85 });
+        const wallMat2 = new THREE.MeshStandardMaterial({ color: 0xffe3ae, roughness: .85 });
+        const trimMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .6 });
+        const woodMat = new THREE.MeshStandardMaterial({ color: 0x7a3d12, roughness: .6 });
+        const roofMat = new THREE.MeshStandardMaterial({ color: 0xa31616, roughness: .7, flatShading: true });
+        function box(w, h, d, m, x, y, z, ry = 0) { const ms = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); ms.position.set(x, y, z); ms.rotation.y = ry; ms.castShadow = true; ms.receiveShadow = true; H.add(ms); return ms; }
+        // main + upper
+        box(10, 4, 8, wallMat, 0, 2, 0); box(8, 3, 7, wallMat2, 0, 5.5, -.3);
+        // roofs
+        const roof1 = new THREE.Mesh(new THREE.ConeGeometry(7.6, 3.4, 4), roofMat); roof1.position.set(0, 8.7, -.3); roof1.rotation.y = Math.PI / 4; roof1.castShadow = true; H.add(roof1);
+        const roofCap = new THREE.Mesh(new THREE.SphereGeometry(.5, 12, 12), new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: .7, roughness: .3 })); roofCap.position.set(0, 10.6, -.3); H.add(roofCap);
+        // porch
+        box(11, .35, 3.4, trimMat, 0, 4.15, 5.2); // porch roof slab
+        box(11.4, .22, 3.8, roofMat, 0, 4.45, 5.2);
+        [[-5, 5.2], [5, 5.2], [-5, 6.6], [5, 6.6]].forEach(([x, z]) => {
+            const c = new THREE.Mesh(new THREE.CylinderGeometry(.22, .26, 4.1, 12), trimMat); c.position.set(x, 2.05, z); c.castShadow = true; H.add(c);
+            const b = new THREE.Mesh(new THREE.BoxGeometry(.7, .5, .7), new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: .5, roughness: .4 })); b.position.set(x, .25, z); H.add(b);
+        });
+        // floor + steps
+        box(11, .3, 3.6, new THREE.MeshStandardMaterial({ color: 0xd9b98a, roughness: .8 }), 0, .15, 5.4);
+        box(3, .25, 1.2, stoneMat, 0, .35, 7.6); box(3.6, .25, 1.6, stoneMat, 0, .15, 7.9);
+        // door frame + door (pivot)
+        box(2.2, 3.2, .3, trimMat, 0, 2.1, 4.05);
+        const doorPivot = new THREE.Group(); doorPivot.position.set(-.8, 2.0, 4.15); H.add(doorPivot);
+        const doorMesh = new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.9, .16), woodMat); doorMesh.position.set(.8, .1, .1); doorMesh.castShadow = true; doorPivot.add(doorMesh);
+        doorMesh.userData.action = 'door';
+        [[.45, .7], [1.15, .7], [.45, -.6], [1.15, -.6]].forEach(([x, y]) => { const p = new THREE.Mesh(new THREE.BoxGeometry(.5, .9, .05), new THREE.MeshStandardMaterial({ color: 0x5a2a08, roughness: .5 })); p.position.set(x - .8 + .8, y, .2); doorMesh.add(p); });
+        const knob = new THREE.Mesh(new THREE.SphereGeometry(.09, 12, 12), new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: .9, roughness: .2 })); knob.position.set(1.35, .1, .25); doorMesh.add(knob);
+        const toranBar = new THREE.Mesh(new THREE.BoxGeometry(2.6, .18, .18), new THREE.MeshStandardMaterial({ color: 0x2d6a2d })); toranBar.position.set(0, 3.85, 4.2); H.add(toranBar);
+        // door glow inside
+        const innerGlow = new THREE.Mesh(new THREE.PlaneGeometry(1.7, 2.9), new THREE.MeshBasicMaterial({ color: 0xffc766 })); innerGlow.position.set(0, 2.1, 3.95); innerGlow.rotation.y = Math.PI; H.add(innerGlow);
+        // name plate
+        const plate = new THREE.Mesh(new THREE.BoxGeometry(2.1, .75, .12), new THREE.MeshStandardMaterial({ color: 0x8a6d1b, metalness: .5, roughness: .4 })); plate.position.set(2.9, 2.4, 4.06); H.add(plate);
+        const plateFace = new THREE.Mesh(new THREE.PlaneGeometry(1.95, .62), new THREE.MeshBasicMaterial({ map: nameTex })); plateFace.position.set(2.9, 2.4, 4.13); H.add(plateFace);
+        // windows
+        const winGlassMats = [];
+        function window_(x, y, z, w = 1.7, h = 1.4) {
+            const g = new THREE.Group(); g.position.set(x, y, z); H.add(g);
+            const fr = new THREE.Mesh(new THREE.BoxGeometry(w + .3, h + .3, .18), trimMat); fr.castShadow = true; g.add(fr);
+            const gm = new THREE.MeshStandardMaterial({ color: 0xbfe9ff, emissive: 0xffb84d, emissiveIntensity: .15, roughness: .2, metalness: .1 }); winGlassMats.push(gm);
+            const gl = new THREE.Mesh(new THREE.PlaneGeometry(w, h), gm); gl.position.z = .1; g.add(gl);
+            const v = new THREE.Mesh(new THREE.BoxGeometry(.08, h, .05), trimMat); v.position.z = .12; g.add(v);
+            const hz = new THREE.Mesh(new THREE.BoxGeometry(w, .08, .05), trimMat); hz.position.z = .12; g.add(hz);
+            const sill = new THREE.Mesh(new THREE.BoxGeometry(w + .5, .14, .35), trimMat); sill.position.set(0, -h / 2 - .18, .05); g.add(sill); return g;
+        }
+        window_(-3.2, 2.3, 4.02); window_(3.2, 1.2, 4.02, 1.4, 1.1); window_(-2.4, 5.6, 3.25, 1.5, 1.2); window_(0, 5.6, 3.25, 1.5, 1.2); window_(2.4, 5.6, 3.25, 1.5, 1.2);
+        window_(-5.02, 2.3, 0).rotation.y = -Math.PI / 2; window_(5.02, 2.3, 0).rotation.y = Math.PI / 2;
+        // balcony railing upper front
+        for (let i = 0; i < 9; i++) { const r = new THREE.Mesh(new THREE.BoxGeometry(.12, .8, .12), trimMat); r.position.set(-2.8 + i * .7, 4.4, 3.6); H.add(r); }
+        box(6.4, .14, .2, trimMat, 0, 4.85, 3.6);
+        // chimney
+        box(1.1, 3.2, 1.1, new THREE.MeshStandardMaterial({ color: 0xb0653a, roughness: .9 }), 3.2, 8.6, -1.5); box(1.4, .3, 1.4, trimMat, 3.2, 10.2, -1.5);
+        // marigold toran across porch
+        const toran = new THREE.Group(); H.add(toran);
+        for (let i = 0; i <= 28; i++) {
+            const t = i / 28, x = -5.2 + t * 10.4, y = 3.85 - Math.sin(t * Math.PI) * .28;
+            const c = new THREE.Mesh(new THREE.SphereGeometry(.14, 10, 10), new THREE.MeshStandardMaterial({ color: i % 2 ? 0xffb300 : 0xff6d00, roughness: .6, emissive: i % 2 ? 0x552200 : 0x662200, emissiveIntensity: .3 }));
+            c.position.set(x, y, 6.95); toran.add(c);
+            if (i % 2 === 0) { const leaf = new THREE.Mesh(new THREE.ConeGeometry(.1, .3, 6), new THREE.MeshStandardMaterial({ color: 0x2d7a2d })); leaf.position.set(x, y - .28, 6.95); leaf.rotation.x = Math.PI; toran.add(leaf); }
+        }
+        // string lights porch + yard
+        const bulbMats = [];
+        function stringLights(a, b, sag, n, parent = scene) {
+            const pts = []; for (let i = 0; i <= 20; i++) { const t = i / 20; pts.push(new THREE.Vector3().lerpVectors(a, b, t).add(new THREE.Vector3(0, -Math.sin(t * Math.PI) * sag, 0))); }
+            parent.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: 0x3a2410 })));
+            for (let i = 0; i <= n; i++) {
+                const t = i / n; const p = new THREE.Vector3().lerpVectors(a, b, t); p.y -= Math.sin(t * Math.PI) * sag;
+                const m = new THREE.MeshStandardMaterial({ color: 0xfff2c0, emissive: 0xffc44d, emissiveIntensity: .6 }); bulbMats.push(m);
+                const bulb = new THREE.Mesh(new THREE.SphereGeometry(.11, 10, 10), m); bulb.position.copy(p).add(new THREE.Vector3(0, -.14, 0)); parent.add(bulb);
+                const gl = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, opacity: .35, depthWrite: false })); gl.scale.set(.9, .9, 1); gl.position.copy(bulb.position); parent.add(gl); bulbMats.push(gl.material);
+            }
+        }
+        stringLights(new THREE.Vector3(-5, 3.7, 6.9), new THREE.Vector3(5, 3.7, 6.9), .7, 14, H);
+        stringLights(new THREE.Vector3(-5, 4.2, 6.6), new THREE.Vector3(-11, .5, 14), 1.2, 10);
+        stringLights(new THREE.Vector3(5, 4.2, 6.6), new THREE.Vector3(11, .5, 14), 1.2, 10);
+        // fence + gate
+        const fenceMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .7 });
+        for (let x = -16; x <= 16; x += 1.4) { if (Math.abs(x) < 3.2) continue; const p = new THREE.Mesh(new THREE.BoxGeometry(.18, 1.1, .18), fenceMat); p.position.set(x, .55, 17); p.castShadow = true; scene.add(p); }
+        [[-16, 17], [16, 17]].forEach(() => { });
+        const rail = new THREE.Mesh(new THREE.BoxGeometry(33, .12, .1), fenceMat); rail.position.set(0, .85, 17); scene.add(rail);
+        [[-3.4, 17], [3.4, 17]].forEach(([x, z]) => {
+            const pil = new THREE.Mesh(new THREE.BoxGeometry(.8, 2.2, .8), new THREE.MeshStandardMaterial({ color: 0xa31616 })); pil.position.set(x, 1.1, z); pil.castShadow = true; scene.add(pil);
+            const cap = new THREE.Mesh(new THREE.SphereGeometry(.32, 12, 12), new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: .6, roughness: .3 })); cap.position.set(x, 2.4, z); scene.add(cap);
+        });
+        const gateGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: titleTex, transparent: true, depthWrite: false })); gateGlow.scale.set(9, 2.3, 1); gateGlow.position.set(0, 11.6, 0); scene.add(gateGlow);
+        // trees / bushes / flowers
+        function tree(x, z, s = 1) {
+            const g = new THREE.Group(); g.position.set(x, 0, z); scene.add(g);
+            const tr = new THREE.Mesh(new THREE.CylinderGeometry(.3 * s, .45 * s, 2.4 * s, 8), new THREE.MeshStandardMaterial({ color: 0x6b3d1a })); tr.position.y = 1.2 * s; tr.castShadow = true; g.add(tr);
+            [[0, 3.6, 1.7], [0, 4.9, 1.25]].forEach(([ox, y, r]) => { const f = new THREE.Mesh(new THREE.ConeGeometry(r * s, 2.4 * s, 10), new THREE.MeshStandardMaterial({ color: 0x2e8b3a, roughness: .9 })); f.position.set(ox, y * s * .9, z * 0 + 0); f.position.y = y * s * .85; f.castShadow = true; g.add(f); }); return g;
+        }
+        tree(-12, 4, 1.2); tree(12, 3, 1.4); tree(-14, -4, 1); tree(14, -5, 1.1); tree(-9, -9, 1.3); tree(10, -9, 1); tree(17, 8, .9); tree(-17, 9, .9);
+        for (let i = 0; i < 14; i++) { const b = new THREE.Mesh(new THREE.SphereGeometry(.6 + Math.random() * .5, 12, 12), new THREE.MeshStandardMaterial({ color: Math.random() > .5 ? 0x3aa845 : 0x2e8b3a, roughness: .9 })); const a = Math.random() * Math.PI * 2, r = 12 + Math.random() * 9; b.position.set(Math.cos(a) * r, .5, Math.sin(a) * r * .8 + 2); b.scale.y = .7; b.castShadow = true; scene.add(b); }
+        const flowerCols = [0xff4d6d, 0xffb300, 0xff6d00, 0xe84393, 0xffffff];
+        for (let i = 0; i < 60; i++) {
+            const f = new THREE.Mesh(new THREE.SphereGeometry(.13, 8, 8), new THREE.MeshStandardMaterial({ color: flowerCols[i % 5], emissive: flowerCols[i % 5], emissiveIntensity: .25 })); const side = i % 2 ? 1 : -1; f.position.set(side * (1.9 + Math.random() * .8), .35 + Math.random() * .15, 6 + Math.random() * 12); scene.add(f);
+            const st = new THREE.Mesh(new THREE.CylinderGeometry(.03, .03, .5, 6), new THREE.MeshStandardMaterial({ color: 0x2d7a2d })); st.position.set(f.position.x, .15, f.position.z); scene.add(st);
+        }
+        // diyas
+        const diyas = [], flames = [];
+        function diya(x, z, s = 1) {
+            const g = new THREE.Group(); g.position.set(x, 0, z); scene.add(g);
+            const base = new THREE.Mesh(new THREE.CylinderGeometry(.32 * s, .22 * s, .22 * s, 14), new THREE.MeshStandardMaterial({ color: 0xb34a1a, roughness: .8 })); base.position.y = .12; g.add(base);
+            const oil = new THREE.Mesh(new THREE.CylinderGeometry(.26 * s, .26 * s, .05 * s, 14), new THREE.MeshStandardMaterial({ color: 0x3a1500 })); oil.position.y = .24; g.add(oil);
+            const fl = new THREE.Sprite(new THREE.SpriteMaterial({ map: flameTex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false })); fl.position.y = .55 * s; fl.scale.set(.7 * s, 1 * s, 1); g.add(fl); flames.push(fl);
+            const gl = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, opacity: .5, depthWrite: false })); gl.scale.set(1.8, 1.8, 1); gl.position.y = .5; g.add(gl);
+            base.userData.action = 'diya'; base.userData.flame = fl; base.userData.glow = gl; diyas.push(base); return g;
+        }
+        for (let i = 0; i < 4; i++) { diya(2.4, 6.2 + i * 2.5); diya(-2.4, 6.2 + i * 2.5); }
+        diya(-4.4, 5.6, 1.2); diya(4.4, 5.6, 1.2); diya(-1.8, 7.6, 1.1); diya(1.8, 7.6, 1.1);
+        // gifts
+        const gifts = []; const giftCols = [[0xd81b60, 0xffd54f], [0x1e88e5, 0xffffff], [0x43a047, 0xffd54f]];
+        giftCols.forEach(([c, r], i) => {
+            const g = new THREE.Group(); g.position.set(-3.6 + i * 1.15, .4, 5.6); scene.add(g);
+            const b = new THREE.Mesh(new THREE.BoxGeometry(.85, .7, .85), new THREE.MeshStandardMaterial({ color: c, roughness: .5 })); b.castShadow = true; b.userData.action = 'gift'; g.add(b);
+            const r1 = new THREE.Mesh(new THREE.BoxGeometry(.9, .72, .16), new THREE.MeshStandardMaterial({ color: r })); g.add(r1);
+            const r2 = new THREE.Mesh(new THREE.BoxGeometry(.16, .72, .9), new THREE.MeshStandardMaterial({ color: r })); g.add(r2);
+            const bow = new THREE.Mesh(new THREE.SphereGeometry(.14, 10, 10), new THREE.MeshStandardMaterial({ color: r })); bow.position.y = .45; g.add(bow);
+            g.userData.spin = 0; g.userData.box = b; gifts.push(g);
+        });
+        // photo billboard - real house picture in 3D
+        const boardG = new THREE.Group(); boardG.position.set(8.5, 0, 10.5); boardG.rotation.y = -.55; scene.add(boardG);
+        [[-2.2], [2.2]].forEach(([x]) => { const p = new THREE.Mesh(new THREE.CylinderGeometry(.12, .12, 3.4, 10), woodMat); p.position.set(x, 1.7, 0); p.castShadow = true; boardG.add(p); });
+        const boardBack = new THREE.Mesh(new THREE.BoxGeometry(5.2, 3.4, .15), new THREE.MeshStandardMaterial({ color: 0x4a0808 })); boardBack.position.y = 3.4; boardBack.castShadow = true; boardG.add(boardBack);
+        const boardSign = new THREE.Mesh(new THREE.PlaneGeometry(5, 1.05), new THREE.MeshBasicMaterial({ map: signTex })); boardSign.position.set(0, 4.55, 0); boardG.add(boardSign);
+        const signBack = new THREE.Mesh(new THREE.BoxGeometry(5.2, .3, .12), new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: .5 })); signBack.position.set(0, 5.15, 0); boardG.add(signBack);
+        const housePhotoMat = new THREE.MeshBasicMaterial({ color: 0x222222 });
+        const housePhoto = new THREE.Mesh(new THREE.PlaneGeometry(4.8, 2.5), housePhotoMat); housePhoto.position.set(0, 3.05, .09); housePhoto.userData.action = 'photo'; boardG.add(housePhoto);
+        new THREE.TextureLoader().setCrossOrigin('anonymous').load('https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80', t => { t.colorSpace = THREE.SRGBColorSpace; housePhotoMat.map = t; housePhotoMat.color.set(0xffffff); housePhotoMat.needsUpdate = true; }, undefined, () => { housePhotoMat.color.set(0xc9a86a); });
+        // smoke
+        const smokes = []; for (let i = 0; i < 16; i++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: smokeTex, color: 0xdddddd, transparent: true, opacity: 0, depthWrite: false })); s.userData.t = Math.random(); scene.add(s); smokes.push(s); }
+        // lanterns
+        const lanterns = []; for (let i = 0; i < 14; i++) {
+            const m = new THREE.Mesh(new THREE.SphereGeometry(.42, 14, 14), new THREE.MeshStandardMaterial({ color: 0xff9a2e, emissive: 0xff7a00, emissiveIntensity: 1.2 })); m.position.set((Math.random() - .5) * 50, Math.random() * 18 + 4, (Math.random() - .5) * 50); scene.add(m);
+            const g = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, opacity: .7, depthWrite: false })); g.scale.set(2.4, 2.4, 1); m.add(g); m.userData.v = .5 + Math.random() * .9; m.userData.ph = Math.random() * 7; lanterns.push(m);
+        }
+        // petals (marigold shower)
+        const PETN = 320; const petGeo = new THREE.BufferGeometry(); const petPos = new Float32Array(PETN * 3); const petVel = new Float32Array(PETN); const petPh = new Float32Array(PETN);
+        for (let i = 0; i < PETN; i++) { petPos[i * 3] = (Math.random() - .5) * 70; petPos[i * 3 + 1] = Math.random() * 26 + 2; petPos[i * 3 + 2] = (Math.random() - .5) * 70; petVel[i] = .8 + Math.random() * 1.6; petPh[i] = Math.random() * 7; }
+        petGeo.setAttribute('position', new THREE.BufferAttribute(petPos, 3));
+        const petCol = new Float32Array(PETN * 3); const pc = [new THREE.Color(0xffb300), new THREE.Color(0xff6d00), new THREE.Color(0xff4d6d), new THREE.Color(0xffe082), new THREE.Color(0xffffff)];
+        for (let i = 0; i < PETN; i++) { const c = pc[i % 5]; petCol[i * 3] = c.r; petCol[i * 3 + 1] = c.g; petCol[i * 3 + 2] = c.b; } petGeo.setAttribute('color', new THREE.BufferAttribute(petCol, 3));
+        const petMat = new THREE.PointsMaterial({ size: .42, map: petalTex, vertexColors: true, transparent: true, opacity: .95, depthWrite: false, alphaTest: .05 });
+        const petals = new THREE.Points(petGeo, petMat); scene.add(petals);
+        // fireworks
+        const fireworks = []; const flash = new THREE.PointLight(0xffffff, 0, 60, 1.5); flash.position.set(0, 16, 0); scene.add(flash);
+        function burst(x, y, z, big = false) {
+            const n = big ? 260 : 150; const g = new THREE.BufferGeometry(); const p = new Float32Array(n * 3); const v = new Float32Array(n * 3); const c = new Float32Array(n * 3);
+            const hues = [Math.random(), Math.random(), Math.random()]; for (let i = 0; i < n; i++) {
+                p[i * 3] = x; p[i * 3 + 1] = y; p[i * 3 + 2] = z;
+                const th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1), sp = (big ? 9 : 6) + Math.random() * (big ? 8 : 6);
+                v[i * 3] = Math.sin(ph) * Math.cos(th) * sp; v[i * 3 + 1] = Math.cos(ph) * sp; v[i * 3 + 2] = Math.sin(ph) * Math.sin(th) * sp;
+                const col = new THREE.Color().setHSL(hues[i % 3], 1, .6); c[i * 3] = col.r; c[i * 3 + 1] = col.g; c[i * 3 + 2] = col.b;
+            }
+            g.setAttribute('position', new THREE.BufferAttribute(p, 3)); g.setAttribute('color', new THREE.BufferAttribute(c, 3));
+            const m = new THREE.PointsMaterial({ size: .4, vertexColors: true, transparent: true, opacity: 1, blending: THREE.AdditiveBlending, depthWrite: false });
+            const pts = new THREE.Points(g, m); scene.add(pts); fireworks.push({ pts, v, life: 1 }); flash.position.set(x, y, z); flash.intensity = 80; if (window.playPop) window.playPop();
+        }
+        function celebrate() { for (let k = 0; k < 6; k++)setTimeout(() => burst((Math.random() - .5) * 30, 14 + Math.random() * 10, (Math.random() - .5) * 20, k === 5), k * 380); }
+        window.ThreeCelebrate = celebrate;
+
+        // ---------- state & day/night ----------
+        let nightMix = 0, nightTarget = 0, doorOpen = false, doorAngle = 0, petalsOn = true, introOn = false, introT = 0;
+        const introFrom = new THREE.Vector3(34, 20, 38), introTo = new THREE.Vector3(13.5, 6.5, 17.5);
+        let camAnim = null;
+        function flyTo(pos, tgt, dur = 1.6) { camAnim = { t: 0, dur, fp: camera.position.clone(), tp: pos.clone(), ft: controls.target.clone(), tt: tgt.clone() }; controls.enabled = false; }
+        const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        function setNight(n) { nightTarget = n ? 1 : 0; $('dayNightBtn').classList.toggle('active', n); $('dayNightBtn').innerHTML = n ? '<i>☀️</i><small>Day</small>' : '<i>🌙</i><small>Night</small>'; $('night-badge').classList.toggle('show', n); houseGlow.intensity = n ? 2.2 : .4; }
+        window.addEventListener('invitationOpened', () => { introOn = true; introT = 0; setTimeout(() => { setNight(true); toast('🌙 Night falls • Diyas & lights are lit 🪔'); setTimeout(celebrate, 1300); }, 2000); });
+
+        // ---------- interaction ----------
+        const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(); let downX = 0, downY = 0;
+        const clickables = [doorMesh, housePhoto, ...gifts.map(g => g.userData.box), ...diyas];
+        renderer.domElement.addEventListener('pointerdown', e => { downX = e.clientX; downY = e.clientY; });
+        renderer.domElement.addEventListener('pointerup', e => {
+            if (Math.hypot(e.clientX - downX, e.clientY - downY) > 6) return;
+            ptr.x = (e.clientX / innerWidth) * 2 - 1; ptr.y = -(e.clientY / innerHeight) * 2 + 1; ray.setFromCamera(ptr, camera);
+            const hit = ray.intersectObjects(clickables, false)[0]; if (!hit) return; const a = hit.object.userData.action;
+            if (a === 'door') toggleDoor();
+            else if (a === 'gift') { const g = gifts.find(g => g.userData.box === hit.object); if (g) g.userData.spin = 1.2; if (window.launchConfetti) window.launchConfetti(60, e.clientX, e.clientY); toast('🎁 Shagun! Thank you for your blessings!'); }
+            else if (a === 'diya') { const f = hit.object.userData.flame; f.visible = !f.visible; hit.object.userData.glow.visible = f.visible; toast(f.visible ? '🪔 Diya lit! Shubh Deepavali vibes' : '🪔 Diya blown out'); }
+            else if (a === 'photo') { document.getElementById('gallery-modal').classList.add('open'); }
+        });
+        function toggleDoor() { doorOpen = !doorOpen; $('doorBtn').classList.toggle('active', doorOpen); toast(doorOpen ? '🚪 Padhaaro! Door open • Welcome inside 🙏' : '🚪 Door closed'); if (window.playBell) window.playBell(doorOpen ? 880 : 520, 1.2, .18); }
+        $('doorBtn').onclick = toggleDoor;
+        $('dayNightBtn').onclick = () => { const n = nightTarget < .5; setNight(n); toast(n ? '🌙 Beautiful night • Fireworks ready!' : '☀️ Shubh Prabhat • Sunny day!'); };
+        $('fireBtn').onclick = () => { celebrate(); if (window.launchConfetti) window.launchConfetti(180); toast('🎆 Shubh Celebration! Badhai Ho! 🥳'); };
+        $('petalBtn').onclick = () => { petalsOn = !petalsOn; $('petalBtn').classList.toggle('active', petalsOn); petals.visible = petalsOn; toast(petalsOn ? '🌸 Phoolon ki Varsha ON' : '🌸 Petals paused'); };
+        $('rotateBtn').onclick = () => { controls.autoRotate = !controls.autoRotate; $('rotateBtn').classList.toggle('active', controls.autoRotate); toast(controls.autoRotate ? '🔄 Auto-orbit ON' : '🔄 Auto-orbit OFF'); };
+        $('photoBtn').onclick = () => { flyTo(new THREE.Vector3(11.5, 4.2, 15.5), new THREE.Vector3(6, 3, 9), 1.4); toast('🏠 Our New Home • Sunshine Villa'); };
+        document.querySelectorAll('.view-btn').forEach(b => b.onclick = () => {
+            const v = b.dataset.view;
+            if (v === 'front') flyTo(new THREE.Vector3(13.5, 6.5, 17.5), new THREE.Vector3(0, 3.2, 0));
+            if (v === 'porch') flyTo(new THREE.Vector3(3.4, 2.6, 11.5), new THREE.Vector3(0, 2.4, 4));
+            if (v === 'aerial') flyTo(new THREE.Vector3(.5, 30, 10), new THREE.Vector3(0, 0, 2));
+            if (v === 'garden') flyTo(new THREE.Vector3(-13, 4.5, 13), new THREE.Vector3(0, 3.5, 2));
+        });
+
+        addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
+
+        // ---------- animate ----------
+        const clock = new THREE.Clock(); let first = true;
+        function animate() {
+            requestAnimationFrame(animate); const dt = Math.min(clock.getDelta(), .05), t = clock.elapsedTime;
+            // intro
+            if (introOn) {
+                introT += dt / 3.2; const e = ease(Math.min(introT, 1)); camera.position.lerpVectors(introFrom, introTo, e);
+                if (introT >= 1) introOn = false;
+            }
+            if (camAnim) {
+                camAnim.t += dt / camAnim.dur; const e = ease(Math.min(camAnim.t, 1)); camera.position.lerpVectors(camAnim.fp, camAnim.tp, e); controls.target.lerpVectors(camAnim.ft, camAnim.tt, e);
+                if (camAnim.t >= 1) { camAnim = null; controls.enabled = true; }
+            }
+            // day/night lerp
+            nightMix += (nightTarget - nightMix) * Math.min(dt * 1.6, 1); const n = nightMix;
+            skyUni.top.value.lerpColors(dayTop, nightTop, n); skyUni.bot.value.lerpColors(dayBot, nightBot, n);
+            scene.fog.color.lerpColors(dayFog, nightFog, n); scene.background.copy(scene.fog.color);
+            hemi.intensity = THREE.MathUtils.lerp(.9, .28, n); sun.intensity = THREE.MathUtils.lerp(2.0, .12, n); moonLight.intensity = THREE.MathUtils.lerp(0, .5, n);
+            starMat.opacity = n; moonMesh.visible = n > .15; moonGlow.material.opacity = n * .85; sunGlow.material.opacity = 1 - n * .85; sunMesh.visible = n < .85;
+            sun.color.setHex(n > .5 ? 0x8fa8ff : 0xfff2d0);
+            porchLight.intensity = THREE.MathUtils.lerp(0, 26, n) + (doorOpen ? 8 : 0);
+            houseGlow.intensity = THREE.MathUtils.lerp(.35, 2.4, n) + (doorOpen ? 1.5 : 0);
+            spot.intensity = THREE.MathUtils.lerp(0, 320, n);
+            diyaLightA.intensity = THREE.MathUtils.lerp(.2, 7, n); diyaLightB.intensity = diyaLightA.intensity;
+            winGlassMats.forEach(m => m.emissiveIntensity = THREE.MathUtils.lerp(.12, 1.6, n));
+            bulbMats.forEach(m => { if (m.emissiveIntensity !== undefined) m.emissiveIntensity = THREE.MathUtils.lerp(.5, 2.4, n); else m.opacity = THREE.MathUtils.lerp(.25, .85, n); });
+            clouds.forEach(c => { c.material.opacity = THREE.MathUtils.lerp(.85, .18, n); c.position.x += c.userData.v * dt; if (c.position.x > 130) c.position.x = -130; });
+            // door
+            doorAngle += ((doorOpen ? -1.85 : 0) - doorAngle) * Math.min(dt * 4, 1); doorPivot.rotation.y = doorAngle;
+            innerGlow.material.color.setHSL(.1, .9, THREE.MathUtils.lerp(.5, .72, n));
+            // flicker
+            const fl = Math.sin(t * 22) * .6 + Math.sin(t * 37) * .4 + (Math.random() - .5) * .8;
+            diyaLightA.intensity += fl * .5; diyaLightB.intensity -= fl * .4; porchLight.intensity += Math.sin(t * 9) * .6;
+            flames.forEach((f, i) => { if (!f.visible) return; const s = .65 + Math.sin(t * 18 + i * 2) * .12 + Math.random() * .06; f.scale.set(s, s * 1.5, 1); });
+            // smoke
+            smokes.forEach(s => {
+                s.userData.t += dt * .22; if (s.userData.t > 1) s.userData.t = 0; const k = s.userData.t;
+                s.position.set(3.2 + k * 2.2, 10.4 + k * 6, -1.5 - k * .8); s.scale.set(1 + k * 3.5, 1 + k * 3.5, 1); s.material.opacity = (1 - k) * .4 * (1 - n * .4);
+            });
+            // petals
+            if (petalsOn) {
+                const arr = petGeo.attributes.position.array; for (let i = 0; i < PETN; i++) {
+                    arr[i * 3 + 1] -= petVel[i] * dt; arr[i * 3] += Math.sin(t * 2 + petPh[i]) * .012;
+                    if (arr[i * 3 + 1] < 0) { arr[i * 3 + 1] = 24 + Math.random() * 4; arr[i * 3] = (Math.random() - .5) * 70; arr[i * 3 + 2] = (Math.random() - .5) * 70; }
+                } petGeo.attributes.position.needsUpdate = true;
+            }
+            // lanterns
+            lanterns.forEach(l => { l.position.y += l.userData.v * dt; l.position.x += Math.sin(t * .8 + l.userData.ph) * dt * .6; if (l.position.y > 26) { l.position.y = 2; l.position.x = (Math.random() - .5) * 50; l.position.z = (Math.random() - .5) * 50; } });
+            // title float
+            gateGlow.position.y = 11.6 + Math.sin(t * 1.2) * .35;
+            // rangoli slow rotate shimmer
+            rangoli.rotation.z += dt * .05;
+            // toran sway
+            toran.position.y = Math.sin(t * 1.6) * .03;
+            // gifts
+            gifts.forEach(g => { if (g.userData.spin > 0) { g.userData.spin -= dt; g.rotation.y += dt * 7; } });
+            // fireworks
+            flash.intensity *= Math.pow(.02, dt);
+            for (let i = fireworks.length - 1; i >= 0; i--) {
+                const f = fireworks[i]; f.life -= dt * .55; const arr = f.pts.geometry.attributes.position.array;
+                for (let j = 0; j < arr.length; j += 3) { arr[j] += f.v[j] * dt; arr[j + 1] += f.v[j + 1] * dt; arr[j + 2] += f.v[j + 2] * dt; f.v[j + 1] -= 6 * dt; f.v[j] *= .985; f.v[j + 1] *= .985; f.v[j + 2] *= .985; }
+                f.pts.geometry.attributes.position.needsUpdate = true; f.pts.material.opacity = Math.max(f.life, 0);
+                if (f.life <= 0) { scene.remove(f.pts); f.pts.geometry.dispose(); f.pts.material.dispose(); fireworks.splice(i, 1); }
+            }
+            controls.update(); renderer.render(scene, camera);
+            if (first) { first = false; setTimeout(() => window.dispatchEvent(new Event('sceneReady')), 400); }
+        }
+        animate();
+        setTimeout(() => window.dispatchEvent(new Event('sceneReady')), 3500);
+    </script>
+</body>
+
+</html>

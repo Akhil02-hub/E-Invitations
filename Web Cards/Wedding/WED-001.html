@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sophia & James — Wedding Invitation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --gold: #b08d57;
+            --gold-light: #d4b483;
+            --ink: #2e2a26;
+            --cream: #faf6f0;
+            --blush: #f3e8e0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: var(--cream);
+            color: var(--ink);
+        }
+
+        .font-script {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .gold {
+            color: var(--gold);
+        }
+
+        .bg-gold {
+            background: var(--gold);
+        }
+
+        .tracking-wideish {
+            letter-spacing: .35em;
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            background: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=80') center 30%/cover no-repeat;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(20, 15, 10, .35) 0%, rgba(20, 15, 10, .15) 40%, rgba(20, 15, 10, .65) 100%);
+        }
+
+        .hero-frame {
+            position: absolute;
+            inset: 18px;
+            border: 1px solid rgba(255, 255, 255, .55);
+            pointer-events: none;
+        }
+
+        .hero-frame::after {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1px solid rgba(255, 255, 255, .3);
+        }
+
+        /* fade-up animation on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity .9s ease, transform .9s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* ornament divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .divider .line {
+            height: 1px;
+            width: 70px;
+            background: linear-gradient(90deg, transparent, var(--gold));
+        }
+
+        .divider .line.r {
+            background: linear-gradient(90deg, var(--gold), transparent);
+        }
+
+        .divider .diamond {
+            width: 9px;
+            height: 9px;
+            background: var(--gold);
+            transform: rotate(45deg);
+        }
+
+        /* countdown */
+        .count-box {
+            background: #fff;
+            border: 1px solid #eadfce;
+            box-shadow: 0 8px 30px rgba(176, 141, 87, .12);
+        }
+
+        .count-num {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* photo frames */
+        .polaroid {
+            background: #fff;
+            padding: 14px 14px 18px;
+            box-shadow: 0 15px 45px rgba(46, 42, 38, .18);
+            transition: transform .5s ease, box-shadow .5s ease;
+        }
+
+        .polaroid:hover {
+            transform: translateY(-8px) rotate(0deg) !important;
+            box-shadow: 0 25px 60px rgba(46, 42, 38, .25);
+        }
+
+        /* timeline */
+        .timeline {
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(var(--gold-light), var(--gold), var(--gold-light));
+            transform: translateX(-50%);
+        }
+
+        .t-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--cream);
+            border: 3px solid var(--gold);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 6px;
+            z-index: 2;
+        }
+
+        @media(max-width:767px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .t-dot {
+                left: 20px;
+            }
+        }
+
+        /* floating petals */
+        .petal {
+            position: fixed;
+            top: -30px;
+            font-size: 18px;
+            color: var(--gold-light);
+            animation: fall linear infinite;
+            pointer-events: none;
+            z-index: 50;
+            opacity: .7;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-5vh) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+
+        /* RSVP */
+        .field {
+            width: 100%;
+            background: #fff;
+            border: 1px solid #e6dccb;
+            padding: 14px 18px;
+            font-size: 1.05rem;
+            outline: none;
+            transition: border .3s, box-shadow .3s;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .field:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(176, 141, 87, .15);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #c6a165, #a9814b);
+            color: #fff;
+            letter-spacing: .25em;
+            transition: transform .3s, box-shadow .3s;
+            box-shadow: 0 8px 24px rgba(176, 141, 87, .35);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px rgba(176, 141, 87, .45);
+        }
+
+        .heart-pulse {
+            display: inline-block;
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.18);
+            }
+        }
+
+        .venue-img {
+            transition: transform 6s ease;
+        }
+
+        .venue-card:hover .venue-img {
+            transform: scale(1.08);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- floating petals container (filled by JS) -->
+    <div id="petals"></div>
+
+    <!-- ============ HERO ============ -->
+    <header class="hero flex items-center justify-center text-center text-white">
+        <div class="hero-frame"></div>
+        <div class="relative z-10 px-6 pb-10">
+            <p class="tracking-wideish uppercase text-sm md:text-base mb-6 opacity-90">Together with their families</p>
+            <h1 class="font-script text-6xl md:text-8xl leading-tight drop-shadow-lg">Sophia <span
+                    class="text-4xl md:text-6xl align-middle heart-pulse">&</span> James</h1>
+            <p class="font-display italic text-lg md:text-2xl mt-6 opacity-95">request the pleasure of your company<br
+                    class="hidden sm:block"> as they say “I do”</p>
+            <div class="mt-8 inline-block border-t border-b border-white/60 py-3 px-8">
+                <p class="font-display text-xl md:text-3xl tracking-widest">SEPTEMBER 20, 2025</p>
+            </div>
+            <p class="mt-4 tracking-wideish text-sm uppercase opacity-90">Rosewood Garden Estate · Napa Valley, CA</p>
+            <a href="#invite" class="mt-10 inline-block text-white/90 text-3xl animate-bounce"
+                aria-label="Scroll down">▾</a>
+        </div>
+    </header>
+
+    <!-- ============ INVITATION MESSAGE + COUNTDOWN ============ -->
+    <section id="invite" class="py-20 md:py-28 px-6 text-center">
+        <div class="max-w-3xl mx-auto reveal">
+            <p class="font-script text-4xl md:text-5xl gold">Save the Date</p>
+            <div class="divider my-6"><span class="line"></span><span class="diamond"></span><span
+                    class="line r"></span></div>
+            <p class="text-xl md:text-2xl leading-relaxed">
+                Two hearts, one love, forever entwined. Join us as we begin our new chapter
+                surrounded by the people who mean the most. Your presence would make our day complete.
+            </p>
+        </div>
+
+        <div class="max-w-3xl mx-auto mt-14 reveal">
+            <p class="uppercase tracking-wideish text-sm gold mb-6">Counting down to forever</p>
+            <div id="countdown" class="grid grid-cols-4 gap-3 md:gap-6">
+                <div class="count-box rounded-lg py-5 md:py-8">
+                    <div id="cd-days" class="count-num text-3xl md:text-5xl font-semibold gold">--</div>
+                    <div class="uppercase tracking-widest text-xs md:text-sm mt-2 text-neutral-500">Days</div>
+                </div>
+                <div class="count-box rounded-lg py-5 md:py-8">
+                    <div id="cd-hours" class="count-num text-3xl md:text-5xl font-semibold gold">--</div>
+                    <div class="uppercase tracking-widest text-xs md:text-sm mt-2 text-neutral-500">Hours</div>
+                </div>
+                <div class="count-box rounded-lg py-5 md:py-8">
+                    <div id="cd-mins" class="count-num text-3xl md:text-5xl font-semibold gold">--</div>
+                    <div class="uppercase tracking-widest text-xs md:text-sm mt-2 text-neutral-500">Minutes</div>
+                </div>
+                <div class="count-box rounded-lg py-5 md:py-8">
+                    <div id="cd-secs" class="count-num text-3xl md:text-5xl font-semibold gold">--</div>
+                    <div class="uppercase tracking-widest text-xs md:text-sm mt-2 text-neutral-500">Seconds</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ OUR STORY / COUPLE PHOTOS ============ -->
+    <section class="py-20 md:py-28 px-6" style="background:var(--blush);">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-14 items-center">
+            <div class="relative reveal flex justify-center">
+                <div class="polaroid max-w-sm" style="transform:rotate(-3deg);">
+                    <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80"
+                        alt="Sophia and James together" class="w-full h-80 object-cover">
+                    <p class="font-script text-2xl text-center mt-3 gold">Us, forever ♥</p>
+                </div>
+                <div class="polaroid max-w-[190px] absolute -bottom-10 -right-2 md:right-6 hidden sm:block"
+                    style="transform:rotate(5deg);">
+                    <img src="https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=500&q=80"
+                        alt="The couple laughing" class="w-full h-40 object-cover">
+                </div>
+            </div>
+            <div class="reveal">
+                <p class="font-script text-4xl md:text-5xl gold">Our Story</p>
+                <div class="divider !justify-start my-6"><span class="line r" style="width:100px;"></span><span
+                        class="diamond"></span></div>
+                <p class="text-xl leading-relaxed">
+                    It began with a chance meeting at a small café in San Francisco, seven years ago.
+                    A shared umbrella in the rain, endless conversations, and countless adventures later —
+                    James got down on one knee under the stars of Big Sur.
+                </p>
+                <p class="text-xl leading-relaxed mt-5 italic text-neutral-600">
+                    “Whatever our souls are made of, his and mine are the same.” — Emily Brontë
+                </p>
+                <div class="mt-8 flex gap-8">
+                    <div>
+                        <p class="font-display text-3xl gold">7</p>
+                        <p class="uppercase tracking-widest text-xs text-neutral-500 mt-1">Years together</p>
+                    </div>
+                    <div>
+                        <p class="font-display text-3xl gold">23</p>
+                        <p class="uppercase tracking-widest text-xs text-neutral-500 mt-1">Trips shared</p>
+                    </div>
+                    <div>
+                        <p class="font-display text-3xl gold">∞</p>
+                        <p class="uppercase tracking-widest text-xs text-neutral-500 mt-1">Love ahead</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ VENUE ============ -->
+    <section class="py-20 md:py-28 px-6">
+        <div class="max-w-6xl mx-auto text-center reveal">
+            <p class="font-script text-4xl md:text-5xl gold">The Venue</p>
+            <div class="divider my-6"><span class="line"></span><span class="diamond"></span><span
+                    class="line r"></span></div>
+            <p class="text-xl max-w-2xl mx-auto">Nestled among rolling vineyards and century-old oaks, Rosewood Garden
+                Estate is where our forever begins.</p>
+        </div>
+
+        <div class="max-w-6xl mx-auto mt-12 grid md:grid-cols-5 gap-8 items-stretch">
+            <div class="venue-card md:col-span-3 rounded-xl overflow-hidden shadow-2xl reveal relative group">
+                <img class="venue-img w-full h-72 md:h-full object-cover"
+                    src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1400&q=80"
+                    alt="Rosewood Garden Estate wedding venue">
+                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-left">
+                    <p class="text-white font-display text-2xl">Rosewood Garden Estate</p>
+                    <p class="text-white/80 tracking-widest text-sm uppercase mt-1">Napa Valley, California</p>
+                </div>
+            </div>
+            <div class="md:col-span-2 flex flex-col gap-6 reveal">
+                <div class="bg-white rounded-xl p-7 shadow-lg border border-[#eee3d2] flex-1">
+                    <p class="uppercase tracking-wideish text-xs gold mb-3">Ceremony</p>
+                    <p class="font-display text-2xl">4:00 in the Afternoon</p>
+                    <p class="text-lg mt-2 text-neutral-600">The Garden Pavilion<br>1200 Vineyard Lane, Napa, CA 94558
+                    </p>
+                </div>
+                <div class="bg-white rounded-xl p-7 shadow-lg border border-[#eee3d2] flex-1">
+                    <p class="uppercase tracking-wideish text-xs gold mb-3">Reception</p>
+                    <p class="font-display text-2xl">6:00 in the Evening</p>
+                    <p class="text-lg mt-2 text-neutral-600">The Grand Ballroom — dinner, dancing & toasts under the
+                        stars.</p>
+                </div>
+                <a href="https://maps.google.com/?q=Napa+Valley,CA" target="_blank" rel="noopener"
+                    class="btn-gold text-center uppercase text-sm py-4 rounded-xl">Get Directions</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ SCHEDULE TIMELINE ============ -->
+    <section class="py-20 md:py-28 px-6" style="background:var(--blush);">
+        <div class="max-w-4xl mx-auto text-center reveal">
+            <p class="font-script text-4xl md:text-5xl gold">The Day's Events</p>
+            <div class="divider my-6"><span class="line"></span><span class="diamond"></span><span
+                    class="line r"></span></div>
+        </div>
+
+        <div class="timeline max-w-4xl mx-auto mt-10">
+            <!-- item -->
+            <div class="relative py-6 md:grid md:grid-cols-2 md:gap-16 reveal">
+                <span class="t-dot"></span>
+                <div class="pl-12 md:pl-0 md:text-right">
+                    <p class="font-display text-2xl gold">3:30 PM</p>
+                    <p class="font-display text-xl mt-1">Guest Arrival</p>
+                    <p class="text-neutral-600 text-lg">Welcome drinks in the rose garden</p>
+                </div>
+                <div class="hidden md:block"></div>
+            </div>
+            <div class="relative py-6 md:grid md:grid-cols-2 md:gap-16 reveal">
+                <span class="t-dot"></span>
+                <div class="hidden md:block"></div>
+                <div class="pl-12 md:pl-0">
+                    <p class="font-display text-2xl gold">4:00 PM</p>
+                    <p class="font-display text-xl mt-1">The Ceremony</p>
+                    <p class="text-neutral-600 text-lg">Vows beneath the oak canopy</p>
+                </div>
+            </div>
+            <div class="relative py-6 md:grid md:grid-cols-2 md:gap-16 reveal">
+                <span class="t-dot"></span>
+                <div class="pl-12 md:pl-0 md:text-right">
+                    <p class="font-display text-2xl gold">5:00 PM</p>
+                    <p class="font-display text-xl mt-1">Cocktail Hour</p>
+                    <p class="text-neutral-600 text-lg">Wine tasting & live jazz quartet</p>
+                </div>
+                <div class="hidden md:block"></div>
+            </div>
+            <div class="relative py-6 md:grid md:grid-cols-2 md:gap-16 reveal">
+                <span class="t-dot"></span>
+                <div class="hidden md:block"></div>
+                <div class="pl-12 md:pl-0">
+                    <p class="font-display text-2xl gold">6:00 PM</p>
+                    <p class="font-display text-xl mt-1">Dinner & Toasts</p>
+                    <p class="text-neutral-600 text-lg">Farm-to-table feast in the ballroom</p>
+                </div>
+            </div>
+            <div class="relative py-6 md:grid md:grid-cols-2 md:gap-16 reveal">
+                <span class="t-dot"></span>
+                <div class="pl-12 md:pl-0 md:text-right">
+                    <p class="font-display text-2xl gold">8:30 PM</p>
+                    <p class="font-display text-xl mt-1">Dancing & Fireworks</p>
+                    <p class="text-neutral-600 text-lg">Celebrate with us until midnight</p>
+                </div>
+                <div class="hidden md:block"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ GALLERY ============ -->
+    <section class="py-20 md:py-28 px-6">
+        <div class="max-w-6xl mx-auto text-center reveal">
+            <p class="font-script text-4xl md:text-5xl gold">Moments We Love</p>
+            <div class="divider my-6"><span class="line"></span><span class="diamond"></span><span
+                    class="line r"></span></div>
+        </div>
+        <div class="max-w-6xl mx-auto mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <img class="reveal rounded-lg object-cover w-full h-52 md:h-64 shadow-lg hover:scale-[1.03] transition-transform duration-500"
+                src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80"
+                alt="Holding hands with rings">
+            <img class="reveal rounded-lg object-cover w-full h-52 md:h-64 shadow-lg hover:scale-[1.03] transition-transform duration-500"
+                src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80"
+                alt="Couple at sunset">
+            <img class="reveal rounded-lg object-cover w-full h-52 md:h-64 shadow-lg hover:scale-[1.03] transition-transform duration-500"
+                src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80"
+                alt="Wedding celebration">
+            <img class="reveal rounded-lg object-cover w-full h-52 md:h-64 shadow-lg hover:scale-[1.03] transition-transform duration-500"
+                src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80"
+                alt="Bridal bouquet and dress">
+        </div>
+    </section>
+
+    <!-- ============ RSVP ============ -->
+    <section class="py-20 md:py-28 px-6 relative"
+        style="background:linear-gradient(rgba(30,22,14,.72),rgba(30,22,14,.72)), url('https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1600&q=80') center/cover fixed;">
+        <div class="max-w-xl mx-auto text-center text-white reveal">
+            <p class="font-script text-5xl">RSVP</p>
+            <p class="mt-4 text-xl text-white/90">Kindly respond by <span class="italic">August 15, 2025</span></p>
+
+            <form id="rsvpForm"
+                class="mt-10 bg-white/95 backdrop-blur rounded-2xl p-8 md:p-10 text-left text-neutral-800 shadow-2xl">
+                <label class="block mb-5">
+                    <span class="uppercase tracking-widest text-xs gold">Full Name</span>
+                    <input required type="text" class="field mt-2 rounded-md" placeholder="Your name">
+                </label>
+                <label class="block mb-5">
+                    <span class="uppercase tracking-widest text-xs gold">Email</span>
+                    <input required type="email" class="field mt-2 rounded-md" placeholder="you@example.com">
+                </label>
+                <div class="grid grid-cols-2 gap-4 mb-5">
+                    <label class="block">
+                        <span class="uppercase tracking-widest text-xs gold">Attending?</span>
+                        <select class="field mt-2 rounded-md">
+                            <option>Joyfully accepts</option>
+                            <option>Regretfully declines</option>
+                        </select>
+                    </label>
+                    <label class="block">
+                        <span class="uppercase tracking-widest text-xs gold">Guests</span>
+                        <select class="field mt-2 rounded-md">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </label>
+                </div>
+                <label class="block mb-7">
+                    <span class="uppercase tracking-widest text-xs gold">A note for the couple</span>
+                    <textarea rows="3" class="field mt-2 rounded-md" placeholder="Share your wishes..."></textarea>
+                </label>
+                <button type="submit" class="btn-gold w-full py-4 rounded-md uppercase text-sm">Send RSVP</button>
+                <p id="rsvpThanks" class="hidden text-center mt-5 text-lg gold font-display">Thank you! We can't wait to
+                    celebrate with you. ♥</p>
+            </form>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="py-14 text-center px-6">
+        <p class="font-script text-4xl gold">Sophia & James</p>
+        <div class="divider my-5"><span class="line"></span><span class="diamond"></span><span class="line r"></span>
+        </div>
+        <p class="uppercase tracking-wideish text-sm text-neutral-500">09 · 20 · 2025 — Napa Valley, California</p>
+        <p class="mt-3 text-neutral-400 italic">#SophiaSaysYesToJames</p>
+    </footer>
+
+    <script>
+        // ---- Countdown ----
+        const target = new Date('2025-09-20T16:00:00-07:00').getTime();
+        function pad(n) { return String(n).padStart(2, '0'); }
+        function tick() {
+            let diff = target - Date.now();
+            if (diff < 0) diff = 0;
+            const d = Math.floor(diff / 86400000),
+                h = Math.floor(diff / 3600000) % 24,
+                m = Math.floor(diff / 60000) % 60,
+                s = Math.floor(diff / 1000) % 60;
+            document.getElementById('cd-days').textContent = d;
+            document.getElementById('cd-hours').textContent = pad(h);
+            document.getElementById('cd-mins').textContent = pad(m);
+            document.getElementById('cd-secs').textContent = pad(s);
+        }
+        tick(); setInterval(tick, 1000);
+
+        // ---- Scroll reveal ----
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+        }, { threshold: .12 });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        // ---- Floating petals ----
+        const petalsWrap = document.getElementById('petals');
+        const symbols = ['❀', '✿', '❁', '♥'];
+        for (let i = 0; i < 14; i++) {
+            const p = document.createElement('span');
+            p.className = 'petal';
+            p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = (9 + Math.random() * 10) + 's';
+            p.style.animationDelay = (Math.random() * 12) + 's';
+            p.style.fontSize = (12 + Math.random() * 16) + 'px';
+            petalsWrap.appendChild(p);
+        }
+
+        // ---- RSVP form ----
+        document.getElementById('rsvpForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            document.getElementById('rsvpThanks').classList.remove('hidden');
+            this.querySelector('button').textContent = 'RSVP Sent ♥';
+            this.querySelector('button').disabled = true;
+        });
+    </script>
+</body>
+
+</html>

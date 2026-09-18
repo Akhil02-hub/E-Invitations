@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="bubblegum">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ava's 7th Birthday Bash! 🎉 You're Invited</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Caveat:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        bubbly: ['"Baloo 2"', 'cursive'],
+                        hand: ['Caveat', 'cursive'],
+                        body: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #100722;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a0b2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(#ff5e8a, #a855f7);
+            border-radius: 20px;
+        }
+
+        /* THEMES */
+        :root {
+            --c1: #ff5e8a;
+            --c2: #a855f7;
+            --c3: #6d28d9;
+            --accent: #ffe500;
+            --ink: #2b0a2e;
+        }
+
+        html[data-theme="bubblegum"] {
+            --c1: #ff5e8a;
+            --c2: #a855f7;
+            --c3: #6d28d9;
+            --accent: #ffea00;
+            --cardGrad: linear-gradient(145deg, #ff7aa8 0%, #ff5e8a 25%, #a855f7 70%, #6d28d9 100%);
+            --pattern: rgba(255, 255, 255, .18);
+        }
+
+        html[data-theme="dino"] {
+            --c1: #4ade80;
+            --c2: #16a34a;
+            --c3: #14532d;
+            --accent: #fef08a;
+            --cardGrad: linear-gradient(145deg, #86efac 0%, #22c55e 30%, #15803d 65%, #052e16 100%);
+            --pattern: rgba(255, 255, 255, .16);
+        }
+
+        html[data-theme="space"] {
+            --c1: #22d3ee;
+            --c2: #6366f1;
+            --c3: #1e1b4b;
+            --accent: #f0abfc;
+            --cardGrad: linear-gradient(145deg, #0e0a3a 0%, #312e81 35%, #6d28d9 70%, #06b6d4 100%);
+            --pattern: rgba(255, 255, 255, .14);
+        }
+
+        html[data-theme="ocean"] {
+            --c1: #38bdf8;
+            --c2: #0284c7;
+            --c3: #0c4a6e;
+            --accent: #fef9c3;
+            --cardGrad: linear-gradient(145deg, #7dd3fc 0%, #0ea5e9 35%, #0369a1 70%, #082f49 100%);
+            --pattern: rgba(255, 255, 255, .18);
+        }
+
+        html[data-theme="sunshine"] {
+            --c1: #fbbf24;
+            --c2: #f43f5e;
+            --c3: #7c2d12;
+            --accent: #fef08a;
+            --cardGrad: linear-gradient(145deg, #fde68a 0%, #fb923c 30%, #f43f5e 65%, #881337 100%);
+            --pattern: rgba(255, 255, 255, .2);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, .08);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, .15);
+        }
+
+        .glass-strong {
+            background: rgba(20, 8, 40, .72);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, .12);
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: .55;
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes orbFloat {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                transform: translateY(-40px) scale(1.15);
+            }
+        }
+
+        /* LOADER */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: radial-gradient(circle at 50% 30%, #3b1d5a, #100722 70%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity .7s, visibility .7s;
+        }
+
+        #loader.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .cake-bounce {
+            font-size: 80px;
+            animation: cakeB 1s ease-in-out infinite;
+            filter: drop-shadow(0 10px 20px rgba(255, 94, 138, .5));
+        }
+
+        @keyframes cakeB {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-5deg);
+            }
+
+            50% {
+                transform: translateY(-18px) rotate(5deg) scale(1.05);
+            }
+        }
+
+        .load-bar {
+            width: 220px;
+            height: 8px;
+            background: rgba(255, 255, 255, .15);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .load-bar div {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff5e8a, #ffea00, #22d3ee);
+            border-radius: 20px;
+            animation: loadFill 2s ease forwards;
+        }
+
+        @keyframes loadFill {
+            to {
+                width: 100%;
+            }
+        }
+
+        /* ENVELOPE */
+        #envelopeOverlay {
+            position: fixed;
+            inset: 0;
+            z-index: 70;
+            background: rgba(10, 4, 22, .82);
+            backdrop-filter: blur(14px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: opacity .8s, visibility .8s;
+        }
+
+        #envelopeOverlay.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .envelope {
+            position: relative;
+            width: min(360px, 85vw);
+            height: 240px;
+            perspective: 800px;
+            margin: 0 auto 18px;
+        }
+
+        .env-back {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #7c3aed, #db2777);
+            border-radius: 18px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, .5);
+        }
+
+        .env-letter {
+            position: absolute;
+            left: 14px;
+            right: 14px;
+            top: 12px;
+            bottom: 12px;
+            background: #fffaf0;
+            border-radius: 12px;
+            z-index: 2;
+            transition: transform .9s cubic-bezier(.34, 1.56, .64, 1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px;
+            color: #4a0e2e;
+        }
+
+        .env-front {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            border-radius: 18px;
+            z-index: 3;
+            clip-path: polygon(0 35%, 50% 62%, 100% 35%, 100% 100%, 0 100%);
+            box-shadow: inset 0 -20px 40px rgba(0, 0, 0, .2);
+        }
+
+        .env-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 135px;
+            background: linear-gradient(180deg, #c084fc, #9333ea);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            border-radius: 18px 18px 0 0;
+            transform-origin: top center;
+            transition: transform .7s ease, z-index 0s .3s;
+            z-index: 4;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .3);
+        }
+
+        .envelope.open .env-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope.open .env-letter {
+            transform: translateY(-115px) scale(1.04) rotate(-1deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .4);
+        }
+
+        .env-seal {
+            position: absolute;
+            left: 50%;
+            top: 88px;
+            transform: translateX(-50%);
+            width: 56px;
+            height: 56px;
+            background: radial-gradient(circle, #ffea00, #ff5e8a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            z-index: 5;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .4), 0 0 0 4px white;
+            transition: .4s;
+        }
+
+        .envelope.open .env-seal {
+            transform: translateX(-50%) scale(0) rotate(180deg);
+        }
+
+        /* 3D CARD */
+        .scene {
+            perspective: 1400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 620px;
+            position: relative;
+        }
+
+        #tilt {
+            transform-style: preserve-3d;
+            will-change: transform;
+            position: relative;
+        }
+
+        #flip {
+            position: relative;
+            width: min(380px, 86vw);
+            height: min(600px, 135vw);
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(.34, 1.3, .4, 1);
+        }
+
+        #flip.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .2), inset 0 1px 0 rgba(255, 255, 255, .4);
+        }
+
+        .face.front {
+            background: var(--cardGrad);
+        }
+
+        .face.back {
+            background: #fffaf2;
+            transform: rotateY(180deg);
+            color: #2b1a3a;
+        }
+
+        .front-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(var(--pattern) 2.5px, transparent 2.6px);
+            background-size: 22px 22px;
+            opacity: .9;
+        }
+
+        .front-shine {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 30%), rgba(255, 255, 255, .35), transparent 55%);
+            pointer-events: none;
+            z-index: 5;
+            mix-blend-mode: overlay;
+        }
+
+        .photo-arch {
+            width: 210px;
+            height: 240px;
+            border-radius: 110px 110px 24px 24px;
+            border: 6px solid white;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .35), 0 0 0 4px rgba(255, 255, 255, .3);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .photo-arch img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .8s;
+        }
+
+        .photo-arch:hover img {
+            transform: scale(1.08);
+        }
+
+        .photo-arch::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, .25));
+        }
+
+        .ribbon {
+            background: var(--accent);
+            color: #1a0b2e;
+            font-weight: 800;
+            letter-spacing: .18em;
+            font-size: 11px;
+            padding: 7px 18px;
+            border-radius: 100px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, .3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-shadow {
+            position: absolute;
+            bottom: -28px;
+            left: 10%;
+            right: 10%;
+            height: 30px;
+            background: radial-gradient(ellipse, rgba(0, 0, 0, .55), transparent 70%);
+            filter: blur(8px);
+        }
+
+        .float-emoji {
+            position: absolute;
+            font-size: 28px;
+            animation: floatE 3.5s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .4));
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        @keyframes floatE {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-8deg);
+            }
+
+            50% {
+                transform: translateY(-16px) rotate(8deg);
+            }
+        }
+
+        .float-wrap {
+            animation: cardFloat 5s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes cardFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .badge-age {
+            background: white;
+            color: #111;
+            font-weight: 800;
+            border-radius: 100px;
+            padding: 6px 18px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .3);
+            display: inline-block;
+        }
+
+        .date-pill {
+            background: rgba(0, 0, 0, .35);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, .4);
+            border-radius: 100px;
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .avatar-stack img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2.5px solid white;
+            object-fit: cover;
+            margin-left: -10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+        }
+
+        .avatar-stack img:first-child {
+            margin-left: 0;
+        }
+
+        /* BACK */
+        .detail-box {
+            background: #fff;
+            border: 2px dashed #e9c4ff;
+            border-radius: 16px;
+            padding: 10px;
+        }
+
+        .qr-frame {
+            background: white;
+            border: 3px solid #1a0b2e;
+            border-radius: 14px;
+            padding: 6px;
+        }
+
+        /* CONTROLS */
+        .input-cute {
+            width: 100%;
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 14px;
+            padding: 10px 14px;
+            font-size: 14px;
+            color: white;
+            outline: none;
+            transition: .3s;
+        }
+
+        .input-cute:focus {
+            border-color: #ff5e8a;
+            background: rgba(255, 255, 255, .15);
+            box-shadow: 0 0 0 3px rgba(255, 94, 138, .25);
+        }
+
+        .input-cute option {
+            color: black;
+        }
+
+        input[type="date"].input-cute,
+        input[type="time"].input-cute {
+            color-scheme: dark;
+        }
+
+        .theme-dot {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: .3s;
+            position: relative;
+        }
+
+        .theme-dot.active {
+            border-color: white;
+            transform: scale(1.12);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, .35), 0 8px 20px rgba(0, 0, 0, .4);
+        }
+
+        .thumb-select {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2.5px solid transparent;
+            transition: .3s;
+        }
+
+        .thumb-select.active {
+            border-color: #ffea00;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .4);
+        }
+
+        .thumb-select:hover {
+            transform: scale(1.05);
+        }
+
+        .toggle {
+            width: 46px;
+            height: 26px;
+            background: rgba(255, 255, 255, .2);
+            border-radius: 100px;
+            position: relative;
+            cursor: pointer;
+            transition: .3s;
+            flex-shrink: 0;
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: .3s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+        }
+
+        .toggle.on {
+            background: linear-gradient(90deg, #ff5e8a, #a855f7);
+        }
+
+        .toggle.on::after {
+            left: 23px;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #ff5e8a, #ffea00, #22d3ee);
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .4);
+            border: 3px solid #ff5e8a;
+        }
+
+        .btn-party {
+            background: linear-gradient(135deg, #ff5e8a, #a855f7);
+            border-radius: 16px;
+            padding: 12px 16px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: .3s;
+            box-shadow: 0 8px 25px rgba(255, 94, 138, .4);
+            border: 1px solid rgba(255, 255, 255, .25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .btn-party:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(255, 94, 138, .55);
+        }
+
+        .btn-party:active {
+            transform: scale(.97);
+        }
+
+        .btn-ghost {
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 16px;
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, .18);
+            transform: translateY(-2px);
+        }
+
+        .count-box {
+            background: linear-gradient(180deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, .06));
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 16px;
+            padding: 10px 4px;
+            text-align: center;
+        }
+
+        .count-box b {
+            font-size: 24px;
+            font-family: 'Baloo 2';
+            display: block;
+            line-height: 1;
+        }
+
+        .count-box span {
+            font-size: 10px;
+            letter-spacing: .15em;
+            opacity: .8;
+            font-weight: 600;
+        }
+
+        /* GALLERY */
+        .g-card {
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .12);
+            transition: .4s;
+        }
+
+        .g-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(255, 94, 138, .3);
+            border-color: rgba(255, 94, 138, .5);
+        }
+
+        .g-card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            transition: .6s;
+        }
+
+        .g-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .g-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(10, 4, 22, .9));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 16px;
+        }
+
+        .filter-btn {
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .15);
+            transition: .3s;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: linear-gradient(90deg, #ff5e8a, #a855f7);
+            border-color: transparent;
+        }
+
+        .like-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 38px;
+            height: 38px;
+            background: rgba(0, 0, 0, .5);
+            backdrop-filter: blur(8px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .3s;
+            border: 1px solid rgba(255, 255, 255, .2);
+        }
+
+        .like-btn.liked {
+            background: #ff2e6d;
+            border-color: #ff2e6d;
+            transform: scale(1.1);
+        }
+
+        .like-btn:hover {
+            transform: scale(1.15);
+        }
+
+        /* TIMELINE */
+        .timeline {
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            bottom: 10px;
+            width: 3px;
+            background: linear-gradient(#ff5e8a, #ffea00, #22d3ee, #a855f7);
+            border-radius: 10px;
+        }
+
+        .t-dot {
+            position: absolute;
+            left: -28px;
+            top: 4px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #1a0b2e;
+            border: 3px solid var(--c1);
+            box-shadow: 0 0 12px var(--c1);
+        }
+
+        /* RSVP */
+        .attend-card {
+            border: 2px solid rgba(255, 255, 255, .15);
+            background: rgba(255, 255, 255, .06);
+            border-radius: 16px;
+            padding: 14px;
+            text-align: center;
+            cursor: pointer;
+            transition: .3s;
+            flex: 1;
+        }
+
+        .attend-card.selected-yes {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, .15);
+            box-shadow: 0 0 20px rgba(34, 197, 94, .3);
+        }
+
+        .attend-card.selected-no {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, .15);
+            box-shadow: 0 0 20px rgba(239, 68, 68, .3);
+        }
+
+        .guest-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        /* LIGHTBOX */
+        #lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+            background: rgba(5, 2, 12, .92);
+            backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #lightbox.show {
+            display: flex;
+        }
+
+        #lightbox img {
+            max-height: 75vh;
+            max-width: 90vw;
+            border-radius: 20px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .6);
+            border: 2px solid rgba(255, 255, 255, .2);
+            object-fit: contain;
+        }
+
+        /* MISC */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 60;
+            font-size: 14px;
+            animation: sparkFade 1s ease forwards;
+        }
+
+        @keyframes sparkFade {
+            0% {
+                transform: scale(0) rotate(0);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.3) rotate(90deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0) rotate(180deg) translateY(-20px);
+                opacity: 0;
+            }
+        }
+
+        .burst-balloon {
+            position: fixed;
+            bottom: -80px;
+            border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
+            z-index: 65;
+            pointer-events: none;
+            animation: burstUp 3s ease-in forwards;
+        }
+
+        .burst-balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            width: 2px;
+            height: 22px;
+            background: rgba(255, 255, 255, .6);
+        }
+
+        @keyframes burstUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-110vh) scale(1.1) rotate(15deg);
+                opacity: 0;
+            }
+        }
+
+        .css-balloon {
+            position: fixed;
+            bottom: -120px;
+            border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
+            opacity: .35;
+            pointer-events: none;
+            z-index: 1;
+            animation: cssFloat linear infinite;
+        }
+
+        @keyframes cssFloat {
+            to {
+                transform: translateY(-120vh) rotate(10deg);
+            }
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            z-index: 90;
+            transition: .4s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: .8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-family: 'Baloo 2';
+            font-weight: 800;
+            font-size: clamp(28px, 5vw, 48px);
+            line-height: 1.1;
+        }
+
+        .grad-text {
+            background: linear-gradient(90deg, #ff5e8a, #ffea00, #22d3ee, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: gradMove 4s linear infinite;
+        }
+
+        @keyframes gradMove {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .music-bars {
+            display: flex;
+            gap: 3px;
+            align-items: end;
+            height: 18px;
+        }
+
+        .music-bars span {
+            width: 4px;
+            background: #22d3ee;
+            border-radius: 4px;
+            animation: bars 1s ease-in-out infinite;
+        }
+
+        .music-bars span:nth-child(2) {
+            animation-delay: .2s;
+            background: #ff5e8a;
+        }
+
+        .music-bars span:nth-child(3) {
+            animation-delay: .4s;
+            background: #ffea00;
+        }
+
+        .music-bars span:nth-child(4) {
+            animation-delay: .6s;
+            background: #a855f7;
+        }
+
+        .music-bars.paused span {
+            animation-play-state: paused;
+            height: 4px !important;
+        }
+
+        @keyframes bars {
+
+            0%,
+            100% {
+                height: 5px;
+            }
+
+            50% {
+                height: 18px;
+            }
+        }
+
+        .map-frame {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, .15);
+        }
+
+        .stepper-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .12);
+            font-weight: 800;
+            transition: .2s;
+        }
+
+        .stepper-btn:hover {
+            background: #ff5e8a;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #flip,
+            #flip * {
+                visibility: visible;
+            }
+
+            #flip {
+                position: fixed;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%) !important;
+            }
+
+            #tilt {
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- BG -->
+    <canvas id="bg3d" class="fixed inset-0 w-full h-full" style="z-index:0;"></canvas>
+    <div class="orb w-[400px] h-[400px] bg-pink-600 top-[-100px] left-[-100px]"></div>
+    <div class="orb w-[350px] h-[350px] bg-purple-700 top-[30%] right-[-120px]" style="animation-delay:2s;"></div>
+    <div class="orb w-[300px] h-[300px] bg-cyan-500 bottom-[-80px] left-[20%]" style="animation-delay:4s; opacity:.35;">
+    </div>
+    <div id="cssBalloons"></div>
+
+    <!-- LOADER -->
+    <div id="loader">
+        <div class="cake-bounce">🎂</div>
+        <h1 class="font-bubbly font-extrabold text-3xl mt-2">Preparing the Party...</h1>
+        <p class="opacity-70 text-sm mt-1 font-body">Inflating balloons & baking cake</p>
+        <div class="load-bar">
+            <div></div>
+        </div>
+    </div>
+
+    <!-- NAV -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-strong border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2">
+                <span class="w-10 h-10 rounded-2xl flex items-center justify-center text-2xl font-bold"
+                    style="background:linear-gradient(135deg,#ff5e8a,#a855f7); box-shadow:0 6px 20px rgba(255,94,138,.5);">🎈</span>
+                <span class="font-bubbly font-extrabold text-xl">Party<span class="grad-text">Pop!</span></span>
+            </a>
+            <div class="hidden md:flex items-center gap-7 text-sm font-medium opacity-90">
+                <a href="#invite" class="hover:text-pink-400 transition">Invitation</a>
+                <a href="#memories" class="hover:text-pink-400 transition">Family Memories</a>
+                <a href="#details" class="hover:text-pink-400 transition">Party Details</a>
+                <a href="#rsvp" class="hover:text-pink-400 transition">RSVP</a>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="navMusicBtn"
+                    class="w-10 h-10 rounded-full glass flex items-center justify-center hover:scale-110 transition"
+                    title="Music">🎵</button>
+                <a href="#rsvp"
+                    class="hidden sm:inline-flex font-bubbly font-bold text-sm px-5 py-2.5 rounded-full text-white"
+                    style="background:linear-gradient(90deg,#ff5e8a,#a855f7); box-shadow:0 6px 20px rgba(255,94,138,.5);">RSVP
+                    Now ✨</a>
+                <button id="menuBtn" class="md:hidden w-10 h-10 rounded-full glass flex items-center justify-center"><i
+                        class="fa fa-bars"></i></button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden px-6 pb-4 flex flex-col gap-3 text-sm font-medium">
+            <a href="#invite">💌 Invitation</a><a href="#memories">📸 Family Memories</a><a href="#details">🎉 Party
+                Details</a><a href="#rsvp">💌 RSVP</a>
+        </div>
+    </nav>
+
+    <!-- ENVELOPE OVERLAY -->
+    <div id="envelopeOverlay">
+        <div class="text-center max-w-md w-full">
+            <div class="envelope" id="envelope">
+                <div class="env-back"></div>
+                <div class="env-letter">
+                    <span class="text-[10px] font-bold tracking-[.2em] text-pink-600">YOU'RE INVITED</span>
+                    <img id="envPreviewImg"
+                        src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=400&q=80"
+                        class="w-full h-[110px] object-cover rounded-lg my-2" alt="family" />
+                    <p class="font-hand text-xl leading-none text-purple-900">Ava's 7th Birthday Bash!</p>
+                    <p class="text-[11px] opacity-70">Tap below to open 💌</p>
+                </div>
+                <div class="env-front"></div>
+                <div class="env-flap"></div>
+                <div class="env-seal">💝</div>
+            </div>
+            <h2 class="font-bubbly font-extrabold text-3xl md:text-4xl">You've Got Birthday Mail! 💌</h2>
+            <p class="opacity-70 text-sm mt-2 mb-5">The Johnson Family sent you a magical 3D invitation.<br />Drag, flip
+                & play with it!</p>
+            <button id="openEnvelopeBtn"
+                class="font-bubbly font-extrabold text-lg px-10 py-4 rounded-full text-white transition hover:scale-105"
+                style="background:linear-gradient(90deg,#ff5e8a,#ff9f1c,#ffea00); box-shadow:0 10px 30px rgba(255,94,138,.6); animation:cardFloat 2.5s ease-in-out infinite;">Tap
+                to Open ✨</button>
+            <p class="text-xs opacity-50 mt-4">🔊 Turn sound on for the full magic</p>
+        </div>
+    </div>
+
+    <main class="relative z-10">
+
+        <!-- HERO / 3D STAGE -->
+        <section id="invite" class="pt-28 md:pt-32 pb-10 px-4 md:px-6 max-w-[1400px] mx-auto">
+            <div class="text-center mb-8 reveal visible">
+                <span class="ribbon"><i class="fa fa-sparkles"></i> INTERACTIVE 3D INVITATION <i
+                        class="fa fa-sparkles"></i></span>
+                <h1 class="section-title mt-4">A Magical Birthday <span class="grad-text">Awaits You!</span></h1>
+                <p class="opacity-70 mt-2 text-sm md:text-base">🖱️ Move to tilt • Click card to flip • Drag to spin ✨
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-[1fr_340px] gap-5 items-start">
+
+                <!-- CENTER: CARD -->
+                <div class="order-1">
+                    <div class="glass rounded-[28px] p-3 md:p-6 relative overflow-hidden">
+                        <div class="absolute top-4 left-5 flex gap-2 z-10">
+                            <span class="w-3 h-3 rounded-full bg-red-400"></span><span
+                                class="w-3 h-3 rounded-full bg-yellow-400"></span><span
+                                class="w-3 h-3 rounded-full bg-green-400"></span>
+                        </div>
+                        <div class="absolute top-3 right-5 text-[11px] font-bold tracking-widest opacity-50 z-10">● LIVE
+                            3D PREVIEW</div>
+                        <div class="scene" id="stage">
+                            <span class="float-emoji" style="top:8%; left:6%; animation-delay:0s;">🎈</span>
+                            <span class="float-emoji" style="top:12%; right:8%; animation-delay:.8s;">🦄</span>
+                            <span class="float-emoji" style="bottom:18%; left:4%; animation-delay:1.4s;">🎁</span>
+                            <span class="float-emoji" style="bottom:14%; right:5%; animation-delay:2s;">⭐</span>
+                            <span class="float-emoji hidden md:block"
+                                style="top:45%; left:1%; animation-delay:.5s; font-size:22px;">🍭</span>
+                            <span class="float-emoji hidden md:block"
+                                style="top:50%; right:2%; animation-delay:1.8s; font-size:22px;">🧁</span>
+                            <div class="float-wrap">
+                                <div id="tilt">
+                                    <div id="flip">
+                                        <!-- FRONT -->
+                                        <div class="face front p-5 flex flex-col items-center text-center text-white">
+                                            <div class="front-pattern"></div>
+                                            <div class="front-shine" id="shine"></div>
+                                            <span class="ribbon relative z-10 mt-1">★ YOU'RE INVITED ★</span>
+                                            <p class="font-hand text-2xl mt-2 relative z-10 opacity-95">to celebrate</p>
+                                            <h2 class="font-bubbly font-extrabold relative z-10 leading-none"
+                                                style="font-size:46px; text-shadow:0 4px 0 rgba(0,0,0,.25), 0 10px 25px rgba(0,0,0,.4);">
+                                                <span id="cardName">Ava</span><span
+                                                    class="font-hand font-bold">'s</span>
+                                            </h2>
+                                            <div class="badge-age relative z-10 mt-1 text-sm"><span
+                                                    id="cardAge">7th</span> Birthday Bash! 🎉</div>
+                                            <div class="photo-arch relative z-10 mt-3">
+                                                <img id="cardCoverImg"
+                                                    src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80"
+                                                    alt="Birthday star with parents" />
+                                            </div>
+                                            <div class="date-pill relative z-10 mt-3" id="cardDatePill">📅 Sunday, Sep
+                                                27 • 4:00 PM</div>
+                                            <p class="relative z-10 text-[12px] mt-1.5 opacity-90 font-medium">📍 <span
+                                                    id="cardVenueSmall">Sunshine Garden Party Hall</span></p>
+                                            <div class="relative z-10 flex items-center gap-2 mt-2">
+                                                <div class="avatar-stack flex" id="cardAvatars"></div>
+                                                <span
+                                                    class="text-[11px] bg-black/30 px-2.5 py-1 rounded-full backdrop-blur">+
+                                                    with Mom & Dad ❤️</span>
+                                            </div>
+                                            <p
+                                                class="relative z-10 text-[11px] mt-auto pt-2 font-bold tracking-widest opacity-80 animate-pulse">
+                                                — TAP CARD TO OPEN ⟲ —</p>
+                                        </div>
+                                        <!-- BACK -->
+                                        <div class="face back p-5 flex flex-col">
+                                            <div class="text-center">
+                                                <span
+                                                    class="text-[10px] font-extrabold tracking-[.25em] text-pink-600">✨
+                                                    PARTY DETAILS ✨</span>
+                                                <div class="flex items-center justify-center gap-3 mt-2">
+                                                    <img id="backAvatar"
+                                                        src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=200&q=80"
+                                                        class="w-14 h-14 rounded-full object-cover border-[3px] border-pink-400 shadow-lg"
+                                                        alt="family" />
+                                                    <div class="text-left">
+                                                        <p
+                                                            class="font-bubbly font-extrabold text-xl leading-none text-purple-900">
+                                                            <span id="backName">Ava</span> is <span
+                                                                id="backAge">7</span>!
+                                                        </p>
+                                                        <p class="font-hand text-lg text-pink-600">Come party with us!
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2 gap-2 mt-3 text-[12px]">
+                                                <div class="detail-box text-center">
+                                                    <div class="text-xl">📅</div><b class="text-purple-900">Date</b>
+                                                    <p id="backDate" class="font-semibold text-gray-700">Sep 27, 2026
+                                                    </p>
+                                                </div>
+                                                <div class="detail-box text-center">
+                                                    <div class="text-xl">⏰</div><b class="text-purple-900">Time</b>
+                                                    <p id="backTime" class="font-semibold text-gray-700">4:00 PM - 7:00
+                                                        PM</p>
+                                                </div>
+                                                <div class="detail-box text-center col-span-2">
+                                                    <div class="text-xl">📍</div><b class="text-purple-900">Venue</b>
+                                                    <p id="backVenue" class="font-semibold text-gray-700">Sunshine
+                                                        Garden Party Hall, 123 Rainbow St.</p>
+                                                </div>
+                                                <div class="detail-box text-center">
+                                                    <div class="text-xl">👗</div><b class="text-purple-900">Dress
+                                                        Code</b>
+                                                    <p class="font-semibold text-gray-700">Colorful & Comfy</p>
+                                                </div>
+                                                <div class="detail-box text-center">
+                                                    <div class="text-xl">🎁</div><b class="text-purple-900">Theme</b>
+                                                    <p id="backTheme" class="font-semibold text-gray-700">Bubblegum
+                                                        Princess</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex gap-2 mt-3">
+                                                <div
+                                                    class="flex-1 bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-2.5 flex items-center gap-2">
+                                                    <div class="flex -space-x-3" id="backStrip"></div>
+                                                    <p class="text-[10px] font-bold text-purple-900 leading-tight">With
+                                                        love from<br />Mom, Dad & <span
+                                                            class="backNameInline">Ava</span> ❤️</p>
+                                                </div>
+                                                <div class="qr-frame w-[86px] flex flex-col items-center"><img
+                                                        src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=AvaBirthdayParty-Sep27&color=4a0e2e"
+                                                        class="w-[68px] h-[68px]" alt="QR" /><span
+                                                        class="text-[8px] font-extrabold tracking-wider">SCAN TO
+                                                        RSVP</span></div>
+                                            </div>
+                                            <div class="grid grid-cols-2 gap-2 mt-3">
+                                                <button onclick="scrollToRSVP()"
+                                                    class="rounded-xl py-2.5 font-bubbly font-bold text-sm text-white"
+                                                    style="background:linear-gradient(90deg,#ff5e8a,#a855f7);">RSVP
+                                                    💌</button>
+                                                <button onclick="addToCalendar()"
+                                                    class="rounded-xl py-2.5 font-bubbly font-bold text-sm bg-gray-900 text-white">+
+                                                    Calendar 📅</button>
+                                            </div>
+                                            <p class="text-center text-[11px] mt-2 text-gray-500 font-medium">Can't wait
+                                                to celebrate! 🎂 <span class="font-hand text-sm text-pink-600">- The
+                                                    Johnsons</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="card-shadow"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center gap-2 pb-2 text-xs opacity-70 font-medium">
+                            <span class="px-3 py-1.5 rounded-full glass">🖱️ Drag to tilt</span>
+                            <span class="px-3 py-1.5 rounded-full glass">👆 Click card to flip</span>
+                            <span class="px-3 py-1.5 rounded-full glass hidden sm:inline">📱 Touch works too</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: COUNTDOWN + ACTIONS -->
+                <div class="order-2 flex flex-col gap-4 reveal visible">
+                    <div class="glass rounded-3xl p-5">
+                        <h3 class="font-bubbly font-extrabold flex items-center gap-2">⏳ Countdown to Cake!</h3>
+                        <p class="text-xs opacity-70 mb-3" id="countLabel">Until Sunday, Sep 27 • 4:00 PM</p>
+                        <div class="grid grid-cols-4 gap-2">
+                            <div class="count-box"><b id="cdD">18</b><span>DAYS</span></div>
+                            <div class="count-box"><b id="cdH">04</b><span>HRS</span></div>
+                            <div class="count-box"><b id="cdM">22</b><span>MINS</span></div>
+                            <div class="count-box"
+                                style="background:linear-gradient(180deg,#ff5e8a,#a855f7); border-color:transparent;"><b
+                                    id="cdS">10</b><span>SECS</span></div>
+                        </div>
+                        <div class="mt-3 h-2.5 rounded-full bg-white/10 overflow-hidden">
+                            <div id="countProgress" class="h-full rounded-full transition-all"
+                                style="width:65%; background:linear-gradient(90deg,#ff5e8a,#ffea00,#22d3ee);"></div>
+                        </div>
+                    </div>
+                    <div class="glass rounded-3xl p-5">
+                        <h3 class="font-bubbly font-extrabold mb-3">⚡ Party Actions</h3>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button id="flipBtn" class="btn-party">🔄 Flip</button>
+                            <button id="celebrateBtn" class="btn-party"
+                                style="background:linear-gradient(135deg,#ffb300,#ff5e00); box-shadow:0 8px 25px rgba(255,159,28,.5);">🎉
+                                Celebrate</button>
+                            <button id="musicBtn" class="btn-ghost"><span class="music-bars paused"
+                                    id="musicBars"><span></span><span></span><span></span><span></span></span>
+                                Music</button>
+                            <button id="shareBtn" class="btn-ghost">🔗 Share</button>
+                            <button onclick="addToCalendar()" class="btn-ghost">📅 Calendar</button>
+                            <button onclick="window.print()" class="btn-ghost">🖨️ Print</button>
+                        </div>
+                        <div class="mt-3 p-3 rounded-2xl text-xs leading-relaxed"
+                            style="background:rgba(255,234,0,.12); border:1px solid rgba(255,234,0,.3);">💡 <b>Tip:</b>
+                            Click the card to flip it open — flip again to see the front!</div>
+                    </div>
+                    <div class="rounded-3xl p-5 text-gray-900"
+                        style="background:linear-gradient(135deg,#fef9c3,#fde68a);">
+                        <div class="flex items-center gap-3">
+                            <span class="text-3xl">☀️</span>
+                            <div>
+                                <p class="font-bubbly font-extrabold leading-none">Party Weather</p>
+                                <p class="text-xs font-semibold opacity-70">Sunny, 24°C • Perfect for fun!</p>
+                            </div>
+                            <span class="ml-auto font-bubbly font-extrabold text-2xl">24°</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALLERY -->
+        <section id="memories" class="max-w-7xl mx-auto px-4 md:px-6 py-14">
+            <div class="text-center reveal">
+                <span class="ribbon">📸 REAL FAMILY MOMENTS</span>
+                <h2 class="section-title mt-3">Our Sweetest Memories <span class="grad-text">Together</span></h2>
+                <p class="opacity-70 mt-2 max-w-xl mx-auto text-sm md:text-base">Every giggle, every hug — the birthday
+                    star with Mom & Dad. Click any photo to view, ❤️ to send love!</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-2 mt-6 reveal">
+                <button class="filter-btn active" data-filter="all">All Moments ✨</button>
+                <button class="filter-btn" data-filter="family">Whole Family 👨‍👩‍👧</button>
+                <button class="filter-btn" data-filter="mom">With Mom 💖</button>
+                <button class="filter-btn" data-filter="dad">With Dad 💙</button>
+            </div>
+            <div id="galleryGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6"></div>
+        </section>
+
+        <!-- DETAILS -->
+        <section id="details" class="max-w-7xl mx-auto px-4 md:px-6 py-10">
+            <div class="grid lg:grid-cols-2 gap-5">
+                <div class="glass rounded-3xl p-6 md:p-8 reveal">
+                    <span class="ribbon">🎉 PARTY SCHEDULE</span>
+                    <h2 class="section-title mt-3 mb-6">The Big Day Plan</h2>
+                    <div class="timeline flex flex-col gap-5">
+                        <div class="relative">
+                            <div class="t-dot"></div>
+                            <div class="glass rounded-2xl p-4 ml-1">
+                                <div class="flex justify-between items-center"><b class="font-bubbly">🎈 Welcome & Free
+                                        Play</b><span
+                                        class="text-xs font-bold px-2.5 py-1 rounded-full bg-pink-500/30">4:00 PM</span>
+                                </div>
+                                <p class="text-sm opacity-70 mt-1">Bounce house, face painting & family photos at the
+                                    rainbow arch.</p>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="t-dot" style="--c1:#ffea00;"></div>
+                            <div class="glass rounded-2xl p-4 ml-1">
+                                <div class="flex justify-between items-center"><b class="font-bubbly">🎂 Cake Cutting
+                                        Ceremony</b><span
+                                        class="text-xs font-bold px-2.5 py-1 rounded-full bg-yellow-500/30">5:00
+                                        PM</span></div>
+                                <p class="text-sm opacity-70 mt-1">Make a wish! Giant unicorn cake with Mom & Dad.</p>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="t-dot" style="--c1:#22d3ee;"></div>
+                            <div class="glass rounded-2xl p-4 ml-1">
+                                <div class="flex justify-between items-center"><b class="font-bubbly">🎩 Magic Show &
+                                        Games</b><span
+                                        class="text-xs font-bold px-2.5 py-1 rounded-full bg-cyan-500/30">5:30 PM</span>
+                                </div>
+                                <p class="text-sm opacity-70 mt-1">Clown magic, treasure hunt & musical chairs for kids
+                                    + parents!</p>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="t-dot" style="--c1:#a855f7;"></div>
+                            <div class="glass rounded-2xl p-4 ml-1">
+                                <div class="flex justify-between items-center"><b class="font-bubbly">🎁 Goodie Bags &
+                                        Goodbye</b><span
+                                        class="text-xs font-bold px-2.5 py-1 rounded-full bg-purple-500/30">6:30
+                                        PM</span></div>
+                                <p class="text-sm opacity-70 mt-1">Take-home treats, polaroid souvenirs & big hugs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-5">
+                    <div class="glass rounded-3xl p-6 md:p-8 reveal">
+                        <span class="ribbon">📍 FIND THE FUN</span>
+                        <h2 class="section-title mt-3">Party Venue</h2>
+                        <p class="font-bubbly font-bold mt-1" id="venueTitle">Sunshine Garden Party Hall</p>
+                        <p class="text-sm opacity-70">123 Rainbow Street, Sunnyvale • Free parking behind the hall 🅿️
+                        </p>
+                        <div class="map-frame mt-4 h-[240px] bg-gray-800"><iframe title="map"
+                                src="https://www.google.com/maps?q=Central+Park+New+York&output=embed"
+                                class="w-full h-full" style="border:0; filter:saturate(1.3);" loading="lazy"></iframe>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 mt-4">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Central+Park+New+York"
+                                target="_blank" class="btn-party !text-[13px]">🧭 Get Directions</a>
+                            <a href="tel:+1234567890" class="btn-ghost !text-[13px]">📞 Call the Hosts</a>
+                        </div>
+                    </div>
+                    <div class="grid sm:grid-cols-3 gap-3 reveal">
+                        <div class="glass rounded-2xl p-4 text-center">
+                            <div class="text-3xl">🎒</div><b class="font-bubbly text-sm">What to Bring</b>
+                            <p class="text-xs opacity-70 mt-1">Just smiles! Swimsuit for splash pad.</p>
+                        </div>
+                        <div class="glass rounded-2xl p-4 text-center">
+                            <div class="text-3xl">🍰</div><b class="font-bubbly text-sm">Yummy Menu</b>
+                            <p class="text-xs opacity-70 mt-1">Pizza, cupcakes, fruit & juice bar.</p>
+                        </div>
+                        <div class="glass rounded-2xl p-4 text-center">
+                            <div class="text-3xl">💬</div><b class="font-bubbly text-sm">Questions?</b>
+                            <p class="text-xs opacity-70 mt-1">Text Mama Mia: (123) 456-7890</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP -->
+        <section id="rsvp" class="max-w-7xl mx-auto px-4 md:px-6 py-14">
+            <div class="text-center reveal">
+                <span class="ribbon">💌 WILL YOU JOIN US?</span>
+                <h2 class="section-title mt-3">RSVP & <span class="grad-text">Guest Wall</span></h2>
+                <p class="opacity-70 mt-2 text-sm">Let us know you're coming — your name will shine on our guest wall! ✨
+                </p>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-5 mt-8">
+                <div class="glass rounded-3xl p-6 md:p-8 reveal">
+                    <h3 class="font-bubbly font-extrabold text-xl mb-4">✍️ Send Your RSVP</h3>
+                    <label class="text-xs font-bold opacity-70">YOUR NAME *</label>
+                    <input id="rsvpName" class="input-cute mt-1 mb-3" placeholder="e.g. The Carter Family" />
+                    <label class="text-xs font-bold opacity-70">EMAIL</label>
+                    <input id="rsvpEmail" type="email" class="input-cute mt-1 mb-3" placeholder="you@email.com" />
+                    <label class="text-xs font-bold opacity-70">WILL YOU ATTEND? *</label>
+                    <div class="flex gap-3 mt-2 mb-3">
+                        <div id="attendYes" class="attend-card selected-yes">
+                            <div class="text-3xl">🥳</div><b class="font-bubbly">Yes, we'll be there!</b>
+                        </div>
+                        <div id="attendNo" class="attend-card">
+                            <div class="text-3xl">😢</div><b class="font-bubbly">Sorry, can't make it</b>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between mb-3">
+                        <label class="text-xs font-bold opacity-70">NUMBER OF GUESTS</label>
+                        <div class="flex items-center gap-3"><button class="stepper-btn" id="minusGuest">−</button><b
+                                id="guestCount" class="font-bubbly text-xl w-6 text-center">2</b><button
+                                class="stepper-btn" id="plusGuest">+</button></div>
+                    </div>
+                    <label class="text-xs font-bold opacity-70">SWEET MESSAGE FOR THE BIRTHDAY STAR 💖</label>
+                    <textarea id="rsvpMsg" rows="3" class="input-cute mt-1 mb-4"
+                        placeholder="Happy birthday Ava! We can't wait to celebrate with you..."></textarea>
+                    <button id="rsvpSubmit" class="btn-party !py-4 !text-base">Send RSVP with Love 💌</button>
+                    <p class="text-[11px] opacity-50 text-center mt-2">By RSVPing you agree to have the BEST time ever
+                        🎉</p>
+                </div>
+                <div class="glass rounded-3xl p-6 md:p-8 reveal flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bubbly font-extrabold text-xl">🌟 Guest Wall <span id="guestTotal"
+                                class="text-sm font-body font-bold px-2.5 py-1 rounded-full ml-1"
+                                style="background:linear-gradient(90deg,#ff5e8a,#a855f7);">8 going</span></h3>
+                        <span class="text-xs opacity-60">🎉 <span id="seatCount">24</span> seats filled</span>
+                    </div>
+                    <div id="guestWall" class="flex flex-col gap-3 overflow-y-auto pr-1" style="max-height:420px;">
+                    </div>
+                    <div class="mt-4 p-4 rounded-2xl text-center"
+                        style="background:linear-gradient(135deg,rgba(255,94,138,.2),rgba(168,85,247,.2)); border:1px dashed rgba(255,94,138,.5);">
+                        <p class="font-hand text-2xl">“The more the merrier!”</p>
+                        <p class="text-xs opacity-70">Share this invite with family & friends ❤️</p>
+                        <button id="shareBtn2" class="btn-party mt-3 !w-auto px-8 mx-auto">🔗 Copy Invite Link</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="border-t border-white/10 mt-6 relative z-10 glass-strong">
+            <div class="max-w-7xl mx-auto px-6 py-10 grid md:grid-cols-3 gap-6 items-center">
+                <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=200&q=80"
+                        class="w-14 h-14 rounded-2xl object-cover border-2 border-pink-400" alt="family" />
+                    <div>
+                        <p class="font-bubbly font-extrabold">The Johnson Family</p>
+                        <p class="text-xs opacity-60">With love, Mom • Dad • <span class="backNameInline">Ava</span></p>
+                    </div>
+                </div>
+                <p class="text-center font-hand text-2xl opacity-90">“Birthdays are better together! 🎂”</p>
+                <p class="text-xs opacity-50 md:text-right">Made with 💖 for <span class="backNameInline">Ava</span>'s
+                    special day • PartyPop Invites © 2026</p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox">
+        <button id="lbClose"
+            class="absolute top-5 right-5 w-12 h-12 rounded-full glass text-xl hover:scale-110 transition z-10">✕</button>
+        <button id="lbPrev"
+            class="absolute left-3 md:left-8 w-12 h-12 rounded-full glass text-xl hover:scale-110 transition z-10">‹</button>
+        <button id="lbNext"
+            class="absolute right-3 md:right-8 w-12 h-12 rounded-full glass text-xl hover:scale-110 transition z-10">›</button>
+        <div class="text-center max-w-3xl">
+            <img id="lbImg" src="" alt="memory" />
+            <p id="lbCap" class="font-hand text-3xl mt-3"></p>
+            <p id="lbCount" class="text-xs opacity-60 font-bold tracking-widest"></p>
+        </div>
+    </div>
+
+    <div id="toast">
+        <div class="glass-strong px-6 py-3.5 rounded-full font-bubbly font-bold text-sm flex items-center gap-2 border border-pink-500/40"
+            style="box-shadow:0 10px 40px rgba(255,94,138,.4);"><span id="toastEmoji" class="text-xl">🎉</span><span
+                id="toastMsg">Yay!</span></div>
+    </div>
+
+    <script>
+        /* ============ FIXED PARTY DETAILS (edit these to change the invite) ============ */
+        const DETAILS = {
+            name: "Ava",
+            age: 7,
+            date: "2026-09-27",   // YYYY-MM-DD
+            time: "16:00",        // HH:MM (24h)
+            venue: "Sunshine Garden Party Hall",
+            theme: "bubblegum"    // bubblegum | dino | space | ocean | sunshine
+        };
+
+        /* ============ DATA ============ */
+        const PHOTOS = [
+            { url: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=80", cap: "The Birthday Star with Mom & Dad ❤️", tag: "family", likes: 128 },
+            { url: "https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=800&q=80", cap: "Morning cuddles before the big day 🥰", tag: "family", likes: 96 },
+            { url: "https://images.unsplash.com/photo-1476703993599-0035a21b17a9?auto=format&fit=crop&w=800&q=80", cap: "Family adventure in the woods 🌲", tag: "family", likes: 112 },
+            { url: "https://images.unsplash.com/photo-1543342384-1f1350e27861?auto=format&fit=crop&w=800&q=80", cap: "Picnic fun with the whole crew 🧺", tag: "family", likes: 84 },
+            { url: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80", cap: "Storytime with Mom 📚💖", tag: "mom", likes: 141 },
+            { url: "https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?auto=format&fit=crop&w=800&q=80", cap: "Sweetest kiss for the birthday girl 💋", tag: "mom", likes: 167 },
+            { url: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=800&q=80", cap: "Sunset giggles with Dad 🌅", tag: "dad", likes: 119 },
+            { url: "https://images.unsplash.com/photo-1504151932400-72d4384f04b3?auto=format&fit=crop&w=800&q=80", cap: "Beach day toss & laughter 🏖️", tag: "dad", likes: 153 },
+        ];
+        const THEME_NAMES = { bubblegum: "Bubblegum Princess 🎀", dino: "Dino Adventure 🦕", space: "Space Explorer 🚀", ocean: "Ocean Splash 🐠", sunshine: "Sunshine Fiesta 🌞" };
+
+        const state = {
+            name: DETAILS.name,
+            age: DETAILS.age,
+            cover: 0,
+            theme: DETAILS.theme,
+            attending: true,
+            guests: 2,
+            autoSpin: true,
+            sparkles: true,
+            filter: "all"
+        };
+
+        let guests = [
+            { name: "Sophia & Family", count: 3, msg: "Can't wait to celebrate our little princess! 🎀", yes: true },
+            { name: "The Carters", count: 4, msg: "Ava is 7!! Time flies. See you there! 🎉", yes: true },
+            { name: "Grandma Rose", count: 1, msg: "My sweet grandbaby! Grandma wouldn't miss it! 💖", yes: true },
+            { name: "Liam's Crew", count: 3, msg: "Liam has been talking about the magic show all week! 🎩", yes: true },
+            { name: "Uncle Mike", count: 2, msg: "Bringing the BIGGEST gift! 🎁", yes: true },
+        ];
+
+        /* ============ HELPERS ============ */
+        const $ = id => document.getElementById(id);
+        function toast(msg, emoji = "🎉") { $("toastMsg").textContent = msg; $("toastEmoji").textContent = emoji; $("toast").classList.add("show"); clearTimeout(window._t); window._t = setTimeout(() => $("toast").classList.remove("show"), 2800); }
+        function ordinal(n) { if (n === 1) return "1st"; if (n === 2) return "2nd"; if (n === 3) return "3rd"; return n + "th"; }
+        function imgFallback(el, seed) { el.onerror = null; el.src = "https://picsum.photos/seed/family" + seed + "/800/600"; }
+        document.querySelectorAll("img").forEach((im, i) => { im.addEventListener("error", () => imgFallback(im, i)); });
+
+        /* ============ LOADER + ENVELOPE ============ */
+        window.addEventListener("load", () => setTimeout(() => $("loader").classList.add("hide"), 1400));
+        setTimeout(() => $("loader").classList.add("hide"), 3500);
+        $("menuBtn").onclick = () => $("mobileMenu").classList.toggle("hidden");
+        document.querySelectorAll("#mobileMenu a").forEach(a => a.onclick = () => $("mobileMenu").classList.add("hidden"));
+
+        $("openEnvelopeBtn").onclick = () => {
+            $("envelope").classList.add("open");
+            toast("Opening your invitation...", "💌");
+            setTimeout(() => {
+                $("envelopeOverlay").classList.add("hide");
+                celebrate(true);
+                gsap.from("#flip", { scale: .6, y: 60, opacity: 0, duration: 1.2, ease: "back.out(1.6)" });
+                gsap.from(".float-emoji", { scale: 0, duration: .8, stagger: .08, ease: "back.out(2)", delay: .4 });
+            }, 1300);
+        };
+
+        /* ============ 3D BACKGROUND (THREE.JS) ============ */
+        (function initBG() {
+            try {
+                const canvas = $("bg3d");
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, .1, 100);
+                camera.position.z = 15;
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+                renderer.setSize(innerWidth, innerHeight);
+                renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+                scene.add(new THREE.AmbientLight(0xffffff, .75));
+                const p1 = new THREE.PointLight(0xff5e8a, 1.4, 40); p1.position.set(6, 4, 6); scene.add(p1);
+                const p2 = new THREE.PointLight(0x22d3ee, 1.2, 40); p2.position.set(-6, -3, 5); scene.add(p2);
+                const d = new THREE.DirectionalLight(0xffffff, .5); d.position.set(0, 8, 5); scene.add(d);
+                const colors = [0xff5e8a, 0xffd166, 0x06d6a0, 0x8ecae6, 0xc77dff, 0xff9f1c, 0x80ed99, 0xff70a6];
+                const geos = [() => new THREE.SphereGeometry(.5, 20, 20), () => new THREE.BoxGeometry(.7, .7, .7), () => new THREE.TorusGeometry(.4, .16, 12, 24), () => new THREE.OctahedronGeometry(.5), () => new THREE.ConeGeometry(.4, .8, 14), () => new THREE.IcosahedronGeometry(.5)];
+                const meshes = [];
+                for (let i = 0; i < 46; i++) {
+                    const m = new THREE.Mesh(geos[i % geos.length](), new THREE.MeshStandardMaterial({ color: colors[i % colors.length], roughness: .35, metalness: .15, transparent: true, opacity: .85 }));
+                    m.position.set((Math.random() - .5) * 26, (Math.random() - .5) * 18, (Math.random() - .5) * 10 - 2);
+                    m.scale.setScalar(.25 + Math.random() * .65);
+                    m.userData = { sp: .3 + Math.random() * .8, off: Math.random() * Math.PI * 2, rs: (Math.random() - .5) * .02 };
+                    scene.add(m); meshes.push(m);
+                }
+                // stars
+                const sg = new THREE.BufferGeometry(); const pos = new Float32Array(400 * 3);
+                for (let i = 0; i < 400; i++) { pos[i * 3] = (Math.random() - .5) * 40; pos[i * 3 + 1] = (Math.random() - .5) * 26; pos[i * 3 + 2] = -6 - Math.random() * 8; }
+                sg.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+                scene.add(new THREE.Points(sg, new THREE.PointsMaterial({ color: 0xffffff, size: .08, transparent: true, opacity: .8 })));
+                let mx = 0, my = 0;
+                addEventListener("mousemove", e => { mx = (e.clientX / innerWidth - .5); my = (e.clientY / innerHeight - .5); });
+                const clock = new THREE.Clock();
+                (function anim() {
+                    requestAnimationFrame(anim);
+                    const t = clock.getElapsedTime();
+                    meshes.forEach(m => { m.position.y += Math.sin(t * m.userData.sp + m.userData.off) * .006; m.rotation.x += m.userData.rs; m.rotation.y += m.userData.rs * 1.3; if (m.position.y > 10) m.position.y = -10; });
+                    camera.position.x += (mx * 3 - camera.position.x) * .04;
+                    camera.position.y += (-my * 2 - camera.position.y) * .04;
+                    camera.lookAt(0, 0, 0);
+                    renderer.render(scene, camera);
+                })();
+                addEventListener("resize", () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
+            } catch (e) { console.log("3D bg fallback", e); }
+        })();
+
+        /* CSS floating balloons */
+        (function () {
+            const wrap = $("cssBalloons"); const cols = ["#ff5e8a", "#ffea00", "#22d3ee", "#a855f7", "#4ade80", "#ff9f1c"];
+            for (let i = 0; i < 12; i++) {
+                const b = document.createElement("div"); b.className = "css-balloon"; const s = 30 + Math.random() * 50;
+                b.style.cssText = `width:${s}px;height:${s * 1.25}px;left:${Math.random() * 100}vw;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.6),${cols[i % cols.length]});animation-duration:${12 + Math.random() * 14}s;animation-delay:${-Math.random() * 14}s;`; wrap.appendChild(b);
+            }
+        })();
+
+        /* ============ 3D CARD TILT & FLIP ============ */
+        const stage = $("stage"), tilt = $("tilt"), flip = $("flip"), shine = $("shine");
+        let tX = 0, tY = 0, tgX = 0, tgY = 0, dragging = false, moved = 0, lastX = 0, lastY = 0, interactT = 0;
+        function loopTilt() {
+            const t = Date.now() / 1000;
+            if (state.autoSpin && Date.now() - interactT > 2500 && !dragging) { tgY = Math.sin(t * .6) * 14; tgX = Math.sin(t * .8) * -8; }
+            tX += (tgX - tX) * .08; tY += (tgY - tY) * .08;
+            tilt.style.transform = `rotateX(${tX}deg) rotateY(${tY}deg)`;
+            requestAnimationFrame(loopTilt);
+        }
+        loopTilt();
+        stage.addEventListener("mousemove", e => {
+            const r = stage.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+            tgY = x * 34; tgX = -y * 30; interactT = Date.now();
+            shine.style.setProperty("--mx", ((x + .5) * 100) + "%"); shine.style.setProperty("--my", ((y + .5) * 100) + "%");
+        });
+        stage.addEventListener("mouseleave", () => { if (!state.autoSpin) { tgX = 0; tgY = 0; } });
+        stage.addEventListener("pointerdown", e => { dragging = true; moved = 0; lastX = e.clientX; lastY = e.clientY; });
+        addEventListener("pointermove", e => { if (!dragging) return; const dx = e.clientX - lastX, dy = e.clientY - lastY; moved += Math.abs(dx) + Math.abs(dy); tgY += dx * .4; tgX -= dy * .4; tgX = Math.max(-45, Math.min(45, tgX)); tgY = Math.max(-60, Math.min(60, tgY)); lastX = e.clientX; lastY = e.clientY; interactT = Date.now(); });
+        addEventListener("pointerup", () => { dragging = false; });
+        flip.addEventListener("click", () => { if (moved < 12) toggleFlip(); });
+        function toggleFlip() { flip.classList.toggle("flipped"); const f = flip.classList.contains("flipped"); toast(f ? "Party details inside! 🎂" : "Back to the front! 💖", f ? "🎂" : "💖"); if (f) confetti({ particleCount: 40, spread: 60, origin: { y: .6 }, colors: ["#ff5e8a", "#ffea00", "#22d3ee"] }); }
+        $("flipBtn").onclick = e => { e.stopPropagation(); toggleFlip(); };
+
+        /* ============ CARD CONTENT (uses DETAILS constants) ============ */
+        function fmtDatePill() {
+            const dt = new Date(DETAILS.date + "T" + DETAILS.time);
+            const day = dt.toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" });
+            let hr = dt.getHours(), ap = hr >= 12 ? "PM" : "AM"; hr = hr % 12 || 12;
+            const tm = `${hr}:${String(dt.getMinutes()).padStart(2, "0")} ${ap}`;
+            const endHr = ((hr + 3) % 12) || 12;
+            return {
+                pill: `📅 ${day} • ${tm}`,
+                full: day + " • " + tm,
+                date: dt.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+                time: tm + " - " + endHr + ":" + String(dt.getMinutes()).padStart(2, "0") + " " + ap,
+                dt
+            };
+        }
+
+        function updateCard() {
+            const v = DETAILS.venue;
+            const f = fmtDatePill();
+            $("cardName").textContent = state.name; $("backName").textContent = state.name;
+            document.querySelectorAll(".backNameInline").forEach(e => e.textContent = state.name);
+            $("cardAge").textContent = ordinal(state.age); $("backAge").textContent = state.age;
+            $("cardDatePill").textContent = f.pill; $("cardVenueSmall").textContent = v;
+            $("backDate").textContent = f.date; $("backTime").textContent = f.time;
+            $("backVenue").textContent = v + ", 123 Rainbow St.";
+            $("backTheme").textContent = THEME_NAMES[state.theme];
+            $("venueTitle").textContent = v; $("countLabel").textContent = "Until " + f.full;
+            const url = PHOTOS[state.cover].url;
+            $("cardCoverImg").src = url; $("backAvatar").src = url; $("envPreviewImg").src = url;
+            document.title = `${state.name}'s ${state.age}th Birthday Bash! 🎉 You're Invited`;
+            // avatars
+            const av = $("cardAvatars"); av.innerHTML = "";
+            [state.cover, (state.cover + 4) % PHOTOS.length, (state.cover + 6) % PHOTOS.length].forEach(i => {
+                const im = document.createElement("img");
+                im.src = PHOTOS[i].url.replace("w=800", "w=100");
+                im.onerror = () => imgFallback(im, i);
+                av.appendChild(im);
+            });
+            const bs = $("backStrip"); bs.innerHTML = "";
+            [state.cover, (state.cover + 2) % PHOTOS.length, (state.cover + 5) % PHOTOS.length].forEach(i => {
+                const im = document.createElement("img");
+                im.src = PHOTOS[i].url.replace("w=800", "w=100");
+                im.className = "w-10 h-10 rounded-full object-cover border-2 border-white shadow";
+                im.onerror = () => imgFallback(im, i);
+                bs.appendChild(im);
+            });
+        }
+        updateCard();
+
+        /* ============ COUNTDOWN ============ */
+        setInterval(() => {
+            const f = fmtDatePill(); let diff = f.dt - new Date();
+            if (diff < 0) diff = 0;
+            const d = Math.floor(diff / 864e5), h = Math.floor(diff / 36e5) % 24, m = Math.floor(diff / 6e4) % 60, s = Math.floor(diff / 1e3) % 60;
+            $("cdD").textContent = String(d).padStart(2, "0"); $("cdH").textContent = String(h).padStart(2, "0");
+            $("cdM").textContent = String(m).padStart(2, "0"); $("cdS").textContent = String(s).padStart(2, "0");
+            const total = 30 * 864e5; $("countProgress").style.width = Math.max(4, Math.min(100, 100 - (diff / total * 100))) + "%";
+        }, 1000);
+
+        /* ============ CELEBRATE + CONFETTI ============ */
+        function celebrate(big = false) {
+            const colors = ["#ff5e8a", "#ffea00", "#22d3ee", "#a855f7", "#4ade80"];
+            confetti({ particleCount: big ? 160 : 90, spread: 100, origin: { y: .6 }, colors });
+            setTimeout(() => confetti({ particleCount: 80, angle: 60, spread: 60, origin: { x: 0, y: .7 }, colors }), 200);
+            setTimeout(() => confetti({ particleCount: 80, angle: 120, spread: 60, origin: { x: 1, y: .7 }, colors }), 350);
+            for (let i = 0; i < 14; i++) {
+                const b = document.createElement("div"); b.className = "burst-balloon";
+                const s = 24 + Math.random() * 34;
+                b.style.cssText = `width:${s}px;height:${s * 1.25}px;left:${5 + Math.random() * 90}vw;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.7),${colors[i % colors.length]});animation-delay:${Math.random() * .4}s;`;
+                document.body.appendChild(b); setTimeout(() => b.remove(), 3400);
+            }
+            gsap.fromTo("#flip", { scale: 1 }, { scale: 1.05, duration: .18, yoyo: true, repeat: 1, ease: "power2.out" });
+        }
+        $("celebrateBtn").onclick = () => { celebrate(); toast("PARTY TIME! Let's celebrate " + state.name + "! 🎉", "🥳"); };
+
+        /* ============ MUSIC (Happy Birthday synth) ============ */
+        let actx = null, playing = false, timers = [];
+        const MELODY = [[392, .35], [392, .35], [440, .7], [392, .7], [523.25, .7], [493.88, 1.1], [392, .35], [392, .35], [440, .7], [392, .7], [587.33, .7], [523.25, 1.1], [392, .35], [392, .35], [783.99, .7], [659.25, .7], [523.25, .7], [493.88, .7], [440, .7], [587.33, .35], [587.33, .35], [659.25, .7], [523.25, .7], [587.33, .7], [523.25, 1.4]];
+        function playNote(f, dur, when) { const o = actx.createOscillator(), g = actx.createGain(); o.type = "triangle"; o.frequency.value = f; g.gain.setValueAtTime(0, when); g.gain.linearRampToValueAtTime(.35, when + .03); g.gain.exponentialRampToValueAtTime(.001, when + dur); o.connect(g); g.connect(actx.destination); o.start(when); o.stop(when + dur + .05); }
+        function startMusic() { if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)(); actx.resume(); playing = true; $("musicBars").classList.remove("paused"); let t = actx.currentTime + .1; const step = () => { if (!playing) return; MELODY.forEach(([f, d]) => { playNote(f, d * .9, t); t += d * .55; }); timers.push(setTimeout(step, (t - actx.currentTime) * 1000 + 300)); }; step(); toast("Playing Happy Birthday! 🎂🎵", "🎵"); }
+        function stopMusic() { playing = false; timers.forEach(clearTimeout); timers = []; $("musicBars").classList.add("paused"); }
+        function toggleMusic() { playing ? stopMusic() : startMusic(); }
+        $("musicBtn").onclick = toggleMusic; $("navMusicBtn").onclick = toggleMusic;
+
+        /* ============ SHARE + CALENDAR ============ */
+        function shareInvite() {
+            const f = fmtDatePill();
+            const txt = `🎉 You're invited to ${state.name}'s ${ordinal(state.age)} Birthday Bash! ${f.full} at ${DETAILS.venue}. Can't wait to see you! 💖`;
+            (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => toast("Invite text copied! Share the joy! 🔗", "🔗")).catch(() => toast(txt, "💌"));
+        }
+        $("shareBtn").onclick = shareInvite; $("shareBtn2").onclick = shareInvite;
+
+        function addToCalendar() {
+            const d = DETAILS.date.replace(/-/g, "");
+            const t = (DETAILS.time || "16:00").replace(":", "") + "00";
+            const dt = `${d}T${t}`;
+            const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:${dt}\nDTEND:${d}T190000\nSUMMARY:${state.name}'s ${ordinal(state.age)} Birthday Bash 🎉\nDESCRIPTION:Join us for cake, games and magic! Venue: ${DETAILS.venue}\nLOCATION:${DETAILS.venue}\nEND:VEVENT\nEND:VCALENDAR`;
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+            a.download = "birthday-party.ics"; a.click();
+            toast("Added to your calendar! 📅", "📅");
+        }
+        function scrollToRSVP() {
+            document.getElementById("rsvp").scrollIntoView({ behavior: "smooth" });
+            if (!flip.classList.contains("flipped")) toggleFlip();
+            setTimeout(() => toggleFlip(), 600);
+        }
+
+        /* ============ GALLERY ============ */
+        function renderGallery() {
+            const g = $("galleryGrid"); g.innerHTML = "";
+            PHOTOS.forEach((p, i) => {
+                if (state.filter !== "all" && p.tag !== state.filter) return;
+                const tagEmo = p.tag === "mom" ? "💖 With Mom" : p.tag === "dad" ? "💙 With Dad" : "👨‍👩‍👧 Family";
+                const card = document.createElement("div"); card.className = "g-card";
+                card.innerHTML = `<img loading="lazy" src="${p.url.replace("w=800", "w=600")}" alt="${p.cap}"/><button class="like-btn" data-i="${i}">🤍</button><div class="g-overlay"><span class="text-[10px] font-extrabold tracking-widest px-2.5 py-1 rounded-full self-start mb-2" style="background:rgba(255,94,138,.85);">${tagEmo}</span><p class="font-bubbly font-bold text-sm leading-snug">${p.cap}</p><p class="text-[11px] opacity-70 mt-1">❤️ <span class="like-count">${p.likes}</span> loves • Click to zoom</p></div>`;
+                const img = card.querySelector("img"); img.onerror = () => imgFallback(img, i);
+                card.onclick = e => { if (e.target.closest(".like-btn")) return; openLB(i); };
+                card.querySelector(".like-btn").onclick = function (ev) {
+                    ev.stopPropagation();
+                    const liked = this.classList.toggle("liked");
+                    p.likes += liked ? 1 : -1;
+                    this.textContent = liked ? "❤️" : "🤍";
+                    card.querySelector(".like-count").textContent = p.likes;
+                    if (liked) { confetti({ particleCount: 20, spread: 50, origin: { y: .7 } }); }
+                };
+                g.appendChild(card);
+            });
+        }
+        renderGallery();
+        document.querySelectorAll(".filter-btn").forEach(b => b.onclick = () => {
+            document.querySelectorAll(".filter-btn").forEach(x => x.classList.remove("active"));
+            b.classList.add("active"); state.filter = b.dataset.filter; renderGallery();
+        });
+
+        /* Lightbox */
+        let lbIdx = 0;
+        const visibleIdx = () => PHOTOS.map((p, i) => i).filter(i => state.filter === "all" || PHOTOS[i].tag === state.filter);
+        function openLB(i) { lbIdx = i; showLB(); $("lightbox").classList.add("show"); document.body.style.overflow = "hidden"; }
+        function showLB() { const p = PHOTOS[lbIdx]; $("lbImg").src = p.url; $("lbCap").textContent = p.cap; const v = visibleIdx(); $("lbCount").textContent = `${v.indexOf(lbIdx) + 1} / ${v.length} • ${p.tag.toUpperCase()}`; gsap.fromTo("#lbImg", { scale: .85, opacity: 0 }, { scale: 1, opacity: 1, duration: .45, ease: "back.out(1.4)" }); }
+        function closeLB() { $("lightbox").classList.remove("show"); document.body.style.overflow = ""; }
+        function stepLB(d) { const v = visibleIdx(); let pos = v.indexOf(lbIdx); pos = (pos + d + v.length) % v.length; lbIdx = v[pos]; showLB(); }
+        $("lbClose").onclick = closeLB; $("lbNext").onclick = () => stepLB(1); $("lbPrev").onclick = () => stepLB(-1);
+        $("lightbox").onclick = e => { if (e.target.id === "lightbox") closeLB(); };
+        addEventListener("keydown", e => { if (!$("lightbox").classList.contains("show")) return; if (e.key === "Escape") closeLB(); if (e.key === "ArrowRight") stepLB(1); if (e.key === "ArrowLeft") stepLB(-1); });
+
+        /* ============ RSVP ============ */
+        $("attendYes").onclick = () => { state.attending = true; $("attendYes").classList.add("selected-yes"); $("attendNo").classList.remove("selected-no"); };
+        $("attendNo").onclick = () => { state.attending = false; $("attendNo").classList.add("selected-no"); $("attendYes").classList.remove("selected-yes"); };
+        $("plusGuest").onclick = () => { state.guests = Math.min(10, state.guests + 1); $("guestCount").textContent = state.guests; };
+        $("minusGuest").onclick = () => { state.guests = Math.max(1, state.guests - 1); $("guestCount").textContent = state.guests; };
+        const AVC = ["linear-gradient(135deg,#ff5e8a,#a855f7)", "linear-gradient(135deg,#22d3ee,#6366f1)", "linear-gradient(135deg,#4ade80,#0ea5e9)", "linear-gradient(135deg,#fbbf24,#f43f5e)", "linear-gradient(135deg,#c084fc,#ec4899)"];
+        function initials(n) { return n.split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase(); }
+        function renderGuests() {
+            const w = $("guestWall"); w.innerHTML = "";
+            guests.forEach((g, i) => {
+                const d = document.createElement("div"); d.className = "glass rounded-2xl p-3.5 flex gap-3 items-start";
+                d.innerHTML = `<div class="guest-avatar" style="background:${AVC[i % AVC.length]}">${initials(g.name)}</div><div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><b class="font-bubbly text-sm">${g.name}</b><span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${g.yes ? "bg-green-500/25 text-green-300" : "bg-red-500/25 text-red-300"}">${g.yes ? `✅ Going • ${g.count} seat${g.count > 1 ? "s" : ""}` : "❌ Can't make it"}</span></div><p class="text-xs opacity-70 mt-1">“${g.msg}”</p></div>`;
+                w.appendChild(d);
+            });
+            const going = guests.filter(g => g.yes).length, seats = guests.filter(g => g.yes).reduce((a, g) => a + g.count, 0);
+            $("guestTotal").textContent = going + " going"; $("seatCount").textContent = seats;
+        }
+        renderGuests();
+        $("rsvpSubmit").onclick = () => {
+            const n = $("rsvpName").value.trim();
+            if (!n) {
+                toast("Please tell us your name! ✍️", "⚠️");
+                $("rsvpName").focus();
+                gsap.fromTo("#rsvpName", { x: -8 }, { x: 0, duration: .4, ease: "elastic.out(1,.3)" });
+                return;
+            }
+            const msg = $("rsvpMsg").value.trim() || (state.attending ? "Can't wait to celebrate! 🎉" : "Sending birthday hugs from afar! 💖");
+            guests.unshift({ name: n, count: state.guests, msg, yes: state.attending });
+            renderGuests();
+            $("rsvpName").value = ""; $("rsvpEmail").value = ""; $("rsvpMsg").value = "";
+            if (state.attending) { celebrate(); toast(`Yay! ${n} is on the guest wall! 🥳`, "💖"); }
+            else toast("We'll miss you! Thanks for letting us know 💌", "😢");
+            $("guestWall").scrollTop = 0;
+        };
+
+        /* ============ SPARKLE TRAIL ============ */
+        let lastSpark = 0;
+        addEventListener("mousemove", e => {
+            if (!state.sparkles) return;
+            const now = Date.now(); if (now - lastSpark < 70) return; lastSpark = now;
+            if (Math.random() > .6) return;
+            const s = document.createElement("div"); s.className = "sparkle";
+            s.textContent = ["✨", "⭐", "💖", "🎈", "🌟"][Math.floor(Math.random() * 5)];
+            s.style.left = e.clientX + "px"; s.style.top = e.clientY + "px";
+            document.body.appendChild(s); setTimeout(() => s.remove(), 1000);
+        });
+
+        /* ============ SCROLL REVEAL ============ */
+        const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); }), { threshold: .12 });
+        document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+        /* Entrance */
+        gsap.from("nav", { y: -70, opacity: 0, duration: .8, ease: "power3.out", delay: 1.5 });
+    </script>
+</body>
+
+</html>

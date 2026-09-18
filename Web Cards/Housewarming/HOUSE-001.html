@@ -1,0 +1,2945 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f6f3eb">
+    <meta name="description"
+        content="A little house, a lot of love. An interactive wedding invitation for Amelia & Oliver.">
+    <title>Amelia & Oliver — You're Invited</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --paper: #f6f3eb;
+            --ink: #35473c;
+            --muted: #85877b;
+            --gold: #aa8661;
+            --line: #dedfd3;
+            --soft: #eeeee3;
+            --white: #fffdf8;
+            --serif: "Cormorant Garamond", Georgia, serif;
+            --sans: "Manrope", sans-serif;
+            --hand: "Caveat", cursive;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 35px;
+        }
+
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--sans);
+            font-size: 14px;
+            transition: background .8s, color .8s;
+        }
+
+        body.evening {
+            --paper: #263c34;
+            --ink: #f2eedf;
+            --muted: #b4bdad;
+            --line: #4a5a4d;
+            --soft: #30463c;
+            --white: #f7f4ec;
+            --gold: #d4b288;
+        }
+
+        body:has(dialog[open]) {
+            overflow: hidden;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button {
+            color: inherit;
+        }
+
+        button,
+        a,
+        input,
+        select,
+        textarea {
+            outline-offset: 5px;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--gold);
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+        }
+
+        button svg,
+        a svg {
+            flex-shrink: 0;
+        }
+
+        svg.icon {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .site-width {
+            width: min(1320px, calc(100% - 112px));
+            margin-inline: auto;
+        }
+
+        .eyebrow {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+        }
+
+        .site-header {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .brand {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .monogram {
+            width: 48px;
+            height: 52px;
+            border: 1px solid var(--gold);
+            border-radius: 25px 25px 4px 4px;
+            display: grid;
+            place-items: center;
+            font-family: var(--serif);
+            font-size: 24px;
+            letter-spacing: -2px;
+            padding-right: 3px;
+        }
+
+        .monogram i {
+            font-weight: 400;
+            font-size: 15px;
+            color: var(--gold);
+        }
+
+        .brand-caption {
+            font-size: 9px;
+            letter-spacing: 2px;
+            line-height: 1.9;
+            font-weight: 600;
+        }
+
+        .header-place {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 1.8px;
+        }
+
+        .header-place svg {
+            width: 13px;
+            height: 13px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .nav a {
+            position: relative;
+        }
+
+        .nav a::after {
+            content: "";
+            height: 1px;
+            background: var(--gold);
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            transition: width .25s;
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        .outline-button {
+            border: 1px solid var(--line);
+            border-radius: 30px;
+            padding: 12px 20px;
+            background: transparent;
+            transition: border-color .2s, background .2s;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .outline-button:hover {
+            border-color: var(--gold);
+            background: #aa86610a;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 39% 61%;
+            position: relative;
+            align-items: center;
+            min-height: 685px;
+        }
+
+        .hero-copy {
+            position: relative;
+            z-index: 2;
+            padding: 55px 0 62px;
+        }
+
+        .hero-copy .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            color: var(--gold);
+            font-size: 9px;
+            letter-spacing: 2.2px;
+        }
+
+        .hero-copy .eyebrow::before {
+            content: "";
+            width: 29px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        h1 {
+            margin: 27px 0 23px;
+            font: 400 clamp(74px, 7.2vw, 108px)/.89 var(--serif);
+            letter-spacing: -3.5px;
+        }
+
+        h1 em {
+            display: block;
+            font-weight: 400;
+            margin-top: 8px;
+            white-space: nowrap;
+        }
+
+        h1 .amp {
+            color: var(--gold);
+            font-size: .81em;
+        }
+
+        .hero-description {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.95;
+            max-width: 310px;
+            margin: 25px 0 30px;
+        }
+
+        .wedding-date {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2.3px;
+            margin-bottom: 9px;
+        }
+
+        .wedding-place {
+            font: italic 19px var(--serif);
+            color: var(--muted);
+        }
+
+        .primary-button {
+            border: 1px solid #3f5140;
+            color: #fffdf5;
+            background: #3f5140;
+            min-height: 50px;
+            padding: 15px 23px;
+            border-radius: 4px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 27px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .3px;
+            box-shadow: 0 5px 12px #293c3110;
+            transition: transform .25s, background .25s, box-shadow .25s;
+        }
+
+        .primary-button:hover {
+            transform: translateY(-2px);
+            background: #52654b;
+            box-shadow: 0 8px 20px #293c3120;
+        }
+
+        .hero-copy>.primary-button {
+            margin-top: 31px;
+        }
+
+        body.evening .primary-button {
+            background: #d9dbc3;
+            color: #263c34;
+            border-color: #d9dbc3;
+        }
+
+        .personal-note {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--muted);
+            font-size: 10px;
+            margin-top: 15px;
+        }
+
+        .personal-note svg {
+            width: 13px;
+            height: 13px;
+            color: var(--gold);
+        }
+
+        .scene-column {
+            position: relative;
+            align-self: stretch;
+            min-width: 0;
+            margin-right: -35px;
+            margin-left: -35px;
+        }
+
+        .scene-heading {
+            position: absolute;
+            width: 100%;
+            top: 25px;
+            text-align: center;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .scene-heading span {
+            display: block;
+            font-family: var(--hand);
+            font-size: 27px;
+            color: var(--gold);
+            transform: rotate(-4deg);
+        }
+
+        .scene-heading .little-stars {
+            display: inline;
+            font: 19px var(--serif);
+            padding: 0 11px;
+        }
+
+        .scene-heading p {
+            font-size: 8px;
+            letter-spacing: 2.3px;
+            color: var(--muted);
+            margin-top: 10px;
+        }
+
+        .scene-stage {
+            position: absolute;
+            inset: 50px -20px 40px;
+            overflow: hidden;
+        }
+
+        .scene-stage::before {
+            content: "";
+            position: absolute;
+            inset: 15% 3% 4%;
+            border-radius: 50%;
+            background: radial-gradient(ellipse, #e6e7d966, transparent 68%);
+            pointer-events: none;
+        }
+
+        body.evening .scene-stage::before {
+            background: radial-gradient(ellipse, #81937e22, transparent 65%);
+        }
+
+        #house-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: relative;
+            z-index: 1;
+            touch-action: pan-y;
+        }
+
+        .scene-loader {
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: var(--paper);
+            gap: 20px;
+            transition: opacity .7s, visibility .7s;
+            color: var(--gold);
+        }
+
+        .scene-loader svg {
+            width: 45px;
+            height: 45px;
+            stroke-width: .8;
+            animation: loader-breathe 2s infinite ease-in-out;
+        }
+
+        .scene-loader span {
+            font-family: var(--hand);
+            font-size: 24px;
+        }
+
+        .scene-stage.ready .scene-loader {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        @keyframes loader-breathe {
+            50% {
+                opacity: .35;
+                transform: translateY(-5px);
+            }
+        }
+
+        .scene-fallback {
+            display: none;
+            position: absolute;
+            inset: 55px 12% 55px;
+            z-index: 2;
+            cursor: pointer;
+            background: var(--white);
+            border: 10px solid var(--white);
+            box-shadow: 0 20px 50px #263c3420;
+            transform: rotate(-3deg);
+        }
+
+        .scene-fallback img {
+            height: calc(100% - 43px);
+            object-fit: cover;
+        }
+
+        .scene-fallback span {
+            display: block;
+            color: #3f5140;
+            text-align: center;
+            font: 26px/43px var(--hand);
+        }
+
+        .scene-stage.scene-error .scene-fallback {
+            display: block;
+        }
+
+        .scene-stage.scene-error #house-canvas {
+            visibility: hidden;
+        }
+
+        .scene-stage.scene-error .door-hotspot {
+            display: none;
+        }
+
+        .door-hotspot {
+            position: absolute;
+            z-index: 3;
+            width: 32px;
+            height: 32px;
+            display: grid;
+            place-items: center;
+            border: 1px solid #fff9e8;
+            border-radius: 50%;
+            color: #68543c;
+            background: #fff9e8e8;
+            box-shadow: 0 0 0 7px #fff9e82b, 0 3px 12px #0002;
+            transform: translate(-50%, -50%);
+            transition: opacity .4s, background .2s;
+            opacity: 0;
+        }
+
+        .ready .door-hotspot {
+            opacity: 1;
+        }
+
+        .door-hotspot.is-hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .door-hotspot:hover {
+            background: #fff;
+        }
+
+        .door-hotspot::after {
+            content: "Come on in";
+            position: absolute;
+            left: 50%;
+            top: 41px;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 9px;
+            padding: 7px 11px;
+            background: #fffaf0f5;
+            border-radius: 3px;
+            box-shadow: 0 2px 8px #263c3410;
+        }
+
+        .door-hotspot svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .scene-toolbar {
+            position: absolute;
+            z-index: 3;
+            left: 50%;
+            bottom: 32px;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .scene-help {
+            font-size: 9px;
+            white-space: nowrap;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-right: 15px;
+        }
+
+        .scene-help svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .tool-button {
+            width: 35px;
+            height: 35px;
+            border: 1px solid var(--line);
+            background: var(--paper);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            transition: background .2s, border-color .2s, transform .2s;
+            position: relative;
+        }
+
+        .tool-button:hover {
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .tool-button[aria-pressed="true"] {
+            background: #dce1ce;
+            border-color: #9fae92;
+            color: #3f5140;
+        }
+
+        .tool-button::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 45px;
+            left: 50%;
+            transform: translateX(-50%) translateY(3px);
+            background: var(--ink);
+            color: var(--paper);
+            border-radius: 3px;
+            padding: 7px 10px;
+            white-space: nowrap;
+            font-size: 9px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s, transform .2s;
+        }
+
+        .tool-button:hover::after,
+        .tool-button:focus-visible::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .chapter-strip {
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            padding: 27px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .chapter-item {
+            display: flex;
+            align-items: center;
+            gap: 19px;
+            justify-content: center;
+        }
+
+        .chapter-item+.chapter-item {
+            border-left: 1px solid var(--line);
+        }
+
+        .chapter-num {
+            font: italic 26px var(--serif);
+            color: var(--gold);
+        }
+
+        .chapter-item .eyebrow {
+            font-size: 8px;
+            letter-spacing: 1.8px;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .chapter-item p {
+            margin: 0;
+            font: 20px var(--serif);
+        }
+
+        .story-section {
+            padding: 100px 0 90px;
+            display: grid;
+            grid-template-columns: .95fr 1.7fr;
+            gap: 75px;
+            align-items: center;
+        }
+
+        .section-heading {
+            font: 400 clamp(40px, 4vw, 57px)/1.05 var(--serif);
+            letter-spacing: -1px;
+            margin: 19px 0 21px;
+        }
+
+        .section-heading em {
+            font-weight: 400;
+            color: var(--gold);
+        }
+
+        .section-copy {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 2;
+            max-width: 345px;
+        }
+
+        .signature {
+            font: 31px var(--hand);
+            color: var(--gold);
+            transform: rotate(-4deg);
+            margin: 20px 0 0 10px;
+        }
+
+        .photo-stack {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 21px;
+            padding: 15px 8px;
+        }
+
+        .photo-card {
+            border: 0;
+            padding: 10px 10px 0;
+            margin: 0;
+            background: #fffdf8;
+            box-shadow: 0 10px 26px #34473412;
+            transform: rotate(-5deg);
+            transition: transform .35s, box-shadow .35s;
+            position: relative;
+            min-width: 0;
+        }
+
+        .photo-card:nth-child(2) {
+            transform: rotate(5deg) translateY(18px);
+        }
+
+        .photo-card:hover {
+            transform: rotate(-1deg) translateY(-7px);
+            box-shadow: 0 17px 32px #34473422;
+        }
+
+        .photo-card:nth-child(2):hover {
+            transform: rotate(1deg) translateY(10px);
+        }
+
+        .photo-card img {
+            height: 285px;
+            object-fit: cover;
+        }
+
+        .photo-caption {
+            font: 25px/1.2 var(--hand);
+            color: #6c765e;
+            display: block;
+            padding: 15px 0 18px;
+        }
+
+        .photo-zoom {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 28px;
+            height: 28px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #fffdf8d9;
+            color: #40523f;
+            opacity: 0;
+            transition: opacity .2s;
+        }
+
+        .photo-card:hover .photo-zoom,
+        .photo-card:focus-visible .photo-zoom {
+            opacity: 1;
+        }
+
+        .photo-zoom svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .day-section {
+            border-top: 1px solid var(--line);
+            padding: 65px 0 70px;
+        }
+
+        .day-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 45px;
+            gap: 30px;
+        }
+
+        .day-heading .section-heading {
+            margin: 13px 0 0;
+            font-size: 45px;
+        }
+
+        .text-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--gold);
+            padding: 8px 0;
+            background: none;
+            border-top: 0;
+            border-left: 0;
+            border-right: 0;
+            color: var(--ink);
+        }
+
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 45px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-top: 27px;
+            border-top: 1px solid var(--line);
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: -4px;
+            width: 7px;
+            height: 7px;
+            background: var(--gold);
+            transform: rotate(45deg);
+        }
+
+        .timeline-time {
+            color: var(--gold);
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        .timeline-item h3 {
+            font: 29px var(--serif);
+            margin: 12px 0 8px;
+        }
+
+        .timeline-item p {
+            font-size: 11px;
+            line-height: 1.9;
+            color: var(--muted);
+            margin: 0;
+            max-width: 270px;
+        }
+
+        .rsvp-banner {
+            position: relative;
+            overflow: hidden;
+            background: var(--soft);
+            border: 1px solid var(--line);
+            border-radius: 130px 130px 5px 5px;
+            text-align: center;
+            padding: 58px 20px 49px;
+            margin: 15px 0 70px;
+        }
+
+        .rsvp-banner .section-heading {
+            font-size: clamp(37px, 4vw, 53px);
+            margin: 14px 0 23px;
+        }
+
+        .rsvp-banner .eyebrow {
+            color: var(--gold);
+        }
+
+        .rsvp-banner .deadline {
+            font-size: 10px;
+            color: var(--muted);
+            margin: 16px 0 0;
+        }
+
+        .botanical {
+            position: absolute;
+            width: 135px;
+            height: 230px;
+            color: var(--gold);
+            opacity: .34;
+            top: 50%;
+            transform: translateY(-50%) rotate(-12deg);
+            left: 55px;
+            pointer-events: none;
+        }
+
+        .botanical.right {
+            left: auto;
+            right: 55px;
+            transform: translateY(-50%) scaleX(-1) rotate(-12deg);
+        }
+
+        .footer {
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0 30px;
+            font-size: 9px;
+            letter-spacing: 1px;
+            color: var(--muted);
+        }
+
+        .footer .footer-names {
+            font: italic 23px var(--serif);
+            color: var(--ink);
+            letter-spacing: 0;
+        }
+
+        .footer-love {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .footer-love svg {
+            width: 12px;
+            height: 12px;
+            color: var(--gold);
+        }
+
+        dialog {
+            padding: 0;
+            border: 0;
+            border-radius: 7px;
+            color: #35473c;
+            background: #faf8f1;
+            width: min(840px, calc(100% - 36px));
+            max-height: calc(100dvh - 44px);
+            box-shadow: 0 30px 100px #152b3444;
+        }
+
+        dialog::backdrop {
+            background: #1c302bb3;
+            backdrop-filter: blur(8px);
+        }
+
+        dialog[open] {
+            animation: dialog-enter .35s ease both;
+        }
+
+        @keyframes dialog-enter {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .close-dialog {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 4;
+            width: 33px;
+            height: 33px;
+            border-radius: 50%;
+            background: #faf8f1ee;
+            color: #35473c;
+            border: 1px solid #d8dccf;
+            display: grid;
+            place-items: center;
+        }
+
+        .close-dialog:hover {
+            background: #eeeee3;
+        }
+
+        .close-dialog svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .invitation-layout {
+            display: grid;
+            grid-template-columns: .9fr 1.1fr;
+            min-height: 565px;
+        }
+
+        .invitation-photo {
+            position: relative;
+            min-height: 100%;
+            background: #adb3a0;
+        }
+
+        .invitation-photo img {
+            position: absolute;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .invitation-photo::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent 45%, #1b29296b);
+        }
+
+        .invitation-photo p {
+            position: absolute;
+            bottom: 25px;
+            left: 28px;
+            right: 28px;
+            color: #fffdf3;
+            font: italic 39px/1.05 var(--serif);
+            z-index: 1;
+        }
+
+        .invitation-content {
+            padding: 51px 34px 34px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .invitation-content .eyebrow {
+            color: #aa8661;
+            font-size: 8px;
+            letter-spacing: 2px;
+        }
+
+        .mini-flower {
+            color: #aa8661;
+            margin-bottom: 21px;
+            width: 35px;
+            height: 35px;
+        }
+
+        .invite-names {
+            font: 50px/.93 var(--serif);
+            margin: 20px 0;
+            font-weight: 400;
+            letter-spacing: -1px;
+        }
+
+        .invite-names em {
+            font-weight: 400;
+            display: block;
+            margin-top: 7px;
+        }
+
+        .invite-intro {
+            font-size: 11px;
+            line-height: 1.9;
+            color: #818577;
+            max-width: 260px;
+            margin: 0 0 21px;
+        }
+
+        .invite-date {
+            border-block: 1px solid #dedfd3;
+            padding: 14px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            width: 100%;
+        }
+
+        .invite-date span {
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            line-height: 1.9;
+        }
+
+        .invite-date strong {
+            font: 45px/.9 var(--serif);
+            font-weight: 400;
+        }
+
+        .invite-location {
+            font: 24px var(--serif);
+            margin: 19px 0 5px;
+        }
+
+        .invite-location-sub {
+            color: #818577;
+            font-size: 10px;
+            line-height: 1.8;
+            margin: 0 0 21px;
+        }
+
+        .invitation-content .primary-button {
+            width: 100%;
+        }
+
+        .calendar-button {
+            border: 0;
+            background: none;
+            color: #7e846f;
+            margin-top: 14px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px;
+        }
+
+        .calendar-button:hover {
+            color: #35473c;
+        }
+
+        .calendar-button svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        #rsvp-dialog {
+            width: min(480px, calc(100% - 32px));
+            padding: 40px;
+        }
+
+        #rsvp-dialog .eyebrow {
+            color: #aa8661;
+            font-size: 9px;
+        }
+
+        #rsvp-dialog h2 {
+            font: 45px var(--serif);
+            margin: 13px 0 10px;
+        }
+
+        .form-intro {
+            font-size: 11px;
+            line-height: 1.8;
+            color: #818577;
+            margin: 0 0 24px;
+        }
+
+        .form-field {
+            margin-bottom: 17px;
+        }
+
+        .form-field label,
+        .form-field legend {
+            font-size: 10px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-field input[type="text"],
+        .form-field input[type="email"],
+        .form-field select,
+        .form-field textarea {
+            width: 100%;
+            border: 1px solid #d9dcd0;
+            border-radius: 4px;
+            background: #fffdf8;
+            color: #35473c;
+            padding: 11px 12px;
+            font-size: 12px;
+        }
+
+        .form-field textarea {
+            resize: vertical;
+            min-height: 69px;
+        }
+
+        fieldset.form-field {
+            border: 0;
+            padding: 0;
+        }
+
+        .attendance-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .attendance-options label {
+            flex: 1;
+            border: 1px solid #d9dcd0;
+            background: #fffdf8;
+            padding: 12px 9px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .attendance-options label:has(input:checked) {
+            border-color: #879378;
+            background: #ecefe3;
+        }
+
+        .attendance-options input {
+            accent-color: #4c6245;
+            margin: 0;
+        }
+
+        #rsvp-form .primary-button {
+            width: 100%;
+        }
+
+        .privacy-note {
+            color: #818577;
+            font-size: 9px;
+            line-height: 1.8;
+            text-align: center;
+            margin: 12px 0 0;
+        }
+
+        .rsvp-success {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .success-seal {
+            width: 65px;
+            height: 65px;
+            display: grid;
+            place-items: center;
+            border: 1px solid #a5af92;
+            background: #ecedde;
+            border-radius: 50%;
+            margin: 0 auto 26px;
+            color: #657454;
+        }
+
+        .success-seal svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .rsvp-success p {
+            color: #818577;
+            font-size: 12px;
+            line-height: 1.9;
+        }
+
+        .rsvp-success .primary-button {
+            margin-top: 12px;
+        }
+
+        .rsvp-success .text-link {
+            color: #35473c;
+            margin-top: 10px;
+            font-size: 10px;
+            border-color: #aa8661;
+        }
+
+        #gallery-dialog {
+            width: min(850px, calc(100% - 36px));
+            background: #faf8f1;
+            overflow: hidden;
+        }
+
+        .gallery-image-wrap {
+            background: #26392e;
+            position: relative;
+            height: min(69dvh, 650px);
+        }
+
+        #gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .gallery-bottom {
+            padding: 17px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        #gallery-caption {
+            font: 29px var(--hand);
+            margin: 0;
+        }
+
+        .gallery-controls {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            color: #35473c;
+        }
+
+        .gallery-controls button {
+            background: none;
+            border: 1px solid #d9dcd0;
+            width: 33px;
+            height: 33px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+        }
+
+        #gallery-count {
+            font-size: 10px;
+            color: #818577;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translate(-50%, 20px);
+            z-index: 20;
+            background: #35473c;
+            color: #fffdf8;
+            padding: 13px 20px;
+            border: 1px solid #ffffff30;
+            border-radius: 4px;
+            box-shadow: 0 5px 30px #0002;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .25s, transform .25s;
+            font-size: 11px;
+            text-align: center;
+            max-width: calc(100% - 32px);
+        }
+
+        .toast.visible {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (min-width: 1550px) {
+            .hero {
+                min-height: 740px;
+            }
+
+            .hero-copy {
+                padding-block: 70px;
+            }
+
+            .scene-stage {
+                inset-block: 60px 40px;
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .site-width {
+                width: calc(100% - 64px);
+            }
+
+            .header-place {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 41% 59%;
+                min-height: 630px;
+            }
+
+            h1 {
+                font-size: 80px;
+            }
+
+            .scene-column {
+                margin-left: -55px;
+                margin-right: -20px;
+            }
+
+            .scene-heading {
+                top: 37px;
+            }
+
+            .scene-heading span {
+                font-size: 24px;
+            }
+
+            .hero-description {
+                font-size: 11px;
+                max-width: 270px;
+            }
+
+            .scene-help {
+                margin-right: 4px;
+                font-size: 8px;
+            }
+
+            .story-section {
+                gap: 40px;
+                padding-block: 80px;
+            }
+
+            .photo-card img {
+                height: 235px;
+            }
+
+            .photo-caption {
+                font-size: 22px;
+            }
+
+            .botanical {
+                left: 20px;
+                width: 105px;
+            }
+
+            .botanical.right {
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .site-width {
+                width: calc(100% - 40px);
+            }
+
+            .site-header {
+                height: 80px;
+            }
+
+            .brand {
+                gap: 10px;
+            }
+
+            .monogram {
+                width: 38px;
+                height: 43px;
+                font-size: 21px;
+            }
+
+            .brand-caption {
+                font-size: 8px;
+                letter-spacing: 1.5px;
+            }
+
+            .nav {
+                gap: 18px;
+            }
+
+            .nav>a {
+                display: none;
+            }
+
+            .outline-button {
+                padding: 10px 16px;
+                font-size: 10px;
+            }
+
+            .hero {
+                display: flex;
+                flex-direction: column;
+                min-height: auto;
+            }
+
+            .hero-copy {
+                padding: 39px 0 0;
+                text-align: center;
+                width: 100%;
+            }
+
+            .hero-copy .eyebrow {
+                justify-content: center;
+                font-size: 8px;
+                letter-spacing: 1.8px;
+            }
+
+            .hero-copy .eyebrow::before {
+                width: 20px;
+            }
+
+            .hero-copy .eyebrow::after {
+                content: "";
+                width: 20px;
+                height: 1px;
+                background: var(--gold);
+            }
+
+            h1 {
+                font-size: clamp(68px, 13vw, 92px);
+                margin: 20px 0 19px;
+                letter-spacing: -2px;
+            }
+
+            h1 em {
+                display: inline;
+                margin-left: 8px;
+            }
+
+            .hero-description {
+                margin: 18px auto 22px;
+                max-width: 320px;
+                font-size: 11px;
+            }
+
+            .hero-description br {
+                display: none;
+            }
+
+            .wedding-date {
+                font-size: 10px;
+                margin-bottom: 6px;
+            }
+
+            .wedding-place {
+                font-size: 18px;
+            }
+
+            .hero-copy>.primary-button {
+                margin-top: 24px;
+                min-height: 45px;
+                font-size: 10px;
+                padding-block: 13px;
+            }
+
+            .personal-note {
+                justify-content: center;
+                font-size: 9px;
+                margin-top: 11px;
+            }
+
+            .scene-column {
+                width: calc(100% + 40px);
+                height: 500px;
+                min-height: 500px;
+                margin: 8px -20px 0;
+            }
+
+            .scene-heading {
+                top: 13px;
+            }
+
+            .scene-heading span {
+                font-size: 23px;
+            }
+
+            .scene-heading p {
+                display: none;
+            }
+
+            .scene-stage {
+                inset: 35px 0 37px;
+            }
+
+            .scene-toolbar {
+                bottom: 17px;
+                gap: 9px;
+            }
+
+            .scene-help {
+                font-size: 9px;
+                margin-right: 9px;
+            }
+
+            .chapter-strip {
+                padding: 22px 0;
+            }
+
+            .chapter-item {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+                padding-inline: 5px;
+            }
+
+            .chapter-num {
+                font-size: 22px;
+            }
+
+            .chapter-item p {
+                font-size: 15px;
+            }
+
+            .chapter-item .eyebrow {
+                font-size: 7px;
+                letter-spacing: 1.1px;
+            }
+
+            .story-section {
+                grid-template-columns: 1fr;
+                gap: 33px;
+                padding: 65px 7px 68px;
+            }
+
+            .story-copy {
+                text-align: center;
+            }
+
+            .section-heading {
+                font-size: 43px;
+            }
+
+            .section-copy {
+                margin-inline: auto;
+                font-size: 11px;
+            }
+
+            .signature {
+                font-size: 29px;
+            }
+
+            .photo-stack {
+                gap: 17px;
+                max-width: 550px;
+                width: 100%;
+                margin-inline: auto;
+                padding-inline: 10px;
+            }
+
+            .photo-card {
+                padding: 7px 7px 0;
+            }
+
+            .photo-card img {
+                height: clamp(195px, 43vw, 310px);
+            }
+
+            .photo-caption {
+                font-size: 22px;
+                padding-block: 12px;
+            }
+
+            .day-section {
+                padding: 42px 0 50px;
+            }
+
+            .day-heading {
+                margin-bottom: 31px;
+                align-items: flex-end;
+                gap: 15px;
+            }
+
+            .day-heading .section-heading {
+                font-size: 36px;
+            }
+
+            .day-heading .text-link {
+                font-size: 9px;
+                white-space: nowrap;
+                gap: 6px;
+            }
+
+            .timeline {
+                gap: 20px;
+            }
+
+            .timeline-item h3 {
+                font-size: 24px;
+            }
+
+            .timeline-time {
+                font-size: 8px;
+            }
+
+            .timeline-item p {
+                font-size: 10px;
+            }
+
+            .rsvp-banner {
+                padding: 44px 20px 37px;
+                border-radius: 75px 75px 4px 4px;
+                margin-bottom: 44px;
+            }
+
+            .rsvp-banner .section-heading {
+                font-size: 37px;
+            }
+
+            .botanical {
+                width: 70px;
+                left: -20px;
+                opacity: .2;
+            }
+
+            .botanical.right {
+                right: -20px;
+            }
+
+            .footer {
+                flex-wrap: wrap;
+                gap: 14px;
+                font-size: 8px;
+                padding-block: 20px;
+            }
+
+            .footer .footer-names {
+                font-size: 21px;
+            }
+
+            .footer-date {
+                display: none;
+            }
+
+            .invitation-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .invitation-photo {
+                height: 185px;
+                min-height: 185px;
+            }
+
+            .invitation-photo img {
+                object-position: center 43%;
+            }
+
+            .invitation-photo p {
+                font-size: 29px;
+                bottom: 5px;
+                left: 24px;
+            }
+
+            .invitation-content {
+                padding: 28px 29px 25px;
+            }
+
+            .mini-flower {
+                display: none;
+            }
+
+            .invite-names {
+                font-size: 43px;
+                margin: 17px 0;
+            }
+
+            .invite-names em {
+                display: inline;
+            }
+
+            .invite-intro {
+                margin-bottom: 15px;
+            }
+
+            .invite-location {
+                margin-top: 16px;
+            }
+
+            .invite-date {
+                max-width: 320px;
+                padding-block: 11px;
+            }
+
+            .invite-date strong {
+                font-size: 37px;
+            }
+
+            .invitation-content .primary-button {
+                max-width: 320px;
+            }
+
+            #rsvp-dialog {
+                padding: 36px 25px 26px;
+            }
+        }
+
+        @media (max-width: 390px) {
+            h1 {
+                font-size: 61px;
+            }
+
+            .scene-column {
+                height: 450px;
+                min-height: 450px;
+            }
+
+            .scene-help {
+                font-size: 8px;
+                margin-right: 1px;
+            }
+
+            .chapter-item p {
+                font-size: 14px;
+            }
+
+            .photo-caption {
+                font-size: 20px;
+            }
+
+            .timeline {
+                gap: 13px;
+            }
+
+            .timeline-item h3 {
+                font-size: 22px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden"
+        aria-hidden="true">
+        <defs>
+            <symbol id="i-arrow" viewBox="0 0 24 24">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+            </symbol>
+            <symbol id="i-up-right" viewBox="0 0 24 24">
+                <path d="M6 18 18 6M6 6h12v12" />
+            </symbol>
+            <symbol id="i-heart" viewBox="0 0 24 24">
+                <path
+                    d="M20.8 4.6a5.6 5.6 0 0 0-8 .1l-.8.9-.8-.9a5.6 5.6 0 0 0-8 7.9L12 21l8.8-8.4a5.6 5.6 0 0 0 0-8Z" />
+            </symbol>
+            <symbol id="i-close" viewBox="0 0 24 24">
+                <path d="m6 6 12 12M6 18 18-12" />
+            </symbol>
+            <symbol id="i-moon" viewBox="0 0 24 24">
+                <path d="M20.9 13.1A8.5 8.5 0 0 1 10.9 3 9 9 0 1 0 20.9 13.1Z" />
+                <path d="M17 3v4M15 5h4" />
+            </symbol>
+            <symbol id="i-rotate" viewBox="0 0 24 24">
+                <path d="M20 8A8 8 0 1 0 21 14M20 3v5h-5" />
+            </symbol>
+            <symbol id="i-reset" viewBox="0 0 24 24">
+                <path d="M3 10 12 3l9 7M5 9v11h14V9M9 20v-7h6v7" />
+            </symbol>
+            <symbol id="i-drag" viewBox="0 0 24 24">
+                <path
+                    d="M8 12V6a2 2 0 0 1 4 0v6-2a2 2 0 0 1 4 0v2-1a2 2 0 0 1 4 0v5c0 4-2 6-6 6h-1c-2 0-3-1-4-3l-4-6a1.7 1.7 0 0 1 2-2l1 1Z" />
+            </symbol>
+            <symbol id="i-pin" viewBox="0 0 24 24">
+                <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z" />
+                <circle cx="12" cy="10" r="2.5" />
+            </symbol>
+            <symbol id="i-calendar" viewBox="0 0 24 24">
+                <rect x="3" y="5" width="18" height="16" rx="2" />
+                <path d="M7 3v4M17 3v4M3 11h18m-13 5h2m4 0h2" />
+            </symbol>
+            <symbol id="i-flower" viewBox="0 0 40 40">
+                <path
+                    d="M20 16C9 4 27-5 24 14c14-12 23 6 5 9 16 8 1 21-7 6-2 18-21 12-11-2-18 2-17-18 0-12-7-15 12-21 9 1Z" />
+                <circle cx="20" cy="21" r="4" />
+            </symbol>
+            <symbol id="i-check" viewBox="0 0 24 24">
+                <path d="m5 12 4 4L19 6" />
+            </symbol>
+            <symbol id="i-branch" viewBox="0 0 120 210">
+                <path
+                    d="M57 203C75 148 27 84 71 8M62 168c-33-3-42-25-42-25 32-3 44 17 42 25Zm-5-29c30-11 40-34 40-34-34 3-41 21-40 34Zm-2-30C26 97 24  seventy 24 76c28 5 33 21 31 33Zm2-31C87 70 96 46 96 46c-27 1-38 17-39 32Zm6-25C43 39 44 17 44 17c23 12 23 23 19 36Zm7-32C89 14 94 1 94 1 72-2 70 11 70 21Z" />
+            </symbol>
+        </defs>
+    </svg>
+
+    <header class="site-header site-width">
+        <a href="#" class="brand" aria-label="Amelia and Oliver, back to the invitation">
+            <div class="monogram"><span>A<i>&</i>O</span></div>
+            <span class="brand-caption">A CELEBRATION<br>OF OUR FOREVER</span>
+        </a>
+        <span class="header-place"><svg class="icon">
+                <use href="#i-pin" />
+            </svg> LAKE COMO, ITALY</span>
+        <nav class="nav" aria-label="Main navigation">
+            <a href="#our-story">Our story</a>
+            <a href="#the-day">The day</a>
+            <button class="outline-button" data-rsvp>Kindly RSVP <span aria-hidden="true">↗</span></button>
+        </nav>
+    </header>
+
+    <main class="site-width">
+        <section class="hero" aria-labelledby="couple-names">
+            <div class="hero-copy">
+                <div class="eyebrow">Together with our families</div>
+                <h1 id="couple-names">Amelia<em><span class="amp">&</span> Oliver</em></h1>
+                <p class="hero-description">We're opening the door to our forever.<br>And it wouldn't feel like home
+                    without you.</p>
+                <div class="wedding-date">SATURDAY, 19 JUNE 2027</div>
+                <div class="wedding-place">Villa del Balbianello · Lake Como, Italy</div>
+                <button class="primary-button" id="open-invitation">
+                    <span>Open our invitation</span>
+                    <svg class="icon">
+                        <use href="#i-up-right" />
+                    </svg>
+                </button>
+                <div class="personal-note"><svg class="icon">
+                        <use href="#i-heart" />
+                    </svg>A little house. A whole lot of love.</div>
+            </div>
+
+            <div class="scene-column">
+                <div class="scene-heading">
+                    <span><i class="little-stars">✧</i> Home is wherever you are <i class="little-stars">✧</i></span>
+                    <p>A LITTLE WORLD, MADE FOR OUR BIG DAY</p>
+                </div>
+                <div class="scene-stage" id="scene-stage">
+                    <canvas id="house-canvas" tabindex="0" role="img"
+                        aria-label="Interactive 3D wedding house on an invitation card. Drag to turn the house, pinch to zoom, or press Enter to open the invitation."></canvas>
+                    <button class="door-hotspot" id="door-hotspot"
+                        aria-label="Open the front door and read our invitation">
+                        <svg class="icon">
+                            <use href="#i-heart" />
+                        </svg>
+                    </button>
+                    <button class="scene-fallback" id="scene-fallback" aria-label="Open our wedding invitation">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85"
+                            alt="A romantic wedding celebration surrounded by greenery">
+                        <span>Our forever starts here</span>
+                    </button>
+                    <div class="scene-loader" id="scene-loader" role="status">
+                        <svg class="icon">
+                            <use href="#i-reset" />
+                        </svg>
+                        <span>Building a little forever…</span>
+                    </div>
+                </div>
+                <div class="scene-toolbar" aria-label="3D house controls">
+                    <span class="scene-help"><svg class="icon">
+                            <use href="#i-drag" />
+                        </svg>Drag to explore · pinch to zoom</span>
+                    <button class="tool-button" id="rotate-button" aria-label="Start automatic rotation"
+                        aria-pressed="false" data-tooltip="Take a little tour"><svg class="icon">
+                            <use href="#i-rotate" />
+                        </svg></button>
+                    <button class="tool-button" id="light-button" aria-label="Switch to evening light"
+                        aria-pressed="false" data-tooltip="Under the stars"><svg class="icon">
+                            <use href="#i-moon" />
+                        </svg></button>
+                    <button class="tool-button" id="reset-button" aria-label="Reset the house view"
+                        data-tooltip="Back to the front door"><svg class="icon">
+                            <use href="#i-reset" />
+                        </svg></button>
+                </div>
+            </div>
+        </section>
+
+        <div class="chapter-strip" aria-label="Wedding at a glance">
+            <div class="chapter-item">
+                <span class="chapter-num">01</span>
+                <div>
+                    <div class="eyebrow">The setting</div>
+                    <p>A little Italian magic</p>
+                </div>
+            </div>
+            <div class="chapter-item">
+                <span class="chapter-num">02</span>
+                <div>
+                    <div class="eyebrow">The promise</div>
+                    <p>Our favorite yes, forever</p>
+                </div>
+            </div>
+            <div class="chapter-item">
+                <span class="chapter-num">03</span>
+                <div>
+                    <div class="eyebrow">The company</div>
+                    <p>You. Of course, you.</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="story-section" id="our-story" aria-labelledby="story-title">
+            <div class="story-copy">
+                <div class="eyebrow">A few chapters before “I do”</div>
+                <h2 class="section-heading" id="story-title">It started with<br><em>a little hello.</em></h2>
+                <p class="section-copy">A missed train, two coffees, and a conversation neither of us wanted to end.
+                    Five years later, we're choosing a lifetime of the little things—together.</p>
+                <p class="section-copy">Now, for our favorite chapter yet. A summer evening, our favorite people, and a
+                    dance floor with your name on it.</p>
+                <p class="signature">With all our love, A & O</p>
+            </div>
+            <div class="photo-stack">
+                <button class="photo-card" data-photo="0" aria-label="Enlarge wedding photograph, The easiest yes">
+                    <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=650&q=85"
+                        alt="A couple sharing a tender moment on their wedding day" loading="lazy">
+                    <span class="photo-caption">The easiest yes.</span>
+                    <span class="photo-zoom"><svg class="icon">
+                            <use href="#i-up-right" />
+                        </svg></span>
+                </button>
+                <button class="photo-card" data-photo="1"
+                    aria-label="Enlarge wedding photograph, And all the days after">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=650&q=85"
+                        alt="A beautiful outdoor wedding with flowers and warm natural light" loading="lazy">
+                    <span class="photo-caption">And all the days after.</span>
+                    <span class="photo-zoom"><svg class="icon">
+                            <use href="#i-up-right" />
+                        </svg></span>
+                </button>
+            </div>
+        </section>
+
+        <section class="day-section" id="the-day" aria-labelledby="day-title">
+            <div class="day-heading">
+                <div>
+                    <div class="eyebrow">A day to remember</div>
+                    <h2 class="section-heading" id="day-title">Here's to <em>the good part.</em></h2>
+                </div>
+                <a class="text-link"
+                    href="https://www.google.com/maps/search/?api=1&query=Villa+del+Balbianello+Lake+Como+Italy"
+                    target="_blank" rel="noopener noreferrer">Find our little paradise<svg class="icon">
+                        <use href="#i-up-right" />
+                    </svg></a>
+            </div>
+            <div class="timeline">
+                <article class="timeline-item">
+                    <span class="timeline-time">03:30 PM · THE LOGGIA</span>
+                    <h3>The “I do” moment</h3>
+                    <p>A lakeside ceremony, a few happy tears, and the beginning of always. Arrive from 3:00 PM.</p>
+                </article>
+                <article class="timeline-item">
+                    <span class="timeline-time">05:00 PM · THE GARDENS</span>
+                    <h3>A toast to love</h3>
+                    <p>Aperitivo in the sunshine. Think spritzes, little bites, and catching up with your favorite
+                        people.</p>
+                </article>
+                <article class="timeline-item">
+                    <span class="timeline-time">07:00 PM · UNDER THE STARS</span>
+                    <h3>Dine. Dance. Repeat.</h3>
+                    <p>An Italian feast and a very full dance floor. Garden-party elegance; dancing shoes encouraged.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="rsvp-banner" aria-labelledby="rsvp-banner-title">
+            <svg class="botanical" viewBox="0 0 120 210" fill="none" stroke="currentColor" stroke-width="1">
+                <path
+                    d="M57 203C75 148 27 84 71 8M62 168c-33-3-42-25-42-25 32-3 44 17 42 25Zm-5-29c30-11 40-34 40-34-34 3-41 21-40 34Zm-2-30C26 97 24 76 24 76c28 5 33 21 31 33Zm2-31C87 70 96 46 96 46c-27 1-38 17-39 32Zm6-25C43 39 44 17 44 17c23 12 23 23 19 36Zm7-32C89 14 94 1 94 1 72-2 70 11 70 21Z" />
+            </svg>
+            <svg class="botanical right" viewBox="0 0 120 210" fill="none" stroke="currentColor" stroke-width="1">
+                <path
+                    d="M57 203C75 148 27 84 71 8M62 168c-33-3-42-25-42-25 32-3 44 17 42 25Zm-5-29c30-11 40-34 40-34-34 3-41 21-40 34Zm-2-30C26 97 24 76 24 76c28 5 33 21 31 33Zm2-31C87 70 96 46 96 46c-27 1-38 17-39 32Zm6-25C43 39 44 17 44 17c23 12 23 23 19 36Zm7-32C89 14 94 1 94 1 72-2 70 11 70 21Z" />
+            </svg>
+            <div class="eyebrow">There's a place for you here</div>
+            <h2 class="section-heading" id="rsvp-banner-title">Our favorite day.<br>Our <em>favorite people.</em></h2>
+            <button class="primary-button" data-rsvp>Save us a seat<svg class="icon">
+                    <use href="#i-heart" />
+                </svg></button>
+            <p class="deadline">Kindly reply by 19 May 2027</p>
+        </section>
+    </main>
+
+    <footer class="footer site-width">
+        <span class="footer-names">Amelia & Oliver</span>
+        <span class="footer-date">19 . 06 . 2027 &nbsp; · &nbsp; LAKE COMO, ITALY</span>
+        <span class="footer-love">Made with love, for you<svg class="icon">
+                <use href="#i-heart" />
+            </svg></span>
+    </footer>
+
+    <dialog id="invitation-dialog" aria-labelledby="invite-title">
+        <button class="close-dialog" data-close aria-label="Close invitation"><svg class="icon">
+                <path d="m6 6 12 12M6 18 18 6" />
+            </svg></button>
+        <div class="invitation-layout">
+            <div class="invitation-photo">
+                <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=900&q=90"
+                    alt="A romantic wedding portrait">
+                <p>The beginning<br>of always.</p>
+            </div>
+            <div class="invitation-content">
+                <svg class="icon mini-flower" viewBox="0 0 40 40">
+                    <use href="#i-flower" />
+                </svg>
+                <div class="eyebrow">With joyful hearts, you're invited</div>
+                <h2 class="invite-names" id="invite-title">Amelia <em>& Oliver</em></h2>
+                <p class="invite-intro">Together with our families, we invite you to celebrate our wedding and the start
+                    of our next adventure.</p>
+                <div class="invite-date"><span>SATURDAY<br>JUNE</span><strong>19</strong><span>2027<br>3:30 PM</span>
+                </div>
+                <p class="invite-location">Villa del Balbianello</p>
+                <p class="invite-location-sub">Lake Como, Italy<br>Garden-party elegance · Reception to follow</p>
+                <button class="primary-button" data-rsvp>We'll be there in spirit… or in dancing shoes<svg class="icon">
+                        <use href="#i-arrow" />
+                    </svg></button>
+                <button class="calendar-button" id="calendar-button"><svg class="icon">
+                        <use href="#i-calendar" />
+                    </svg>Keep the date · Add to calendar</button>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="rsvp-dialog" aria-labelledby="rsvp-title">
+        <button class="close-dialog" data-close aria-label="Close RSVP"><svg class="icon">
+                <path d="m6 6 12 12M6 18 18 6" />
+            </svg></button>
+        <div id="rsvp-form-view">
+            <div class="eyebrow">A seat at our table</div>
+            <h2 id="rsvp-title">Will you join us?</h2>
+            <p class="form-intro">We hope it's a yes. Please prepare your reply by 19 May 2027.</p>
+            <form id="rsvp-form">
+                <div class="form-field"><label for="guest-name">Your full name</label><input id="guest-name" name="name"
+                        type="text" autocomplete="name" placeholder="The name we'll put on your place card" required
+                        maxlength="100"></div>
+                <div class="form-field"><label for="guest-email">Email address</label><input id="guest-email"
+                        name="email" type="email" autocomplete="email" placeholder="you@example.com" required
+                        maxlength="150"></div>
+                <fieldset class="form-field">
+                    <legend>Will you be celebrating with us?</legend>
+                    <div class="attendance-options">
+                        <label><input type="radio" name="attendance" value="yes" checked>Joyfully accept</label>
+                        <label><input type="radio" name="attendance" value="no">Regretfully decline</label>
+                    </div>
+                </fieldset>
+                <div id="attending-fields">
+                    <div class="form-field"><label for="guest-count">Seats on your invitation</label><select
+                            id="guest-count" name="guests">
+                            <option value="1">Just me · 1 guest</option>
+                            <option value="2">The two of us · 2 guests</option>
+                        </select></div>
+                    <div class="form-field"><label for="guest-note">Dietary needs or a little note <span
+                                style="font-weight:400;color:#929586">(optional)</span></label><textarea id="guest-note"
+                            name="note" placeholder="Anything we should know?" maxlength="700"></textarea></div>
+                </div>
+                <button class="primary-button" type="submit">Save my reply<svg class="icon">
+                        <use href="#i-heart" />
+                    </svg></button>
+                <p class="privacy-note">Your reply stays on this device. Download it after saving and share it with the
+                    couple; it is not sent automatically.</p>
+            </form>
+        </div>
+        <div class="rsvp-success" id="rsvp-success" hidden aria-live="polite">
+            <div class="success-seal"><svg class="icon">
+                    <use href="#i-check" />
+                </svg></div>
+            <div class="eyebrow">Your reply is ready</div>
+            <h2 id="success-heading">A little yes.<br>A lot of joy.</h2>
+            <p id="success-message"></p>
+            <button class="primary-button" id="download-rsvp">Download my RSVP<svg class="icon">
+                    <path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5" />
+                </svg></button>
+            <br><button class="text-link" id="edit-rsvp">Edit my reply</button>
+        </div>
+    </dialog>
+
+    <dialog id="gallery-dialog" aria-labelledby="gallery-caption">
+        <button class="close-dialog" data-close aria-label="Close photographs"><svg class="icon">
+                <path d="m6 6 12 12M6 18 18 6" />
+            </svg></button>
+        <div class="gallery-image-wrap"><img id="gallery-image" src="" alt=""></div>
+        <div class="gallery-bottom">
+            <p id="gallery-caption"></p>
+            <div class="gallery-controls">
+                <button id="previous-photo" aria-label="Previous photograph"><svg class="icon"
+                        style="transform:rotate(180deg)">
+                        <use href="#i-arrow" />
+                    </svg></button>
+                <span id="gallery-count"></span>
+                <button id="next-photo" aria-label="Next photograph"><svg class="icon">
+                        <use href="#i-arrow" />
+                    </svg></button>
+            </div>
+        </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status"></div>
+
+    <script>
+        (() => {
+            const $ = (selector) => document.querySelector(selector);
+            const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const invite = $("#invitation-dialog");
+            const rsvp = $("#rsvp-dialog");
+            const gallery = $("#gallery-dialog");
+            let inviteTimer, toastTimer, photoIndex = 0, reply = null;
+            let invitationOpened = false;
+
+            const photos = [
+                { url: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1500&q=90", caption: "The easiest yes.", alt: "A couple sharing a tender moment on their wedding day" },
+                { url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90", caption: "And all the days after.", alt: "A romantic outdoor wedding celebration" },
+                { url: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=90", caption: "A little room for magic.", alt: "A beautiful wedding reception with carefully arranged flowers and tables" }
+            ];
+
+            function openDialog(dialog) {
+                clearTimeout(inviteTimer);
+                document.querySelectorAll("dialog[open]").forEach(other => { if (other !== dialog) other.close(); });
+                if (!dialog.open) dialog.showModal();
+            }
+            window.openWeddingInvitation = () => {
+                window.weddingScene?.open();
+                $("#door-hotspot").classList.add("is-hidden");
+                $("#open-invitation span").textContent = "Read our invitation";
+                const delay = invitationOpened || reduceMotion || !window.weddingScene ? 0 : 850;
+                invitationOpened = true;
+                clearTimeout(inviteTimer);
+                inviteTimer = setTimeout(() => openDialog(invite), delay);
+            };
+            $("#open-invitation").addEventListener("click", window.openWeddingInvitation);
+            $("#door-hotspot").addEventListener("click", window.openWeddingInvitation);
+            $("#scene-fallback").addEventListener("click", window.openWeddingInvitation);
+            $("#house-canvas").addEventListener("keydown", event => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    window.openWeddingInvitation();
+                }
+            });
+            document.querySelectorAll("[data-rsvp]").forEach(button => {
+                button.addEventListener("click", () => openDialog(rsvp));
+            });
+            document.querySelectorAll("[data-close]").forEach(button => {
+                button.addEventListener("click", () => button.closest("dialog").close());
+            });
+            document.querySelectorAll("dialog").forEach(dialog => {
+                dialog.addEventListener("click", event => {
+                    if (event.target !== dialog) return;
+                    const rect = dialog.getBoundingClientRect();
+                    if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+                });
+            });
+
+            window.showWeddingPhoto = (index = 0) => {
+                photoIndex = (index + photos.length) % photos.length;
+                const photo = photos[photoIndex];
+                $("#gallery-image").src = photo.url;
+                $("#gallery-image").alt = photo.alt;
+                $("#gallery-caption").textContent = photo.caption;
+                $("#gallery-count").textContent = `${photoIndex + 1} / ${photos.length}`;
+                openDialog(gallery);
+            };
+            document.querySelectorAll("[data-photo]").forEach(button => button.addEventListener("click", () => window.showWeddingPhoto(Number(button.dataset.photo))));
+            $("#previous-photo").addEventListener("click", () => window.showWeddingPhoto(photoIndex - 1));
+            $("#next-photo").addEventListener("click", () => window.showWeddingPhoto(photoIndex + 1));
+            gallery.addEventListener("keydown", event => {
+                if (event.key === "ArrowRight") { event.preventDefault(); window.showWeddingPhoto(photoIndex + 1); }
+                if (event.key === "ArrowLeft") { event.preventDefault(); window.showWeddingPhoto(photoIndex - 1); }
+            });
+
+            function toast(message) {
+                clearTimeout(toastTimer);
+                $("#toast").textContent = message;
+                $("#toast").classList.add("visible");
+                toastTimer = setTimeout(() => $("#toast").classList.remove("visible"), 3400);
+            }
+            function downloadFile(text, filename, type) {
+                const url = URL.createObjectURL(new Blob([text], { type }));
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = filename;
+                document.body.append(link);
+                link.click();
+                link.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 10000);
+            }
+            $("#calendar-button").addEventListener("click", () => {
+                const calendar = [
+                    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Amelia and Oliver//Wedding Invitation//EN",
+                    "CALSCALE:GREGORIAN", "BEGIN:VEVENT", "UID:amelia-oliver-20270619@wedding.local",
+                    "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, ""),
+                    "DTSTART:20270619T133000Z", "DTEND:20270619T215900Z",
+                    "SUMMARY:Amelia & Oliver's Wedding",
+                    "LOCATION:Villa del Balbianello\\, Lake Como\\, Italy",
+                    "DESCRIPTION:We cannot wait to celebrate with you! Arrive from 3:00 PM.",
+                    " Garden-party elegance. Ceremony at 3:30 PM local Italy time.",
+                    "STATUS:CONFIRMED", "END:VEVENT", "END:VCALENDAR", ""
+                ].join("\r\n");
+                downloadFile(calendar, "Amelia-and-Oliver-Wedding.ics", "text/calendar;charset=utf-8");
+                $("#calendar-button").innerHTML = '<svg class="icon"><use href="#i-check"/></svg>Calendar file ready — open it to save the date';
+            });
+
+            const form = $("#rsvp-form");
+            function updateAttendance() {
+                $("#attending-fields").hidden = form.elements.attendance.value === "no";
+            }
+            form.querySelectorAll('[name="attendance"]').forEach(input => input.addEventListener("change", updateAttendance));
+            try {
+                const saved = JSON.parse(localStorage.getItem("ao-wedding-rsvp") || "null");
+                if (saved && typeof saved.name === "string" && typeof saved.email === "string") {
+                    form.elements.name.value = saved.name;
+                    form.elements.email.value = saved.email;
+                    form.elements.attendance.value = saved.attendance === "no" ? "no" : "yes";
+                    form.elements.guests.value = saved.guests === "2" ? "2" : "1";
+                    form.elements.note.value = typeof saved.note === "string" ? saved.note : "";
+                    updateAttendance();
+                }
+            } catch (_) { }
+            form.addEventListener("submit", event => {
+                event.preventDefault();
+                if (!form.reportValidity()) return;
+                const data = new FormData(form);
+                const name = String(data.get("name")).trim();
+                if (!name) { form.elements.name.setCustomValidity("Please enter your name."); form.elements.name.reportValidity(); return; }
+                reply = {
+                    name, email: String(data.get("email")).trim(),
+                    attendance: data.get("attendance"),
+                    guests: data.get("attendance") === "yes" ? data.get("guests") : "0",
+                    note: data.get("attendance") === "yes" ? String(data.get("note")).trim() : ""
+                };
+                let saved = false;
+                try { localStorage.setItem("ao-wedding-rsvp", JSON.stringify(reply)); saved = true; } catch (_) { }
+                $("#success-heading").innerHTML = reply.attendance === "yes" ? "A little yes.<br>A lot of joy." : "You'll be there<br>in our hearts.";
+                $("#success-message").textContent = `${reply.name}, your reply is ${saved ? "saved on this device" : "ready to download"}. Download it and share it with Amelia & Oliver to confirm. Nothing has been sent automatically.`;
+                $("#rsvp-form-view").hidden = true;
+                $("#rsvp-success").hidden = false;
+                $("#download-rsvp").focus();
+            });
+            form.elements.name.addEventListener("input", () => form.elements.name.setCustomValidity(""));
+            $("#edit-rsvp").addEventListener("click", () => {
+                $("#rsvp-success").hidden = true;
+                $("#rsvp-form-view").hidden = false;
+                $("#guest-name").focus();
+            });
+            $("#download-rsvp").addEventListener("click", () => {
+                if (!reply) return;
+                const text = `AMELIA & OLIVER — WEDDING RSVP\n19 June 2027 · Villa del Balbianello, Lake Como\n\nName: ${reply.name}\nEmail: ${reply.email}\nReply: ${reply.attendance === "yes" ? "Joyfully accepts" : "Regretfully declines"}\nGuests: ${reply.guests}\nNote: ${reply.note || "—"}\n\nPlease share this reply with the couple to confirm your RSVP.\n`;
+                downloadFile(text, "Our-wedding-RSVP.txt", "text/plain;charset=utf-8");
+            });
+
+            $("#rotate-button").addEventListener("click", () => {
+                if (!window.weddingScene) { toast("The little house is still getting ready."); return; }
+                const active = window.weddingScene.rotate();
+                $("#rotate-button").setAttribute("aria-pressed", String(active));
+                $("#rotate-button").setAttribute("aria-label", active ? "Pause automatic rotation" : "Start automatic rotation");
+            });
+            $("#light-button").addEventListener("click", () => {
+                const night = document.body.classList.toggle("evening");
+                $("#light-button").setAttribute("aria-pressed", String(night));
+                $("#light-button").setAttribute("aria-label", night ? "Switch to golden daylight" : "Switch to evening light");
+                $("#light-button").dataset.tooltip = night ? "A little golden hour" : "Under the stars";
+                document.querySelector('meta[name="theme-color"]').content = night ? "#263c34" : "#f6f3eb";
+                window.weddingScene?.lights(night);
+            });
+            $("#reset-button").addEventListener("click", () => {
+                window.weddingScene?.reset();
+                $("#rotate-button").setAttribute("aria-pressed", "false");
+                $("#rotate-button").setAttribute("aria-label", "Start automatic rotation");
+                $("#door-hotspot").classList.remove("is-hidden");
+                invitationOpened = false;
+                clearTimeout(inviteTimer);
+                $("#open-invitation span").textContent = "Open our invitation";
+            });
+
+            window.sceneFailed = () => {
+                $("#scene-stage").classList.add("ready", "scene-error");
+                $(".scene-help").textContent = "A little glimpse of our forever";
+                $("#rotate-button").disabled = true;
+                $("#reset-button").disabled = true;
+            };
+            // Keep the invitation usable if a graphics CDN or WebGL is unavailable.
+            setTimeout(() => { if (!window.weddingScene) window.sceneFailed(); }, 14000);
+        })();
+    </script>
+
+    <script type="module">
+        (async () => {
+            try {
+                const THREE = await import("three");
+                const { OrbitControls } = await import("three/addons/controls/OrbitControls.js");
+                const stage = document.getElementById("scene-stage");
+                const canvas = document.getElementById("house-canvas");
+                const hotspot = document.getElementById("door-hotspot");
+                const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
+                renderer.setClearColor(0x000000, 0);
+                renderer.shadowMap.enabled = true;
+                renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                renderer.outputColorSpace = THREE.SRGBColorSpace;
+                renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                renderer.toneMappingExposure = 1.18;
+
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(35, 1, .1, 70);
+                const homePosition = new THREE.Vector3(7.7, 6.15, 11.8);
+                const homeTarget = new THREE.Vector3(0, 1.75, .25);
+                camera.position.copy(homePosition);
+                const controls = new OrbitControls(camera, canvas);
+                controls.target.copy(homeTarget);
+                controls.enableDamping = true;
+                controls.dampingFactor = .065;
+                controls.enablePan = false;
+                controls.minDistance = 8;
+                controls.maxDistance = 20;
+                controls.minPolarAngle = .42;
+                controls.maxPolarAngle = Math.PI / 2.12;
+                controls.rotateSpeed = .62;
+                controls.zoomSpeed = .7;
+                controls.autoRotateSpeed = .65;
+                // Scroll the page normally; pinch gestures still zoom the invitation.
+                controls.enableZoom = true;
+                canvas.style.touchAction = "pan-y";
+                controls.update();
+
+                const hemi = new THREE.HemisphereLight(0xfff5df, 0x849580, 2.05);
+                scene.add(hemi);
+                const sun = new THREE.DirectionalLight(0xffedcc, 3.2);
+                sun.position.set(-4, 9, 6);
+                sun.castShadow = true;
+                sun.shadow.mapSize.set(1536, 1536);
+                Object.assign(sun.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8, near: .5, far: 25 });
+                sun.shadow.normalBias = .035;
+                sun.shadow.bias = -.00015;
+                sun.shadow.radius = 4;
+                scene.add(sun);
+                const fill = new THREE.DirectionalLight(0xe0e9dc, 1.2);
+                fill.position.set(5, 5, -5);
+                scene.add(fill);
+                const warmLight = new THREE.PointLight(0xffb95e, .5, 7, 2);
+                warmLight.position.set(0, 2, 2.1);
+                scene.add(warmLight);
+
+                const house = new THREE.Group();
+                scene.add(house);
+                const interactables = [];
+                let seed = 1287;
+                const rand = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+
+                const material = (color, roughness = .85, extra = {}) => new THREE.MeshStandardMaterial({ color, roughness, ...extra });
+                const m = {
+                    paper: material("#f6f0df"),
+                    paperEdge: material("#e0dcc8"),
+                    plaster: material("#f4ead3"),
+                    trim: material("#fff4df"),
+                    sage: material("#8b9e86"),
+                    sageLight: material("#a7b49a"),
+                    door: material("#7c947a", .7),
+                    roof: material("#c78d77"),
+                    roofLight: material("#dba28b"),
+                    roofSeam: material("#af7661"),
+                    stone: material("#dad8c3"),
+                    gold: material("#c1a067", .34, { metalness: .55 }),
+                    wood: material("#a38a65"),
+                    trunk: material("#877757"),
+                    leaf: material("#71866a"),
+                    darkLeaf: material("#4f6c55"),
+                    paleLeaf: material("#9fab80"),
+                    flower: material("#f1cab8"),
+                    whiteFlower: material("#fff4dc"),
+                    pot: material("#d6ad93"),
+                    glass: material("#788673", .25, { emissive: new THREE.Color("#eeba76"), emissiveIntensity: .2 }),
+                    bulb: material("#fff0c8", .35, { emissive: new THREE.Color("#ffc671"), emissiveIntensity: .8 }),
+                    wire: material("#7d8167"),
+                    interior: material("#ded8bd")
+                };
+
+                // A soft, lightly mottled plaster finish, generated locally.
+                const plasterCanvas = document.createElement("canvas");
+                plasterCanvas.width = plasterCanvas.height = 128;
+                const pctx = plasterCanvas.getContext("2d");
+                pctx.fillStyle = "#f6eedb"; pctx.fillRect(0, 0, 128, 128);
+                for (let i = 0; i < 3000; i++) {
+                    pctx.fillStyle = rand() > .5 ? "rgba(143,122,93,.045)" : "rgba(255,255,246,.17)";
+                    pctx.fillRect(rand() * 128, rand() * 128, 1 + rand() * 2, 1 + rand() * 2);
+                }
+                const plasterTexture = new THREE.CanvasTexture(plasterCanvas);
+                plasterTexture.colorSpace = THREE.SRGBColorSpace;
+                plasterTexture.wrapS = plasterTexture.wrapT = THREE.RepeatWrapping;
+                m.plaster.map = plasterTexture;
+
+                function mesh(geometry, mat, x = 0, y = 0, z = 0, parent = house, cast = true) {
+                    const object = new THREE.Mesh(geometry, mat);
+                    object.position.set(x, y, z);
+                    object.castShadow = cast;
+                    object.receiveShadow = true;
+                    parent.add(object);
+                    return object;
+                }
+                const box = (w, h, d, mat, x, y, z, parent = house) => mesh(new THREE.BoxGeometry(w, h, d), mat, x, y, z, parent);
+                const sphereGeometry = new THREE.SphereGeometry(1, 10, 8);
+                const icoGeometry = new THREE.IcosahedronGeometry(1, 1);
+                function sphere(r, mat, x, y, z, parent = house) {
+                    const s = mesh(sphereGeometry, mat, x, y, z, parent);
+                    s.scale.setScalar(r); return s;
+                }
+                function rod(a, b, radius, mat, parent = house) {
+                    const delta = new THREE.Vector3().subVectors(b, a);
+                    const object = mesh(new THREE.CylinderGeometry(radius, radius, delta.length(), 7), mat, 0, 0, 0, parent);
+                    object.position.copy(a).add(b).multiplyScalar(.5);
+                    object.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), delta.normalize());
+                    return object;
+                }
+                function roundedRect(w, h, r) {
+                    const s = new THREE.Shape(), x = -w / 2, y = -h / 2;
+                    s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r);
+                    s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                    s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r);
+                    s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y);
+                    return s;
+                }
+                function archShape(width, height, bottom = 0, centerX = 0) {
+                    const s = new THREE.Shape(), r = width / 2, spring = bottom + height - r;
+                    s.moveTo(centerX - r, bottom);
+                    s.lineTo(centerX + r, bottom);
+                    s.lineTo(centerX + r, spring);
+                    s.absarc(centerX, spring, r, 0, Math.PI, false);
+                    s.lineTo(centerX - r, bottom);
+                    s.closePath();
+                    return s;
+                }
+                function printTexture(width, height, draw) {
+                    const c = document.createElement("canvas");
+                    c.width = width; c.height = height;
+                    draw(c.getContext("2d"), width, height);
+                    const texture = new THREE.CanvasTexture(c);
+                    texture.colorSpace = THREE.SRGBColorSpace;
+                    texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
+                    return texture;
+                }
+
+                // Three softly beveled sheets turn the garden into a miniature pop-up card.
+                for (let i = 0; i < 3; i++) {
+                    const geometry = new THREE.ExtrudeGeometry(roundedRect(8.25, 6.4, .19), { depth: .045, bevelEnabled: true, bevelSegments: 2, steps: 1, bevelSize: .028, bevelThickness: .018 });
+                    const sheet = mesh(geometry, i === 2 ? m.paper : m.paperEdge, 0, -.18 + i * .056, .35);
+                    sheet.rotation.x = -Math.PI / 2;
+                    sheet.rotation.z = i === 0 ? -.012 : 0;
+                }
+                const print = printTexture(1024, 170, (ctx, w, h) => {
+                    ctx.fillStyle = "#f6f0df"; ctx.fillRect(0, 0, w, h);
+                    ctx.textAlign = "center"; ctx.fillStyle = "#69755c";
+                    ctx.font = "34px Georgia"; ctx.fillText("A M E L I A   &   O L I V E R", w / 2, 71);
+                    ctx.fillStyle = "#aa916b"; ctx.font = "17px Arial"; ctx.fillText("L A K E  C O M O    ·    1 9 . 0 6 . 2 0 2 7", w / 2, 115);
+                    ctx.strokeStyle = "#c2bd9c"; ctx.lineWidth = 1;
+                    ctx.beginPath(); ctx.moveTo(70, 84); ctx.lineTo(170, 84); ctx.moveTo(w - 170, 84); ctx.lineTo(w - 70, 84); ctx.stroke();
+                });
+                const cardPrint = mesh(new THREE.PlaneGeometry(4.15, .69), new THREE.MeshStandardMaterial({ map: print, roughness: 1 }), 0, .022, 3.03);
+                cardPrint.rotation.x = -Math.PI / 2;
+
+                // Contact shading is inexpensive and stays soft even on mobile GPUs.
+                const shadowTexture = printTexture(128, 128, (ctx, w, h) => {
+                    const gradient = ctx.createRadialGradient(w / 2, h / 2, 12, w / 2, h / 2, w / 2);
+                    gradient.addColorStop(0, "rgba(43,53,34,.25)");
+                    gradient.addColorStop(.65, "rgba(43,53,34,.12)");
+                    gradient.addColorStop(1, "rgba(43,53,34,0)");
+                    ctx.fillStyle = gradient; ctx.fillRect(0, 0, w, h);
+                });
+                const contact = mesh(new THREE.PlaneGeometry(12, 10), new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false }), 0, -.258, .5, scene, false);
+                contact.rotation.x = -Math.PI / 2;
+                const ground = mesh(new THREE.PlaneGeometry(200, 200), new THREE.ShadowMaterial({ opacity: .12 }), 0, -.25, 0, scene, false);
+                ground.rotation.x = -Math.PI / 2;
+
+                // Villa shell, with a true arched opening in the front façade.
+                box(5.15, .22, 3.4, m.stone, 0, .13, 0);
+                box(.17, 3.23, 3.25, m.plaster, -2.43, 1.855, 0);
+                box(.17, 3.23, 3.25, m.plaster, 2.43, 1.855, 0);
+                box(4.9, 3.23, .17, m.plaster, 0, 1.855, -1.54);
+                box(4.72, .06, 3.13, m.interior, 0, .27, 0);
+
+                const facadeShape = new THREE.Shape();
+                facadeShape.moveTo(-2.5, .23); facadeShape.lineTo(2.5, .23);
+                facadeShape.lineTo(2.5, 3.48); facadeShape.lineTo(-2.5, 3.48); facadeShape.closePath();
+                const opening = archShape(1.86, 2.91, .24);
+                facadeShape.holes.push(new THREE.Path(opening.getPoints(36)));
+                mesh(new THREE.ExtrudeGeometry(facadeShape, { depth: .19, bevelEnabled: false }), m.plaster, 0, 0, 1.6);
+
+                [-2.37, 2.37].forEach(x => {
+                    box(.18, 3.23, .11, m.trim, x, 1.855, 1.82);
+                    box(.31, .12, .19, m.trim, x, .33, 1.85);
+                    box(.3, .12, .19, m.trim, x, 3.31, 1.85);
+                });
+                box(5.35, .14, 3.62, m.trim, 0, 3.48, -.02);
+                box(5.18, .065, 3.47, m.stone, 0, .33, -.02);
+
+                const gableShape = new THREE.Shape();
+                gableShape.moveTo(-2.55, 3.52); gableShape.lineTo(2.55, 3.52); gableShape.lineTo(0, 4.76); gableShape.closePath();
+                const gableGeometry = new THREE.ExtrudeGeometry(gableShape, { depth: .16, bevelEnabled: false });
+                mesh(gableGeometry, m.plaster, 0, 0, 1.65);
+                mesh(gableGeometry, m.plaster, 0, 0, -1.8);
+
+                // Terracotta roof with individually rounded tile ridges.
+                const run = 2.88, rise = 1.42, slope = Math.atan2(rise, run);
+                [-1, 1].forEach(side => {
+                    const roof = box(Math.hypot(run, rise), .14, 4.04, m.roof, side * run / 2, 4.15, -.06);
+                    roof.rotation.z = -side * slope;
+                    const ridgeGeometry = new THREE.CylinderGeometry(.057, .057, 4.07, 7);
+                    const ridges = new THREE.InstancedMesh(ridgeGeometry, m.roofLight, 16);
+                    const dummy = new THREE.Object3D();
+                    for (let i = 0; i < 16; i++) {
+                        const x = .065 + i * .18;
+                        dummy.position.set(side * x, 4.94 - x * rise / run, -.06);
+                        dummy.rotation.set(Math.PI / 2, 0, 0);
+                        dummy.updateMatrix(); ridges.setMatrixAt(i, dummy.matrix);
+                    }
+                    ridges.castShadow = true; ridges.receiveShadow = true; house.add(ridges);
+                    [-1.38, -.65, .08, .81, 1.54].forEach(z => {
+                        rod(new THREE.Vector3(side * .04, 4.93, z), new THREE.Vector3(side * 2.87, 3.52, z), .012, m.roofSeam);
+                    });
+                });
+                const roofRidge = mesh(new THREE.CylinderGeometry(.095, .095, 4.13, 10), m.roofLight, 0, 4.94, -.06);
+                roofRidge.rotation.x = Math.PI / 2;
+                box(.44, .96, .45, m.plaster, 1.47, 4.56, -1.11);
+                box(.59, .12, .58, m.trim, 1.47, 5.07, -1.11);
+                box(.36, .022, .36, m.darkLeaf, 1.47, 5.136, -1.11);
+
+                const atticGlass = mesh(new THREE.CircleGeometry(.245, 32), m.glass, 0, 4.05, 1.823);
+                const atticTrim = mesh(new THREE.TorusGeometry(.263, .043, 8, 32), m.trim, 0, 4.05, 1.83);
+                box(.023, .45, .025, m.trim, 0, 4.05, 1.85);
+                box(.45, .023, .025, m.trim, 0, 4.05, 1.85);
+
+                const plaque = printTexture(384, 115, (ctx, w, h) => {
+                    ctx.fillStyle = "#f8efda"; ctx.fillRect(0, 0, w, h);
+                    ctx.strokeStyle = "#b7aa82"; ctx.lineWidth = 2; ctx.strokeRect(10, 10, w - 20, h - 20);
+                    ctx.fillStyle = "#7d896c"; ctx.font = "italic 61px Georgia"; ctx.textAlign = "center"; ctx.fillText("A & O", w / 2, 80);
+                });
+                mesh(new THREE.PlaneGeometry(.82, .245), new THREE.MeshStandardMaterial({ map: plaque, roughness: 1 }), 0, 3.49, 1.915);
+
+                function addWindow(parent, x, y, z, rotation = 0, shutters = true) {
+                    const group = new THREE.Group(); group.position.set(x, y, z); group.rotation.y = rotation; parent.add(group);
+                    const borderShape = archShape(.88, 1.48);
+                    const cutout = archShape(.65, 1.26, .105);
+                    borderShape.holes.push(new THREE.Path(cutout.getPoints(20)));
+                    mesh(new THREE.ExtrudeGeometry(borderShape, { depth: .06, bevelEnabled: false }), m.trim, 0, 0, 0, group);
+                    mesh(new THREE.ShapeGeometry(archShape(.67, 1.28, .095)), m.glass, 0, 0, .012, group);
+                    box(.028, 1.23, .025, m.trim, 0, .74, .07, group);
+                    box(.66, .029, .025, m.trim, 0, .7, .07, group);
+                    box(.98, .08, .24, m.trim, 0, .03, .04, group);
+                    if (shutters) [-1, 1].forEach(side => {
+                        box(.255, 1.19, .065, m.sage, side * .57, .67, .013, group);
+                        for (let i = 0; i < 7; i++) {
+                            const slat = box(.215, .085, .045, m.sageLight, side * .57, .19 + i * .145, .06, group);
+                            slat.rotation.x = -.18;
+                        }
+                    });
+                }
+                addWindow(house, -1.72, 1.24, 1.81);
+                addWindow(house, 1.72, 1.24, 1.81);
+                addWindow(house, 2.527, 1.24, -.38, Math.PI / 2, false);
+                addWindow(house, -2.527, 1.24, -.38, -Math.PI / 2, false);
+
+                // The two real, hinged door leaves open onto a photographic invitation.
+                function makeDoor(side) {
+                    const pivot = new THREE.Group();
+                    pivot.position.set(side * .88, 0, 1.81);
+                    if (side === 1) pivot.scale.x = -1;
+                    house.add(pivot);
+                    const shape = new THREE.Shape();
+                    shape.moveTo(0, .255); shape.lineTo(.88, .255); shape.lineTo(.88, 3.12);
+                    shape.absarc(.88, 2.24, .88, Math.PI / 2, Math.PI, false); shape.closePath();
+                    const leaf = mesh(new THREE.ExtrudeGeometry(shape, { depth: .095, bevelEnabled: true, bevelThickness: .012, bevelSize: .012, bevelSegments: 2 }), m.door, 0, 0, 0, pivot);
+                    leaf.userData.action = "invite"; interactables.push(leaf);
+                    [1.01, 2.075].forEach((y, index) => {
+                        const height = index ? .74 : .9;
+                        box(.65, .025, .022, m.sageLight, .44, y - height / 2, .111, pivot);
+                        box(.65, .025, .022, m.sageLight, .44, y + height / 2, .111, pivot);
+                        box(.025, height, .022, m.sageLight, .115, y, .111, pivot);
+                        box(.025, height, .022, m.sageLight, .765, y, .111, pivot);
+                    });
+                    box(.06, .2, .025, m.gold, .755, 1.48, .12, pivot);
+                    sphere(.045, m.gold, .755, 1.5, .175, pivot);
+                    return pivot;
+                }
+                const leftDoor = makeDoor(-1);
+                const rightDoor = makeDoor(1);
+
+                const archPoints = [new THREE.Vector3(-1.02, .32, 1.87), new THREE.Vector3(-1.02, 1.3, 1.87), new THREE.Vector3(-1.02, 2.24, 1.87)];
+                for (let i = 1; i <= 32; i++) {
+                    const angle = Math.PI - i / 32 * Math.PI;
+                    archPoints.push(new THREE.Vector3(Math.cos(angle) * 1.02, 2.24 + Math.sin(angle) * 1.02, 1.87));
+                }
+                archPoints.push(new THREE.Vector3(1.02, 1.3, 1.87), new THREE.Vector3(1.02, .32, 1.87));
+                mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(archPoints), 70, .06, 8, false), m.trim);
+
+                const photoMaterial = new THREE.MeshStandardMaterial({ color: "#e8d8bc", roughness: .76 });
+                box(1.82, 2.47, .08, m.gold, 0, 1.575, 1.455);
+                const doorPhoto = mesh(new THREE.PlaneGeometry(1.69, 2.33), photoMaterial, 0, 1.575, 1.501);
+                doorPhoto.userData.action = "photo"; interactables.push(doorPhoto);
+
+                const textureLoader = new THREE.TextureLoader();
+                textureLoader.setCrossOrigin("anonymous");
+                function loadPhoto(url, targetMaterial, aspect) {
+                    textureLoader.load(url, texture => {
+                        texture.colorSpace = THREE.SRGBColorSpace;
+                        texture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+                        const imageAspect = texture.image.width / texture.image.height;
+                        if (imageAspect > aspect) {
+                            texture.repeat.x = aspect / imageAspect;
+                            texture.offset.x = (1 - texture.repeat.x) / 2;
+                        } else {
+                            texture.repeat.y = imageAspect / aspect;
+                            texture.offset.y = (1 - texture.repeat.y) / 2;
+                        }
+                        targetMaterial.map = texture;
+                        targetMaterial.color.set("#ffffff");
+                        targetMaterial.needsUpdate = true;
+                    }, undefined, () => {
+                        // A locally generated monogram keeps the interior beautiful offline.
+                        targetMaterial.map = plaque;
+                        targetMaterial.color.set("#ffffff");
+                        targetMaterial.needsUpdate = true;
+                    });
+                }
+                const coupleURL = "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=800&q=85";
+                loadPhoto(coupleURL, photoMaterial, 1.69 / 2.33);
+
+                // The photograph beside the house is a freestanding, clickable paper easel.
+                const easel = new THREE.Group();
+                easel.position.set(3.2, .03, 1.04);
+                easel.rotation.set(-.12, -.28, -.035);
+                house.add(easel);
+                [-1, 1].forEach(side => {
+                    const leg = box(.064, 1.4, .07, m.wood, side * .3, .68, -.06, easel);
+                    leg.rotation.z = side * -.18;
+                });
+                box(1.19, 1.58, .055, m.trim, 0, 1.1, 0, easel);
+                const easelPhotoMaterial = new THREE.MeshStandardMaterial({ color: "#dfd9c5", roughness: .8 });
+                const easelPhoto = mesh(new THREE.PlaneGeometry(1.025, 1.24), easelPhotoMaterial, 0, 1.19, .034, easel);
+                easelPhoto.userData.action = "photo"; interactables.push(easelPhoto);
+                loadPhoto(coupleURL, easelPhotoMaterial, 1.025 / 1.24);
+                const easelCaption = printTexture(512, 92, (ctx, w, h) => {
+                    ctx.fillStyle = "#fff4df"; ctx.fillRect(0, 0, w, h);
+                    ctx.textAlign = "center"; ctx.font = "italic 40px Georgia"; ctx.fillStyle = "#7b8869";
+                    ctx.fillText("our kind of forever", w / 2, 60);
+                });
+                mesh(new THREE.PlaneGeometry(1.04, .19), new THREE.MeshStandardMaterial({ map: easelCaption, roughness: 1 }), 0, .439, .035, easel);
+                box(1.3, .065, .16, m.wood, 0, .31, .05, easel);
+
+                // Front steps, individually cut stone pavers, and a little garden.
+                box(2.36, .11, .6, m.stone, 0, .11, 1.89);
+                box(2.04, .12, .47, m.trim, 0, .205, 1.79);
+                [2.33, 2.58].forEach(z => box(.84, .046, .18, m.stone, 0, .035, z));
+                [-1, 1].forEach(side => {
+                    box(.9, .055, 3.4, m.paleLeaf, side * 3.07, .025, -.35);
+                    box(1.15, .055, .66, m.paleLeaf, side * 1.95, .025, 2.16);
+                });
+
+                // Instanced blossoms and leaves keep the floral arch detailed but light.
+                const blossomPositions = [];
+                const leafPositions = [];
+                for (let i = 0; i < 45; i++) {
+                    let x, y;
+                    if (i < 29) {
+                        const a = i / 28 * Math.PI;
+                        x = Math.cos(a) * 1.105; y = 2.24 + Math.sin(a) * 1.105;
+                    } else {
+                        const side = i % 2 ? 1 : -1;
+                        x = side * (1.09 + rand() * .08); y = 1.12 + rand() * 1.18;
+                    }
+                    const z = 1.95 + rand() * .07;
+                    for (let k = 0; k < 4; k++) {
+                        blossomPositions.push({ x: x + (rand() - .5) * .14, y: y + (rand() - .5) * .13, z: z + rand() * .065, s: .045 + rand() * .04 });
+                    }
+                    for (let k = 0; k < 2; k++) leafPositions.push({ x: x + (rand() - .5) * .24, y: y + (rand() - .5) * .22, z: z - .025, r: rand() * Math.PI });
+                }
+                const flowerInstances = new THREE.InstancedMesh(icoGeometry, m.flower, blossomPositions.length);
+                const dummy = new THREE.Object3D();
+                blossomPositions.forEach((p, i) => {
+                    dummy.position.set(p.x, p.y, p.z); dummy.rotation.set(rand(), rand(), rand()); dummy.scale.setScalar(p.s); dummy.updateMatrix();
+                    flowerInstances.setMatrixAt(i, dummy.matrix);
+                    flowerInstances.setColorAt(i, new THREE.Color(i % 4 === 0 ? "#fff8e7" : i % 3 === 0 ? "#ebbea6" : "#f3d7c1"));
+                });
+                flowerInstances.castShadow = true; house.add(flowerInstances);
+                const leafInstances = new THREE.InstancedMesh(sphereGeometry, m.leaf, leafPositions.length);
+                leafPositions.forEach((p, i) => {
+                    dummy.position.set(p.x, p.y, p.z); dummy.rotation.set(.4, p.r, p.r); dummy.scale.set(.058, .13, .026); dummy.updateMatrix(); leafInstances.setMatrixAt(i, dummy.matrix);
+                });
+                leafInstances.castShadow = true; house.add(leafInstances);
+
+                const trees = [];
+                function cypress(x, z, height) {
+                    const tree = new THREE.Group(); tree.position.set(x, .03, z); house.add(tree); trees.push(tree);
+                    mesh(new THREE.CylinderGeometry(.065, .09, .8, 8), m.trunk, 0, .4, 0, tree);
+                    const crown = mesh(icoGeometry, m.darkLeaf, 0, height * .62, 0, tree);
+                    crown.scale.set(.37, height * .49, .38);
+                    const crown2 = mesh(icoGeometry, m.leaf, -.08, height * .67, .045, tree);
+                    crown2.scale.set(.255, height * .36, .27);
+                    const top = mesh(new THREE.ConeGeometry(.235, .85, 8), m.darkLeaf, .015, height - .27, 0, tree);
+                    sphere(.27, m.paleLeaf, .1, .16, .05, tree).scale.y = .45;
+                }
+                cypress(-3.17, -1.05, 3.38);
+                cypress(3.17, -1.25, 3.6);
+                cypress(-3.48, -.28, 2.36);
+
+                function planter(x, z, scale = 1) {
+                    const group = new THREE.Group(); group.position.set(x, .03, z); group.scale.setScalar(scale); house.add(group);
+                    mesh(new THREE.CylinderGeometry(.26, .19, .4, 12), m.pot, 0, .2, 0, group);
+                    mesh(new THREE.TorusGeometry(.253, .035, 6, 16), m.pot, 0, .397, 0, group).rotation.x = Math.PI / 2;
+                    for (let i = 0; i < 7; i++) {
+                        const a = i / 7 * Math.PI * 2;
+                        const leaf = sphere(.2, i % 2 ? m.leaf : m.paleLeaf, Math.cos(a) * .18, .52 + rand() * .12, Math.sin(a) * .18, group);
+                        leaf.scale.set(.18, .22, .15);
+                    }
+                    for (let i = 0; i < 15; i++) {
+                        const a = rand() * Math.PI * 2, radius = rand() * .27;
+                        const bloom = sphere(.075 + rand() * .025, i % 3 ? m.whiteFlower : m.flower, Math.cos(a) * radius, .66 + rand() * .14, Math.sin(a) * radius, group);
+                    }
+                }
+                planter(-1.63, 2.03, 1.12);
+                planter(1.63, 2.03, 1.12);
+                planter(-3.5, 1.44, .87);
+                planter(2.96, -.38, .72);
+
+                // Olive bushes fill the edges without covering the printed card.
+                [-1, 1].forEach(side => {
+                    for (let i = 0; i < 8; i++) {
+                        const bush = mesh(icoGeometry, i % 2 ? m.leaf : m.paleLeaf, side * (2.94 + rand() * .2), .17 + rand() * .06, -.7 + i * .24);
+                        bush.scale.set(.21, .2 + rand() * .14, .23);
+                    }
+                });
+
+                function lantern(x, z) {
+                    const group = new THREE.Group(); group.position.set(x, .03, z); house.add(group);
+                    box(.25, .045, .25, m.gold, 0, .03, 0, group);
+                    box(.24, .045, .24, m.gold, 0, .37, 0, group);
+                    [-1, 1].forEach(sx => [-1, 1].forEach(sz => box(.016, .31, .016, m.gold, sx * .102, .2, sz * .102, group)));
+                    mesh(new THREE.CylinderGeometry(.052, .057, .19, 8), m.whiteFlower, 0, .15, 0, group);
+                    const flame = sphere(.039, m.bulb, 0, .27, 0, group); flame.scale.y = .068;
+                    const top = mesh(new THREE.ConeGeometry(.17, .105, 4), m.gold, 0, .44, 0, group);
+                    top.rotation.y = Math.PI / 4;
+                    mesh(new THREE.TorusGeometry(.045, .009, 5, 14), m.gold, 0, .53, 0, group);
+                }
+                lantern(-1.17, 2.42);
+                lantern(1.17, 2.42);
+
+                // Tiny festoon lights run down both sides of the garden.
+                [-1, 1].forEach(side => {
+                    box(.052, 1.94, .052, m.wood, side * 3.55, .99, 2.37);
+                    const points = [];
+                    for (let i = 0; i <= 24; i++) {
+                        const t = i / 24;
+                        points.push(new THREE.Vector3(side * (3.18 + t * .37), 3.04 * (1 - t) + 1.94 * t - Math.sin(t * Math.PI) * .29, -1.06 + t * 3.43));
+                    }
+                    const curve = new THREE.CatmullRomCurve3(points);
+                    mesh(new THREE.TubeGeometry(curve, 30, .012, 5, false), m.wire);
+                    for (let i = 0; i < 10; i++) {
+                        const p = curve.getPoint((i + .5) / 10);
+                        box(.028, .075, .028, m.gold, p.x, p.y - .04, p.z);
+                        sphere(.043, m.bulb, p.x, p.y - .095, p.z);
+                    }
+                });
+
+                // A few drifting petals, rather than heavy particle effects.
+                const petals = [];
+                const petalMaterial = new THREE.MeshStandardMaterial({ color: "#ead0b8", roughness: 1, transparent: true, opacity: .72, side: THREE.DoubleSide });
+                const petalGeometry = new THREE.SphereGeometry(1, 6, 4);
+                for (let i = 0; i < 22; i++) {
+                    const petal = mesh(petalGeometry, petalMaterial, (rand() - .5) * 9, .4 + rand() * 5.5, (rand() - .5) * 5, scene, false);
+                    petal.scale.set(.037 + rand() * .025, .015, .022);
+                    petal.userData.speed = .09 + rand() * .13;
+                    petal.userData.phase = rand() * Math.PI * 2;
+                    petals.push(petal);
+                }
+
+                let width = 1, height = 1, visible = true, doorTarget = 0, nightTarget = document.body.classList.contains("evening") ? 1 : 0, nightValue = nightTarget;
+                let resetting = false;
+                let elapsed = 0;
+                const projected = new THREE.Vector3();
+                const localHotspot = new THREE.Vector3(0, 1.46, 1.99);
+                const resize = () => {
+                    width = stage.clientWidth; height = stage.clientHeight;
+                    if (!width || !height) return;
+                    renderer.setSize(width, height, false);
+                    camera.aspect = width / height;
+                    camera.fov = camera.aspect < .8 ? 43 : camera.aspect < 1 ? 39 : 35;
+                    camera.updateProjectionMatrix();
+                };
+                new ResizeObserver(resize).observe(stage);
+                resize();
+                new IntersectionObserver(entries => { visible = entries[0].isIntersecting; }, { rootMargin: "80px" }).observe(stage);
+
+                controls.addEventListener("start", () => { resetting = false; });
+                controls.addEventListener("change", () => {
+                    const frontVisible = camera.position.z > 3 && Math.abs(camera.position.x) < 11;
+                    hotspot.style.visibility = frontVisible ? "visible" : "hidden";
+                });
+
+                const raycaster = new THREE.Raycaster(), pointer = new THREE.Vector2();
+                let downX = 0, downY = 0, downTime = 0, downPointer = null;
+                const activePointers = new Set();
+                let wasMultiTouch = false;
+                function hitTest(event) {
+                    const rect = canvas.getBoundingClientRect();
+                    pointer.set((event.clientX - rect.left) / rect.width * 2 - 1, -(event.clientY - rect.top) / rect.height * 2 + 1);
+                    raycaster.setFromCamera(pointer, camera);
+                    // Include architecture in the test, so photos cannot be clicked through walls.
+                    const hits = raycaster.intersectObject(house, true);
+                    return hits.length ? hits[0].object : null;
+                }
+                canvas.addEventListener("pointerdown", event => {
+                    activePointers.add(event.pointerId);
+                    if (activePointers.size > 1) wasMultiTouch = true;
+                    if (activePointers.size === 1) {
+                        wasMultiTouch = false;
+                        downX = event.clientX; downY = event.clientY; downTime = performance.now(); downPointer = event.pointerId;
+                    }
+                });
+                canvas.addEventListener("pointermove", event => {
+                    if (event.pointerType !== "mouse" || activePointers.size) return;
+                    const object = hitTest(event);
+                    canvas.style.cursor = object?.userData.action ? "pointer" : "grab";
+                });
+                canvas.addEventListener("pointerup", event => {
+                    activePointers.delete(event.pointerId);
+                    if (!wasMultiTouch && downPointer === event.pointerId && Math.hypot(event.clientX - downX, event.clientY - downY) < 7 && performance.now() - downTime < 650) {
+                        const object = hitTest(event);
+                        if (object?.userData.action === "invite") window.openWeddingInvitation();
+                        if (object?.userData.action === "photo") window.showWeddingPhoto(0);
+                    }
+                    if (!activePointers.size) downPointer = null;
+                });
+                canvas.addEventListener("pointercancel", event => { activePointers.delete(event.pointerId); downPointer = null; });
+
+                window.weddingScene = {
+                    open() {
+                        doorTarget = 1;
+                        controls.autoRotate = false;
+                        document.getElementById("rotate-button").setAttribute("aria-pressed", "false");
+                        document.getElementById("rotate-button").setAttribute("aria-label", "Start automatic rotation");
+                    },
+                    rotate() { resetting = false; controls.autoRotate = !controls.autoRotate; return controls.autoRotate; },
+                    lights(night) { nightTarget = night ? 1 : 0; },
+                    reset() {
+                        controls.autoRotate = false; doorTarget = 0; resetting = true;
+                        if (reducedMotion) { camera.position.copy(homePosition); controls.target.copy(homeTarget); resetting = false; controls.update(); }
+                    }
+                };
+
+                stage.classList.remove("scene-error");
+                stage.classList.add("ready");
+                document.getElementById("rotate-button").disabled = false;
+                document.getElementById("reset-button").disabled = false;
+                document.querySelector(".scene-help").innerHTML = '<svg class="icon"><use href="#i-drag"/></svg>Drag to explore · pinch to zoom';
+                canvas.style.cursor = "grab";
+
+                const clock = new THREE.Clock();
+                function animate() {
+                    requestAnimationFrame(animate);
+                    const dt = Math.min(clock.getDelta(), .05);
+                    if (!visible || document.hidden) return;
+                    elapsed += dt;
+                    const ease = reducedMotion ? 1 : 1 - Math.exp(-5 * dt);
+                    leftDoor.rotation.y = THREE.MathUtils.lerp(leftDoor.rotation.y, -doorTarget * Math.PI * .61, ease);
+                    rightDoor.rotation.y = THREE.MathUtils.lerp(rightDoor.rotation.y, doorTarget * Math.PI * .61, ease);
+
+                    if (resetting) {
+                        camera.position.lerp(homePosition, ease);
+                        controls.target.lerp(homeTarget, ease);
+                        if (camera.position.distanceTo(homePosition) < .015) { camera.position.copy(homePosition); controls.target.copy(homeTarget); resetting = false; }
+                    }
+                    nightValue = THREE.MathUtils.lerp(nightValue, nightTarget, ease);
+                    hemi.intensity = THREE.MathUtils.lerp(2.05, .65, nightValue);
+                    sun.intensity = THREE.MathUtils.lerp(3.2, .42, nightValue);
+                    fill.intensity = THREE.MathUtils.lerp(1.2, .75, nightValue);
+                    warmLight.intensity = THREE.MathUtils.lerp(.5, 7, nightValue);
+                    m.glass.emissiveIntensity = THREE.MathUtils.lerp(.2, 1.7, nightValue);
+                    m.bulb.emissiveIntensity = THREE.MathUtils.lerp(.8, 3.7, nightValue);
+
+                    if (!reducedMotion) {
+                        petals.forEach((petal, i) => {
+                            petal.position.y -= dt * petal.userData.speed;
+                            petal.position.x += Math.sin(elapsed * .42 + petal.userData.phase) * dt * .07;
+                            petal.rotation.set(elapsed * .33 + i, elapsed * .23, elapsed * .42 + i);
+                            if (petal.position.y < .1) petal.position.y = 5.9;
+                        });
+                        trees.forEach((tree, i) => { tree.rotation.z = Math.sin(elapsed * .65 + i * 2) * .009; });
+                    }
+                    controls.update();
+                    house.updateMatrixWorld();
+                    projected.copy(localHotspot).applyMatrix4(house.matrixWorld).project(camera);
+                    hotspot.style.left = `${(projected.x * .5 + .5) * width}px`;
+                    hotspot.style.top = `${(-projected.y * .5 + .5) * height}px`;
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                canvas.addEventListener("webglcontextlost", event => {
+                    event.preventDefault();
+                    visible = false;
+                    window.sceneFailed();
+                });
+                canvas.addEventListener("webglcontextrestored", () => location.reload());
+            } catch (error) {
+                console.warn("The photographic invitation is available without 3D.", error);
+                window.sceneFailed();
+            }
+        })();
+    </script>
+</body>
+
+</html>

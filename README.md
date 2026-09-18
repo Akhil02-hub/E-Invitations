@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 # Premium E—Invitation 
 
 A collection of invitation templates by **Premium E-Invitation**, featuring three invitation formats:
+=======
+# Premium E-Invitations — Invitation Templates
+
+# Live link :- https://premiumeinvitations.cc.cd/
+
+A collection of invitation templates by **A Akhil**, featuring three invitation formats:
+>>>>>>> 42357fe (add)
 
 - **For free cards:-** https://premiumeinvitations.cc.cd/
 - 💌 **Digital Invitations (₹9 only)** — static invitation card designs
@@ -14,6 +22,7 @@ Templates can cover a wide range of events, including:
 - 💍 Wedding
 - 🎂 Birthday
 - 💖 Engagement
+- ❤️‍🩹 Love proposals
 - 👶 Baby Shower
 - 💐 Anniversary
 - 🎉 Party
@@ -62,7 +71,7 @@ This repository is intended to provide free invitation templates for personal ev
 
 ## Creator
 
-**AkhilWebInvites**  
+**A Akhil**  
 Invitation Designs • Digital • Animated • Web
 
 GitHub: [Akhil02-hub](https://github.com/Akhil02-hub)

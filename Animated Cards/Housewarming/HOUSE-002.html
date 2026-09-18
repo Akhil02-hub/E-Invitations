@@ -1,0 +1,2666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Sharma's Griha Pravesh • Housewarming Invitation</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --gold-l: #f9e29c;
+            --gold-d: #8a6d1b;
+            --navy: #0b1026;
+            --cream: #fff8e7;
+            --maroon: #7a1f2e;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            background: #070b1d;
+            color: var(--cream)
+        }
+
+        #scene-container {
+            position: fixed;
+            inset: 0;
+            z-index: 0
+        }
+
+        #scene-container canvas {
+            display: block;
+            touch-action: none
+        }
+
+        #vignette {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background: radial-gradient(ellipse at 50% 45%, transparent 50%, rgba(0, 0, 0, .55) 100%)
+        }
+
+        #gold-particles {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: .5;
+            background-image: radial-gradient(1px 1px at 10% 20%, #f9e29c, transparent), radial-gradient(1px 1px at 30% 80%, #fff, transparent), radial-gradient(1.5px 1.5px at 70% 30%, #f9e29c, transparent), radial-gradient(1px 1px at 90% 60%, #fff, transparent);
+            animation: twk 4s ease-in-out infinite alternate
+        }
+
+        @keyframes twk {
+            from {
+                opacity: .2
+            }
+
+            to {
+                opacity: .6
+            }
+        }
+
+        /* LOADER */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: radial-gradient(circle at 50% 30%, #1a234d, #070b1d);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            transition: opacity .8s
+        }
+
+        #loader.hide {
+            opacity: 0;
+            pointer-events: none
+        }
+
+        .ring {
+            width: 78px;
+            height: 78px;
+            border-radius: 50%;
+            border: 3px solid rgba(212, 175, 55, .2);
+            border-top-color: var(--gold);
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 30px rgba(212, 175, 55, .3)
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        #loader h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold-l);
+            letter-spacing: 1px;
+            margin: 0;
+            font-size: 22px
+        }
+
+        #loader p {
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: rgba(255, 248, 231, .6);
+            margin: 0;
+            text-transform: uppercase
+        }
+
+        /* TOPBAR */
+        #topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, .65), transparent);
+            pointer-events: none
+        }
+
+        #topbar>* {
+            pointer-events: auto
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .logo-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f9e29c, #d4af37);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, .4)
+        }
+
+        .logo-text {
+            line-height: 1.1
+        }
+
+        .logo-text b {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            color: var(--gold-l);
+            letter-spacing: .5px
+        }
+
+        .logo-text span {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: rgba(255, 248, 231, .7)
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 8px
+        }
+
+        .icon-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(15, 12, 30, .6);
+            border: 1px solid rgba(212, 175, 55, .4);
+            color: var(--gold-l);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(12px);
+            transition: .25s
+        }
+
+        .icon-btn:hover {
+            transform: translateY(-2px);
+            background: var(--gold);
+            color: #221800;
+            box-shadow: 0 8px 20px rgba(212, 175, 55, .4)
+        }
+
+        .icon-btn.active {
+            background: linear-gradient(135deg, #f9e29c, #d4af37);
+            color: #221800;
+            border-color: transparent
+        }
+
+        /* INVITE CARD */
+        #invite-card {
+            position: fixed;
+            left: 20px;
+            top: 70px;
+            width: 392px;
+            max-width: calc(100vw - 40px);
+            max-height: calc(100vh - 165px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            overscroll-behavior: contain;
+            z-index: 5;
+            background: linear-gradient(165deg, rgba(28, 20, 45, .94), rgba(12, 10, 26, .92));
+            border-radius: 24px;
+            border: 1px solid rgba(212, 175, 55, .55);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, .65), 0 0 0 6px rgba(212, 175, 55, .07), inset 0 1px 0 rgba(255, 255, 255, .12);
+            backdrop-filter: blur(22px);
+            transition: transform .55s cubic-bezier(.22, 1, .36, 1), opacity .4s;
+            animation: slideIn .9s cubic-bezier(.22, 1, .36, 1)
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-60px);
+                opacity: 0
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1
+            }
+        }
+
+        #invite-card.hidden {
+            transform: translateX(-120%);
+            opacity: 0;
+            pointer-events: none
+        }
+
+        #invite-card::-webkit-scrollbar {
+            width: 6px
+        }
+
+        #invite-card::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--gold), var(--gold-d));
+            border-radius: 10px
+        }
+
+        #invite-card::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, .05)
+        }
+
+        .card-frame {
+            position: sticky;
+            top: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #7a1f2e, #d4af37, #f9e29c, #d4af37, #7a1f2e);
+            z-index: 2
+        }
+
+        .card-inner {
+            padding: 20px 22px 22px
+        }
+
+        .ausp {
+            text-align: center;
+            color: var(--gold);
+            font-size: 13px;
+            letter-spacing: 1px
+        }
+
+        .inv-label {
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 4px;
+            color: rgba(255, 248, 231, .65);
+            margin-top: 10px
+        }
+
+        .c-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 44px;
+            line-height: 1;
+            text-align: center;
+            margin: 6px 0 2px;
+            background: linear-gradient(100deg, #fff8c9, #d4af37 30%, #f9e29c 50%, #d4af37 70%, #fff8c9);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3.5s linear infinite;
+            filter: drop-shadow(0 2px 12px rgba(212, 175, 55, .3))
+        }
+
+        @keyframes shimmer {
+            to {
+                background-position: 200% center
+            }
+        }
+
+        .c-sub {
+            text-align: center;
+            letter-spacing: 6px;
+            font-size: 12px;
+            color: var(--cream);
+            font-weight: 500
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 14px 0;
+            color: var(--gold);
+            font-size: 14px
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent)
+        }
+
+        .house-wrap {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid rgba(212, 175, 55, .6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .5)
+        }
+
+        .house-wrap img {
+            width: 100%;
+            height: 182px;
+            object-fit: cover;
+            display: block;
+            transition: transform .7s, opacity .3s
+        }
+
+        .house-wrap:hover img {
+            transform: scale(1.08)
+        }
+
+        .photo-badge {
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, .62);
+            backdrop-filter: blur(10px);
+            padding: 8px 10px 8px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, .35)
+        }
+
+        .photo-badge span {
+            font-size: 12px;
+            font-weight: 500
+        }
+
+        .photo-badge small {
+            display: block;
+            font-size: 10px;
+            color: var(--gold-l);
+            letter-spacing: 1px
+        }
+
+        .view3d {
+            background: linear-gradient(135deg, #f9e29c, #d4af37);
+            border: none;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #2a1e00;
+            white-space: nowrap
+        }
+
+        .view3d:hover {
+            transform: scale(1.05)
+        }
+
+        .gallery {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 52px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: .7;
+            transition: .25s;
+            flex: 1
+        }
+
+        .gallery img.active,
+        .gallery img:hover {
+            border-color: var(--gold);
+            opacity: 1;
+            transform: translateY(-2px)
+        }
+
+        .owners {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 16px 0 6px
+        }
+
+        .avatar {
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--gold);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, .35);
+            background: #222
+        }
+
+        .avatar.a1 {
+            margin-right: -14px;
+            z-index: 2
+        }
+
+        .avatar.a2 {
+            margin-left: -14px
+        }
+
+        .heart {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff5d8f, #7a1f2e);
+            border: 2px solid #fff8e7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            z-index: 3;
+            box-shadow: 0 4px 15px rgba(255, 93, 143, .5)
+        }
+
+        .owner-names {
+            text-align: center
+        }
+
+        .owner-names h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 19px;
+            margin: 6px 0 2px;
+            color: var(--gold-l);
+            line-height: 1.2
+        }
+
+        .owner-names p {
+            font-size: 11.5px;
+            color: rgba(255, 248, 231, .7);
+            margin: 0
+        }
+
+        .owner-tag {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #221800;
+            background: linear-gradient(135deg, #f9e29c, #d4af37);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: 700
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+            margin: 14px 0 9px
+        }
+
+        .dbox {
+            background: rgba(212, 175, 55, .08);
+            border: 1px solid rgba(212, 175, 55, .25);
+            border-radius: 13px;
+            padding: 10px 8px;
+            text-align: center;
+            transition: .25s
+        }
+
+        .dbox:hover {
+            background: rgba(212, 175, 55, .15);
+            transform: translateY(-2px)
+        }
+
+        .dbox .ic {
+            font-size: 20px
+        }
+
+        .dbox .lb {
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-top: 2px
+        }
+
+        .dbox .vl {
+            font-size: 12.5px;
+            font-weight: 600;
+            margin-top: 3px;
+            line-height: 1.35
+        }
+
+        .dbox.full {
+            grid-column: 1/-1
+        }
+
+        .count {
+            display: flex;
+            gap: 8px;
+            margin: 10px 0 4px
+        }
+
+        .cd {
+            flex: 1;
+            background: linear-gradient(180deg, rgba(212, 175, 55, .22), rgba(212, 175, 55, .05));
+            border: 1px solid rgba(212, 175, 55, .4);
+            border-radius: 12px;
+            padding: 8px 2px;
+            text-align: center
+        }
+
+        .cd b {
+            display: block;
+            font-size: 21px;
+            color: var(--gold-l);
+            font-variant-numeric: tabular-nums
+        }
+
+        .cd span {
+            font-size: 8.5px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, .6)
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 8px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 12.5px;
+            cursor: pointer;
+            border: none;
+            transition: .25s;
+            letter-spacing: .3px
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #f9e29c, #d4af37);
+            color: #2a1e00;
+            box-shadow: 0 8px 22px rgba(212, 175, 55, .4)
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(212, 175, 55, .55)
+        }
+
+        .btn-out {
+            background: transparent;
+            border: 1px solid rgba(212, 175, 55, .5);
+            color: var(--gold-l)
+        }
+
+        .btn-out:hover {
+            background: rgba(212, 175, 55, .15)
+        }
+
+        .mini-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px
+        }
+
+        .mini {
+            flex: 1;
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .12);
+            color: var(--cream);
+            padding: 9px;
+            border-radius: 10px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .mini:hover {
+            background: rgba(255, 255, 255, .12)
+        }
+
+        .bless {
+            text-align: center;
+            font-size: 11px;
+            color: rgba(255, 248, 231, .55);
+            margin-top: 12px;
+            font-style: italic
+        }
+
+        /* CARD TOGGLE */
+        #card-toggle {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 6;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 12, 30, .75);
+            border: 1px solid rgba(212, 175, 55, .5);
+            color: var(--gold-l);
+            padding: 11px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .5)
+        }
+
+        #card-toggle:hover {
+            background: var(--gold);
+            color: #221800
+        }
+
+        /* BOTTOM CONTROLS */
+        #bottom-bar {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            background: rgba(12, 10, 26, .72);
+            backdrop-filter: blur(16px);
+            padding: 9px;
+            border-radius: 18px;
+            border: 1px solid rgba(212, 175, 55, .32);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .5);
+            max-width: calc(100vw - 24px);
+            overflow-x: auto
+        }
+
+        #bottom-bar::-webkit-scrollbar {
+            display: none
+        }
+
+        .vbtn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--cream);
+            padding: 8px 13px;
+            border-radius: 11px;
+            font-size: 11.5px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: .2s;
+            font-family: 'Poppins'
+        }
+
+        .vbtn:hover {
+            background: rgba(212, 175, 55, .18);
+            color: var(--gold-l)
+        }
+
+        .vbtn.active {
+            background: rgba(212, 175, 55, .22);
+            border-color: rgba(212, 175, 55, .45);
+            color: var(--gold-l)
+        }
+
+        .vsep {
+            width: 1px;
+            height: 24px;
+            background: rgba(212, 175, 55, .3);
+            flex-shrink: 0
+        }
+
+        /* HINT */
+        #hint {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 5;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(10px);
+            padding: 11px 14px;
+            border-radius: 13px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            font-size: 11px;
+            line-height: 1.7;
+            max-width: 225px;
+            color: rgba(255, 248, 231, .85)
+        }
+
+        #hint b {
+            color: var(--gold-l)
+        }
+
+        /* MODALS */
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, .72);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            pointer-events: none;
+            transition: .35s;
+            padding: 16px
+        }
+
+        .modal.open {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        .mcard {
+            background: linear-gradient(165deg, #211737, #0e0b1e);
+            border: 1px solid rgba(212, 175, 55, .5);
+            border-radius: 22px;
+            padding: 28px;
+            width: 440px;
+            max-width: 94vw;
+            max-height: 88vh;
+            overflow-y: auto;
+            transform: scale(.9) translateY(24px);
+            transition: .4s cubic-bezier(.22, 1, .36, 1);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .7);
+            position: relative
+        }
+
+        .modal.open .mcard {
+            transform: scale(1) translateY(0)
+        }
+
+        .mcard::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 24px;
+            right: 24px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            border-radius: 0 0 4px 4px
+        }
+
+        .mcard h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold-l);
+            margin: 0 0 4px;
+            font-size: 26px;
+            text-align: center
+        }
+
+        .mcard .msub {
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255, 248, 231, .6);
+            margin-bottom: 16px
+        }
+
+        .mclose {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .15);
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px
+        }
+
+        .mclose:hover {
+            background: var(--gold);
+            color: #000
+        }
+
+        .field {
+            margin-bottom: 12px
+        }
+
+        .field label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--gold);
+            margin-bottom: 6px;
+            text-transform: uppercase
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 11px;
+            border: 1px solid rgba(212, 175, 55, .3);
+            background: rgba(255, 255, 255, .06);
+            color: #fff;
+            font-family: 'Poppins';
+            font-size: 13px;
+            outline: none
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, .09)
+        }
+
+        .field select option {
+            background: #1a1530
+        }
+
+        .attend-row {
+            display: flex;
+            gap: 8px
+        }
+
+        .attend {
+            flex: 1;
+            padding: 11px;
+            border-radius: 11px;
+            border: 1px solid rgba(212, 175, 55, .3);
+            background: transparent;
+            color: var(--cream);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600
+        }
+
+        .attend.sel {
+            background: linear-gradient(135deg, #f9e29c, #d4af37);
+            color: #221800;
+            border-color: transparent
+        }
+
+        .timeline {
+            margin: 10px 0
+        }
+
+        .titem {
+            display: flex;
+            gap: 12px;
+            padding: 11px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, .15)
+        }
+
+        .titem:last-child {
+            border: none
+        }
+
+        .ttime {
+            flex-shrink: 0;
+            width: 72px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gold-l);
+            background: rgba(212, 175, 55, .12);
+            border-radius: 9px;
+            padding: 7px 4px;
+            text-align: center;
+            height: fit-content
+        }
+
+        .tinfo b {
+            font-size: 13px;
+            display: block
+        }
+
+        .tinfo span {
+            font-size: 11.5px;
+            color: rgba(255, 248, 231, .65)
+        }
+
+        /* TOAST */
+        #toasts {
+            position: fixed;
+            top: 70px;
+            right: 18px;
+            z-index: 60;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: min(330px, calc(100vw - 36px))
+        }
+
+        .toast {
+            background: linear-gradient(135deg, rgba(30, 24, 55, .96), rgba(15, 12, 30, .96));
+            border: 1px solid rgba(212, 175, 55, .5);
+            border-left: 4px solid var(--gold);
+            border-radius: 13px;
+            padding: 12px 15px;
+            font-size: 12.5px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .5);
+            animation: tin .45s cubic-bezier(.22, 1, .36, 1);
+            backdrop-filter: blur(12px)
+        }
+
+        @keyframes tin {
+            from {
+                transform: translateX(60px);
+                opacity: 0
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1
+            }
+        }
+
+        .toast.out {
+            transition: .4s;
+            transform: translateX(60px);
+            opacity: 0
+        }
+
+        #tooltip {
+            position: fixed;
+            z-index: 70;
+            pointer-events: none;
+            background: rgba(0, 0, 0, .85);
+            border: 1px solid var(--gold);
+            color: var(--gold-l);
+            padding: 6px 11px;
+            border-radius: 9px;
+            font-size: 11px;
+            display: none;
+            white-space: nowrap;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .5)
+        }
+
+        @media(max-width:920px) {
+            #invite-card {
+                left: 12px;
+                right: 12px;
+                top: auto;
+                bottom: 78px;
+                width: auto;
+                max-height: 54vh
+            }
+
+            #invite-card.hidden {
+                transform: translateY(calc(100% + 120px))
+            }
+
+            #hint {
+                display: none
+            }
+
+            #bottom-bar {
+                bottom: 10px;
+                padding: 7px
+            }
+
+            .vbtn {
+                padding: 7px 10px;
+                font-size: 10.5px
+            }
+
+            #card-toggle {
+                bottom: auto;
+                top: 68px;
+                left: 12px;
+                padding: 9px 14px
+            }
+
+            .c-title {
+                font-size: 36px
+            }
+
+            .house-wrap img {
+                height: 150px
+            }
+
+            #toasts {
+                top: 118px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loader">
+        <div class="ring"></div>
+        <h2>🏠 Preparing Your Invitation</h2>
+        <p>Lighting diyas &amp; decorating home</p>
+    </div>
+    <div id="scene-container"></div>
+    <div id="vignette"></div>
+    <div id="gold-particles"></div>
+
+    <nav id="topbar">
+        <div class="logo">
+            <div class="logo-mark">🪔</div>
+            <div class="logo-text"><b>Sharma's Griha Pravesh</b><span>HOUSEWARMING • 3D INVITE</span></div>
+        </div>
+        <div class="top-actions">
+            <button class="icon-btn" id="btn-day" title="Toggle Day / Night">☀️</button>
+            <button class="icon-btn" id="btn-music" title="Play festive music">🎵</button>
+            <button class="icon-btn active" id="btn-rotate" title="Auto-rotate camera">🔄</button>
+        </div>
+    </nav>
+
+    <aside id="invite-card">
+        <div class="card-frame"></div>
+        <div class="card-inner">
+            <div class="ausp">॥ श्री गणेशाय नमः ॥</div>
+            <div class="inv-label">YOU ARE CORDIALLY INVITED TO</div>
+            <div class="c-title">Griha Pravesh</div>
+            <div class="c-sub">HOUSEWARMING CEREMONY</div>
+            <div class="divider">🪔 ✦ 🪔</div>
+
+            <div class="house-wrap">
+                <img id="main-house-img"
+                    src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
+                    alt="Sharma's New House"
+                    onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80';">
+                <div class="photo-badge">
+                    <div><span>🏡 Sunshine Villa</span><small>OUR DREAM HOME • PUNE</small></div><button class="view3d"
+                        id="btn-focus-house">View 3D ✨</button>
+                </div>
+            </div>
+            <div class="gallery">
+                <img class="active"
+                    src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=400&q=60"
+                    data-full="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
+                    alt="Exterior">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=60"
+                    data-full="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+                    alt="Living">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=400&q=60"
+                    data-full="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
+                    alt="Interior">
+                <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=400&q=60"
+                    data-full="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=800&q=80"
+                    alt="Night">
+            </div>
+
+            <div class="owners">
+                <img class="avatar a1"
+                    src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80"
+                    alt="Rajesh Sharma"
+                    onerror="this.onerror=null;this.src='https://randomuser.me/api/portraits/men/32.jpg';">
+                <div class="heart">❤️</div>
+                <img class="avatar a2"
+                    src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80"
+                    alt="Priya Sharma"
+                    onerror="this.onerror=null;this.src='https://randomuser.me/api/portraits/women/44.jpg';">
+            </div>
+            <div class="owner-names">
+                <h3>Mr. Rajesh Sharma &amp; Mrs. Priya Sharma</h3>
+                <p>with Aarav &amp; Diya • Proud Owners of Sunshine Villa</p>
+                <div class="owner-tag">✦ request your gracious presence ✦</div>
+            </div>
+
+            <div class="details">
+                <div class="dbox">
+                    <div class="ic">📅</div>
+                    <div class="lb">Date</div>
+                    <div class="vl">Mon, Oct 12, 2026</div>
+                </div>
+                <div class="dbox">
+                    <div class="ic">🕘</div>
+                    <div class="lb">Time</div>
+                    <div class="vl">9:00 AM onwards</div>
+                </div>
+                <div class="dbox full">
+                    <div class="ic">📍</div>
+                    <div class="lb">Venue</div>
+                    <div class="vl">Sunshine Villa, Plot 42, Green Acres,<br>Lakeview Road, Pune 411045</div>
+                </div>
+            </div>
+
+            <div class="count">
+                <div class="cd"><b id="cd-d">00</b><span>DAYS</span></div>
+                <div class="cd"><b id="cd-h">00</b><span>HOURS</span></div>
+                <div class="cd"><b id="cd-m">00</b><span>MINS</span></div>
+                <div class="cd"><b id="cd-s">00</b><span>SECS</span></div>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-gold" id="btn-rsvp">💌 RSVP Now</button>
+                <button class="btn btn-out" id="btn-schedule">📜 Ceremony</button>
+            </div>
+            <div class="mini-row">
+                <button class="mini" id="btn-calendar">📆 Add to Calendar</button>
+                <button class="mini" id="btn-directions">🧭 Directions</button>
+                <button class="mini" id="btn-share">🔗 Share</button>
+            </div>
+            <div class="bless">"With blessings of our elders, we open the doors of our new home to you"</div>
+        </div>
+    </aside>
+
+    <button id="card-toggle">💌 <span id="toggle-label">Hide Card</span></button>
+
+    <div id="bottom-bar">
+        <button class="vbtn active" data-view="front">🏠 Front</button>
+        <button class="vbtn" data-view="porch">🚪 Porch</button>
+        <button class="vbtn" data-view="aerial">🦅 Aerial</button>
+        <button class="vbtn" data-view="photo">🖼️ Photo</button>
+        <div class="vsep"></div>
+        <button class="vbtn active" id="btn-lights">💡 Lights</button>
+        <button class="vbtn active" id="btn-diyas">🪔 Diyas</button>
+        <button class="vbtn" id="btn-burst">🎉 Confetti</button>
+    </div>
+
+    <div id="hint">🖱️ <b>Drag</b> to orbit • <b>Scroll</b> to zoom<br>🚪 Click the <b>door</b> to open • 🎁 Click
+        <b>gifts</b><br>💡 Click <b>windows</b> for lights</div>
+
+    <div class="modal" id="rsvp-modal">
+        <div class="mcard">
+            <button class="mclose" data-close="rsvp-modal">✕</button>
+            <h2>💌 RSVP</h2>
+            <div class="msub">Please confirm your presence at our Griha Pravesh</div>
+            <div class="field"><label>Your Name</label><input id="r-name" placeholder="e.g. Amit Verma"></div>
+            <div class="field"><label>Phone / Email</label><input id="r-contact" placeholder="+91 ..."></div>
+            <div class="field"><label>Will you attend?</label>
+                <div class="attend-row"><button class="attend sel" data-a="yes">✅ Joyfully Accept</button><button
+                        class="attend" data-a="no">😔 Regretfully Decline</button></div>
+            </div>
+            <div class="field"><label>Guests (including you)</label><select id="r-guests">
+                    <option>1</option>
+                    <option selected>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5+</option>
+                </select></div>
+            <div class="field"><label>Blessings / Message</label><textarea id="r-msg" rows="2"
+                    placeholder="Shubhkamnayein..."></textarea></div>
+            <button class="btn btn-gold" id="rsvp-submit" style="width:100%">Send RSVP 🙏</button>
+        </div>
+    </div>
+
+    <div class="modal" id="schedule-modal">
+        <div class="mcard">
+            <button class="mclose" data-close="schedule-modal">✕</button>
+            <h2>📜 Ceremony Schedule</h2>
+            <div class="msub">Monday, October 12, 2026 • Sunshine Villa</div>
+            <div class="timeline">
+                <div class="titem">
+                    <div class="ttime">9:00 AM</div>
+                    <div class="tinfo"><b>🙏 Ganesh Puja &amp; Kalash Sthapana</b><span>Welcome of deities &amp;
+                            sanctification of home</span></div>
+                </div>
+                <div class="titem">
+                    <div class="ttime">10:00 AM</div>
+                    <div class="tinfo"><b>🏠 Griha Pravesh &amp; Toran</b><span>Owners enter with kalash • Ribbon
+                            cutting</span></div>
+                </div>
+                <div class="titem">
+                    <div class="ttime">11:00 AM</div>
+                    <div class="tinfo"><b>🔥 Havan &amp; Vastu Shanti</b><span>Sacred fire ceremony for peace &amp;
+                            prosperity</span></div>
+                </div>
+                <div class="titem">
+                    <div class="ttime">1:00 PM</div>
+                    <div class="tinfo"><b>🍛 Maha Prasad &amp; Lunch</b><span>Traditional festive lunch for all
+                            guests</span></div>
+                </div>
+                <div class="titem">
+                    <div class="ttime">4:00 PM</div>
+                    <div class="tinfo"><b>🎶 Sangeet &amp; House Tour</b><span>Music, blessings &amp; tour of Sunshine
+                            Villa</span></div>
+                </div>
+                <div class="titem">
+                    <div class="ttime">7:00 PM</div>
+                    <div class="tinfo"><b>🪔 Deep Prajwalan &amp; Aarti</b><span>Lighting 108 diyas • Evening aarti
+                            &amp; farewell</span></div>
+                </div>
+            </div>
+            <button class="btn btn-gold" id="schedule-rsvp" style="width:100%">I'll Be There 🎉</button>
+        </div>
+    </div>
+
+    <div id="toasts"></div>
+    <div id="tooltip"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        /* ------------------------------------------------------------------
+           MINIMAL ORBITCONTROLS FALLBACK
+           (used only if the CDN copy above fails to load)
+        ------------------------------------------------------------------ */
+        (function () {
+            if (!window.THREE || THREE.OrbitControls) return;
+            THREE.OrbitControls = function (object, domElement) {
+                var scope = this;
+                this.object = object;
+                this.domElement = domElement;
+                this.target = new THREE.Vector3();
+                this.enableDamping = false;
+                this.dampingFactor = 0.05;
+                this.minDistance = 1;
+                this.maxDistance = Infinity;
+                this.minPolarAngle = 0;
+                this.maxPolarAngle = Math.PI;
+                this.autoRotate = false;
+                this.autoRotateSpeed = 2.0;
+                this.enabled = true;
+                this.enableZoom = true;
+                this.enableRotate = true;
+
+                var dTheta = 0, dPhi = 0, dScale = 1;
+                var dragging = false, px = 0, py = 0;
+                var pinchDist = 0;
+                var tmpOff = new THREE.Vector3();
+                var tmpSph = new THREE.Spherical();
+
+                this.update = function () {
+                    tmpOff.subVectors(scope.object.position, scope.target);
+                    tmpSph.setFromVector3(tmpOff);
+                    if (scope.autoRotate && !dragging) {
+                        tmpSph.theta -= scope.autoRotateSpeed * 0.002;
+                    }
+                    tmpSph.theta += dTheta;
+                    tmpSph.phi += dPhi;
+                    tmpSph.phi = Math.max(scope.minPolarAngle, Math.min(scope.maxPolarAngle, tmpSph.phi));
+                    tmpSph.radius = Math.max(scope.minDistance, Math.min(scope.maxDistance, tmpSph.radius * dScale));
+                    tmpOff.setFromSpherical(tmpSph);
+                    scope.object.position.copy(scope.target).add(tmpOff);
+                    scope.object.lookAt(scope.target);
+
+                    if (scope.enableDamping) {
+                        dTheta *= (1 - scope.dampingFactor);
+                        dPhi *= (1 - scope.dampingFactor);
+                        dScale = 1 + (dScale - 1) * (1 - scope.dampingFactor);
+                    } else {
+                        dTheta = 0; dPhi = 0; dScale = 1;
+                    }
+                    return true;
+                };
+
+                function onDown(e) {
+                    if (!scope.enabled || !scope.enableRotate) return;
+                    dragging = true;
+                    px = e.clientX; py = e.clientY;
+                    if (domElement.setPointerCapture && e.pointerId !== undefined) {
+                        try { domElement.setPointerCapture(e.pointerId); } catch (err) { }
+                    }
+                }
+                function onMove(e) {
+                    if (!dragging || !scope.enabled || !scope.enableRotate) return;
+                    var dx = e.clientX - px, dy = e.clientY - py;
+                    px = e.clientX; py = e.clientY;
+                    var h = domElement.clientHeight || 600;
+                    dTheta -= 2 * Math.PI * dx / h;
+                    dPhi -= 2 * Math.PI * dy / h;
+                }
+                function onUp() { dragging = false; }
+                function onWheel(e) {
+                    if (!scope.enabled || !scope.enableZoom) return;
+                    e.preventDefault();
+                    dScale *= (e.deltaY > 0 ? 1.1 : 0.9);
+                }
+                function onTouchMove(e) {
+                    if (e.touches.length === 2) {
+                        e.preventDefault();
+                        var dx = e.touches[0].clientX - e.touches[1].clientX;
+                        var dy = e.touches[0].clientY - e.touches[1].clientY;
+                        var d = Math.sqrt(dx * dx + dy * dy);
+                        if (pinchDist) dScale *= pinchDist / d;
+                        pinchDist = d;
+                    }
+                }
+                function onTouchEnd() { pinchDist = 0; }
+
+                domElement.addEventListener('pointerdown', onDown);
+                domElement.addEventListener('pointermove', onMove);
+                window.addEventListener('pointerup', onUp);
+                window.addEventListener('pointercancel', onUp);
+                domElement.addEventListener('wheel', onWheel, { passive: false });
+                domElement.addEventListener('touchmove', onTouchMove, { passive: false });
+                domElement.addEventListener('touchend', onTouchEnd);
+            };
+        })();
+
+        /* ==================================================================
+           MAIN APPLICATION
+        ================================================================== */
+        (function () {
+            "use strict";
+
+            /* ---------- UI HELPERS ---------- */
+            function toast(msg, ms) {
+                ms = ms || 3800;
+                var c = document.getElementById('toasts');
+                var d = document.createElement('div');
+                d.className = 'toast';
+                d.innerHTML = msg;
+                c.appendChild(d);
+                setTimeout(function () {
+                    d.classList.add('out');
+                    setTimeout(function () { d.remove(); }, 450);
+                }, ms);
+            }
+            function openModal(id) { document.getElementById(id).classList.add('open'); }
+            function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+            document.querySelectorAll('[data-close]').forEach(function (b) {
+                b.addEventListener('click', function () { closeModal(b.getAttribute('data-close')); });
+            });
+            document.querySelectorAll('.modal').forEach(function (m) {
+                m.addEventListener('click', function (e) { if (e.target === m) m.classList.remove('open'); });
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal.open').forEach(function (m) { m.classList.remove('open'); });
+                }
+            });
+
+            /* ---------- COUNTDOWN ---------- */
+            var targetDate = new Date('2026-10-12T09:00:00');
+            function pad(n) { return (n < 10 ? '0' : '') + n; }
+            function tickCD() {
+                var diff = targetDate - new Date();
+                if (diff < 0) diff = 0;
+                var d = Math.floor(diff / 864e5),
+                    h = Math.floor(diff / 36e5) % 24,
+                    m = Math.floor(diff / 6e4) % 60,
+                    s = Math.floor(diff / 1e3) % 60;
+                document.getElementById('cd-d').textContent = pad(d);
+                document.getElementById('cd-h').textContent = pad(h);
+                document.getElementById('cd-m').textContent = pad(m);
+                document.getElementById('cd-s').textContent = pad(s);
+            }
+            setInterval(tickCD, 1000);
+            tickCD();
+
+            /* ---------- GALLERY ---------- */
+            var mainImg = document.getElementById('main-house-img');
+            mainImg.style.transition = 'opacity .3s, transform .7s';
+            document.querySelectorAll('.gallery img').forEach(function (th) {
+                th.addEventListener('click', function () {
+                    document.querySelectorAll('.gallery img').forEach(function (x) { x.classList.remove('active'); });
+                    th.classList.add('active');
+                    var full = th.getAttribute('data-full');
+                    mainImg.style.opacity = 0;
+                    setTimeout(function () {
+                        mainImg.onload = function () { mainImg.style.opacity = 1; };
+                        mainImg.onerror = function () { mainImg.style.opacity = 1; };
+                        mainImg.src = full;
+                        if (mainImg.complete) mainImg.style.opacity = 1;
+                    }, 150);
+                });
+            });
+
+            /* ---------- CARD TOGGLE ---------- */
+            var card = document.getElementById('invite-card');
+            var tgl = document.getElementById('card-toggle');
+            var tlabel = document.getElementById('toggle-label');
+            tgl.addEventListener('click', function () {
+                card.classList.toggle('hidden');
+                tlabel.textContent = card.classList.contains('hidden') ? 'Show Card' : 'Hide Card';
+            });
+
+            /* ---------- RSVP ---------- */
+            var attend = 'yes';
+            document.querySelectorAll('.attend').forEach(function (b) {
+                b.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.attend').forEach(function (x) { x.classList.remove('sel'); });
+                    b.classList.add('sel');
+                    attend = b.getAttribute('data-a');
+                });
+            });
+            document.getElementById('btn-rsvp').addEventListener('click', function () { openModal('rsvp-modal'); });
+            document.getElementById('btn-schedule').addEventListener('click', function () { openModal('schedule-modal'); });
+            document.getElementById('schedule-rsvp').addEventListener('click', function () {
+                closeModal('schedule-modal');
+                openModal('rsvp-modal');
+            });
+            document.getElementById('rsvp-submit').addEventListener('click', function () {
+                var n = document.getElementById('r-name').value.trim() || 'Guest';
+                closeModal('rsvp-modal');
+                if (attend === 'yes') {
+                    toast('🙏 Dhanyavaad <b>' + n + '</b>! We can\'t wait to welcome you.<br>✨ ' + document.getElementById('r-guests').value + ' seat(s) reserved.');
+                    burstAt(new THREE.Vector3(0, 6, 2), 180, 7);
+                } else {
+                    toast('💛 Thank you <b>' + n + '</b> for your blessings from afar!');
+                }
+                chime();
+            });
+            document.getElementById('btn-calendar').addEventListener('click', function () {
+                window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text=Sharma+Griha+Pravesh+%7C+Housewarming&dates=20261012T033000Z/20261012T130000Z&details=Griha+Pravesh+ceremony+at+Sunshine+Villa.+9AM+Puja,+11AM+Havan,+1PM+Lunch.&location=Sunshine+Villa,+Plot+42,+Green+Acres,+Pune', '_blank');
+            });
+            document.getElementById('btn-directions').addEventListener('click', function () {
+                window.open('https://maps.google.com/?q=Green+Acres+Pune', '_blank');
+            });
+            document.getElementById('btn-share').addEventListener('click', function () {
+                var t = '🏠 You are invited! Sharma\'s Griha Pravesh • Oct 12, 2026 • Sunshine Villa, Pune • 9AM onwards 🙏';
+                if (navigator.share) {
+                    navigator.share({ title: 'Griha Pravesh Invite', text: t }).catch(function () { });
+                } else if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(t).then(function () {
+                        toast('🔗 Invitation text copied! Share with family ❤️');
+                    }).catch(function () { toast('🔗 ' + t); });
+                } else {
+                    toast('🔗 ' + t);
+                }
+            });
+
+            /* ---------- THREE SETUP ---------- */
+            var container = document.getElementById('scene-container');
+            var scene, camera, renderer, controls, clock, raycaster, pointer;
+            var houseGroup, doorPivot, doorMesh, doorOpen = false, doorAngle = 0;
+            var windowMats = [], bulbs = [], flames = [], balloons = [], lampLights = [], smokes = [], clickables = [];
+            var stars, starsMat, moon, moonGlow, fireflies, fireBase, firePhase, photoBoard;
+            var dirLight, hemiLight, ambLight, porchLight, groundMat;
+            var confettiPool = [], confettiGroup;
+            var currentDay = 0, targetDay = 0, lightsOn = true, diyasOn = true, autoRot = true;
+            var camAnim = null;
+            var colNight = new THREE.Color(0x0b1026), colDay = new THREE.Color(0x9fd4ff), tmpCol = new THREE.Color();
+            var gNight = new THREE.Color(0x1d3a2c), gDay = new THREE.Color(0x69a85f);
+            var chimneyTop = new THREE.Vector3(2.0, 8.0, -1.0);
+            var time = 0, downPos = null;
+
+            function canvasTex(w, h, draw) {
+                var c = document.createElement('canvas');
+                c.width = w; c.height = h;
+                var x = c.getContext('2d');
+                draw(x, w, h);
+                var t = new THREE.CanvasTexture(c);
+                t.encoding = THREE.sRGBEncoding;
+                return t;
+            }
+            var glowTex = canvasTex(128, 128, function (x, w, h) {
+                var g = x.createRadialGradient(64, 64, 2, 64, 64, 64);
+                g.addColorStop(0, 'rgba(255,255,255,1)');
+                g.addColorStop(.35, 'rgba(255,230,150,.7)');
+                g.addColorStop(1, 'rgba(255,200,80,0)');
+                x.fillStyle = g; x.fillRect(0, 0, w, h);
+            });
+            var smokeTex = canvasTex(128, 128, function (x, w, h) {
+                var g = x.createRadialGradient(64, 64, 4, 64, 64, 62);
+                g.addColorStop(0, 'rgba(230,230,230,.85)');
+                g.addColorStop(.6, 'rgba(200,200,200,.35)');
+                g.addColorStop(1, 'rgba(200,200,200,0)');
+                x.fillStyle = g; x.fillRect(0, 0, w, h);
+            });
+            var rangoliTex = canvasTex(512, 512, function (x, w, h) {
+                x.clearRect(0, 0, w, h);
+                x.translate(256, 256);
+                var cols = ['#ff5d8f', '#ffb703', '#06d6a0', '#ef476f', '#ffd166', '#9d4edd'];
+                for (var r = 0; r < 2; r++) {
+                    for (var i = 0; i < 16; i++) {
+                        x.save();
+                        x.rotate(i / 16 * Math.PI * 2 + r * .2);
+                        x.fillStyle = cols[(i + r) % cols.length];
+                        x.globalAlpha = .92;
+                        x.beginPath();
+                        var rad = r === 0 ? 190 : 130;
+                        x.ellipse(0, -rad, r === 0 ? 26 : 20, r === 0 ? 60 : 44, 0, 0, Math.PI * 2);
+                        x.fill();
+                        x.fillStyle = '#fff';
+                        x.beginPath();
+                        x.arc(0, -rad - (r === 0 ? 38 : 28), 7, 0, Math.PI * 2);
+                        x.fill();
+                        x.restore();
+                    }
+                }
+                for (var k = 4; k > 0; k--) {
+                    x.fillStyle = cols[k % cols.length];
+                    x.beginPath(); x.arc(0, 0, k * 24, 0, Math.PI * 2); x.fill();
+                    x.strokeStyle = '#fff'; x.lineWidth = 3; x.stroke();
+                }
+                x.fillStyle = '#fff8c9';
+                x.beginPath(); x.arc(0, 0, 12, 0, Math.PI * 2); x.fill();
+            });
+            var signTex = canvasTex(1024, 512, function (x, w, h) {
+                var g = x.createLinearGradient(0, 0, 0, h);
+                g.addColorStop(0, '#5a3a1e'); g.addColorStop(1, '#3a2410');
+                x.fillStyle = g; x.fillRect(0, 0, w, h);
+                x.strokeStyle = '#d4af37'; x.lineWidth = 10; x.strokeRect(18, 18, w - 36, h - 36);
+                x.lineWidth = 3; x.strokeRect(42, 42, w - 84, h - 84);
+                x.textAlign = 'center';
+                x.fillStyle = '#f9e29c'; x.font = '600 54px Georgia';
+                x.fillText("SHARMA'S", w / 2, 120);
+                x.font = 'italic 700 110px Georgia'; x.fillStyle = '#fff8c9';
+                x.fillText('New Home', w / 2, 250);
+                x.fillStyle = '#d4af37'; x.font = '600 44px Georgia';
+                x.fillText('✦  GRIHA PRAVESH  ✦', w / 2, 350);
+                x.fillStyle = '#ffe9a8'; x.font = '500 40px Georgia';
+                x.fillText('OCT 12 • 9 AM • PUNE', w / 2, 430);
+            });
+            var welcomeTex = canvasTex(512, 128, function (x, w, h) {
+                x.fillStyle = '#2a1a08'; x.fillRect(0, 0, w, h);
+                x.strokeStyle = '#d4af37'; x.lineWidth = 6; x.strokeRect(6, 6, w - 12, h - 12);
+                x.textAlign = 'center'; x.fillStyle = '#f9e29c'; x.font = '700 58px Georgia';
+                x.fillText('✦ WELCOME ✦', w / 2, 84);
+            });
+            var photoLabelTex = canvasTex(512, 80, function (x, w, h) {
+                x.clearRect(0, 0, w, h);
+                x.textAlign = 'center';
+                x.fillStyle = '#f9e29c';
+                x.font = 'italic 700 44px Georgia';
+                x.shadowColor = '#d4af37'; x.shadowBlur = 12;
+                x.fillText('Our Dream Home — Sunshine Villa', w / 2, 55);
+            });
+
+            /* ---------- BOOT ---------- */
+            try {
+                init();
+            } catch (err) {
+                console.error(err);
+                document.getElementById('loader').innerHTML = '<h2>⚠️ WebGL not available</h2><p>Please try a modern browser</p>';
+            }
+
+            function init() {
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color().copy(colNight);
+                scene.fog = new THREE.Fog(0x0b1026, 28, 75);
+
+                camera = new THREE.PerspectiveCamera(46, innerWidth / innerHeight, .1, 200);
+                camera.position.set(13, 8, 17);
+
+                renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(innerWidth, innerHeight);
+                renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+                renderer.shadowMap.enabled = true;
+                renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                renderer.outputEncoding = THREE.sRGBEncoding;
+                renderer.domElement.style.touchAction = 'none';
+                container.appendChild(renderer.domElement);
+
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.target.set(0, 2.4, 0);
+                controls.enableDamping = true;
+                controls.dampingFactor = .06;
+                controls.minDistance = 5;
+                controls.maxDistance = 34;
+                controls.maxPolarAngle = Math.PI / 2 - .06;
+                controls.autoRotate = true;
+                controls.autoRotateSpeed = .65;
+
+                clock = new THREE.Clock();
+                raycaster = new THREE.Raycaster();
+                pointer = new THREE.Vector2();
+
+                ambLight = new THREE.AmbientLight(0x8a7fbf, .35); scene.add(ambLight);
+                hemiLight = new THREE.HemisphereLight(0x8fb8ff, 0x3a2a1a, .45); scene.add(hemiLight);
+                dirLight = new THREE.DirectionalLight(0x9db8ff, .6);
+                dirLight.position.set(-14, 20, 10);
+                dirLight.castShadow = true;
+                dirLight.shadow.mapSize.set(1024, 1024);
+                dirLight.shadow.camera.left = -18;
+                dirLight.shadow.camera.right = 18;
+                dirLight.shadow.camera.top = 18;
+                dirLight.shadow.camera.bottom = -18;
+                dirLight.shadow.camera.far = 60;
+                scene.add(dirLight);
+
+                buildGround();
+                buildHouse();
+                buildYard();
+                buildSky();
+                buildPhotoBoard();
+                buildConfetti();
+                bindEvents();
+                animate();
+
+                setTimeout(function () {
+                    document.getElementById('loader').classList.add('hide');
+                    toast('🙏 <b>Welcome!</b> Explore our 3D home. Click the <b>door &amp; gifts</b> ✨');
+                    burstAt(new THREE.Vector3(0, 7, 4), 90, 5);
+                }, 900);
+            }
+
+            function mat(c, r, m) {
+                return new THREE.MeshStandardMaterial({
+                    color: c,
+                    roughness: (r === undefined ? .85 : r),
+                    metalness: m || 0
+                });
+            }
+
+            /* ---------- GROUND ---------- */
+            function buildGround() {
+                groundMat = new THREE.MeshStandardMaterial({ color: 0x1d3a2c, roughness: 1 });
+                var g = new THREE.Mesh(new THREE.CircleGeometry(34, 48), groundMat);
+                g.rotation.x = -Math.PI / 2;
+                g.receiveShadow = true;
+                scene.add(g);
+
+                var lawnMat = new THREE.MeshStandardMaterial({ color: 0x24513a, roughness: 1 });
+                var lawn = new THREE.Mesh(new THREE.CircleGeometry(13.5, 40), lawnMat);
+                lawn.rotation.x = -Math.PI / 2;
+                lawn.position.y = .01;
+                lawn.receiveShadow = true;
+                scene.add(lawn);
+                groundMat.userData = { lawnMat: lawnMat };
+
+                var road = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 20), mat(0x3d3d4d, .95));
+                road.rotation.x = -Math.PI / 2;
+                road.position.set(0, .015, 19);
+                road.receiveShadow = true;
+                scene.add(road);
+            }
+
+            /* ---------- HOUSE ---------- */
+            function makeWindow(w, h) {
+                var grp = new THREE.Group();
+                var frame = new THREE.Mesh(new THREE.BoxGeometry(w + .24, h + .24, .1), mat(0xfdf6e3, .6));
+                grp.add(frame);
+
+                var glassMat = new THREE.MeshStandardMaterial({
+                    color: 0xffe9a8, emissive: 0xffb84d, emissiveIntensity: 1.6, roughness: .25
+                });
+                windowMats.push(glassMat);
+
+                var glass = new THREE.Mesh(new THREE.PlaneGeometry(w, h), glassMat);
+                glass.position.z = .06;
+                grp.add(glass);
+                glass.userData = { type: 'window', tip: 'Click to toggle lights 💡' };
+                clickables.push(glass);
+
+                var mv = new THREE.Mesh(new THREE.BoxGeometry(.06, h, .03), mat(0xffffff, .5));
+                mv.position.z = .08; grp.add(mv);
+                var mh = new THREE.Mesh(new THREE.BoxGeometry(w, .06, .03), mat(0xffffff, .5));
+                mh.position.z = .08; grp.add(mh);
+                var sill = new THREE.Mesh(new THREE.BoxGeometry(w + .44, .12, .22), mat(0xeadfc2, .7));
+                sill.position.set(0, -h / 2 - .14, .06);
+                grp.add(sill);
+                return grp;
+            }
+
+            function buildHouse() {
+                houseGroup = new THREE.Group();
+                scene.add(houseGroup);
+
+                var wallMat = mat(0xf5e6c4, .85);
+                var wallMat2 = mat(0xf0d9a8, .85);
+                var white = mat(0xfdf6e3, .6);
+
+                var found = new THREE.Mesh(new THREE.BoxGeometry(9, .5, 7), mat(0x8d8d9a, .9));
+                found.position.y = .25;
+                found.receiveShadow = true; found.castShadow = true;
+                houseGroup.add(found);
+
+                var gf = new THREE.Mesh(new THREE.BoxGeometry(8, 3, 6), wallMat);
+                gf.position.y = 2; gf.castShadow = true; gf.receiveShadow = true;
+                houseGroup.add(gf);
+
+                var uf = new THREE.Mesh(new THREE.BoxGeometry(6.5, 2.4, 5), wallMat2);
+                uf.position.y = 4.7; uf.castShadow = true; uf.receiveShadow = true;
+                houseGroup.add(uf);
+
+                var trim = new THREE.Mesh(new THREE.BoxGeometry(8.2, .22, 6.2), white);
+                trim.position.y = 3.55;
+                houseGroup.add(trim);
+
+                /* Roof slabs */
+                var roofW = 7.9, roofH = 2.3, roofD = 6.4, baseY = 5.9;
+                var slope = Math.sqrt((roofW / 2) * (roofW / 2) + roofH * roofH);
+                var ang = Math.atan2(roofH, roofW / 2);
+                var roofMat = mat(0xa93a2e, .75);
+                var slabG = new THREE.BoxGeometry(slope + .35, .2, roofD);
+                var L = new THREE.Mesh(slabG, roofMat);
+                L.position.set(-roofW / 4 + .05, baseY + roofH / 2, 0);
+                L.rotation.z = ang; L.castShadow = true;
+                houseGroup.add(L);
+                var R = new THREE.Mesh(slabG, roofMat);
+                R.position.set(roofW / 4 - .05, baseY + roofH / 2, 0);
+                R.rotation.z = -ang; R.castShadow = true;
+                houseGroup.add(R);
+                var ridge = new THREE.Mesh(new THREE.BoxGeometry(.34, .22, roofD + .15), mat(0x7c241c, .7));
+                ridge.position.set(0, baseY + roofH + .02, 0);
+                houseGroup.add(ridge);
+
+                /* Gables */
+                var sh = new THREE.Shape();
+                sh.moveTo(-3.25, 0); sh.lineTo(3.25, 0); sh.lineTo(0, roofH); sh.closePath();
+                var gg = new THREE.ShapeGeometry(sh);
+                var g1 = new THREE.Mesh(gg, wallMat2);
+                g1.position.set(0, baseY, 2.51); houseGroup.add(g1);
+                var g2 = new THREE.Mesh(gg, wallMat2);
+                g2.position.set(0, baseY, -2.51); g2.rotation.y = Math.PI; houseGroup.add(g2);
+
+                /* Chimney */
+                var ch = new THREE.Mesh(new THREE.BoxGeometry(.65, 1.9, .65), mat(0x9a5a4a, .85));
+                ch.position.set(2.0, 7.0, -1.0); ch.castShadow = true; houseGroup.add(ch);
+                var chTop = new THREE.Mesh(new THREE.BoxGeometry(.85, .18, .85), mat(0x5a3a30, .8));
+                chTop.position.set(2.0, 7.98, -1.0); houseGroup.add(chTop);
+
+                /* Porch */
+                var plat = new THREE.Mesh(new THREE.BoxGeometry(4.2, .32, 2.6), mat(0xd9c9a8, .8));
+                plat.position.set(0, .66, 4.2);
+                plat.receiveShadow = true; plat.castShadow = true;
+                houseGroup.add(plat);
+
+                var colG = new THREE.CylinderGeometry(.12, .15, 2.75, 12);
+                [-1.85, 1.85].forEach(function (x) {
+                    var c = new THREE.Mesh(colG, white);
+                    c.position.set(x, 2.2, 5.05);
+                    c.castShadow = true;
+                    houseGroup.add(c);
+                });
+
+                var pr = new THREE.Mesh(new THREE.BoxGeometry(4.6, .2, 3.0), mat(0x7a1f2e, .7));
+                pr.position.set(0, 3.62, 4.2);
+                pr.castShadow = true;
+                houseGroup.add(pr);
+
+                var st1 = new THREE.Mesh(new THREE.BoxGeometry(2.2, .16, .55), mat(0xb8ab8a, .9));
+                st1.position.set(0, .42, 5.75); houseGroup.add(st1);
+                var st2 = new THREE.Mesh(new THREE.BoxGeometry(2.6, .14, .6), mat(0xa89a7a, .9));
+                st2.position.set(0, .2, 6.05); houseGroup.add(st2);
+
+                /* Balcony */
+                var bal = new THREE.Mesh(new THREE.BoxGeometry(3.4, .16, 1.0), white);
+                bal.position.set(0, 3.85, 3.0); bal.castShadow = true; houseGroup.add(bal);
+                for (var i = 0; i < 9; i++) {
+                    var b = new THREE.Mesh(new THREE.BoxGeometry(.07, .55, .07), white);
+                    b.position.set(-1.55 + i * .39, 4.2, 3.42);
+                    houseGroup.add(b);
+                }
+                var brail = new THREE.Mesh(new THREE.BoxGeometry(3.4, .08, .08), white);
+                brail.position.set(0, 4.5, 3.42); houseGroup.add(brail);
+
+                /* Door */
+                var dframe = new THREE.Mesh(new THREE.BoxGeometry(1.55, 2.45, .16), white);
+                dframe.position.set(0, 1.95, 3.03); houseGroup.add(dframe);
+
+                doorPivot = new THREE.Group();
+                doorPivot.position.set(-.62, 1.9, 3.1);
+                houseGroup.add(doorPivot);
+
+                doorMesh = new THREE.Mesh(new THREE.BoxGeometry(1.24, 2.25, .09), mat(0x6f3a1a, .6));
+                doorMesh.position.set(.62, 0, 0);
+                doorMesh.castShadow = true;
+                doorPivot.add(doorMesh);
+                doorMesh.userData = { type: 'door', tip: 'Click to open / close door 🚪' };
+                clickables.push(doorMesh);
+
+                var p1 = new THREE.Mesh(new THREE.BoxGeometry(.85, .85, .03), mat(0x8a4d22, .6));
+                p1.position.set(.62, .5, .06); doorPivot.add(p1);
+                var p2 = new THREE.Mesh(new THREE.BoxGeometry(.85, .75, .03), mat(0x8a4d22, .6));
+                p2.position.set(.62, -.6, .06); doorPivot.add(p2);
+                var knob = new THREE.Mesh(new THREE.SphereGeometry(.07, 12, 12),
+                    new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: .9, roughness: .3 }));
+                knob.position.set(1.05, 0, .1); doorPivot.add(knob);
+
+                /* Porch light */
+                porchLight = new THREE.PointLight(0xffc873, 1.5, 10);
+                porchLight.position.set(0, 3.3, 4.4); houseGroup.add(porchLight);
+                var porchBulb = new THREE.Mesh(new THREE.SphereGeometry(.11, 12, 12),
+                    new THREE.MeshBasicMaterial({ color: 0xffe0a0 }));
+                porchBulb.position.copy(porchLight.position); houseGroup.add(porchBulb);
+                var pglow = new THREE.Sprite(new THREE.SpriteMaterial({
+                    map: glowTex, color: 0xffc873, transparent: true, opacity: .8, depthWrite: false
+                }));
+                pglow.scale.set(1.4, 1.4, 1);
+                pglow.position.copy(porchLight.position);
+                houseGroup.add(pglow);
+
+                /* Toran (marigold garland) */
+                for (var t = 0; t <= 12; t++) {
+                    var tt = t / 12;
+                    var tx = -.85 + 1.7 * tt;
+                    var ty = 3.22 - Math.sin(Math.PI * tt) * .28;
+                    var col = (tt * 12 % 2 < 1) ? 0xff7a00 : 0xffcc00;
+                    var s = new THREE.Mesh(new THREE.SphereGeometry(.09, 10, 10),
+                        new THREE.MeshStandardMaterial({ color: col, roughness: .6, emissive: col, emissiveIntensity: .35 }));
+                    s.position.set(tx, ty, 3.18);
+                    houseGroup.add(s);
+                }
+
+                /* Windows */
+                var w1 = makeWindow(1.25, 1.15); w1.position.set(-2.55, 2.05, 3.03); houseGroup.add(w1);
+                var w2 = makeWindow(1.25, 1.15); w2.position.set(2.55, 2.05, 3.03); houseGroup.add(w2);
+                var w3 = makeWindow(1.15, 1.05); w3.position.set(-1.7, 4.7, 2.53); houseGroup.add(w3);
+                var w4 = makeWindow(1.15, 1.05); w4.position.set(1.7, 4.7, 2.53); houseGroup.add(w4);
+                var w5 = makeWindow(1.1, 1.0); w5.position.set(4.03, 2.1, 0); w5.rotation.y = Math.PI / 2; houseGroup.add(w5);
+                var w6 = makeWindow(1.1, 1.0); w6.position.set(-4.03, 2.1, 0); w6.rotation.y = -Math.PI / 2; houseGroup.add(w6);
+
+                /* Round attic window */
+                var circ = new THREE.Mesh(new THREE.CircleGeometry(.42, 24), windowMats[0]);
+                circ.position.set(0, 6.6, 2.56); houseGroup.add(circ);
+                var ring = new THREE.Mesh(new THREE.TorusGeometry(.45, .08, 10, 24), white);
+                ring.position.set(0, 6.6, 2.56); houseGroup.add(ring);
+
+                /* Festoons */
+                festoon(new THREE.Vector3(-3.9, 5.85, 3.2), new THREE.Vector3(3.9, 5.85, 3.2), .7, 16);
+                festoon(new THREE.Vector3(-2.25, 3.55, 5.55), new THREE.Vector3(2.25, 3.55, 5.55), .45, 12);
+                festoon(new THREE.Vector3(-1.85, 3.5, 5.05), new THREE.Vector3(-1.8, 1.9, 9), .5, 9);
+                festoon(new THREE.Vector3(1.85, 3.5, 5.05), new THREE.Vector3(1.8, 1.9, 9), .5, 9);
+
+                /* Smoke pool */
+                for (var k = 0; k < 18; k++) {
+                    var sm = new THREE.Sprite(new THREE.SpriteMaterial({
+                        map: smokeTex, transparent: true, opacity: 0, depthWrite: false, color: 0xd8d8e0
+                    }));
+                    sm.position.copy(chimneyTop);
+                    scene.add(sm);
+                    smokes.push({ s: sm, life: Math.random() * 3, max: 2.5 + Math.random() });
+                }
+            }
+
+            function festoon(p1, p2, sag, count) {
+                var pts = [];
+                for (var i = 0; i <= 24; i++) {
+                    var t = i / 24;
+                    var v = new THREE.Vector3().lerpVectors(p1, p2, t);
+                    v.y -= Math.sin(Math.PI * t) * sag;
+                    pts.push(v);
+                }
+                var line = new THREE.Line(
+                    new THREE.BufferGeometry().setFromPoints(pts),
+                    new THREE.LineBasicMaterial({ color: 0x222228 })
+                );
+                houseGroup.add(line);
+
+                var pal = [0xffd166, 0xef476f, 0x06d6a0, 0x118ab2, 0xff9f1c, 0xff5d8f];
+                for (var j = 0; j < count; j++) {
+                    var tt = (j + .5) / count;
+                    var p = new THREE.Vector3().lerpVectors(p1, p2, tt);
+                    p.y -= Math.sin(Math.PI * tt) * sag;
+                    p.y -= .1;
+                    var c = pal[j % pal.length];
+                    var b = new THREE.Mesh(new THREE.SphereGeometry(.075, 8, 8), new THREE.MeshBasicMaterial({ color: c }));
+                    b.position.copy(p);
+                    houseGroup.add(b);
+                    var gl = new THREE.Sprite(new THREE.SpriteMaterial({
+                        map: glowTex, color: c, transparent: true, opacity: .75, depthWrite: false
+                    }));
+                    gl.scale.set(.42, .42, 1);
+                    gl.position.copy(p);
+                    houseGroup.add(gl);
+                    bulbs.push({ m: b, g: gl, ph: Math.random() * 6.28 });
+                }
+            }
+
+            /* ---------- YARD ---------- */
+            function tree(x, z, s) {
+                var g = new THREE.Group();
+                g.position.set(x, 0, z);
+                var trunk = new THREE.Mesh(new THREE.CylinderGeometry(.16 * s, .24 * s, 1.6 * s, 8), mat(0x6b4a2a, .9));
+                trunk.position.y = .8 * s; trunk.castShadow = true; g.add(trunk);
+                var gm = mat(0x2f7a3d, .9);
+                [[1.25, 1.6, 1.9], [.95, 1.3, 2.7], [.6, 1.0, 3.4]].forEach(function (a) {
+                    var c = new THREE.Mesh(new THREE.ConeGeometry(a[0] * s, a[1] * s, 9), gm);
+                    c.position.y = a[2] * s;
+                    c.castShadow = true;
+                    g.add(c);
+                });
+                scene.add(g);
+            }
+
+            function lamp(x, z) {
+                var g = new THREE.Group();
+                g.position.set(x, 0, z);
+                var pole = new THREE.Mesh(new THREE.CylinderGeometry(.06, .09, 2.6, 10), mat(0x22222c, .6, .4));
+                pole.position.y = 1.3; pole.castShadow = true; g.add(pole);
+                var base = new THREE.Mesh(new THREE.CylinderGeometry(.18, .24, .22, 10), mat(0x33333d, .7));
+                base.position.y = .11; g.add(base);
+                var head = new THREE.Mesh(new THREE.SphereGeometry(.19, 14, 14),
+                    new THREE.MeshBasicMaterial({ color: 0xffe0a0 }));
+                head.position.y = 2.72; g.add(head);
+                var cap = new THREE.Mesh(new THREE.ConeGeometry(.27, .22, 10), mat(0x1a1a22, .6));
+                cap.position.y = 2.98; g.add(cap);
+                var gl = new THREE.Sprite(new THREE.SpriteMaterial({
+                    map: glowTex, color: 0xffc873, transparent: true, opacity: .85, depthWrite: false
+                }));
+                gl.scale.set(1.7, 1.7, 1);
+                gl.position.y = 2.72; g.add(gl);
+                var li = new THREE.PointLight(0xffc873, 1.2, 13);
+                li.position.y = 2.72; g.add(li);
+                lampLights.push(li);
+                scene.add(g);
+            }
+
+            function diya(x, z, y) {
+                var g = new THREE.Group();
+                g.position.set(x, y || 0, z);
+                var b = new THREE.Mesh(new THREE.CylinderGeometry(.18, .11, .13, 12), mat(0xb35a2a, .8));
+                b.position.y = .07; g.add(b);
+                var oil = new THREE.Mesh(new THREE.CylinderGeometry(.13, .13, .025, 12), mat(0x1a0f05, .4));
+                oil.position.y = .14; g.add(oil);
+                var fl = new THREE.Mesh(new THREE.ConeGeometry(.05, .2, 8),
+                    new THREE.MeshBasicMaterial({ color: 0xffb300 }));
+                fl.position.y = .27; g.add(fl);
+                var gl = new THREE.Sprite(new THREE.SpriteMaterial({
+                    map: glowTex, color: 0xff9500, transparent: true, opacity: .85, depthWrite: false
+                }));
+                gl.scale.set(.75, .75, 1);
+                gl.position.y = .3; g.add(gl);
+                flames.push({ m: fl, g: gl, ph: Math.random() * 6.28, grp: g });
+                scene.add(g);
+                return g;
+            }
+
+            function gift(x, y, z, s, c, rc) {
+                var g = new THREE.Group();
+                g.position.set(x, y + s / 2, z);
+                var box = new THREE.Mesh(new THREE.BoxGeometry(s, s, s), mat(c, .5));
+                box.castShadow = true;
+                g.add(box);
+                box.userData = { type: 'gift', tip: 'Click to open gift 🎁', pos: new THREE.Vector3(x, y + 1, z) };
+                clickables.push(box);
+                var r1 = new THREE.Mesh(new THREE.BoxGeometry(s * 1.02, s * 1.02, s * .24), mat(rc, .4));
+                g.add(r1);
+                var r2 = new THREE.Mesh(new THREE.BoxGeometry(s * .24, s * 1.02, s * 1.02), mat(rc, .4));
+                g.add(r2);
+                var bow = new THREE.Mesh(new THREE.SphereGeometry(s * .14, 10, 10), mat(rc, .4));
+                bow.position.y = s / 2 + s * .1;
+                g.add(bow);
+                scene.add(g);
+            }
+
+            function balloon(color, x, z, h) {
+                var g = new THREE.Group();
+                g.position.set(x, 0, z);
+                var b = new THREE.Mesh(new THREE.SphereGeometry(.36, 18, 18),
+                    new THREE.MeshStandardMaterial({ color: color, roughness: .3, metalness: .1 }));
+                b.position.y = h;
+                b.castShadow = true;
+                g.add(b);
+                var k = new THREE.Mesh(new THREE.ConeGeometry(.08, .12, 8), mat(0x333333, .6));
+                k.position.y = h - .44; g.add(k);
+                var lg = new THREE.BufferGeometry().setFromPoints([
+                    new THREE.Vector3(0, .15, 0),
+                    new THREE.Vector3(0, h - .5, 0)
+                ]);
+                g.add(new THREE.Line(lg, new THREE.LineBasicMaterial({ color: 0xdddddd })));
+                scene.add(g);
+                balloons.push({ g: g, b: b, base: 0, ph: Math.random() * 6.28 });
+            }
+
+            function buildYard() {
+                /* Path stones */
+                var stoneMat = mat(0x9a9aa5, .95);
+                for (var i = 0; i < 7; i++) {
+                    var st = new THREE.Mesh(new THREE.CylinderGeometry(.62, .72, .12, 7), stoneMat);
+                    st.position.set(i % 2 ? .22 : -.22, .06, 7.6 + i * 1.05);
+                    st.rotation.y = Math.random();
+                    st.receiveShadow = true;
+                    scene.add(st);
+                }
+
+                /* Rangoli */
+                var rg = new THREE.Mesh(new THREE.CircleGeometry(1.05, 40),
+                    new THREE.MeshBasicMaterial({ map: rangoliTex, transparent: true }));
+                rg.rotation.x = -Math.PI / 2;
+                rg.position.set(0, .05, 6.35);
+                scene.add(rg);
+
+                /* Fence */
+                var fm = mat(0xf5f2e8, .7);
+                function picket(x, z, ry) {
+                    var p = new THREE.Mesh(new THREE.BoxGeometry(.13, .92, .06), fm);
+                    p.position.set(x, .46, z);
+                    p.rotation.y = ry || 0;
+                    p.castShadow = true;
+                    scene.add(p);
+                    var tip = new THREE.Mesh(new THREE.ConeGeometry(.09, .14, 4), fm);
+                    tip.position.set(x, .99, z);
+                    tip.rotation.y = (ry || 0) + Math.PI / 4;
+                    scene.add(tip);
+                }
+                for (var fx = -10; fx <= 10; fx += .62) {
+                    if (Math.abs(fx) < 1.9) continue;
+                    picket(fx, 9);
+                }
+                for (var fz = -7; fz < 9; fz += .62) {
+                    picket(-10, fz, Math.PI / 2);
+                    picket(10, fz, Math.PI / 2);
+                }
+                [-5.95, 5.95].forEach(function (x) {
+                    [.62, .3].forEach(function (y) {
+                        var r = new THREE.Mesh(new THREE.BoxGeometry(8.1, .09, .06), fm);
+                        r.position.set(x, y, 9);
+                        scene.add(r);
+                    });
+                });
+
+                /* Gate pillars */
+                [-1.9, 1.9].forEach(function (x) {
+                    var pil = new THREE.Mesh(new THREE.BoxGeometry(.48, 1.7, .48), mat(0x8d8d9a, .8));
+                    pil.position.set(x, .85, 9);
+                    pil.castShadow = true;
+                    scene.add(pil);
+
+                    var cap = new THREE.Mesh(new THREE.BoxGeometry(.6, .12, .6), mat(0x4a4a55, .7));
+                    cap.position.set(x, 1.75, 9);
+                    scene.add(cap);
+
+                    var lampB = new THREE.Mesh(new THREE.SphereGeometry(.14, 10, 10),
+                        new THREE.MeshBasicMaterial({ color: 0xffd166 }));
+                    lampB.position.set(x, 1.98, 9);
+                    scene.add(lampB);
+
+                    var gl = new THREE.Sprite(new THREE.SpriteMaterial({
+                        map: glowTex, color: 0xffd166, transparent: true, opacity: .8, depthWrite: false
+                    }));
+                    gl.scale.set(1, 1, 1);
+                    gl.position.set(x, 1.98, 9);
+                    scene.add(gl);
+
+                    bulbs.push({ m: lampB, g: gl, ph: Math.random() * 6 });
+                });
+
+                var beam = new THREE.Mesh(new THREE.BoxGeometry(4.3, .5, .18), mat(0x2a1a08, .7));
+                beam.position.set(0, 2.25, 9);
+                scene.add(beam);
+
+                var wplane = new THREE.Mesh(new THREE.PlaneGeometry(4.1, .42),
+                    new THREE.MeshBasicMaterial({ map: welcomeTex }));
+                wplane.position.set(0, 2.25, 9.1);
+                scene.add(wplane);
+
+                /* Trees */
+                tree(-8.2, 2, 1.15);
+                tree(8.3, 1, 1.0);
+                tree(-7.2, -4.5, 1.3);
+                tree(7.6, -5, 1.2);
+                tree(-9.3, 6.5, .85);
+                tree(9.4, 6, .9);
+                tree(-4.5, -7, 1.0);
+                tree(4.8, -7.2, 1.1);
+
+                /* Lamps */
+                lamp(-3.1, 7.2);
+                lamp(3.1, 7.2);
+
+                /* Diyas */
+                [[-1.2, 7.2], [1.2, 7.2], [-1.2, 8.4], [1.2, 8.4], [-1.2, 9.8], [1.2, 9.8],
+                [-1.2, 11], [1.2, 11], [-1.6, 5.2, .82], [1.6, 5.2, .82], [-1.9, 4.4, .82], [1.9, 4.4, .82]]
+                    .forEach(function (p) { diya(p[0], p[1], p[2] || 0); });
+
+                /* Yard sign */
+                var sg = new THREE.Group();
+                sg.position.set(4.7, 0, 5.6);
+                sg.rotation.y = -.38;
+                scene.add(sg);
+
+                [-.95, .95].forEach(function (x) {
+                    var post = new THREE.Mesh(new THREE.CylinderGeometry(.08, .09, 1.7, 10), mat(0x5a3a1e, .8));
+                    post.position.set(x, .85, 0);
+                    post.castShadow = true;
+                    sg.add(post);
+                });
+
+                var board = new THREE.Mesh(new THREE.BoxGeometry(2.35, 1.3, .1), mat(0x4a2f14, .8));
+                board.position.y = 1.65;
+                board.castShadow = true;
+                sg.add(board);
+
+                var face = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 1.15),
+                    new THREE.MeshBasicMaterial({ map: signTex }));
+                face.position.set(0, 1.65, .06);
+                sg.add(face);
+                face.userData = { type: 'sign', tip: 'Sharma Family Welcomes You 🙏' };
+                clickables.push(face);
+
+                var sroof = new THREE.Mesh(new THREE.BoxGeometry(2.6, .12, .5), mat(0x7a1f2e, .7));
+                sroof.position.y = 2.36;
+                sg.add(sroof);
+
+                /* Gifts */
+                gift(1.9, .82, 4.4, .5, 0xef476f, 0xffd166);
+                gift(2.45, .82, 4.9, .38, 0x118ab2, 0xffffff);
+                gift(-2.1, .82, 4.6, .44, 0xd4af37, 0x7a1f2e);
+
+                /* Balloons */
+                balloon(0xef476f, -2.4, 8.4, 3.4);
+                balloon(0xffd166, 2.4, 8.4, 3.7);
+                balloon(0x06d6a0, -3.6, 5.4, 3.1);
+                balloon(0x9d4edd, 3.8, 5.2, 3.5);
+                balloon(0xff5d8f, 0, 9.8, 4.0);
+            }
+
+            /* ---------- SKY ---------- */
+            function buildSky() {
+                var n = 900;
+                var pos = new Float32Array(n * 3);
+                for (var i = 0; i < n; i++) {
+                    var r = 58 + Math.random() * 22,
+                        th = Math.random() * Math.PI * 2,
+                        ph = Math.random() * Math.PI * .46;
+                    pos[i * 3] = r * Math.sin(ph) * Math.cos(th);
+                    pos[i * 3 + 1] = r * Math.cos(ph) * .85 + 4;
+                    pos[i * 3 + 2] = r * Math.sin(ph) * Math.sin(th);
+                }
+                var g = new THREE.BufferGeometry();
+                g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+                starsMat = new THREE.PointsMaterial({ color: 0xffffff, size: .38, transparent: true, opacity: 1 });
+                stars = new THREE.Points(g, starsMat);
+                scene.add(stars);
+
+                moon = new THREE.Mesh(new THREE.SphereGeometry(1.9, 24, 24),
+                    new THREE.MeshBasicMaterial({ color: 0xfef9c3, transparent: true }));
+                moon.position.set(-22, 20, -26);
+                scene.add(moon);
+
+                moonGlow = new THREE.Sprite(new THREE.SpriteMaterial({
+                    map: glowTex, color: 0xfff6c0, transparent: true, opacity: .7, depthWrite: false
+                }));
+                moonGlow.scale.set(11, 11, 1);
+                moonGlow.position.copy(moon.position);
+                scene.add(moonGlow);
+
+                var fn = 70;
+                fireBase = new Float32Array(fn * 3);
+                firePhase = new Float32Array(fn);
+                var fp = new Float32Array(fn * 3);
+                for (var j = 0; j < fn; j++) {
+                    var x = (Math.random() - .5) * 24,
+                        y = .5 + Math.random() * 3.5,
+                        z = -6 + Math.random() * 18;
+                    fireBase[j * 3] = x; fireBase[j * 3 + 1] = y; fireBase[j * 3 + 2] = z;
+                    fp[j * 3] = x; fp[j * 3 + 1] = y; fp[j * 3 + 2] = z;
+                    firePhase[j] = Math.random() * 6.28;
+                }
+                var fg = new THREE.BufferGeometry();
+                fg.setAttribute('position', new THREE.BufferAttribute(fp, 3));
+                fireflies = new THREE.Points(fg, new THREE.PointsMaterial({
+                    color: 0xffee88, size: .16, transparent: true, opacity: .95,
+                    blending: THREE.AdditiveBlending, depthWrite: false
+                }));
+                scene.add(fireflies);
+            }
+
+            /* ---------- PHOTO BOARD ---------- */
+            function buildPhotoBoard() {
+                photoBoard = new THREE.Group();
+                photoBoard.position.set(-5.9, 4.3, 3.2);
+                scene.add(photoBoard);
+
+                var frame = new THREE.Mesh(new THREE.BoxGeometry(4.5, 2.95, .14),
+                    new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: .75, roughness: .32 }));
+                photoBoard.add(frame);
+
+                var inner = new THREE.Mesh(new THREE.BoxGeometry(4.5, 2.95, .1), mat(0x1a1428, .8));
+                inner.position.z = .03;
+                photoBoard.add(inner);
+
+                var phMat = new THREE.MeshBasicMaterial({ color: 0x2a2438 });
+                var photo = new THREE.Mesh(new THREE.PlaneGeometry(4.1, 2.55), phMat);
+                photo.position.z = .09;
+                photoBoard.add(photo);
+                photo.userData = { type: 'photo', tip: 'Our Dream Home — click to view 🏡' };
+                clickables.push(photo);
+
+                var label = new THREE.Mesh(new THREE.PlaneGeometry(4.2, .62),
+                    new THREE.MeshBasicMaterial({ map: photoLabelTex, transparent: true }));
+                label.position.y = -1.85;
+                photoBoard.add(label);
+
+                var back = new THREE.Sprite(new THREE.SpriteMaterial({
+                    map: glowTex, color: 0xd4af37, transparent: true, opacity: .35, depthWrite: false
+                }));
+                back.scale.set(7, 5, 1);
+                back.position.z = -.4;
+                photoBoard.add(back);
+
+                var loader = new THREE.TextureLoader();
+                loader.crossOrigin = 'anonymous';
+                loader.load(
+                    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
+                    function (t) {
+                        t.encoding = THREE.sRGBEncoding;
+                        phMat.map = t;
+                        phMat.color.set(0xffffff);
+                        phMat.needsUpdate = true;
+                    },
+                    undefined,
+                    function () { phMat.color.set(0x8a6d3b); }
+                );
+
+                /* Poles */
+                var pg = new THREE.CylinderGeometry(.07, .09, 4.4, 10);
+                [-1.8, 1.8].forEach(function (x) {
+                    var p = new THREE.Mesh(pg, mat(0x3a2c18, .8));
+                    p.position.set(x, -3.4, -.2);
+                    p.castShadow = true;
+                    photoBoard.add(p);
+                });
+            }
+
+            /* ---------- CONFETTI ---------- */
+            function buildConfetti() {
+                confettiGroup = new THREE.Group();
+                scene.add(confettiGroup);
+                var cols = [0xffd166, 0xef476f, 0x06d6a0, 0x118ab2, 0xff9f1c, 0xd4af37, 0xff5d8f, 0xffffff];
+                var geo = new THREE.PlaneGeometry(.13, .19);
+                for (var i = 0; i < 260; i++) {
+                    var m = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({
+                        color: cols[i % cols.length], side: THREE.DoubleSide
+                    }));
+                    m.visible = false;
+                    confettiGroup.add(m);
+                    confettiPool.push({ m: m, v: new THREE.Vector3(), a: new THREE.Vector3(), life: 0, on: false });
+                }
+            }
+
+            function burstAt(p, count, spread) {
+                count = count || 120;
+                spread = spread || 6;
+                var done = 0;
+                for (var i = 0; i < confettiPool.length && done < count; i++) {
+                    var c = confettiPool[i];
+                    if (c.on) continue;
+                    c.on = true;
+                    c.m.visible = true;
+                    c.m.position.set(
+                        p.x + (Math.random() - .5),
+                        p.y + (Math.random() - .5) * .5,
+                        p.z + (Math.random() - .5)
+                    );
+                    c.v.set((Math.random() - .5) * spread, Math.random() * 6 + 3, (Math.random() - .5) * spread);
+                    c.a.set(Math.random() * 8, Math.random() * 8, Math.random() * 8);
+                    c.life = 3 + Math.random() * 2;
+                    done++;
+                }
+            }
+            window.burstAt = burstAt;
+
+            /* ---------- EVENTS ---------- */
+            function bindEvents() {
+                addEventListener('resize', function () {
+                    camera.aspect = innerWidth / innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(innerWidth, innerHeight);
+                });
+
+                var tip = document.getElementById('tooltip');
+
+                function setPointer(e) {
+                    var cx = e.touches ? e.touches[0].clientX : e.clientX;
+                    var cy = e.touches ? e.touches[0].clientY : e.clientY;
+                    pointer.x = (cx / innerWidth) * 2 - 1;
+                    pointer.y = -(cy / innerHeight) * 2 + 1;
+                    return { x: cx, y: cy };
+                }
+
+                renderer.domElement.addEventListener('pointermove', function (e) {
+                    var p = setPointer(e);
+                    raycaster.setFromCamera(pointer, camera);
+                    var hits = raycaster.intersectObjects(clickables);
+                    if (hits.length) {
+                        document.body.style.cursor = 'pointer';
+                        tip.style.display = 'block';
+                        tip.style.left = (p.x + 14) + 'px';
+                        tip.style.top = (p.y + 14) + 'px';
+                        tip.textContent = hits[0].object.userData.tip || '✨';
+                    } else {
+                        document.body.style.cursor = 'grab';
+                        tip.style.display = 'none';
+                    }
+                });
+
+                renderer.domElement.addEventListener('pointerdown', function (e) {
+                    downPos = { x: e.clientX, y: e.clientY };
+                });
+
+                renderer.domElement.addEventListener('pointerup', function (e) {
+                    if (!downPos) return;
+                    var dx = e.clientX - downPos.x;
+                    var dy = e.clientY - downPos.y;
+                    downPos = null;
+                    if (dx * dx + dy * dy > 100) return;   /* was 36 – too sensitive */
+
+                    setPointer(e);
+                    raycaster.setFromCamera(pointer, camera);
+                    var hits = raycaster.intersectObjects(clickables);
+                    if (!hits.length) return;
+                    var u = hits[0].object.userData;
+
+                    if (u.type === 'door') {
+                        doorOpen = !doorOpen;
+                        toast(doorOpen
+                            ? '🚪 <b>Welcome in!</b> The doors of Sunshine Villa are open.'
+                            : '🚪 Door closed. See you on Oct 12!');
+                        chime(660);
+                    }
+                    else if (u.type === 'gift') {
+                        var pp = u.pos || hits[0].point;
+                        burstAt(pp.clone().add(new THREE.Vector3(0, 1, 0)), 120, 6);
+                        var msgs = [
+                            '🎁 Shubh Labh! Blessings overflow!',
+                            '🎁 Thank you for your love & gift!',
+                            '🎁 Dher saari shubhkamnayein!',
+                            '✨ May your life be as joyful as this day!'
+                        ];
+                        toast(msgs[Math.floor(Math.random() * msgs.length)]);
+                        chime(880);
+                    }
+                    else if (u.type === 'window') {
+                        lightsOn = !lightsOn;
+                        document.getElementById('btn-lights').classList.toggle('active', lightsOn);
+                        toast(lightsOn ? '💡 Lights ON — home glowing warm!' : '💡 Lights OFF — stars shine brighter!');
+                    }
+                    else if (u.type === 'sign') {
+                        flyTo([4.7, 2.4, 10.5], [4.4, 1.6, 5.6]);
+                        toast('🙏 <b>Sharma Parivaar</b> welcomes you with folded hands!');
+                    }
+                    else if (u.type === 'photo') {
+                        flyTo([-5.9, 4.4, 9.5], [-5.9, 3.9, 3.2]);
+                        toast('🏡 <b>Sunshine Villa</b> — 4BHK • 2400 sq.ft • Our dream come true!');
+                    }
+                });
+
+                /* View buttons */
+                document.querySelectorAll('[data-view]').forEach(function (b) {
+                    b.addEventListener('click', function () {
+                        document.querySelectorAll('[data-view]').forEach(function (x) { x.classList.remove('active'); });
+                        b.classList.add('active');
+                        var v = b.getAttribute('data-view');
+                        if (v === 'front') flyTo([0, 4.2, 16.5], [0, 2.6, 0]);
+                        else if (v === 'porch') flyTo([0, 2.3, 8.2], [0, 1.9, 3]);
+                        else if (v === 'aerial') flyTo([13, 14, 13], [0, 0, 0]);
+                        else if (v === 'photo') flyTo([-5.9, 4.6, 10], [-5.9, 3.8, 3.2]);
+                    });
+                });
+
+                document.getElementById('btn-focus-house').addEventListener('click', function () {
+                    flyTo([0, 4.2, 16.5], [0, 2.6, 0]);
+                    if (innerWidth < 920) {
+                        card.classList.add('hidden');
+                        tlabel.textContent = 'Show Card';
+                    }
+                });
+
+                document.getElementById('btn-lights').addEventListener('click', function () {
+                    lightsOn = !lightsOn;
+                    this.classList.toggle('active', lightsOn);
+                    toast(lightsOn ? '💡 Festive lights ON ✨' : '💡 Lights OFF 🌙');
+                });
+
+                document.getElementById('btn-diyas').addEventListener('click', function () {
+                    diyasOn = !diyasOn;
+                    this.classList.toggle('active', diyasOn);   /* FIXED: was !diyasOn */
+                    flames.forEach(function (f) { f.grp.visible = diyasOn; });
+                    toast(diyasOn ? '🪔 Diyas lit — Shubh Deepavali vibes!' : '🪔 Diyas extinguished');
+                });
+
+                document.getElementById('btn-burst').addEventListener('click', function () {
+                    burstAt(new THREE.Vector3((Math.random() - .5) * 6, 7, 3), 180, 8);
+                    toast('🎉 Celebration! Shubh Griha Pravesh!');
+                    chime(990);
+                });
+
+                document.getElementById('btn-day').addEventListener('click', function () {
+                    targetDay = targetDay > .5 ? 0 : 1;
+                    this.classList.toggle('active', targetDay > .5);
+                    this.textContent = targetDay > .5 ? '🌙' : '☀️';
+                    toast(targetDay > .5
+                        ? '☀️ Good morning! Sunshine Villa in daylight'
+                        : '🌙 Good evening! Lights & stars are magical');
+                });
+
+                document.getElementById('btn-rotate').addEventListener('click', function () {
+                    autoRot = !autoRot;
+                    controls.autoRotate = autoRot && !(camAnim && camAnim.on);
+                    this.classList.toggle('active', autoRot);
+                });
+
+                document.getElementById('btn-music').addEventListener('click', function () {
+                    ensureAudio();
+                    toggleMusic();
+                    this.classList.toggle('active', audioPlaying);
+                });
+            }
+
+            function flyTo(pos, tgt, dur) {
+                camAnim = {
+                    t: 0,
+                    dur: dur || 1.6,
+                    fp: camera.position.clone(),
+                    tp: new THREE.Vector3(pos[0], pos[1], pos[2]),
+                    ft: controls.target.clone(),
+                    tt: new THREE.Vector3(tgt[0], tgt[1], tgt[2]),
+                    on: true
+                };
+                controls.autoRotate = false;
+            }
+
+            /* ---------- AUDIO (synthesized festive ambience + chimes) ---------- */
+            var actx = null, aMaster = null, aPlaying = false;
+            window.audioPlaying = false;
+
+            function initAudio() {
+                var AC = window.AudioContext || window.webkitAudioContext;
+                if (!AC) return;
+                actx = new AC();
+                aMaster = actx.createGain();
+                aMaster.gain.value = 0;           /* silent until music is enabled */
+                aMaster.connect(actx.destination);
+
+                var filt = actx.createBiquadFilter();
+                filt.type = 'lowpass';
+                filt.frequency.value = 600;
+                filt.connect(aMaster);
+
+                [[108, .5], [162, .3], [216, .18], [324, .08]].forEach(function (o) {
+                    var os = actx.createOscillator();
+                    os.type = 'sine';
+                    os.frequency.value = o[0];
+                    var g = actx.createGain();
+                    g.gain.value = o[1];
+                    os.connect(g);
+                    g.connect(filt);
+                    os.start();
+                });
+
+                (function bellLoop() {
+                    if (!actx) return;
+                    if (aPlaying && aMaster) {
+                        var scale = [523.25, 587.33, 659.25, 783.99, 880];
+                        var f = scale[Math.floor(Math.random() * scale.length)];
+                        var o = actx.createOscillator(), g = actx.createGain();
+                        o.type = 'sine';
+                        o.frequency.value = f;
+                        g.gain.setValueAtTime(.0001, actx.currentTime);
+                        g.gain.exponentialRampToValueAtTime(.5, actx.currentTime + .03);
+                        g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + 2.5);
+                        o.connect(g);
+                        g.connect(aMaster);
+                        o.start();
+                        o.stop(actx.currentTime + 2.6);
+                    }
+                    setTimeout(bellLoop, 4500 + Math.random() * 4000);
+                })();
+            }
+
+            function ensureAudio() {
+                try {
+                    if (!actx) initAudio();
+                    if (actx && actx.state === 'suspended') actx.resume();
+                } catch (e) { }
+            }
+            document.addEventListener('pointerdown', ensureAudio);
+            document.addEventListener('touchstart', ensureAudio, { passive: true });
+
+            function toggleMusic() {
+                ensureAudio();
+                if (!actx) return;
+                aPlaying = !aPlaying;
+                window.audioPlaying = aPlaying;
+                if (aMaster) {
+                    aMaster.gain.cancelScheduledValues(actx.currentTime);
+                    aMaster.gain.linearRampToValueAtTime(aPlaying ? .12 : .0001, actx.currentTime + .5);
+                }
+                toast(aPlaying ? '🎵 Festive ambience playing 🎶' : '🎵 Music paused');
+            }
+
+            function chime(f) {
+                try {
+                    if (!actx || actx.state === 'suspended') return;
+                    var o = actx.createOscillator(), g = actx.createGain();
+                    o.type = 'sine';
+                    o.frequency.value = f || 740;
+                    g.gain.setValueAtTime(.3, actx.currentTime);
+                    g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + 1.2);
+                    o.connect(g);
+                    g.connect(actx.destination);
+                    o.start();
+                    o.stop(actx.currentTime + 1.3);
+                } catch (e) { }
+            }
+            window.chime = chime;
+
+            /* ---------- ANIMATE ---------- */
+            function lerp(a, b, t) { return a + (b - a) * t; }
+
+            function animate() {
+                requestAnimationFrame(animate);
+
+                var dt = Math.min(clock.getDelta(), .05);
+                time += dt;
+
+                /* Day / night easing */
+                currentDay += (targetDay - currentDay) * dt * 1.6;
+                var d = currentDay;
+
+                tmpCol.copy(colNight).lerp(colDay, d);
+                scene.background.copy(tmpCol);
+                scene.fog.color.copy(tmpCol);
+                scene.fog.near = lerp(28, 35, d);
+                scene.fog.far = lerp(75, 110, d);
+
+                ambLight.intensity = lerp(.35, .7, d);
+                hemiLight.intensity = lerp(.45, 1.0, d);
+                dirLight.intensity = lerp(.6, 1.35, d);
+                dirLight.color.setHex(d > .5 ? 0xfff2d0 : 0x9db8ff);
+
+                starsMat.opacity = 1 - d;
+                stars.visible = d < .85;
+                moon.visible = d < .6;
+                moonGlow.visible = d < .6;
+
+                groundMat.color.copy(gNight).lerp(gDay, d);
+                if (groundMat.userData.lawnMat) {
+                    groundMat.userData.lawnMat.color.setHex(d > .5 ? 0x7fbf6a : 0x24513a);
+                }
+
+                var wI = lightsOn ? lerp(1.7, .12, d) : 0;
+                windowMats.forEach(function (m) { m.emissiveIntensity = wI; });
+                porchLight.intensity = lightsOn ? lerp(1.6, .15, d) : 0;
+                lampLights.forEach(function (l) { l.intensity = lightsOn ? lerp(1.25, 0, d) : 0; });
+
+                /* Bulbs twinkle */
+                for (var i = 0; i < bulbs.length; i++) {
+                    var b = bulbs[i];
+                    var tw = .6 + Math.sin(time * 4 + b.ph) * .4;
+                    b.m.visible = lightsOn;
+                    b.g.visible = lightsOn;
+                    if (lightsOn) {
+                        b.g.material.opacity = tw;
+                        b.m.scale.setScalar(.85 + tw * .3);
+                    }
+                }
+
+                /* Diya flames */
+                for (var f = 0; f < flames.length; f++) {
+                    var fl = flames[f];
+                    if (!diyasOn) continue;
+                    fl.m.scale.y = 1 + Math.sin(time * 15 + fl.ph) * .22;
+                    fl.m.scale.x = 1 + Math.cos(time * 13 + fl.ph) * .12;
+                    fl.g.material.opacity = lerp(.9, .45, d) + Math.sin(time * 10 + fl.ph) * .15;
+                }
+
+                /* Door */
+                var target = doorOpen ? -1.85 : 0;
+                doorAngle += (target - doorAngle) * dt * 4;
+                if (doorPivot) doorPivot.rotation.y = doorAngle;
+
+                /* Balloons */
+                for (var bi = 0; bi < balloons.length; bi++) {
+                    var bl = balloons[bi];
+                    bl.g.position.y = Math.sin(time * 1.2 + bl.ph) * .28;
+                    bl.g.rotation.y = Math.sin(time * .6 + bl.ph) * .15;
+                }
+
+                /* Photo board billboard + float */
+                if (photoBoard) {
+                    photoBoard.lookAt(camera.position.x, photoBoard.position.y, camera.position.z);
+                    photoBoard.position.y = 4.3 + Math.sin(time * 1.1) * .15;
+                }
+
+                /* Fireflies */
+                if (fireflies) {
+                    var p = fireflies.geometry.attributes.position;
+                    for (var fi = 0; fi < firePhase.length; fi++) {
+                        p.array[fi * 3] = fireBase[fi * 3] + Math.sin(time * .8 + firePhase[fi]) * .6;
+                        p.array[fi * 3 + 1] = fireBase[fi * 3 + 1] + Math.sin(time * 1.3 + firePhase[fi] * 2) * .4;
+                        p.array[fi * 3 + 2] = fireBase[fi * 3 + 2] + Math.cos(time * .6 + firePhase[fi]) * .6;
+                    }
+                    p.needsUpdate = true;
+                    fireflies.material.opacity = lightsOn ? (1 - d) * .95 + .05 : .3;
+                }
+
+                /* Chimney smoke */
+                for (var s = 0; s < smokes.length; s++) {
+                    var o = smokes[s];
+                    o.life += dt;
+                    if (o.life > o.max) {
+                        o.life = 0;
+                        o.s.position.copy(chimneyTop);
+                        o.s.position.x += (Math.random() - .5) * .2;
+                        o.s.position.z += (Math.random() - .5) * .2;
+                    }
+                    var k = o.life / o.max;
+                    o.s.position.y = chimneyTop.y + o.life * 1.25;
+                    o.s.position.x += dt * .45;
+                    o.s.scale.set(.6 + k * 2.2, .6 + k * 2.2, 1);
+                    o.s.material.opacity = .42 * (1 - k) * (k < .2 ? k * 5 : 1);
+                }
+
+                /* Confetti */
+                for (var c = 0; c < confettiPool.length; c++) {
+                    var cf = confettiPool[c];
+                    if (!cf.on) continue;
+                    cf.v.y -= 6.5 * dt;
+                    cf.m.position.addScaledVector(cf.v, dt);
+                    cf.m.rotation.x += cf.a.x * dt;
+                    cf.m.rotation.y += cf.a.y * dt;
+                    cf.m.rotation.z += cf.a.z * dt;
+                    cf.life -= dt;
+                    if (cf.m.position.y < .06 && cf.life > 0) {
+                        cf.m.position.y = .06;
+                        cf.v.y *= -.32;
+                        cf.v.x *= .75;
+                        cf.v.z *= .75;
+                        cf.a.multiplyScalar(.9);
+                    }
+                    if (cf.life <= 0) {
+                        cf.on = false;
+                        cf.m.visible = false;
+                    }
+                }
+
+                /* Camera fly animation */
+                if (camAnim && camAnim.on) {
+                    camAnim.t += dt / camAnim.dur;
+                    var t = Math.min(camAnim.t, 1);
+                    var e = t * t * (3 - 2 * t);
+                    camera.position.lerpVectors(camAnim.fp, camAnim.tp, e);
+                    controls.target.lerpVectors(camAnim.ft, camAnim.tt, e);
+                    if (t >= 1) {
+                        camAnim.on = false;
+                        controls.autoRotate = autoRot;
+                    }
+                }
+
+                controls.update();
+                renderer.render(scene, camera);
+            }
+
+        })();
+    </script>
+</body>
+
+</html>

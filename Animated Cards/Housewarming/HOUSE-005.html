@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sharma Villa • Griha Pravesh Invitation</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500;700;900&family=Poppins:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        :root {
+            --gold: #d4af37;
+            --gold2: #f6d47c;
+            --deep: #0b1026;
+            --cream: #fff8e7;
+            --maroon: #7a1f1f;
+            --brown: #4a2c14
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0b1026;
+            font-family: 'Poppins', sans-serif;
+            color: #fff
+        }
+
+        #scene-container {
+            position: fixed;
+            inset: 0;
+            z-index: 0
+        }
+
+        canvas.webgl {
+            display: block;
+            width: 100%;
+            height: 100%
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            pointer-events: none
+        }
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: radial-gradient(circle at 50% 40%, #1a2347 0%, #0b1026 60%, #050816 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity .8s
+        }
+
+        #loader.hide {
+            opacity: 0;
+            pointer-events: none
+        }
+
+        .loader-house {
+            font-size: 72px;
+            animation: bounceH 1.2s ease-in-out infinite;
+            filter: drop-shadow(0 10px 25px rgba(212, 175, 55, .5))
+        }
+
+        @keyframes bounceH {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1)
+            }
+
+            50% {
+                transform: translateY(-14px) scale(1.05)
+            }
+        }
+
+        .loader-bar {
+            width: 240px;
+            height: 4px;
+            background: rgba(255, 255, 255, .15);
+            border-radius: 10px;
+            margin-top: 22px;
+            overflow: hidden
+        }
+
+        .loader-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--gold), var(--gold2));
+            border-radius: 10px
+        }
+
+        .loader-text {
+            margin-top: 14px;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: var(--gold2);
+            letter-spacing: 1px
+        }
+
+        /* TOP BAR */
+        #topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            background: linear-gradient(to bottom, rgba(5, 8, 22, .85), rgba(5, 8, 22, 0));
+            pointer-events: none
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            pointer-events: auto
+        }
+
+        .brand-mark {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f6d47c, #b8860b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, .4);
+            border: 1px solid rgba(255, 255, 255, .4)
+        }
+
+        .brand h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            line-height: 1.1;
+            color: #fff
+        }
+
+        .brand h1 span {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold2);
+            font-size: 22px;
+            font-weight: 400
+        }
+
+        .brand p {
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--gold2);
+            text-transform: uppercase
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 8px;
+            pointer-events: auto
+        }
+
+        .icon-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, .5);
+            background: rgba(10, 14, 36, .6);
+            backdrop-filter: blur(10px);
+            color: var(--gold2);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .25s
+        }
+
+        .icon-btn:hover,
+        .icon-btn.active {
+            background: linear-gradient(135deg, var(--gold), #9a7b1e);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, .4)
+        }
+
+        #musicBtn.playing {
+            animation: pulseGold 1.6s infinite
+        }
+
+        @keyframes pulseGold {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, .6)
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(212, 175, 55, 0)
+            }
+        }
+
+        /* HERO TITLE */
+        #hero {
+            position: fixed;
+            top: 78px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            text-align: center;
+            pointer-events: none;
+            width: 94%;
+            max-width: 900px
+        }
+
+        #hero .om {
+            display: inline-block;
+            font-size: 28px;
+            background: rgba(0, 0, 0, .35);
+            border: 1px solid rgba(212, 175, 55, .6);
+            padding: 6px 18px;
+            border-radius: 30px;
+            backdrop-filter: blur(8px);
+            color: var(--gold2);
+            letter-spacing: 2px
+        }
+
+        #hero h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(36px, 7vw, 68px);
+            color: #fff;
+            text-shadow: 0 4px 30px rgba(212, 175, 55, .6), 0 2px 0 #7a5a00;
+            margin: 6px 0 0
+        }
+
+        #hero h3 {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 6px;
+            font-size: clamp(11px, 2.5vw, 18px);
+            color: var(--gold2);
+            text-transform: uppercase
+        }
+
+        #hero p {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, .85);
+            margin-top: 4px
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: rgba(255, 60, 60, .15);
+            border: 1px solid rgba(255, 80, 80, .5);
+            padding: 5px 12px;
+            border-radius: 20px;
+            color: #ffb3b3
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff3b3b;
+            animation: blink 1s infinite
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: .2
+            }
+        }
+
+        /* HINT */
+        #hint {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 92px;
+            z-index: 10;
+            background: rgba(0, 0, 0, .5);
+            border: 1px solid rgba(212, 175, 55, .4);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            color: #ffe9a8;
+            white-space: nowrap;
+            pointer-events: none;
+            animation: floatHint 3s ease-in-out infinite
+        }
+
+        @keyframes floatHint {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0)
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-6px)
+            }
+        }
+
+        /* CONTROLS BAR */
+        #controls-bar {
+            position: fixed;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(8, 11, 28, .72);
+            border: 1px solid rgba(212, 175, 55, .35);
+            backdrop-filter: blur(14px);
+            padding: 10px 12px;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, .6);
+            max-width: 96vw;
+            overflow-x: auto
+        }
+
+        .ctl-btn {
+            border: 1px solid rgba(212, 175, 55, .3);
+            background: rgba(255, 255, 255, .06);
+            color: #fff;
+            border-radius: 14px;
+            padding: 9px 13px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: .2s;
+            font-family: 'Poppins', sans-serif
+        }
+
+        .ctl-btn small {
+            opacity: .7;
+            font-weight: 400
+        }
+
+        .ctl-btn:hover {
+            background: rgba(212, 175, 55, .2);
+            border-color: var(--gold);
+            transform: translateY(-2px)
+        }
+
+        .ctl-btn.gold {
+            background: linear-gradient(135deg, #f6d47c, #b8860b);
+            color: #3a2700;
+            font-weight: 700;
+            border: none;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, .5);
+            animation: glowInvite 2s infinite
+        }
+
+        @keyframes glowInvite {
+
+            0%,
+            100% {
+                box-shadow: 0 6px 20px rgba(212, 175, 55, .5)
+            }
+
+            50% {
+                box-shadow: 0 6px 32px rgba(246, 212, 124, .9)
+            }
+        }
+
+        .ctl-sep {
+            width: 1px;
+            height: 28px;
+            background: rgba(212, 175, 55, .3);
+            flex-shrink: 0
+        }
+
+        /* TOOLTIP */
+        #tooltip {
+            position: fixed;
+            z-index: 30;
+            pointer-events: none;
+            background: rgba(0, 0, 0, .8);
+            border: 1px solid var(--gold);
+            color: var(--gold2);
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity .15s;
+            transform: translate(-50%, -130%);
+            white-space: nowrap;
+            backdrop-filter: blur(6px)
+        }
+
+        #toast {
+            position: fixed;
+            top: 90px;
+            right: 16px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: min(340px, 90vw)
+        }
+
+        .toast-msg {
+            background: linear-gradient(135deg, rgba(20, 26, 60, .95), rgba(10, 14, 36, .95));
+            border: 1px solid var(--gold);
+            border-left: 4px solid var(--gold2);
+            padding: 12px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
+            animation: slideIn .4s
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0
+            }
+
+            to {
+                transform: none;
+                opacity: 1
+            }
+        }
+
+        /* INVITATION OVERLAY */
+        #invite-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(3, 5, 15, .78);
+            backdrop-filter: blur(10px);
+            padding: 14px
+        }
+
+        #invite-overlay.show {
+            display: flex
+        }
+
+        .envelope-stage {
+            perspective: 1200px;
+            text-align: center;
+            max-width: 520px;
+            width: 100%
+        }
+
+        .envelope {
+            position: relative;
+            width: min(420px, 90vw);
+            height: 280px;
+            margin: 0 auto;
+            cursor: pointer;
+            transform-style: preserve-3d
+        }
+
+        .env-back {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #7a1f1f, #4a1010);
+            border-radius: 14px;
+            border: 1px solid var(--gold);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .7)
+        }
+
+        .env-letter {
+            position: absolute;
+            left: 14px;
+            right: 14px;
+            top: 14px;
+            bottom: 14px;
+            background: var(--cream);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            transition: .8s;
+            color: #4a2c14
+        }
+
+        .env-letter img {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid var(--gold)
+        }
+
+        .env-letter h4 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 30px;
+            margin: 6px 0 0;
+            color: var(--maroon)
+        }
+
+        .env-letter p {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase
+        }
+
+        .env-front {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(122, 31, 31, .97), rgba(60, 15, 15, .97));
+            border-radius: 14px;
+            clip-path: polygon(0 0, 50% 48%, 100% 0, 100% 100%, 0 100%);
+            border: 1px solid var(--gold)
+        }
+
+        .env-flap {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 52%;
+            background: linear-gradient(180deg, #9b2a2a, #7a1f1f);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top;
+            border-radius: 14px 14px 0 0;
+            border: 1px solid var(--gold);
+            transition: transform .8s;
+            z-index: 3;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 18px
+        }
+
+        .env-seal {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #f6d47c, #b8860b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            border: 2px solid #fff;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .5)
+        }
+
+        .envelope.open .env-flap {
+            transform: rotateX(180deg);
+            z-index: 0
+        }
+
+        .envelope.open .env-letter {
+            transform: translateY(-110px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .4)
+        }
+
+        .tap-hint {
+            margin-top: 18px;
+            color: var(--gold2);
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 18px;
+            animation: floatHint 2s infinite
+        }
+
+        /* CARD */
+        #card-wrap {
+            display: none;
+            width: 100%;
+            max-width: 620px;
+            max-height: 92vh;
+            overflow-y: auto;
+            border-radius: 20px;
+            perspective: 1200px
+        }
+
+        #card-wrap.show {
+            display: block
+        }
+
+        .invite-card {
+            background: linear-gradient(180deg, #fffdf5 0%, #fff6df 40%, #fdecc2 100%);
+            color: #3a2700;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid var(--gold);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .7), 0 0 60px rgba(212, 175, 55, .3);
+            position: relative;
+            transform-style: preserve-3d
+        }
+
+        .invite-card::before {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            border: 2px solid rgba(180, 140, 40, .5);
+            border-radius: 14px;
+            pointer-events: none;
+            z-index: 5
+        }
+
+        .corner {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            z-index: 6;
+            opacity: .9;
+            font-size: 34px;
+            line-height: 1
+        }
+
+        .c1 {
+            top: 14px;
+            left: 14px
+        }
+
+        .c2 {
+            top: 14px;
+            right: 14px;
+            transform: scaleX(-1)
+        }
+
+        .c3 {
+            bottom: 14px;
+            left: 14px;
+            transform: scaleY(-1)
+        }
+
+        .c4 {
+            bottom: 14px;
+            right: 14px;
+            transform: scale(-1)
+        }
+
+        .card-hero {
+            position: relative;
+            height: 230px;
+            overflow: hidden
+        }
+
+        .card-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .card-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 40%, rgba(60, 20, 10, .75))
+        }
+
+        .hero-overlay {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 2
+        }
+
+        .hero-overlay .shree {
+            background: rgba(255, 248, 231, .92);
+            display: inline-block;
+            padding: 4px 18px;
+            border-radius: 20px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--maroon);
+            border: 1px solid var(--gold);
+            font-weight: 600
+        }
+
+        .hero-overlay h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 44px;
+            color: #fff;
+            text-shadow: 0 3px 12px rgba(0, 0, 0, .7);
+            margin: 2px 0 0
+        }
+
+        .hero-overlay h5 {
+            letter-spacing: 5px;
+            color: var(--gold2);
+            font-size: 12px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 8px #000
+        }
+
+        .card-body {
+            padding: 22px 26px 28px;
+            text-align: center;
+            position: relative
+        }
+
+        .om-row {
+            font-size: 26px;
+            letter-spacing: 8px;
+            color: var(--maroon)
+        }
+
+        .bless {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: #6b4a1f;
+            margin: 6px 0
+        }
+
+        .names-line {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--maroon);
+            margin: 8px 0
+        }
+
+        .owners {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin: 14px 0
+        }
+
+        .owner {
+            text-align: center;
+            flex: 1;
+            max-width: 170px
+        }
+
+        .owner .photo {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, var(--gold2), #9a6b00);
+            box-shadow: 0 8px 20px rgba(150, 110, 20, .35)
+        }
+
+        .owner .photo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff
+        }
+
+        .owner h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            margin-top: 8px;
+            color: #3a1e0a
+        }
+
+        .owner p {
+            font-size: 11px;
+            color: #7a5a2a;
+            letter-spacing: .5px
+        }
+
+        .amp {
+            font-family: 'Great Vibes', cursive;
+            font-size: 36px;
+            color: var(--maroon);
+            align-self: center
+        }
+
+        .kids {
+            font-size: 13px;
+            color: #5a3a15;
+            background: rgba(212, 175, 55, .15);
+            border: 1px dashed rgba(150, 110, 20, .5);
+            border-radius: 12px;
+            padding: 8px 12px;
+            display: inline-block;
+            margin: 4px 0 8px
+        }
+
+        .date-box {
+            margin: 14px auto;
+            background: linear-gradient(135deg, #7a1f1f, #a02c2c);
+            color: #ffe9a8;
+            border-radius: 14px;
+            padding: 14px;
+            border: 1px solid var(--gold);
+            box-shadow: 0 8px 24px rgba(122, 31, 31, .35)
+        }
+
+        .date-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            letter-spacing: 1px
+        }
+
+        .date-box p {
+            font-size: 13px;
+            margin-top: 2px
+        }
+
+        #countdown {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px
+        }
+
+        .cd {
+            background: rgba(255, 255, 255, .14);
+            border: 1px solid rgba(246, 212, 124, .5);
+            border-radius: 10px;
+            min-width: 62px;
+            padding: 8px 4px
+        }
+
+        .cd b {
+            display: block;
+            font-size: 20px
+        }
+
+        .cd span {
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: .9
+        }
+
+        .venue {
+            background: #fff;
+            border: 1px solid rgba(180, 140, 40, .4);
+            border-radius: 14px;
+            padding: 14px;
+            margin-top: 14px;
+            text-align: left
+        }
+
+        .venue h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--maroon);
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .venue p {
+            font-size: 13px;
+            color: #5a3a15;
+            margin-top: 4px;
+            line-height: 1.5
+        }
+
+        .timeline {
+            margin-top: 14px;
+            text-align: left
+        }
+
+        .timeline h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--maroon);
+            font-size: 15px;
+            text-align: center;
+            margin-bottom: 10px
+        }
+
+        .t-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: rgba(255, 255, 255, .7);
+            border: 1px solid rgba(180, 140, 40, .25);
+            border-radius: 12px;
+            padding: 10px 12px;
+            margin-bottom: 8px
+        }
+
+        .t-time {
+            background: var(--maroon);
+            color: #ffe9a8;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 10px;
+            border-radius: 8px;
+            white-space: nowrap;
+            min-width: 86px;
+            text-align: center
+        }
+
+        .t-info b {
+            font-size: 13px;
+            color: #3a1e0a
+        }
+
+        .t-info p {
+            font-size: 12px;
+            color: #6b4a1f
+        }
+
+        .rsvp {
+            margin-top: 14px;
+            background: linear-gradient(135deg, #fffdf0, #fdecc2);
+            border: 2px solid var(--gold);
+            border-radius: 14px;
+            padding: 16px
+        }
+
+        .rsvp h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--maroon)
+        }
+
+        .rsvp-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px
+        }
+
+        .rsvp input {
+            flex: 1;
+            border: 1px solid rgba(150, 110, 20, .4);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            outline: none;
+            background: #fff
+        }
+
+        .rsvp input:focus {
+            border-color: var(--maroon);
+            box-shadow: 0 0 0 3px rgba(122, 31, 31, .12)
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 11px 16px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .btn-accept {
+            background: linear-gradient(135deg, #1a7a3a, #0f5a28);
+            color: #fff;
+            flex: 1
+        }
+
+        .btn-decline {
+            background: #fff;
+            border: 1px solid #c9a84a;
+            color: #7a5a00;
+            flex: 1
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, .2)
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap
+        }
+
+        .card-actions .btn {
+            flex: 1;
+            min-width: 140px
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #f6d47c, #b8860b);
+            color: #3a2700
+        }
+
+        .btn-dark {
+            background: #1a2347;
+            color: var(--gold2)
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #9a6b00;
+            color: #6b4a1f
+        }
+
+        .card-foot {
+            margin-top: 14px;
+            font-family: 'Great Vibes', cursive;
+            font-size: 24px;
+            color: var(--maroon)
+        }
+
+        .card-foot small {
+            display: block;
+            font-family: 'Poppins', sans-serif;
+            font-size: 11px;
+            color: #7a5a2a;
+            letter-spacing: 1px
+        }
+
+        #close-card {
+            position: sticky;
+            top: 10px;
+            margin-left: calc(100% - 44px);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--maroon);
+            color: #fff;
+            border: 2px solid var(--gold2);
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .house-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            background: #1a2347;
+            color: var(--gold2);
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            border: 1px solid var(--gold)
+        }
+
+        .house-tag img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--gold2)
+        }
+
+        /* view pills */
+        #views {
+            position: fixed;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .view-pill {
+            background: rgba(8, 11, 28, .7);
+            border: 1px solid rgba(212, 175, 55, .3);
+            backdrop-filter: blur(10px);
+            color: #ffe9a8;
+            font-size: 11px;
+            padding: 9px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: .2s;
+            letter-spacing: .5px;
+            text-align: left
+        }
+
+        .view-pill:hover,
+        .view-pill.active {
+            background: linear-gradient(135deg, var(--gold), #9a7b1e);
+            color: #fff;
+            border-color: #fff
+        }
+
+        @media(max-width:820px) {
+            #views {
+                display: none
+            }
+
+            #hero {
+                top: 70px
+            }
+
+            #hero p {
+                display: none
+            }
+
+            .brand h1 {
+                font-size: 15px
+            }
+
+            .brand p {
+                display: none
+            }
+
+            #hint {
+                bottom: 86px;
+                font-size: 11px
+            }
+
+            .ctl-btn {
+                padding: 8px 10px;
+                font-size: 11px
+            }
+
+            .card-body {
+                padding: 18px 16px 24px
+            }
+
+            .owners {
+                gap: 8px
+            }
+
+            .owner .photo {
+                width: 78px;
+                height: 78px
+            }
+
+            #countdown {
+                gap: 6px
+            }
+
+            .cd {
+                min-width: 54px
+            }
+
+            .rsvp-row {
+                flex-direction: column
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, .2);
+            border-radius: 10px
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px
+        }
+    </style>
+</head>
+
+<body>
+    <div id="scene-container"></div>
+    <canvas id="confetti-canvas"></canvas>
+    <div id="tooltip"></div>
+    <div id="toast"></div>
+
+    <div id="loader">
+        <div class="loader-house">🏡</div>
+        <div style="font-family:'Great Vibes',cursive;font-size:38px;color:#f6d47c">Sharma Villa</div>
+        <div class="loader-text">Decorating your dream home with lights & love…</div>
+        <div class="loader-bar">
+            <div class="loader-fill" id="loadFill"></div>
+        </div>
+        <div class="loader-text" id="loadPct" style="font-size:12px">0%</div>
+    </div>
+
+    <header id="topbar">
+        <div class="brand">
+            <div class="brand-mark">🛕</div>
+            <div>
+                <h1>GRIHA PRAVESH <span>Invitation</span></h1>
+                <p>Sharma Family • Bengaluru</p>
+            </div>
+        </div>
+        <div class="top-actions">
+            <button class="icon-btn" id="musicBtn" title="Ceremony Music">🔔</button>
+            <button class="icon-btn" id="dayNightTop" title="Day / Night">🌙</button>
+            <button class="icon-btn" id="shareTop" title="Share">↗</button>
+        </div>
+    </header>
+
+    <div id="hero">
+        <div class="om">🪔 ॥ श्री गणेशाय नमः ॥ 🪔</div>
+        <h2>Griha Pravesh</h2>
+        <h3>Housewarming Ceremony • Rajesh & Priya Sharma</h3>
+        <p>✨ Drag to orbit • Scroll to zoom • Click the door, diyas & gifts • Open your invitation ✨</p>
+        <div class="live-badge"><span class="live-dot"></span> Live 3D Venue — Sharma Villa</div>
+    </div>
+
+    <div id="hint">🏠 Click the main door to open • Click diyas to light • Click gifts for blessings</div>
+
+    <div id="views">
+        <button class="view-pill active" data-view="hero">✨ Hero View</button>
+        <button class="view-pill" data-view="front">🏠 Front Porch</button>
+        <button class="view-pill" data-view="door">🚪 Main Door</button>
+        <button class="view-pill" data-view="garden">🌳 Garden & Lights</button>
+        <button class="view-pill" data-view="photo">📸 Family Photo Spot</button>
+        <button class="view-pill" data-view="aerial">🦅 Aerial Blessings</button>
+    </div>
+
+    <div id="controls-bar">
+        <button class="ctl-btn gold" id="openInviteBtn">💌 Open Invitation</button>
+        <div class="ctl-sep"></div>
+        <button class="ctl-btn" id="doorBtn">🚪 Door</button>
+        <button class="ctl-btn" id="diyaBtn">🪔 Light Diyas</button>
+        <button class="ctl-btn" id="fireBtn">🎆 Fireworks</button>
+        <button class="ctl-btn" id="dayNightBtn">🌙 Night</button>
+        <button class="ctl-btn" id="rotateBtn">🔄 Auto-Rotate</button>
+    </div>
+
+    <div id="invite-overlay">
+        <div class="envelope-stage" id="envelopeStage">
+            <div class="envelope" id="envelope">
+                <div class="env-back"></div>
+                <div class="env-letter">
+                    <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80"
+                        alt="Our New Home">
+                    <h4>You're Invited!</h4>
+                    <p>Sharma Villa • Griha Pravesh</p>
+                </div>
+                <div class="env-front"></div>
+                <div class="env-flap">
+                    <div class="env-seal">🪔</div>
+                </div>
+            </div>
+            <div class="tap-hint">Tap the envelope to open with love 💛</div>
+            <button class="btn btn-gold" id="skipEnv" style="margin-top:12px">Open Directly →</button>
+        </div>
+
+        <div id="card-wrap">
+            <div class="invite-card" id="inviteCard">
+                <span class="corner c1">🌿</span><span class="corner c2">🌿</span><span class="corner c3">🌿</span><span
+                    class="corner c4">🌿</span>
+                <button id="close-card" title="Close">✕</button>
+                <div class="card-hero">
+                    <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=900&q=80"
+                        alt="Sharma Villa - Our New House">
+                    <div class="hero-overlay">
+                        <div class="shree">॥ श्री गणेशाय नमः ॥</div>
+                        <h2>Griha Pravesh</h2>
+                        <h5>Housewarming Ceremony</h5>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="om-row">🪔 🌺 🪔</div>
+                    <p class="bless">With the divine blessings of our elders & grace of God,</p>
+                    <div class="names-line">Mr. Ramesh Sharma & Mrs. Kamala Sharma</div>
+                    <p style="font-size:12px;color:#7a5a2a">request the honour of your presence at the housewarming of
+                        their new home</p>
+                    <div class="house-tag"><img
+                            src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=100&q=60"
+                            alt=""> Sharma Villa • Our Dream Home • See it live in 3D behind this card</div>
+                    <div class="owners">
+                        <div class="owner">
+                            <div class="photo"><img src="https://randomuser.me/api/portraits/men/32.jpg"
+                                    alt="Rajesh Sharma"></div>
+                            <h4>Rajesh Sharma</h4>
+                            <p>Proud Owner & Host</p>
+                        </div>
+                        <div class="amp">&</div>
+                        <div class="owner">
+                            <div class="photo"><img src="https://randomuser.me/api/portraits/women/44.jpg"
+                                    alt="Priya Sharma"></div>
+                            <h4>Priya Sharma</h4>
+                            <p>Proud Owner & Hostess</p>
+                        </div>
+                    </div>
+                    <div class="kids">👧 Anaya Sharma &nbsp;•&nbsp; 👦 Aarav Sharma &nbsp;•&nbsp; with love from the
+                        whole Sharma Parivaar</div>
+                    <div class="date-box">
+                        <h3>🗓 Sunday, 12th October 2026</h3>
+                        <p>Muhurat: 10:30 AM onwards • Puja followed by lunch</p>
+                        <div id="countdown">
+                            <div class="cd"><b id="cdD">00</b><span>Days</span></div>
+                            <div class="cd"><b id="cdH">00</b><span>Hours</span></div>
+                            <div class="cd"><b id="cdM">00</b><span>Mins</span></div>
+                            <div class="cd"><b id="cdS">00</b><span>Secs</span></div>
+                        </div>
+                    </div>
+                    <div class="venue">
+                        <h4>📍 Venue — Sharma Villa</h4>
+                        <p>Plot 42, Green Valley Layout, Whitefield,<br>Bengaluru, Karnataka 560066<br>Landmark: Near
+                            Hope Farm Junction • Parking available</p>
+                    </div>
+                    <div class="timeline">
+                        <h4>✨ Ceremony Program ✨</h4>
+                        <div class="t-item">
+                            <div class="t-time">9:00 AM</div>
+                            <div class="t-info"><b>🙏 Ganesh Puja & Kalash Sthapana</b>
+                                <p>Traditional prayers to bless the new beginning</p>
+                            </div>
+                        </div>
+                        <div class="t-item">
+                            <div class="t-time">10:30 AM</div>
+                            <div class="t-info"><b>🏠 Griha Pravesh & Toran Ceremony</b>
+                                <p>Owners enter with kalash • Ribbon & coconut ritual</p>
+                            </div>
+                        </div>
+                        <div class="t-item">
+                            <div class="t-time">12:00 PM</div>
+                            <div class="t-info"><b>🔥 Havan & Aarti</b>
+                                <p>Holy fire ceremony for prosperity & happiness</p>
+                            </div>
+                        </div>
+                        <div class="t-item">
+                            <div class="t-time">1:00 PM</div>
+                            <div class="t-info"><b>🍛 Grand Lunch & Blessings</b>
+                                <p>South & North Indian feast • Gifts & family photos</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rsvp">
+                        <h4>💌 Will you grace us with your presence?</h4>
+                        <div class="rsvp-row"><input id="rsvpName" placeholder="Your name (e.g. Mehta Family)"><input
+                                id="rsvpCount" type="number" min="1" max="10" value="2" style="max-width:80px"
+                                title="Guests"></div>
+                        <div class="rsvp-row"><button class="btn btn-accept" id="acceptBtn">✔ Joyfully
+                                Accept</button><button class="btn btn-decline" id="declineBtn">✕ Regretfully
+                                Decline</button></div>
+                        <p id="rsvpMsg" style="font-size:12px;margin-top:8px;color:#1a7a3a;font-weight:600"></p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-gold" id="calBtn">📅 Add to Calendar</button>
+                        <button class="btn btn-dark" id="mapBtn">🧭 Get Directions</button>
+                        <button class="btn btn-outline" id="callBtn">📞 +91 98765 43210</button>
+                    </div>
+                    <div class="card-foot">We can't wait to celebrate with you!<small>— Rajesh, Priya, Aarav & Anaya
+                            —</small></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            "use strict";
+            // ---------- Helpers ----------
+            function toast(msg, ms) { var box = document.getElementById('toast'); var d = document.createElement('div'); d.className = 'toast-msg'; d.innerHTML = msg; box.appendChild(d); setTimeout(function () { d.style.opacity = '0'; d.style.transition = '.5s'; setTimeout(function () { d.remove() }, 500) }, ms || 3200); }
+            function lerp(a, b, t) { return a + (b - a) * t }
+            function lerpColor(c1, c2, t) { return new THREE.Color(lerp(c1.r, c2.r, t), lerp(c1.g, c2.g, t), lerp(c1.b, c2.b, t)); }
+
+            // ---------- Loader fake progress ----------
+            var loadPct = 0, loadFill = document.getElementById('loadFill'), loadTxt = document.getElementById('loadPct');
+            var loadInt = setInterval(function () { loadPct = Math.min(92, loadPct + Math.random() * 10); loadFill.style.width = loadPct + '%'; loadTxt.textContent = Math.floor(loadPct) + '%'; }, 180);
+
+            // ---------- Renderer / Scene ----------
+            var container = document.getElementById('scene-container');
+            var renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.outputEncoding = THREE.sRGBEncoding;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.1;
+            renderer.domElement.className = 'webgl';
+            container.appendChild(renderer.domElement);
+
+            var scene = new THREE.Scene();
+            var NIGHT_BG = new THREE.Color(0x0b1026), DAY_BG = new THREE.Color(0x87bfe8);
+            var NIGHT_FOG = new THREE.Color(0x0b1026), DAY_FOG = new THREE.Color(0xbcd9ef);
+            scene.background = NIGHT_BG.clone();
+            scene.fog = new THREE.Fog(NIGHT_FOG.clone(), 32, 110);
+
+            var camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 400);
+            camera.position.set(15, 9, 19);
+
+            var controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.target.set(0, 3.2, 0);
+            controls.enableDamping = true; controls.dampingFactor = 0.06;
+            controls.minDistance = 4; controls.maxDistance = 45;
+            controls.maxPolarAngle = Math.PI * 0.495;
+            controls.autoRotate = true; controls.autoRotateSpeed = 0.7;
+
+            // ---------- Lights ----------
+            var ambient = new THREE.AmbientLight(0xffffff, 0.45); scene.add(ambient);
+            var hemi = new THREE.HemisphereLight(0x8fb7ff, 0x3a2a18, 0.5); scene.add(hemi);
+            var moonLight = new THREE.DirectionalLight(0xbdd0ff, 0.9);
+            moonLight.position.set(-18, 24, 12); moonLight.castShadow = true;
+            moonLight.shadow.mapSize.set(2048, 2048);
+            moonLight.shadow.camera.left = -25; moonLight.shadow.camera.right = 25;
+            moonLight.shadow.camera.top = 25; moonLight.shadow.camera.bottom = -25;
+            moonLight.shadow.camera.far = 80; moonLight.shadow.bias = -0.0005;
+            scene.add(moonLight);
+            var sunLight = new THREE.DirectionalLight(0xfff2cc, 0.0);
+            sunLight.position.set(18, 26, 10); sunLight.castShadow = true;
+            sunLight.shadow.mapSize.set(2048, 2048);
+            sunLight.shadow.camera.left = -25; sunLight.shadow.camera.right = 25;
+            sunLight.shadow.camera.top = 25; sunLight.shadow.camera.bottom = -25;
+            scene.add(sunLight);
+            var porchLight = new THREE.PointLight(0xffc46b, 1.6, 18, 2); porchLight.position.set(0, 3.4, 5.2); scene.add(porchLight);
+            var interiorLight = new THREE.PointLight(0xffb84d, 0.0, 12, 2); interiorLight.position.set(0, 2.4, 1.5); scene.add(interiorLight);
+            var gardenSpot = new THREE.SpotLight(0xffe9a8, 1.0, 30, 0.55, 0.6, 1.2);
+            gardenSpot.position.set(-9, 8, 10); gardenSpot.target.position.set(-8, 1, 2); scene.add(gardenSpot); scene.add(gardenSpot.target);
+            var fireLight = new THREE.PointLight(0xffffff, 0, 60, 1.5); fireLight.position.set(0, 14, 0); scene.add(fireLight);
+
+            // ---------- Canvas texture helpers ----------
+            function canvasTex(w, h, fn) { var c = document.createElement('canvas'); c.width = w; c.height = h; var x = c.getContext('2d'); fn(x, w, h); var t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; return t; }
+            var flameTex = canvasTex(64, 64, function (x, w, h) { var g = x.createRadialGradient(32, 36, 2, 32, 32, 30); g.addColorStop(0, 'rgba(255,255,220,1)'); g.addColorStop(0.25, 'rgba(255,200,80,1)'); g.addColorStop(0.55, 'rgba(255,120,20,.9)'); g.addColorStop(1, 'rgba(255,60,0,0)'); x.fillStyle = g; x.fillRect(0, 0, w, h); });
+            var glowTex = canvasTex(128, 128, function (x) { var g = x.createRadialGradient(64, 64, 4, 64, 64, 62); g.addColorStop(0, 'rgba(255,240,200,1)'); g.addColorStop(0.4, 'rgba(255,200,100,.55)'); g.addColorStop(1, 'rgba(255,150,0,0)'); x.fillStyle = g; x.fillRect(0, 0, 128, 128); });
+            var smokeTex = canvasTex(128, 128, function (x) { var g = x.createRadialGradient(64, 64, 5, 64, 64, 60); g.addColorStop(0, 'rgba(220,220,230,.85)'); g.addColorStop(1, 'rgba(200,200,210,0)'); x.fillStyle = g; x.fillRect(0, 0, 128, 128); });
+            var rangoliTex = canvasTex(512, 512, function (x, w, h) { x.clearRect(0, 0, w, h); x.translate(256, 256); var cols = ['#ff3b6b', '#ff9f1c', '#ffe74c', '#2ec4b6', '#e71d36', '#9b5de5', '#00bbf9']; for (var r = 6; r > 0; r--) { x.beginPath(); x.fillStyle = cols[r % cols.length]; x.globalAlpha = .92; x.arc(0, 0, r * 38, 0, Math.PI * 2); x.fill(); x.globalAlpha = 1; x.strokeStyle = '#fff'; x.lineWidth = 3; x.stroke(); } for (var i = 0; i < 16; i++) { x.save(); x.rotate(i / 16 * Math.PI * 2); x.fillStyle = cols[i % cols.length]; x.beginPath(); x.ellipse(0, -150, 22, 58, 0, 0, Math.PI * 2); x.fill(); x.strokeStyle = '#fff'; x.lineWidth = 3; x.stroke(); x.fillStyle = '#fff'; x.beginPath(); x.arc(0, -150, 10, 0, Math.PI * 2); x.fill(); x.restore(); } x.fillStyle = '#fff'; x.beginPath(); x.arc(0, 0, 18, 0, Math.PI * 2); x.fill(); x.fillStyle = '#ff3b6b'; x.font = 'bold 26px serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('ॐ', 0, 1); });
+            var nameTex = canvasTex(512, 128, function (x, w, h) { var g = x.createLinearGradient(0, 0, w, 0); g.addColorStop(0, '#2a1608'); g.addColorStop(.5, '#4a2a10'); g.addColorStop(1, '#2a1608'); x.fillStyle = g; x.fillRect(0, 0, w, h); x.strokeStyle = '#d4af37'; x.lineWidth = 8; x.strokeRect(8, 8, w - 16, h - 16); x.fillStyle = '#f6d47c'; x.font = 'bold 56px Georgia'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('SHARMA VILLA', w / 2, h / 2 - 8); x.font = '22px Georgia'; x.fillStyle = '#ffe9a8'; x.fillText('★ शुभ लाभ ★', w / 2, h - 26); });
+            var bannerTex = canvasTex(1024, 160, function (x, w, h) { x.fillStyle = '#7a1f1f'; x.fillRect(0, 0, w, h); x.strokeStyle = '#f6d47c'; x.lineWidth = 10; x.strokeRect(10, 10, w - 20, h - 20); x.fillStyle = '#f6d47c'; x.font = 'bold 62px Georgia'; x.textAlign = 'center'; x.fillText('WELCOME  TO  SHARMA  VILLA', w / 2, 86); x.fillStyle = '#ffe9a8'; x.font = 'italic 30px Georgia'; x.fillText('Griha Pravesh  •  12 Oct 2026  •  Please remove footwear', w / 2, 128); });
+
+            // ---------- Stars & Moon ----------
+            var starGeo = new THREE.BufferGeometry(); var starCount = 900; var sp = new Float32Array(starCount * 3);
+            for (var i = 0; i < starCount; i++) { var r = 120 + Math.random() * 80, th = Math.random() * Math.PI * 2, ph = Math.random() * Math.PI * 0.5; sp[i * 3] = r * Math.cos(th) * Math.cos(ph); sp[i * 3 + 1] = r * Math.sin(ph) + 8; sp[i * 3 + 2] = r * Math.sin(th) * Math.cos(ph); }
+            starGeo.setAttribute('position', new THREE.BufferAttribute(sp, 3));
+            var starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 1.4, sizeAttenuation: false, transparent: true, opacity: 1 });
+            var stars = new THREE.Points(starGeo, starMat); scene.add(stars);
+            var moon = new THREE.Mesh(new THREE.SphereGeometry(3, 32, 32), new THREE.MeshBasicMaterial({ color: 0xf4f0d8 })); moon.position.set(-42, 34, -50); scene.add(moon);
+            var moonGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xcdd8ff, transparent: true, opacity: .8, depthWrite: false })); moonGlow.scale.set(18, 18, 1); moonGlow.position.copy(moon.position); scene.add(moonGlow);
+
+            // ---------- Ground ----------
+            var groundMat = new THREE.MeshStandardMaterial({ color: 0x2a5a2a, roughness: 1 });
+            var ground = new THREE.Mesh(new THREE.CircleGeometry(60, 64), groundMat);
+            ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+            var lawnRing = new THREE.Mesh(new THREE.RingGeometry(11.5, 13.2, 64), new THREE.MeshStandardMaterial({ color: 0x3e7a3e, roughness: .9 }));
+            lawnRing.rotation.x = -Math.PI / 2; lawnRing.position.y = 0.02; lawnRing.receiveShadow = true; scene.add(lawnRing);
+            // driveway + path
+            var driveMat = new THREE.MeshStandardMaterial({ color: 0x8a8a92, roughness: .95 });
+            var drive = new THREE.Mesh(new THREE.PlaneGeometry(5, 22), driveMat); drive.rotation.x = -Math.PI / 2; drive.position.set(5.5, 0.03, 12); drive.receiveShadow = true; scene.add(drive);
+            for (var s = 0; s < 7; s++) { var stone = new THREE.Mesh(new THREE.BoxGeometry(1.9, 0.12, 1.1), new THREE.MeshStandardMaterial({ color: s % 2 ? 0xd9c9a8 : 0xcbb78f, roughness: .9 })); stone.position.set(0, 0.06, 6.2 + s * 1.6); stone.receiveShadow = true; stone.castShadow = true; scene.add(stone); }
+
+            // ---------- HOUSE ----------
+            var house = new THREE.Group(); scene.add(house);
+            var wallMat = new THREE.MeshStandardMaterial({ color: 0xf5e6c8, roughness: .85 });
+            var wallMat2 = new THREE.MeshStandardMaterial({ color: 0xe8d3a8, roughness: .85 });
+            var trimMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .6 });
+            var woodMat = new THREE.MeshStandardMaterial({ color: 0x6b3d15, roughness: .7 });
+            var roofMat = new THREE.MeshStandardMaterial({ color: 0x8e2a24, roughness: .75, metalness: .1 });
+
+            function box(w, h, d, mat, x, y, z, ry) { var m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat); m.position.set(x, y, z); if (ry) m.rotation.y = ry; m.castShadow = true; m.receiveShadow = true; return m; }
+
+            var base = box(8, 3.6, 6, wallMat, 0, 1.8, 0); house.add(base);
+            var upper = box(7, 2.8, 5.4, wallMat2, 0, 4.9, 0); house.add(upper);
+            // roofs (pyramid)
+            function pyramid(size, height, mat, y) { var g = new THREE.ConeGeometry(size, height, 4); var m = new THREE.Mesh(g, mat); m.rotation.y = Math.PI / 4; m.position.y = y; m.castShadow = true; m.receiveShadow = true; return m; }
+            var roof1 = pyramid(6.1, 2.4, roofMat, 7.5); roof1.scale.set(1, 1, 0.92); house.add(roof1);
+            var roofGold = new THREE.Mesh(new THREE.SphereGeometry(0.28, 16, 16), new THREE.MeshStandardMaterial({ color: 0xf6d47c, metalness: .9, roughness: .2, emissive: 0x664400, emissiveIntensity: .4 }));
+            roofGold.position.set(0, 8.85, 0); house.add(roofGold);
+            // porch
+            var porchFloor = box(9.5, 0.35, 3.4, trimMat, 0, 0.18, 4.4); house.add(porchFloor);
+            var porchRoof = box(9.5, 0.25, 3.6, new THREE.MeshStandardMaterial({ color: 0x7a1f1f, roughness: .7 }), 0, 3.9, 4.4); house.add(porchRoof);
+            var pillarGeo = new THREE.CylinderGeometry(0.16, 0.2, 3.5, 16);
+            for (var px = -4; px <= 4; px += 2) { if (Math.abs(px) < 0.5) continue; var pil = new THREE.Mesh(pillarGeo, trimMat); pil.position.set(px, 2, 5.8); pil.castShadow = true; house.add(pil); var pc = new THREE.Mesh(new THREE.SphereGeometry(0.24, 12, 12), new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: .8, roughness: .25 })); pc.position.set(px, 3.75, 5.8); house.add(pc); }
+            // windows
+            var winGlowMat = new THREE.MeshStandardMaterial({ color: 0xffe2a0, emissive: 0xffb84d, emissiveIntensity: 1.4, roughness: .3 });
+            var winFrameMat = new THREE.MeshStandardMaterial({ color: 0x4a2c14, roughness: .6 });
+            var clickables = [];
+            function makeWindow(x, y, z, ry, w, h) { w = w || 1.4; h = h || 1.5; var g = new THREE.Group(); var f = new THREE.Mesh(new THREE.BoxGeometry(w + 0.25, h + 0.25, 0.12), winFrameMat); f.castShadow = true; g.add(f); var p = new THREE.Mesh(new THREE.PlaneGeometry(w, h), winGlowMat); p.position.z = 0.07; g.add(p); var barV = new THREE.Mesh(new THREE.BoxGeometry(0.07, h, 0.05), winFrameMat); barV.position.z = 0.09; g.add(barV); var barH = new THREE.Mesh(new THREE.BoxGeometry(w, 0.07, 0.05), winFrameMat); barH.position.z = 0.09; g.add(barH); g.position.set(x, y, z); g.rotation.y = ry || 0; g.userData = { tip: '✨ Warm festive lights inside' }; house.add(g); clickables.push(p); p.userData.root = g; return g; }
+            makeWindow(-2.6, 2.2, 3.02, 0); makeWindow(2.6, 2.2, 3.02, 0);
+            makeWindow(-2.2, 5.0, 2.72, 0, 1.2, 1.2); makeWindow(2.2, 5.0, 2.72, 0, 1.2, 1.2); makeWindow(0, 5.0, 2.72, 0, 1.0, 1.2);
+            makeWindow(4.02, 2.3, 0, Math.PI / 2); makeWindow(-4.02, 2.3, 0, -Math.PI / 2);
+            makeWindow(3.52, 5.0, 0, Math.PI / 2, 1.1, 1.1); makeWindow(-3.52, 5.0, 0, -Math.PI / 2, 1.1, 1.1);
+            // balcony
+            var balc = box(4.5, 0.18, 1.1, trimMat, 0, 3.65, 3.2); house.add(balc);
+            for (var bx = -2; bx <= 2; bx += 0.5) { var rail = box(0.07, 0.8, 0.07, woodMat, bx, 4.1, 3.65); house.add(rail); }
+            house.add(box(4.5, 0.08, 0.08, woodMat, 0, 4.5, 3.65));
+            // door (hinged)
+            var doorFrame = box(1.8, 2.9, 0.25, trimMat, 0, 1.7, 3.05); house.add(doorFrame);
+            var doorPivot = new THREE.Group(); doorPivot.position.set(-0.75, 0.25, 3.15); house.add(doorPivot);
+            var doorMesh = box(1.5, 2.65, 0.12, new THREE.MeshStandardMaterial({ color: 0x5a2d0e, roughness: .55 }), 0.75, 1.45, 0); doorPivot.add(doorMesh);
+            var doorPanel1 = box(1.0, 0.9, 0.04, new THREE.MeshStandardMaterial({ color: 0x7a441c, roughness: .5 }), 0.75, 1.9, 0.08); doorPivot.add(doorPanel1);
+            var doorPanel2 = box(1.0, 0.9, 0.04, new THREE.MeshStandardMaterial({ color: 0x7a441c, roughness: .5 }), 0.75, 0.85, 0.08); doorPivot.add(doorPanel2);
+            var handle = new THREE.Mesh(new THREE.SphereGeometry(0.09, 12, 12), new THREE.MeshStandardMaterial({ color: 0xf6d47c, metalness: .9, roughness: .2 })); handle.position.set(1.25, 1.3, 0.12); doorPivot.add(handle);
+            doorMesh.userData = { tip: '🚪 Click to open / close the main door', isDoor: true }; clickables.push(doorMesh);
+            var doorGlowPlane = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 2.7), new THREE.MeshBasicMaterial({ color: 0xffd27a, transparent: true, opacity: 0 })); doorGlowPlane.position.set(0, 1.65, 3.0); house.add(doorGlowPlane);
+            var doorOpen = false, doorAngle = 0, doorTarget = 0;
+            // name plate
+            var namePlate = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.55, 0.08), new THREE.MeshStandardMaterial({ map: nameTex, roughness: .5 })); namePlate.position.set(2.6, 1.4, 3.15); house.add(namePlate);
+            // chimney + smoke
+            var chimney = box(0.9, 2.2, 0.9, new THREE.MeshStandardMaterial({ color: 0x9a6a4a, roughness: .9 }), 2.2, 7.2, -1); house.add(chimney);
+            var smokes = []; for (var sm = 0; sm < 18; sm++) { var spr = new THREE.Sprite(new THREE.SpriteMaterial({ map: smokeTex, transparent: true, opacity: 0, depthWrite: false })); spr.userData = { t: Math.random() }; spr.position.set(2.2, 8.4, -1); scene.add(spr); smokes.push(spr); }
+            // rangoli
+            var rangoli = new THREE.Mesh(new THREE.CircleGeometry(1.3, 48), new THREE.MeshBasicMaterial({ map: rangoliTex, transparent: true })); rangoli.rotation.x = -Math.PI / 2; rangoli.position.set(0, 0.38, 6.6); scene.add(rangoli);
+            // marigold toran across porch
+            var toranGroup = new THREE.Group(); scene.add(toranGroup);
+            (function () { var n = 34; for (var k = 0; k <= n; k++) { var t = k / n; var x = lerp(-4.4, 4.4, t); var sag = Math.sin(t * Math.PI) * -0.55; var y = 3.65 + sag; var c = (k % 2 === 0) ? 0xff7a00 : 0xffd400; var f = new THREE.Mesh(new THREE.SphereGeometry(0.11, 10, 10), new THREE.MeshStandardMaterial({ color: c, roughness: .6, emissive: c, emissiveIntensity: .25 })); f.position.set(x, y, 5.95); toranGroup.add(f); if (k % 3 === 0) { var leaf = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.28, 6), new THREE.MeshStandardMaterial({ color: 0x1a7a2a })); leaf.position.set(x, y - 0.2, 5.95); leaf.rotation.x = Math.PI; toranGroup.add(leaf); } } })();
+            // om hanging
+            var omTex2 = canvasTex(256, 256, function (x) { x.fillStyle = 'rgba(0,0,0,0)'; x.fillRect(0, 0, 256, 256); x.fillStyle = '#f6d47c'; x.font = 'bold 150px serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.shadowColor = '#ff9d00'; x.shadowBlur = 30; x.fillText('ॐ', 128, 140); });
+            var omPlane = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.9), new THREE.MeshBasicMaterial({ map: omTex2, transparent: true })); omPlane.position.set(0, 3.2, 6.0); scene.add(omPlane);
+
+            // ---------- Fence ----------
+            var fenceMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .7 });
+            for (var f = -14; f <= 14; f += 1.2) { if (Math.abs(f) < 3.2) continue; var pk = box(0.18, 1.1, 0.18, fenceMat, f, 0.55, 13.5); scene.add(pk); var tip = new THREE.Mesh(new THREE.ConeGeometry(0.16, 0.25, 4), fenceMat); tip.position.set(f, 1.22, 13.5); tip.rotation.y = Math.PI / 4; scene.add(tip); }
+            scene.add(box(29, 0.12, 0.12, fenceMat, 0, 0.85, 13.5));
+
+            // ---------- Trees / garden ----------
+            var trees = [];
+            function tree(x, z, s) { var g = new THREE.Group(); var trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.22 * s, 0.32 * s, 1.8 * s, 10), new THREE.MeshStandardMaterial({ color: 0x5a3a1a, roughness: .9 })); trunk.position.y = 0.9 * s; trunk.castShadow = true; g.add(trunk); var cols = [0x1f7a2e, 0x2a9a3a, 0x176326]; for (var j = 0; j < 3; j++) { var r = (1.3 - j * 0.28) * s; var fol = new THREE.Mesh(new THREE.SphereGeometry(r, 16, 16), new THREE.MeshStandardMaterial({ color: cols[j % 3], roughness: .85 })); fol.position.y = (1.9 + j * 0.9) * s; fol.castShadow = true; g.add(fol); } g.position.set(x, 0, z); g.userData = { phase: Math.random() * 6 }; scene.add(g); trees.push(g); }
+            tree(-9, 4, 1.2); tree(-11, -2, 1.0); tree(9.5, 3, 1.3); tree(11, -3, 0.9); tree(-7, -7, 1.1); tree(8, -7, 1.0); tree(-13, 7, 0.8); tree(13, 7, 0.85);
+            // flower beds
+            for (var fl = 0; fl < 50; fl++) { var fc = [0xff3b6b, 0xffd400, 0xff7a00, 0xff5ad0, 0xffffff][fl % 5]; var fm = new THREE.Mesh(new THREE.SphereGeometry(0.12, 8, 8), new THREE.MeshStandardMaterial({ color: fc, emissive: fc, emissiveIntensity: .35 })); var ang = Math.random() * Math.PI * 2; var rad = 9 + Math.random() * 4.5; fm.position.set(Math.cos(ang) * rad, 0.14, Math.sin(ang) * rad * 0.9 + 2); if (Math.abs(fm.position.x) < 4 && fm.position.z > 4) fm.position.x += 6; scene.add(fm); }
+            // lamp posts
+            var lampLights = [];
+            function lamp(x, z) { var g = new THREE.Group(); var pole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.12, 3.4, 10), new THREE.MeshStandardMaterial({ color: 0x222a3a, roughness: .6, metalness: .4 })); pole.position.y = 1.7; pole.castShadow = true; g.add(pole); var bulb = new THREE.Mesh(new THREE.SphereGeometry(0.28, 16, 16), new THREE.MeshBasicMaterial({ color: 0xffe9a8 })); bulb.position.y = 3.55; g.add(bulb); var gl = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, opacity: .9, depthWrite: false })); gl.scale.set(2.4, 2.4, 1); gl.position.y = 3.55; g.add(gl); var pl = new THREE.PointLight(0xffd27a, 0.9, 10, 2); pl.position.y = 3.5; g.add(pl); lampLights.push(pl); g.position.set(x, 0, z); scene.add(g); }
+            lamp(-5, 9); lamp(5, 9); lamp(-12, -5); lamp(12, -5);
+
+            // ---------- String lights ----------
+            var bulbs = [];
+            function stringLights(p1, p2, sag, count) { var pts = []; for (var i = 0; i <= count; i++) { var t = i / count; var x = lerp(p1.x, p2.x, t), y = lerp(p1.y, p2.y, t) - Math.sin(t * Math.PI) * sag, z = lerp(p1.z, p2.z, t); pts.push(new THREE.Vector3(x, y, z)); if (i > 0 && i < count) { var col = [0xffd27a, 0xff6b6b, 0x6bff8a, 0x6bb8ff, 0xff6bd6][i % 5]; var b = new THREE.Mesh(new THREE.SphereGeometry(0.09, 8, 8), new THREE.MeshBasicMaterial({ color: col })); b.position.set(x, y - 0.08, z); scene.add(b); var bg = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: col, transparent: true, opacity: .7, depthWrite: false })); bg.scale.set(0.8, 0.8, 1); bg.position.copy(b.position); scene.add(bg); bulbs.push({ m: b, g: bg, ph: Math.random() * 6 }); } } var geo = new THREE.BufferGeometry().setFromPoints(pts); scene.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0x222222 }))); }
+            stringLights(new THREE.Vector3(-4.6, 3.8, 5.8), new THREE.Vector3(-9, 4.4, 2), 1.0, 14);
+            stringLights(new THREE.Vector3(4.6, 3.8, 5.8), new THREE.Vector3(9, 4.4, 2), 1.0, 14);
+            stringLights(new THREE.Vector3(-9, 4.4, 2), new THREE.Vector3(-5, 3.2, 9.5), 0.9, 12);
+            stringLights(new THREE.Vector3(9, 4.4, 2), new THREE.Vector3(5, 3.2, 9.5), 0.9, 12);
+            stringLights(new THREE.Vector3(-5, 3.2, 9.5), new THREE.Vector3(5, 3.2, 9.5), 1.2, 18);
+
+            // ---------- Poles for string lights ----------
+            [[-9, 2], [9, 2], [-5, 9.5], [5, 9.5]].forEach(function (p) { var pole = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.1, 4.6, 8), woodMat); pole.position.set(p[0], 2.3, p[1]); pole.castShadow = true; scene.add(pole); });
+
+            // ---------- Diyas ----------
+            var diyas = [];
+            function diya(x, z, lit) { var g = new THREE.Group(); var bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.14, 0.14, 14), new THREE.MeshStandardMaterial({ color: 0x9a4a1e, roughness: .8 })); bowl.position.y = 0.07; g.add(bowl); var flame = new THREE.Sprite(new THREE.SpriteMaterial({ map: flameTex, transparent: true, depthWrite: false })); flame.scale.set(0.45, 0.65, 1); flame.position.y = 0.45; g.add(flame); var halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xff9d2e, transparent: true, opacity: .75, depthWrite: false })); halo.scale.set(1.4, 1.4, 1); halo.position.y = 0.45; g.add(halo); g.position.set(x, 0.12, z); g.userData = { flame: flame, halo: halo, lit: lit !== false, ph: Math.random() * 10, tip: '🪔 Click to light / extinguish diya' }; if (!g.userData.lit) { flame.visible = false; halo.visible = false; } scene.add(g); diyas.push(g); bowl.userData = { isDiya: g }; clickables.push(bowl); return g; }
+            for (var d = 0; d < 5; d++) { diya(-1.7 - d * 0.12, 6.0 + d * 1.55, true); diya(1.7 + d * 0.12, 6.0 + d * 1.55, true); }
+            diya(-2.2, 4.6, true); diya(2.2, 4.6, true); diya(-4.2, 6.2, true); diya(4.2, 6.2, true);
+            var diyaLightA = new THREE.PointLight(0xff8c2e, 1.2, 9, 2); diyaLightA.position.set(0, 1, 8); scene.add(diyaLightA);
+            var diyaLightB = new THREE.PointLight(0xff8c2e, 0.9, 8, 2); diyaLightB.position.set(0, 1, 5.5); scene.add(diyaLightB);
+
+            // ---------- Gifts ----------
+            var gifts = [];
+            function gift(x, z, c1, c2) { var g = new THREE.Group(); var b = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.7, 0.7), new THREE.MeshStandardMaterial({ color: c1, roughness: .4 })); b.position.y = 0.35; b.castShadow = true; g.add(b); var r1 = new THREE.Mesh(new THREE.BoxGeometry(0.74, 0.74, 0.14), new THREE.MeshStandardMaterial({ color: c2, roughness: .3 })); r1.position.y = 0.35; g.add(r1); var r2 = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.74, 0.74), new THREE.MeshStandardMaterial({ color: c2, roughness: .3 })); r2.position.y = 0.35; g.add(r2); var bow = new THREE.Mesh(new THREE.TorusGeometry(0.12, 0.05, 8, 16), new THREE.MeshStandardMaterial({ color: c2, metalness: .4, roughness: .3 })); bow.position.y = 0.75; bow.rotation.x = Math.PI / 2; g.add(bow); g.position.set(x, 0.35, z); g.userData = { tip: '🎁 Click to open blessings!', isGift: true, baseY: 0.35 }; scene.add(g); gifts.push(g); b.userData = { isGiftRoot: g }; clickables.push(b); return g; }
+            gift(3.2, 5.2, 0xd42a2a, 0xf6d47c); gift(3.9, 4.6, 0x2a6ad4, 0xffffff); gift(-3.4, 5.1, 0x8a2be2, 0xffe74c); gift(-4.0, 4.5, 0x1a9a5a, 0xffd27a);
+
+            // ---------- Welcome banner arch ----------
+            var banner = new THREE.Mesh(new THREE.PlaneGeometry(7, 1.1), new THREE.MeshBasicMaterial({ map: bannerTex, side: THREE.DoubleSide })); banner.position.set(0, 4.6, 12.6); scene.add(banner);
+            var archL = box(0.25, 4.6, 0.25, woodMat, -3.7, 2.3, 12.6); scene.add(archL); var archR = box(0.25, 4.6, 0.25, woodMat, 3.7, 2.3, 12.6); scene.add(archR);
+
+            // ---------- 3D Photo Billboard : Real House Picture ----------
+            var texLoader = new THREE.TextureLoader(); texLoader.crossOrigin = 'anonymous';
+            var billGroup = new THREE.Group(); billGroup.position.set(-8.2, 0, 3.5); billGroup.rotation.y = 0.55; scene.add(billGroup);
+            var billFrame = box(4.6, 3.2, 0.18, woodMat, 0, 2.4, 0); billGroup.add(billFrame);
+            var billGold = box(4.3, 2.9, 0.2, new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: .7, roughness: .3 }), 0, 2.4, 0); billGroup.add(billGold);
+            var billPlaneMat = new THREE.MeshBasicMaterial({ color: 0x222222 });
+            var billPlane = new THREE.Mesh(new THREE.PlaneGeometry(4.0, 2.6), billPlaneMat); billPlane.position.set(0, 2.4, 0.12); billGroup.add(billPlane);
+            billPlane.userData = { tip: '📸 Our Dream Home — Sharma Villa' }; clickables.push(billPlane);
+            var leg1 = box(0.18, 1.2, 0.18, woodMat, -1.6, 0.6, -0.1); billGroup.add(leg1);
+            var leg2 = box(0.18, 1.2, 0.18, woodMat, 1.6, 0.6, -0.1); billGroup.add(leg2);
+            var billCapTex = canvasTex(512, 80, function (x, w, h) { x.fillStyle = '#1a2347'; x.fillRect(0, 0, w, h); x.fillStyle = '#f6d47c'; x.font = 'bold 36px Georgia'; x.textAlign = 'center'; x.fillText('★  OUR DREAM HOME  ★', w / 2, 52); });
+            var billCap = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 0.5), new THREE.MeshBasicMaterial({ map: billCapTex })); billCap.position.set(0, 0.95, 0.12); billGroup.add(billCap);
+            texLoader.load('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80', function (t) { t.encoding = THREE.sRGBEncoding; billPlaneMat.map = t; billPlaneMat.color.set(0xffffff); billPlaneMat.needsUpdate = true; });
+
+            // ---------- 3D Family Portraits : Real Owners ----------
+            function portraitFrame(url, x, y, z, ry, label) { var g = new THREE.Group(); g.position.set(x, y, z); g.rotation.y = ry; var fr = new THREE.Mesh(new THREE.CylinderGeometry(0.75, 0.75, 0.12, 28), new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: .7, roughness: .3 })); fr.rotation.x = Math.PI / 2; g.add(fr); var mat = new THREE.MeshBasicMaterial({ color: 0x444444 }); var face = new THREE.Mesh(new THREE.CircleGeometry(0.62, 28), mat); face.position.z = 0.07; g.add(face); face.userData = { tip: '💛 ' + label }; clickables.push(face); texLoader.load(url, function (t) { t.encoding = THREE.sRGBEncoding; mat.map = t; mat.color.set(0xffffff); mat.needsUpdate = true; }); var pole = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.08, 2.0, 8), woodMat); pole.position.y = -1.4; g.add(pole); var lt = canvasTex(256, 64, function (c) { c.fillStyle = '#7a1f1f'; c.fillRect(0, 0, 256, 64); c.fillStyle = '#ffe9a8'; c.font = 'bold 26px Georgia'; c.textAlign = 'center'; c.fillText(label, 128, 42); }); var lp = new THREE.Mesh(new THREE.PlaneGeometry(1.4, 0.35), new THREE.MeshBasicMaterial({ map: lt })); lp.position.set(0, -0.95, 0.08); g.add(lp); scene.add(g); return g; }
+            portraitFrame('https://randomuser.me/api/portraits/men/32.jpg', 6.8, 2.6, 6.8, -0.6, 'Rajesh Sharma');
+            portraitFrame('https://randomuser.me/api/portraits/women/44.jpg', 8.6, 2.6, 5.2, -0.7, 'Priya Sharma');
+
+            // ---------- Car ----------
+            (function () { var car = new THREE.Group(); var body = new THREE.Mesh(new THREE.BoxGeometry(3.2, 0.7, 1.6), new THREE.MeshStandardMaterial({ color: 0xb01e1e, metalness: .6, roughness: .3 })); body.position.y = 0.7; body.castShadow = true; car.add(body); var top = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.6, 1.4), new THREE.MeshStandardMaterial({ color: 0xd42a2a, metalness: .5, roughness: .3 })); top.position.set(-0.2, 1.3, 0); top.castShadow = true; car.add(top); var wg = new THREE.BoxGeometry(1.5, 0.35, 1.45); var win = new THREE.Mesh(wg, new THREE.MeshStandardMaterial({ color: 0x9ad6ff, metalness: .7, roughness: .15 })); win.position.set(-0.2, 1.3, 0); car.add(win); var wg2 = new THREE.CylinderGeometry(0.35, 0.35, 0.3, 16); var wm = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: .8 });[[-1.1, 0.75], [1.1, 0.75], [-1.1, -0.75], [1.1, -0.75]].forEach(function (p) { var wh = new THREE.Mesh(wg2, wm); wh.rotation.x = Math.PI / 2; wh.position.set(p[0], 0.35, p[1]); car.add(wh); }); var hl = new THREE.Mesh(new THREE.SphereGeometry(0.12, 10, 10), new THREE.MeshBasicMaterial({ color: 0xfff2b0 })); hl.position.set(1.62, 0.7, 0.5); car.add(hl); var hl2 = hl.clone(); hl2.position.z = -0.5; car.add(hl2); car.position.set(5.5, 0, 12); car.rotation.y = 0.08; scene.add(car); })();
+
+            // ---------- Fireflies ----------
+            var flyGeo = new THREE.BufferGeometry(); var flyN = 80; var flyPos = new Float32Array(flyN * 3); var flyPhase = [];
+            for (var fi = 0; fi < flyN; fi++) { flyPos[fi * 3] = (Math.random() - 0.5) * 30; flyPos[fi * 3 + 1] = 0.5 + Math.random() * 5; flyPos[fi * 3 + 2] = (Math.random() - 0.5) * 30; flyPhase.push(Math.random() * 6); }
+            flyGeo.setAttribute('position', new THREE.BufferAttribute(flyPos, 3));
+            var flies = new THREE.Points(flyGeo, new THREE.PointsMaterial({ color: 0xffe27a, size: 0.18, transparent: true, opacity: .9 })); scene.add(flies);
+
+            // ---------- Fireworks ----------
+            var rockets = [], bursts = [];
+            function boomSound() { try { if (!audioOn) return; var t = actx.currentTime; var o = actx.createOscillator(), g = actx.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(30, t + 0.6); g.gain.setValueAtTime(0.5, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.7); o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.75); } catch (e) { } }
+            function launchFirework() { var x = (Math.random() - 0.5) * 16; var z = -4 - Math.random() * 8; var col = new THREE.Color().setHSL(Math.random(), 0.9, 0.6); var mesh = new THREE.Mesh(new THREE.SphereGeometry(0.14, 8, 8), new THREE.MeshBasicMaterial({ color: 0xfff2b0 })); mesh.position.set(x, 0.5, z + 6); scene.add(mesh); rockets.push({ m: mesh, vy: 11 + Math.random() * 3, col: col }); }
+            function explode(pos, col) { var n = 110; var geo = new THREE.BufferGeometry(); var p = new Float32Array(n * 3), v = []; for (var i = 0; i < n; i++) { p[i * 3] = pos.x; p[i * 3 + 1] = pos.y; p[i * 3 + 2] = pos.z; var th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1), sp = 4 + Math.random() * 6; v.push(new THREE.Vector3(sp * Math.sin(ph) * Math.cos(th), sp * Math.cos(ph), sp * Math.sin(ph) * Math.sin(th))); } geo.setAttribute('position', new THREE.BufferAttribute(p, 3)); var mat = new THREE.PointsMaterial({ color: col, size: 0.32, transparent: true, opacity: 1 }); var pts = new THREE.Points(geo, mat); scene.add(pts); bursts.push({ pts: pts, vel: v, life: 1.6, age: 0 }); fireLight.position.copy(pos); fireLight.color.copy(col); fireLight.intensity = 6; boomSound(); }
+            function updateFireworks(dt) { for (var i = rockets.length - 1; i >= 0; i--) { var r = rockets[i]; r.m.position.y += r.vy * dt; r.vy -= 2 * dt; if (r.m.position.y > 13 + Math.random() * 2 || r.vy < 5) { scene.remove(r.m); explode(r.m.position.clone(), r.col); rockets.splice(i, 1); } } for (var j = bursts.length - 1; j >= 0; j--) { var b = bursts[j]; b.age += dt; var arr = b.pts.geometry.attributes.position.array; for (var k = 0; k < b.vel.length; k++) { b.vel[k].y -= 5.5 * dt; arr[k * 3] += b.vel[k].x * dt; arr[k * 3 + 1] += b.vel[k].y * dt; arr[k * 3 + 2] += b.vel[k].z * dt; } b.pts.geometry.attributes.position.needsUpdate = true; b.pts.material.opacity = Math.max(0, 1 - b.age / b.life); if (b.age >= b.life) { scene.remove(b.pts); b.pts.geometry.dispose(); bursts.splice(j, 1); } } fireLight.intensity = Math.max(0, fireLight.intensity - dt * 8); }
+
+            // ---------- Confetti 2D ----------
+            var cCan = document.getElementById('confetti-canvas'), cCtx = cCan.getContext('2d'), confetti = [];
+            function sizeConfetti() { cCan.width = window.innerWidth; cCan.height = window.innerHeight; }
+            sizeConfetti();
+            function burstConfetti(n, x, y) { for (var i = 0; i < (n || 120); i++) { confetti.push({ x: x !== undefined ? x : Math.random() * cCan.width, y: y !== undefined ? y : Math.random() * -100 - 10, vx: (Math.random() - 0.5) * 4, vy: 2 + Math.random() * 4, s: 4 + Math.random() * 6, r: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.3, c: 'hsl(' + Math.floor(Math.random() * 360) + ',90%,60%)', life: 1 }); } }
+            function updateConfetti() { cCtx.clearRect(0, 0, cCan.width, cCan.height); for (var i = confetti.length - 1; i >= 0; i--) { var p = confetti[i]; p.x += p.vx; p.y += p.vy; p.vy += 0.05; p.r += p.vr; p.life -= 0.003; cCtx.save(); cCtx.translate(p.x, p.y); cCtx.rotate(p.r); cCtx.globalAlpha = Math.max(0, p.life); cCtx.fillStyle = p.c; cCtx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * 0.6); cCtx.restore(); if (p.y > cCan.height + 20 || p.life <= 0) confetti.splice(i, 1); } }
+
+            // ---------- Audio : temple ambience ----------
+            var actx = null, master = null, audioOn = false, bellTimer = null;
+            function initAudio() { if (actx) return; try { actx = new (window.AudioContext || window.webkitAudioContext)(); master = actx.createGain(); master.gain.value = 0.5; master.connect(actx.destination); var o1 = actx.createOscillator(), o2 = actx.createOscillator(), g = actx.createGain(), f = actx.createBiquadFilter(); o1.type = 'sawtooth'; o1.frequency.value = 136.1; o2.type = 'sawtooth'; o2.frequency.value = 136.5; f.type = 'lowpass'; f.frequency.value = 420; g.gain.value = 0.035; o1.connect(f); o2.connect(f); f.connect(g); g.connect(master); o1.start(); o2.start(); } catch (e) { } }
+            function bell() { if (!audioOn || !actx) return; var t = actx.currentTime; var notes = [523.25, 587.33, 659.25, 783.99, 880]; var fq = notes[Math.floor(Math.random() * notes.length)]; var o = actx.createOscillator(), g = actx.createGain(); o.type = 'sine'; o.frequency.value = fq; g.gain.setValueAtTime(0.22, t); g.gain.exponentialRampToValueAtTime(0.001, t + 2.2); o.connect(g); g.connect(master); o.start(t); o.stop(t + 2.3); bellTimer = setTimeout(bell, 3500 + Math.random() * 3500); }
+            document.getElementById('musicBtn').addEventListener('click', function () { initAudio(); if (actx && actx.state === 'suspended') actx.resume(); audioOn = !audioOn; this.classList.toggle('playing', audioOn); this.textContent = audioOn ? '🔔' : '🔕'; if (audioOn) { bell(); toast('🔔 Ceremony bells & ambience ON'); } else { clearTimeout(bellTimer); toast('🔕 Music muted'); } });
+
+            // ---------- Raycast interaction ----------
+            var ray = new THREE.Raycaster(), mouse = new THREE.Vector2(), tooltip = document.getElementById('tooltip');
+            var downPos = null;
+            renderer.domElement.addEventListener('pointermove', function (e) { mouse.x = (e.clientX / window.innerWidth) * 2 - 1; mouse.y = -(e.clientY / window.innerHeight) * 2 + 1; ray.setFromCamera(mouse, camera); var hits = ray.intersectObjects(clickables, false); if (hits.length) { var u = hits[0].object.userData; var tip = u.tip || (u.isDoor ? '🚪 Door' : u.isDiya ? '🪔 Diya' : u.isGiftRoot ? '🎁 Gift' : '✨'); if (u.isDiya) tip = u.isDiya.userData.tip; if (u.isGiftRoot) tip = u.isGiftRoot.userData.tip; tooltip.textContent = tip; tooltip.style.left = e.clientX + 'px'; tooltip.style.top = e.clientY + 'px'; tooltip.style.opacity = '1'; renderer.domElement.style.cursor = 'pointer'; } else { tooltip.style.opacity = '0'; renderer.domElement.style.cursor = 'grab'; } });
+            renderer.domElement.addEventListener('pointerdown', function (e) { downPos = { x: e.clientX, y: e.clientY }; });
+            renderer.domElement.addEventListener('pointerup', function (e) { if (!downPos) return; var dx = e.clientX - downPos.x, dy = e.clientY - downPos.y; if (Math.hypot(dx, dy) > 8) { downPos = null; return; } downPos = null; mouse.x = (e.clientX / window.innerWidth) * 2 - 1; mouse.y = -(e.clientY / window.innerHeight) * 2 + 1; ray.setFromCamera(mouse, camera); var hits = ray.intersectObjects(clickables, false); if (!hits.length) return; var o = hits[0].object; var u = o.userData; if (u.isDoor) { toggleDoor(); } else if (u.isDiya) { var d = u.isDiya; d.userData.lit = !d.userData.lit; d.userData.flame.visible = d.userData.lit; d.userData.halo.visible = d.userData.lit; toast(d.userData.lit ? '🪔 Diya lit — light dispels darkness' : '🪔 Diya extinguished'); } else if (u.isGiftRoot) { openGift(u.isGiftRoot); } else if (o === billPlane) { flyTo('photo'); toast('📸 Sharma Villa — Our Dream Home 🏡'); } else if (u.tip && u.tip.indexOf('Rajesh') >= 0) { toast('💛 Rajesh Sharma — Proud Owner & Host 🙏'); burstConfetti(60, e.clientX, e.clientY); } else if (u.tip && u.tip.indexOf('Priya') >= 0) { toast('💛 Priya Sharma — Proud Owner & Hostess 🙏'); burstConfetti(60, e.clientX, e.clientY); } else { toast('✨ Festive lights glowing for the ceremony'); } });
+            function toggleDoor() { doorOpen = !doorOpen; doorTarget = doorOpen ? -1.9 : 0; gsap.to(interiorLight, { intensity: doorOpen ? 2.2 : 0, duration: 0.8 }); gsap.to(doorGlowPlane.material, { opacity: doorOpen ? 0.85 : 0, duration: 0.8 }); toast(doorOpen ? '🚪 The doors of Sharma Villa open with blessings!' : '🚪 Door closed'); if (doorOpen) { burstConfetti(80, window.innerWidth / 2, window.innerHeight * 0.4); } }
+            function openGift(g) { gsap.fromTo(g.position, { y: g.userData.baseY }, { y: g.userData.baseY + 1.2, duration: 0.35, yoyo: true, repeat: 1, ease: 'power2.out' }); gsap.fromTo(g.rotation, { y: 0 }, { y: Math.PI * 2, duration: 0.8 }); var msgs = ['🎁 Blessings of prosperity!', '🎁 May your home fill with laughter!', '🎁 Shubh Griha Pravesh!', '🎁 Health, wealth & happiness!']; toast(msgs[Math.floor(Math.random() * msgs.length)]); burstConfetti(90, window.innerWidth / 2, window.innerHeight * 0.5); for (var i = 0; i < 3; i++)setTimeout(launchFirework, i * 250); }
+
+            // ---------- Camera presets ----------
+            var views = { hero: { p: [15, 9, 19], t: [0, 3.2, 0] }, front: { p: [0, 3.6, 15.5], t: [0, 2.8, 3] }, door: { p: [2.4, 2.2, 7.6], t: [0, 1.8, 3] }, garden: { p: [-10.5, 4, 10.5], t: [0, 2, 3] }, photo: { p: [-4.2, 2.6, 8.2], t: [-8.2, 2.2, 3.5] }, aerial: { p: [0.5, 22, 6], t: [0, 0, 2] } };
+            function flyTo(name) { var v = views[name]; if (!v) return; controls.autoRotate = false; document.getElementById('rotateBtn').textContent = '🔄 Auto-Rotate'; gsap.to(camera.position, { x: v.p[0], y: v.p[1], z: v.p[2], duration: 1.6, ease: 'power3.inOut' }); gsap.to(controls.target, { x: v.t[0], y: v.t[1], z: v.t[2], duration: 1.6, ease: 'power3.inOut' }); document.querySelectorAll('.view-pill').forEach(function (b) { b.classList.toggle('active', b.dataset.view === name); }); }
+            document.querySelectorAll('.view-pill').forEach(function (b) { b.addEventListener('click', function () { flyTo(b.dataset.view); }); });
+
+            // ---------- Buttons ----------
+            document.getElementById('doorBtn').addEventListener('click', toggleDoor);
+            var allLit = true;
+            document.getElementById('diyaBtn').addEventListener('click', function () { allLit = !allLit; diyas.forEach(function (d) { d.userData.lit = allLit; d.userData.flame.visible = allLit; d.userData.halo.visible = allLit; }); toast(allLit ? '🪔 All 14 diyas glowing — Shubh Deepavali vibes!' : '🪔 All diyas extinguished'); });
+            document.getElementById('fireBtn').addEventListener('click', function () { for (var i = 0; i < 5; i++)setTimeout(launchFirework, i * 350); toast('🎆 Fireworks for the celebration!'); burstConfetti(120); });
+            var autoRot = true;
+            document.getElementById('rotateBtn').addEventListener('click', function () { autoRot = !autoRot; controls.autoRotate = autoRot; this.textContent = autoRot ? '⏸ Stop Rotate' : '🔄 Auto-Rotate'; this.classList.toggle('gold', !autoRot); });
+            var isNight = true, modeT = { t: 1 };
+            function applyMode() { var t = modeT.t; scene.background.copy(lerpColor(DAY_BG, NIGHT_BG, t)); scene.fog.color.copy(lerpColor(DAY_FOG, NIGHT_FOG, t)); moonLight.intensity = lerp(0.15, 0.9, t); sunLight.intensity = lerp(1.15, 0.0, t); ambient.intensity = lerp(0.75, 0.45, t); hemi.intensity = lerp(0.7, 0.5, t); starMat.opacity = t; stars.visible = t > 0.05; moon.visible = t > 0.05; moonGlow.visible = t > 0.05; winGlowMat.emissiveIntensity = lerp(0.15, 1.4, t); porchLight.intensity = lerp(0.3, 1.6, t); diyaLightA.intensity = lerp(0.3, 1.2, t); diyaLightB.intensity = lerp(0.25, 0.9, t); lampLights.forEach(function (l) { l.intensity = lerp(0.1, 0.9, t); }); bulbs.forEach(function (b) { b.g.material.opacity = lerp(0.25, 0.7, t); }); }
+            function toggleDayNight() { isNight = !isNight; gsap.to(modeT, { t: isNight ? 1 : 0, duration: 2, ease: 'power2.inOut', onUpdate: applyMode }); var lbl = isNight ? '🌙 Night' : '☀️ Day'; document.getElementById('dayNightBtn').textContent = lbl; document.getElementById('dayNightTop').textContent = isNight ? '🌙' : '☀️'; toast(isNight ? '🌙 Evening aarti ambience — lights glowing' : '☀️ Morning muhurat — bright & auspicious'); }
+            document.getElementById('dayNightBtn').addEventListener('click', toggleDayNight);
+            document.getElementById('dayNightTop').addEventListener('click', toggleDayNight);
+            document.getElementById('shareTop').addEventListener('click', shareInvite);
+            function shareInvite() { var data = { title: 'Griha Pravesh — Sharma Villa', text: 'You are invited to our Housewarming Ceremony on 12 Oct 2026! 🏡', url: location.href }; if (navigator.share) { navigator.share(data).catch(function () { }); } else { try { navigator.clipboard.writeText(data.text + ' ' + data.url); toast('🔗 Invitation link copied!'); } catch (e) { toast('🔗 Share this page with family!'); } } }
+
+            // ---------- Invitation overlay ----------
+            var overlay = document.getElementById('invite-overlay'), envelope = document.getElementById('envelope'), stage = document.getElementById('envelopeStage'), cardWrap = document.getElementById('card-wrap');
+            document.getElementById('openInviteBtn').addEventListener('click', openOverlay);
+            function openOverlay() { overlay.classList.add('show'); stage.style.display = 'block'; cardWrap.classList.remove('show'); envelope.classList.remove('open'); gsap.fromTo('.envelope', { scale: 0.6, opacity: 0, rotateY: 20 }, { scale: 1, opacity: 1, rotateY: 0, duration: 0.8, ease: 'back.out(1.4)' }); }
+            function revealCard() { stage.style.display = 'none'; cardWrap.classList.add('show'); gsap.fromTo('#inviteCard', { rotateY: 25, scale: 0.85, opacity: 0 }, { rotateY: 0, scale: 1, opacity: 1, duration: 0.9, ease: 'back.out(1.2)' }); burstConfetti(180); for (var i = 0; i < 4; i++)setTimeout(launchFirework, i * 300); }
+            envelope.addEventListener('click', function () { envelope.classList.add('open'); setTimeout(revealCard, 950); });
+            document.getElementById('skipEnv').addEventListener('click', revealCard);
+            document.getElementById('close-card').addEventListener('click', function () { overlay.classList.remove('show'); });
+            overlay.addEventListener('click', function (e) { if (e.target === overlay) overlay.classList.remove('show'); });
+            // card tilt
+            var inviteCard = document.getElementById('inviteCard');
+            cardWrap.addEventListener('mousemove', function (e) { var r = inviteCard.getBoundingClientRect(); var rx = ((e.clientY - r.top) / r.height - 0.5) * -6, ry = ((e.clientX - r.left) / r.width - 0.5) * 6; inviteCard.style.transform = 'rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)'; });
+            cardWrap.addEventListener('mouseleave', function () { inviteCard.style.transform = 'rotateX(0) rotateY(0)'; });
+
+            // ---------- Countdown ----------
+            var target = new Date('2026-10-12T10:30:00').getTime();
+            function tick() { var now = Date.now(), diff = Math.max(0, target - now); var d = Math.floor(diff / 86400000), h = Math.floor(diff % 86400000 / 3600000), m = Math.floor(diff % 3600000 / 60000), s = Math.floor(diff % 60000 / 1000); document.getElementById('cdD').textContent = String(d).padStart(2, '0'); document.getElementById('cdH').textContent = String(h).padStart(2, '0'); document.getElementById('cdM').textContent = String(m).padStart(2, '0'); document.getElementById('cdS').textContent = String(s).padStart(2, '0'); }
+            setInterval(tick, 1000); tick();
+
+            // ---------- RSVP / actions ----------
+            document.getElementById('acceptBtn').addEventListener('click', function () { var n = document.getElementById('rsvpName').value || 'Guest Family'; var c = document.getElementById('rsvpCount').value || 2; document.getElementById('rsvpMsg').textContent = '🙏 Dhanyavaad ' + n + '! ' + c + ' guest(s) confirmed. See you on 12th Oct!'; try { localStorage.setItem('griha_rsvp', JSON.stringify({ n: n, c: c, ok: true })); } catch (e) { } burstConfetti(220); for (var i = 0; i < 6; i++)setTimeout(launchFirework, i * 280); toast('🎉 RSVP Accepted — ' + n); });
+            document.getElementById('declineBtn').addEventListener('click', function () { var n = document.getElementById('rsvpName').value || 'Friend'; document.getElementById('rsvpMsg').textContent = '💛 We will miss you, ' + n + '. Blessings from afar accepted!'; document.getElementById('rsvpMsg').style.color = '#7a1f1f'; toast('💌 Response recorded. Thank you!'); });
+            document.getElementById('calBtn').addEventListener('click', function () { var ics = 'BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:20261012T050000Z\nDTEND:20261012T083000Z\nSUMMARY:Griha Pravesh - Sharma Villa Housewarming\nDESCRIPTION:Housewarming ceremony of Rajesh & Priya Sharma. Muhurat 10:30 AM. Lunch to follow.\nLOCATION:Plot 42 Green Valley Whitefield Bengaluru\nEND:VEVENT\nEND:VCALENDAR'; var b = new Blob([ics], { type: 'text/calendar' }); var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'Griha-Pravesh-Sharma-Villa.ics'; a.click(); toast('📅 Calendar file downloaded!'); });
+            document.getElementById('mapBtn').addEventListener('click', function () { window.open('https://www.google.com/maps/search/Whitefield+Bengaluru', '_blank'); });
+            document.getElementById('callBtn').addEventListener('click', function () { location.href = 'tel:+919876543210'; });
+
+            // ---------- Animate ----------
+            var clock = new THREE.Clock();
+            function animate() {
+                requestAnimationFrame(animate); var dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
+                controls.update();
+                // door
+                doorAngle += (doorTarget - doorAngle) * Math.min(1, dt * 4); doorPivot.rotation.y = doorAngle;
+                // flames flicker
+                diyas.forEach(function (d) { if (!d.userData.lit) return; var ph = d.userData.ph; var f = 1 + Math.sin(t * 14 + ph) * 0.12 + Math.sin(t * 31 + ph * 2) * 0.06; d.userData.flame.scale.set(0.45 * f, 0.65 * (2 - f * 0.5) * 1.0, 1); d.userData.halo.material.opacity = 0.6 + Math.sin(t * 10 + ph) * 0.15; });
+                diyaLightA.intensity = (isNight ? 1.2 : 0.3) + Math.sin(t * 13) * 0.15;
+                porchLight.intensity = (isNight ? 1.6 : 0.3) + Math.sin(t * 7) * 0.08;
+                // bulbs twinkle
+                bulbs.forEach(function (b) { var s = 1 + Math.sin(t * 4 + b.ph) * 0.25; b.m.scale.set(s, s, s); b.g.material.opacity = (isNight ? 0.7 : 0.25) + Math.sin(t * 5 + b.ph) * 0.15; });
+                // trees sway
+                trees.forEach(function (tr) { tr.rotation.z = Math.sin(t * 1.2 + tr.userData.phase) * 0.02; tr.rotation.x = Math.cos(t * 0.9 + tr.userData.phase) * 0.015; });
+                // smoke
+                smokes.forEach(function (s) { s.userData.t += dt * 0.22; if (s.userData.t > 1) s.userData.t = 0; var k = s.userData.t; s.position.set(2.2 + k * 1.6, 8.4 + k * 4.5, -1 - k * 0.8); s.scale.set(0.8 + k * 2.2, 0.8 + k * 2.2, 1); s.material.opacity = (1 - k) * 0.45; });
+                // stars twinkle
+                starMat.opacity = (isNight ? 1 : 0) * (0.75 + Math.sin(t * 2) * 0.25);
+                // fireflies drift
+                var fp = flies.geometry.attributes.position.array; for (var i = 0; i < flyN; i++) { fp[i * 3] += Math.sin(t * 0.7 + flyPhase[i]) * dt * 0.5; fp[i * 3 + 1] += Math.cos(t * 0.9 + flyPhase[i]) * dt * 0.4; } flies.geometry.attributes.position.needsUpdate = true;
+                // om float + rangoli spin
+                omPlane.position.y = 3.2 + Math.sin(t * 1.5) * 0.08; omPlane.rotation.y = Math.sin(t * 0.8) * 0.25; rangoli.rotation.z += dt * 0.15;
+                roofGold.rotation.y += dt;
+                // banner wave
+                banner.position.y = 4.6 + Math.sin(t * 1.2) * 0.05;
+                updateFireworks(dt); updateConfetti();
+                renderer.render(scene, camera);
+            }
+            animate(); applyMode();
+
+            // ---------- Resize ----------
+            window.addEventListener('resize', function () { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); sizeConfetti(); });
+
+            // ---------- Finish loader ----------
+            setTimeout(function () { clearInterval(loadInt); loadFill.style.width = '100%'; loadTxt.textContent = '100%'; setTimeout(function () { document.getElementById('loader').classList.add('hide'); toast('🙏 Welcome to <b>Sharma Villa</b> — drag to explore the 3D venue!'); setTimeout(function () { burstConfetti(100); launchFirework(); setTimeout(launchFirework, 400); }, 600); }, 400); }, 1600);
+
+            // auto fireworks occasionally
+            setInterval(function () { if (document.hidden) return; if (Math.random() < 0.5) launchFirework(); }, 5000);
+            // hide hint after a while
+            setTimeout(function () { var h = document.getElementById('hint'); if (h) h.style.display = 'none'; }, 14000);
+            controls.addEventListener('start', function () { if (autoRot) { autoRot = false; controls.autoRotate = false; document.getElementById('rotateBtn').textContent = '🔄 Auto-Rotate'; } });
+        })();
+    </script>
+</body>
+
+</html>
