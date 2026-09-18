@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Premium E—Invitation 
 
 A collection of invitation templates by **Premium E-Invitation**, featuring three invitation formats:
@@ -8,7 +7,6 @@ A collection of invitation templates by **Premium E-Invitation**, featuring thre
 # Live link :- https://premiumeinvitations.cc.cd/
 
 A collection of invitation templates by **A Akhil**, featuring three invitation formats:
->>>>>>> 42357fe (add)
 
 - **For free cards:-** https://premiumeinvitations.cc.cd/
 - 💌 **Digital Invitations (₹9 only)** — static invitation card designs
