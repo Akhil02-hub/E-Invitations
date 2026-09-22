@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ You're Invited! | Emma's 25th Birthday</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --gold: #f59e0b;
+            --pink: #ec4899;
+            --purple: #a855f7;
+            --rose: #f43f5e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background: #0f0a1a;
+            color: white;
+            min-height: 100vh;
+        }
+
+        #birthday-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            display: block;
+        }
+
+        .overlay {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            pointer-events: none;
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                0 0 80px rgba(236, 72, 153, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            pointer-events: auto;
+        }
+
+        .title-font {
+            font-family: 'Pacifico', cursive;
+        }
+
+        .display-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fbbf24, #f472b6, #c084fc, #f472b6);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 6s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .glow-btn {
+            background: linear-gradient(135deg, #ec4899, #a855f7, #f59e0b);
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.4), 0 10px 40px rgba(168, 85, 247, 0.3);
+        }
+
+        .glow-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 0 50px rgba(236, 72, 153, 0.6), 0 20px 60px rgba(168, 85, 247, 0.4);
+        }
+
+        .glow-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .detail-card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .detail-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(244, 114, 182, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(236, 72, 153, 0.15);
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .floating-delay-1 {
+            animation-delay: 0.5s;
+        }
+
+        .floating-delay-2 {
+            animation-delay: 1s;
+        }
+
+        .floating-delay-3 {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-12px) rotate(2deg);
+            }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(251, 191, 36, 0.6), 0 0 60px rgba(236, 72, 153, 0.3);
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: white;
+            pointer-events: none;
+            animation: sparkleAnim 1.5s ease-out forwards;
+        }
+
+        @keyframes sparkleAnim {
+            0% {
+                opacity: 1;
+                transform: scale(0) translate(0, 0);
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1) translate(var(--tx), var(--ty));
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            animation: revealUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .reveal-delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .reveal-delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .reveal-delay-3 {
+            animation-delay: 0.6s;
+        }
+
+        .reveal-delay-4 {
+            animation-delay: 0.8s;
+        }
+
+        .reveal-delay-5 {
+            animation-delay: 1s;
+        }
+
+        .reveal-delay-6 {
+            animation-delay: 1.2s;
+        }
+
+        @keyframes revealUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .confetti-burst {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -20px;
+            opacity: 0;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                top: -10%;
+                transform: rotate(0deg) translateX(0);
+            }
+
+            100% {
+                opacity: 0;
+                top: 110%;
+                transform: rotate(720deg) translateX(100px);
+            }
+        }
+
+        .rsvp-success {
+            display: none;
+            animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .candle-flame {
+            animation: flicker 0.15s ease-in-out infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% {
+                transform: scale(1) rotate(-2deg);
+                opacity: 0.9;
+            }
+
+            100% {
+                transform: scale(1.1) rotate(2deg);
+                opacity: 1;
+            }
+        }
+
+        .badge {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(236, 72, 153, 0.2));
+            border: 1px solid rgba(251, 191, 36, 0.4);
+        }
+
+        .scroll-hint {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-12px);
+            }
+
+            60% {
+                transform: translateY(-6px);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f0a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(#ec4899, #a855f7);
+            border-radius: 4px;
+        }
+
+        @media (max-width: 640px) {
+            .glass-card {
+                margin: 1rem;
+            }
+
+            .title-font {
+                font-size: 2.5rem !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="birthday-canvas"></canvas>
+    <div id="confetti-container" class="confetti-burst"></div>
+
+    <div class="overlay">
+        <!-- Hero Section -->
+        <section class="min-h-screen flex flex-col items-center justify-center px-4 py-12 relative">
+            <!-- Decorative floating emojis -->
+            <div class="absolute top-20 left-10 text-4xl floating opacity-60 pointer-events-none hidden md:block">🎈
+            </div>
+            <div
+                class="absolute top-40 right-16 text-3xl floating-delay-1 opacity-50 pointer-events-none hidden md:block">
+                ✨</div>
+            <div
+                class="absolute bottom-32 left-20 text-3xl floating-delay-2 opacity-40 pointer-events-none hidden md:block">
+                🎁</div>
+            <div
+                class="absolute top-1/3 right-10 text-4xl floating-delay-3 opacity-50 pointer-events-none hidden md:block">
+                🎂</div>
+
+            <div class="glass-card rounded-3xl p-8 md:p-12 max-w-2xl w-full text-center relative overflow-hidden">
+                <!-- Inner glow accents -->
+                <div class="absolute -top-20 -right-20 w-40 h-40 bg-pink-500/20 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl"></div>
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl">
+                </div>
+
+                <div class="relative z-10">
+                    <div
+                        class="badge inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium text-amber-200 mb-6 reveal">
+                        <span class="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></span>
+                        You're Cordially Invited
+                    </div>
+
+                    <p
+                        class="text-pink-300 text-lg md:text-xl font-light tracking-widest uppercase mb-2 reveal reveal-delay-1">
+                        Join us for</p>
+
+                    <h1 class="title-font text-5xl md:text-7xl gradient-text mb-2 reveal reveal-delay-2 leading-tight">
+                        Emma's
+                    </h1>
+                    <h2 class="display-font text-3xl md:text-5xl text-white mb-6 reveal reveal-delay-2">
+                        25<span class="text-pink-400">th</span> Birthday
+                    </h2>
+
+                    <p
+                        class="text-white/70 text-base md:text-lg max-w-md mx-auto mb-8 reveal reveal-delay-3 leading-relaxed">
+                        A magical evening of celebration, laughter, cake & unforgettable memories under the stars ✨
+                    </p>
+
+                    <!-- Details Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 reveal reveal-delay-4">
+                        <div class="detail-card rounded-2xl p-4 floating">
+                            <div class="text-3xl mb-2">📅</div>
+                            <p class="text-xs text-white/50 uppercase tracking-wider mb-1">Date</p>
+                            <p class="font-semibold text-white">June 21, 2025</p>
+                            <p class="text-sm text-pink-300">Saturday</p>
+                        </div>
+                        <div class="detail-card rounded-2xl p-4 floating-delay-1">
+                            <div class="text-3xl mb-2">🕖</div>
+                            <p class="text-xs text-white/50 uppercase tracking-wider mb-1">Time</p>
+                            <p class="font-semibold text-white">7:00 PM</p>
+                            <p class="text-sm text-pink-300">Onwards</p>
+                        </div>
+                        <div class="detail-card rounded-2xl p-4 floating-delay-2">
+                            <div class="text-3xl mb-2">📍</div>
+                            <p class="text-xs text-white/50 uppercase tracking-wider mb-1">Venue</p>
+                            <p class="font-semibold text-white">Starlight Hall</p>
+                            <p class="text-sm text-pink-300">42 Bloom Ave</p>
+                        </div>
+                    </div>
+
+                    <!-- Dress Code & Note -->
+                    <div class="flex flex-wrap justify-center gap-3 mb-8 reveal reveal-delay-5">
+                        <span class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/80">
+                            👗 Dress Code: Cocktail Glam
+                        </span>
+                        <span class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/80">
+                            🎁 Gifts optional, smiles required
+                        </span>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center reveal reveal-delay-6">
+                        <button id="rsvp-btn"
+                            class="glow-btn text-white font-semibold px-10 py-4 rounded-full text-lg tracking-wide w-full sm:w-auto">
+                            🎉 Count Me In!
+                        </button>
+                        <button id="celebrate-btn"
+                            class="px-8 py-4 rounded-full border-2 border-pink-400/50 text-pink-200 font-medium hover:bg-pink-500/20 hover:border-pink-400 transition-all duration-300 w-full sm:w-auto">
+                            ✨ Light the Candles
+                        </button>
+                    </div>
+
+                    <!-- Success Message -->
+                    <div id="rsvp-success"
+                        class="rsvp-success mt-8 p-6 rounded-2xl bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-400/30">
+                        <div class="text-4xl mb-3">🥳</div>
+                        <h3 class="text-xl font-bold text-white mb-1">You're on the list!</h3>
+                        <p class="text-white/70">We can't wait to celebrate with you. See you there!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll hint -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-center scroll-hint pointer-events-none">
+                <p class="text-white/40 text-sm mb-1">Explore the magic</p>
+                <div class="text-white/50 text-2xl">↓</div>
+            </div>
+        </section>
+
+        <!-- Party Details Section -->
+        <section class="py-20 px-4 relative">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="title-font text-4xl md:text-5xl text-center gradient-text mb-4">The Celebration</h2>
+                <p class="text-center text-white/60 mb-16 max-w-xl mx-auto">An evening filled with joy, music, gourmet
+                    treats and moments you'll treasure forever</p>
+
+                <div class="grid md:grid-cols-3 gap-6 pointer-events-auto">
+                    <div
+                        class="glass-card rounded-2xl p-8 text-center group hover:scale-105 transition-transform duration-500">
+                        <div
+                            class="w-16 h-16 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-3xl shadow-lg shadow-pink-500/30 group-hover:rotate-12 transition-transform">
+                            🎵</div>
+                        <h3 class="text-xl font-bold mb-2">Live DJ & Dancing</h3>
+                        <p class="text-white/60 text-sm leading-relaxed">Groove to the hottest beats and classic hits
+                            all night long under dazzling lights.</p>
+                    </div>
+                    <div
+                        class="glass-card rounded-2xl p-8 text-center group hover:scale-105 transition-transform duration-500">
+                        <div
+                            class="w-16 h-16 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-3xl shadow-lg shadow-amber-500/30 group-hover:rotate-12 transition-transform">
+                            🍰</div>
+                        <h3 class="text-xl font-bold mb-2">Decadent Cake</h3>
+                        <p class="text-white/60 text-sm leading-relaxed">A stunning three-tier masterpiece with
+                            champagne frosting and edible gold.</p>
+                    </div>
+                    <div
+                        class="glass-card rounded-2xl p-8 text-center group hover:scale-105 transition-transform duration-500">
+                        <div
+                            class="w-16 h-16 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center text-3xl shadow-lg shadow-purple-500/30 group-hover:rotate-12 transition-transform">
+                            🥂</div>
+                        <h3 class="text-xl font-bold mb-2">Open Bar & Bites</h3>
+                        <p class="text-white/60 text-sm leading-relaxed">Signature cocktails, mocktails and a gourmet
+                            grazing table to delight every palate.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="py-16 px-4">
+            <div class="max-w-3xl mx-auto pointer-events-auto">
+                <h2 class="title-font text-4xl text-center gradient-text mb-12">Evening Timeline</h2>
+                <div class="space-y-0 relative">
+                    <div
+                        class="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-pink-500 via-purple-500 to-amber-400">
+                    </div>
+
+                    <div class="flex gap-6 mb-8 relative">
+                        <div
+                            class="w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-xl shrink-0 z-10 shadow-lg shadow-pink-500/40 pulse-glow">
+                            7PM</div>
+                        <div class="glass-card rounded-2xl p-5 flex-1">
+                            <h4 class="font-bold text-lg">Welcome Drinks & Mingling</h4>
+                            <p class="text-white/60 text-sm mt-1">Arrive, grab a signature cocktail and reconnect with
+                                friends.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 mb-8 relative">
+                        <div
+                            class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center text-xl shrink-0 z-10 shadow-lg shadow-purple-500/40">
+                            8PM</div>
+                        <div class="glass-card rounded-2xl p-5 flex-1">
+                            <h4 class="font-bold text-lg">Dinner & Toasts</h4>
+                            <p class="text-white/60 text-sm mt-1">A delicious seated dinner followed by heartfelt
+                                birthday speeches.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 mb-8 relative">
+                        <div
+                            class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-xl shrink-0 z-10 shadow-lg shadow-amber-500/40">
+                            9PM</div>
+                        <div class="glass-card rounded-2xl p-5 flex-1">
+                            <h4 class="font-bold text-lg">Cake Ceremony 🎂</h4>
+                            <p class="text-white/60 text-sm mt-1">The big moment — candles, wishes, and the most
+                                Instagram-worthy cake cut!</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 relative">
+                        <div
+                            class="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-xl shrink-0 z-10 shadow-lg shadow-cyan-500/40">
+                            10PM+</div>
+                        <div class="glass-card rounded-2xl p-5 flex-1">
+                            <h4 class="font-bold text-lg">Dance Floor Opens</h4>
+                            <p class="text-white/60 text-sm mt-1">DJ takes over. Dance until your feet can't take
+                                anymore!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer CTA -->
+        <section class="py-20 px-4 text-center">
+            <div
+                class="glass-card rounded-3xl p-10 md:p-16 max-w-2xl mx-auto pointer-events-auto relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-pink-600/10 via-transparent to-purple-600/10"></div>
+                <div class="relative z-10">
+                    <div class="text-5xl mb-4">💖</div>
+                    <h2 class="title-font text-4xl md:text-5xl gradient-text mb-4">Don't Miss Out!</h2>
+                    <p class="text-white/70 mb-8 max-w-md mx-auto">Emma would be over the moon to celebrate this
+                        milestone with you. Kindly RSVP by June 1st.</p>
+                    <button id="rsvp-btn-2" class="glow-btn text-white font-semibold px-12 py-4 rounded-full text-lg">
+                        RSVP Now ✨
+                    </button>
+                    <p class="mt-8 text-white/40 text-sm">Questions? Reach us at party@emmas25.com</p>
+                </div>
+            </div>
+            <p class="mt-12 text-white/30 text-sm">Made with 🎂 & love · Emma's 25th Birthday 2025</p>
+        </section>
+    </div>
+
+    <script>
+        // ===== THREE.JS BIRTHDAY SCENE =====
+        const canvas = document.getElementById('birthday-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setClearColor(0x0f0a1a, 1);
+        renderer.shadowMap.enabled = true;
+
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x0f0a1a, 0.015);
+
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 5, 18);
+        camera.lookAt(0, 2, 0);
+
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0x4a3070, 0.4);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffeecc, 0.8);
+        dirLight.position.set(5, 15, 8);
+        dirLight.castShadow = true;
+        scene.add(dirLight);
+
+        const pinkLight = new THREE.PointLight(0xec4899, 1.5, 30);
+        pinkLight.position.set(-8, 6, 5);
+        scene.add(pinkLight);
+
+        const purpleLight = new THREE.PointLight(0xa855f7, 1.2, 25);
+        purpleLight.position.set(8, 5, 3);
+        scene.add(purpleLight);
+
+        const goldLight = new THREE.PointLight(0xf59e0b, 1, 20);
+        goldLight.position.set(0, 8, 0);
+        scene.add(goldLight);
+
+        // ===== STARFIELD =====
+        const starsGeo = new THREE.BufferGeometry();
+        const starCount = 1200;
+        const starPositions = new Float32Array(starCount * 3);
+        const starColors = new Float32Array(starCount * 3);
+        for (let i = 0; i < starCount; i++) {
+            starPositions[i * 3] = (Math.random() - 0.5) * 100;
+            starPositions[i * 3 + 1] = Math.random() * 50 + 5;
+            starPositions[i * 3 + 2] = (Math.random() - 0.5) * 100;
+            const colorChoice = Math.random();
+            if (colorChoice > 0.7) {
+                starColors[i * 3] = 1; starColors[i * 3 + 1] = 0.7; starColors[i * 3 + 2] = 0.9;
+            } else if (colorChoice > 0.4) {
+                starColors[i * 3] = 0.9; starColors[i * 3 + 1] = 0.85; starColors[i * 3 + 2] = 1;
+            } else {
+                starColors[i * 3] = 1; starColors[i * 3 + 1] = 1; starColors[i * 3 + 2] = 0.8;
+            }
+        }
+        starsGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+        starsGeo.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+        const starsMat = new THREE.PointsMaterial({ size: 0.15, vertexColors: true, transparent: true, opacity: 0.9 });
+        const stars = new THREE.Points(starsGeo, starsMat);
+        scene.add(stars);
+
+        // ===== BALLOONS =====
+        const balloons = [];
+        const balloonColors = [0xec4899, 0xa855f7, 0xf59e0b, 0x3b82f6, 0xef4444, 0x10b981, 0xf472b6, 0x8b5cf6];
+
+        function createBalloon(x, y, z, color, scale = 1) {
+            const group = new THREE.Group();
+
+            // Balloon body
+            const geo = new THREE.SphereGeometry(0.6 * scale, 32, 32);
+            geo.scale(1, 1.2, 1);
+            const mat = new THREE.MeshStandardMaterial({
+                color: color,
+                metalness: 0.1,
+                roughness: 0.3,
+                emissive: color,
+                emissiveIntensity: 0.15
+            });
+            const balloon = new THREE.Mesh(geo, mat);
+            balloon.castShadow = true;
+            group.add(balloon);
+
+            // Highlight
+            const highlightGeo = new THREE.SphereGeometry(0.15 * scale, 16, 16);
+            const highlightMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.4 });
+            const highlight = new THREE.Mesh(highlightGeo, highlightMat);
+            highlight.position.set(-0.2 * scale, 0.3 * scale, 0.4 * scale);
+            group.add(highlight);
+
+            // Knot
+            const knotGeo = new THREE.ConeGeometry(0.08 * scale, 0.15 * scale, 8);
+            const knotMat = new THREE.MeshStandardMaterial({ color: color, roughness: 0.5 });
+            const knot = new THREE.Mesh(knotGeo, knotMat);
+            knot.position.y = -0.72 * scale;
+            knot.rotation.x = Math.PI;
+            group.add(knot);
+
+            // String
+            const stringGeo = new THREE.CylinderGeometry(0.01, 0.01, 2.5 * scale, 4);
+            const stringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
+            const string = new THREE.Mesh(stringGeo, stringMat);
+            string.position.y = -2 * scale;
+            group.add(string);
+
+            group.position.set(x, y, z);
+            group.userData = {
+                baseY: y,
+                speed: 0.3 + Math.random() * 0.5,
+                phase: Math.random() * Math.PI * 2,
+                rotSpeed: (Math.random() - 0.5) * 0.3,
+                swayAmount: 0.3 + Math.random() * 0.4
+            };
+            scene.add(group);
+            balloons.push(group);
+            return group;
+        }
+
+        // Create many balloons
+        for (let i = 0; i < 18; i++) {
+            const x = (Math.random() - 0.5) * 28;
+            const y = Math.random() * 10 + 2;
+            const z = (Math.random() - 0.5) * 20 - 5;
+            const color = balloonColors[i % balloonColors.length];
+            const scale = 0.7 + Math.random() * 0.6;
+            createBalloon(x, y, z, color, scale);
+        }
+
+        // ===== BIRTHDAY CAKE =====
+        const cakeGroup = new THREE.Group();
+
+        // Cake plate
+        const plateGeo = new THREE.CylinderGeometry(3.2, 3.4, 0.15, 64);
+        const plateMat = new THREE.MeshStandardMaterial({ color: 0xf5f5f5, metalness: 0.6, roughness: 0.2 });
+        const plate = new THREE.Mesh(plateGeo, plateMat);
+        plate.position.y = 0;
+        plate.receiveShadow = true;
+        cakeGroup.add(plate);
+
+        // Cake layers
+        const layerColors = [0xffb6c1, 0xff69b4, 0xff1493];
+        const layerHeights = [1.2, 1.0, 0.8];
+        const layerRadii = [2.8, 2.1, 1.4];
+        let layerY = 0.15;
+
+        for (let i = 0; i < 3; i++) {
+            const layerGeo = new THREE.CylinderGeometry(layerRadii[i], layerRadii[i], layerHeights[i], 64);
+            const layerMat = new THREE.MeshStandardMaterial({
+                color: layerColors[i],
+                roughness: 0.6,
+                metalness: 0.05
+            });
+            const layer = new THREE.Mesh(layerGeo, layerMat);
+            layer.position.y = layerY + layerHeights[i] / 2;
+            layer.castShadow = true;
+            layer.receiveShadow = true;
+            cakeGroup.add(layer);
+
+            // Frosting drip ring
+            const frostingGeo = new THREE.TorusGeometry(layerRadii[i] * 0.95, 0.12, 8, 48);
+            const frostingMat = new THREE.MeshStandardMaterial({ color: 0xfff0f5, roughness: 0.4 });
+            const frosting = new THREE.Mesh(frostingGeo, frostingMat);
+            frosting.position.y = layerY + layerHeights[i] - 0.05;
+            frosting.rotation.x = Math.PI / 2;
+            cakeGroup.add(frosting);
+
+            // Side frosting dots
+            for (let j = 0; j < 12; j++) {
+                const angle = (j / 12) * Math.PI * 2;
+                const dotGeo = new THREE.SphereGeometry(0.1, 8, 8);
+                const dotMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
+                const dot = new THREE.Mesh(dotGeo, dotMat);
+                dot.position.set(
+                    Math.cos(angle) * layerRadii[i],
+                    layerY + 0.3 + (j % 3) * 0.25,
+                    Math.sin(angle) * layerRadii[i]
+                );
+                cakeGroup.add(dot);
+            }
+
+            layerY += layerHeights[i];
+        }
+
+        // Candles
+        const candles = [];
+        const candlePositions = [
+            [0, 0], [0.5, 0.3], [-0.5, 0.3], [0.3, -0.5], [-0.3, -0.5],
+            [0.7, -0.2], [-0.7, -0.2], [0, 0.6], [0.4, 0.5], [-0.4, 0.5]
+        ];
+
+        candlePositions.forEach((pos, idx) => {
+            const candleG = new THREE.Group();
+
+            // Candle stick
+            const stickGeo = new THREE.CylinderGeometry(0.06, 0.06, 0.7, 8);
+            const stickColors = [0xff6b9d, 0xc084fc, 0xfbbf24, 0x60a5fa, 0x34d399];
+            const stickMat = new THREE.MeshStandardMaterial({ color: stickColors[idx % stickColors.length] });
+            const stick = new THREE.Mesh(stickGeo, stickMat);
+            stick.position.y = 0.35;
+            candleG.add(stick);
+
+            // Wick
+            const wickGeo = new THREE.CylinderGeometry(0.015, 0.015, 0.1, 4);
+            const wickMat = new THREE.MeshBasicMaterial({ color: 0x222222 });
+            const wick = new THREE.Mesh(wickGeo, wickMat);
+            wick.position.y = 0.75;
+            candleG.add(wick);
+
+            // Flame
+            const flameGeo = new THREE.SphereGeometry(0.1, 8, 8);
+            flameGeo.scale(0.7, 1.4, 0.7);
+            const flameMat = new THREE.MeshBasicMaterial({
+                color: 0xffaa00,
+                transparent: true,
+                opacity: 0.9
+            });
+            const flame = new THREE.Mesh(flameGeo, flameMat);
+            flame.position.y = 0.9;
+            candleG.add(flame);
+
+            // Flame glow light
+            const flameLight = new THREE.PointLight(0xff6600, 0.4, 3);
+            flameLight.position.y = 0.9;
+            candleG.add(flameLight);
+
+            // Inner flame
+            const innerFlameGeo = new THREE.SphereGeometry(0.05, 6, 6);
+            innerFlameGeo.scale(0.6, 1.2, 0.6);
+            const innerFlameMat = new THREE.MeshBasicMaterial({ color: 0xffffcc });
+            const innerFlame = new THREE.Mesh(innerFlameGeo, innerFlameMat);
+            innerFlame.position.y = 0.88;
+            candleG.add(innerFlame);
+
+            candleG.position.set(pos[0], layerY, pos[1]);
+            candleG.userData = { flame, innerFlame, flameLight, phase: Math.random() * Math.PI * 2 };
+            cakeGroup.add(candleG);
+            candles.push(candleG);
+        });
+
+        // Cherries / toppings on top
+        for (let i = 0; i < 6; i++) {
+            const angle = (i / 6) * Math.PI * 2;
+            const cherryGeo = new THREE.SphereGeometry(0.12, 12, 12);
+            const cherryMat = new THREE.MeshStandardMaterial({ color: 0xdc2626, roughness: 0.3, metalness: 0.2 });
+            const cherry = new THREE.Mesh(cherryGeo, cherryMat);
+            cherry.position.set(Math.cos(angle) * 0.9, layerY + 0.1, Math.sin(angle) * 0.9);
+            cakeGroup.add(cherry);
+        }
+
+        cakeGroup.position.set(0, 0, 0);
+        scene.add(cakeGroup);
+
+        // ===== GIFT BOXES =====
+        function createGift(x, y, z, color, ribbonColor, scale = 1) {
+            const gift = new THREE.Group();
+
+            const boxGeo = new THREE.BoxGeometry(1.2 * scale, 0.9 * scale, 1.2 * scale);
+            const boxMat = new THREE.MeshStandardMaterial({ color, roughness: 0.4, metalness: 0.1 });
+            const box = new THREE.Mesh(boxGeo, boxMat);
+            box.castShadow = true;
+            gift.add(box);
+
+            // Ribbon vertical
+            const ribVGeo = new THREE.BoxGeometry(0.15 * scale, 0.92 * scale, 1.22 * scale);
+            const ribMat = new THREE.MeshStandardMaterial({ color: ribbonColor, metalness: 0.3, roughness: 0.4 });
+            const ribV = new THREE.Mesh(ribVGeo, ribMat);
+            gift.add(ribV);
+
+            // Ribbon horizontal
+            const ribHGeo = new THREE.BoxGeometry(1.22 * scale, 0.15 * scale, 1.22 * scale);
+            const ribH = new THREE.Mesh(ribHGeo, ribMat);
+            ribH.position.y = 0.15 * scale;
+            gift.add(ribH);
+
+            // Bow
+            const bowGeo = new THREE.TorusGeometry(0.2 * scale, 0.08 * scale, 8, 16);
+            const bow = new THREE.Mesh(bowGeo, ribMat);
+            bow.position.y = 0.55 * scale;
+            bow.rotation.x = Math.PI / 2;
+            gift.add(bow);
+
+            const bow2 = bow.clone();
+            bow2.rotation.z = Math.PI / 2;
+            gift.add(bow2);
+
+            gift.position.set(x, y, z);
+            gift.rotation.y = Math.random() * 0.5;
+            scene.add(gift);
+            return gift;
+        }
+
+        createGift(-5, 0.45, 3, 0xec4899, 0xfbbf24, 1);
+        createGift(-6.5, 0.35, 2, 0xa855f7, 0xffffff, 0.8);
+        createGift(5, 0.45, 2.5, 0x3b82f6, 0xf472b6, 1.1);
+        createGift(6.2, 0.3, 3.5, 0xf59e0b, 0xef4444, 0.7);
+        createGift(-4, 0.3, 5, 0x10b981, 0xfbbf24, 0.75);
+        createGift(4.5, 0.25, 5, 0xf472b6, 0xa855f7, 0.65);
+
+        // ===== CONFETTI PARTICLES (3D) =====
+        const confettiCount = 300;
+        const confettiGeo = new THREE.BufferGeometry();
+        const confettiPos = new Float32Array(confettiCount * 3);
+        const confettiCol = new Float32Array(confettiCount * 3);
+        const confettiVel = [];
+        const confettiColorsList = [
+            [1, 0.3, 0.6], [0.66, 0.33, 0.97], [0.96, 0.62, 0.04],
+            [0.23, 0.51, 0.96], [0.06, 0.73, 0.51], [1, 1, 1],
+            [0.94, 0.27, 0.27], [0.45, 0.21, 0.6]
+        ];
+
+        for (let i = 0; i < confettiCount; i++) {
+            confettiPos[i * 3] = (Math.random() - 0.5) * 40;
+            confettiPos[i * 3 + 1] = Math.random() * 25;
+            confettiPos[i * 3 + 2] = (Math.random() - 0.5) * 30;
+            const c = confettiColorsList[Math.floor(Math.random() * confettiColorsList.length)];
+            confettiCol[i * 3] = c[0];
+            confettiCol[i * 3 + 1] = c[1];
+            confettiCol[i * 3 + 2] = c[2];
+            confettiVel.push({
+                x: (Math.random() - 0.5) * 0.05,
+                y: -0.02 - Math.random() * 0.04,
+                z: (Math.random() - 0.5) * 0.05,
+                rotSpeed: (Math.random() - 0.5) * 0.1
+            });
+        }
+        confettiGeo.setAttribute('position', new THREE.BufferAttribute(confettiPos, 3));
+        confettiGeo.setAttribute('color', new THREE.BufferAttribute(confettiCol, 3));
+        const confettiMat = new THREE.PointsMaterial({
+            size: 0.2,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.85,
+            sizeAttenuation: true
+        });
+        const confettiParticles = new THREE.Points(confettiGeo, confettiMat);
+        scene.add(confettiParticles);
+
+        // ===== GROUND =====
+        const groundGeo = new THREE.CircleGeometry(40, 64);
+        const groundMat = new THREE.MeshStandardMaterial({
+            color: 0x1a1025,
+            roughness: 0.9,
+            metalness: 0.1
+        });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = -0.01;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        // Soft glow ring on ground under cake
+        const ringGeo = new THREE.RingGeometry(3.5, 5, 64);
+        const ringMat = new THREE.MeshBasicMaterial({
+            color: 0xec4899,
+            transparent: true,
+            opacity: 0.15,
+            side: THREE.DoubleSide
+        });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.rotation.x = -Math.PI / 2;
+        ring.position.y = 0.02;
+        scene.add(ring);
+
+        // ===== ANIMATION STATE =====
+        let candlesLit = true;
+        let celebrationMode = false;
+        let celebrationTimer = 0;
+        let cameraAngle = 0;
+        const clock = new THREE.Clock();
+
+        // ===== RENDER LOOP =====
+        function animate() {
+            requestAnimationFrame(animate);
+            const t = clock.getElapsedTime();
+            const delta = clock.getDelta();
+
+            // Animate balloons
+            balloons.forEach((b) => {
+                const d = b.userData;
+                b.position.y = d.baseY + Math.sin(t * d.speed + d.phase) * d.swayAmount;
+                b.position.x += Math.sin(t * 0.2 + d.phase) * 0.002;
+                b.rotation.y += d.rotSpeed * 0.01;
+                b.rotation.z = Math.sin(t * d.speed * 0.5 + d.phase) * 0.08;
+            });
+
+            // Animate candles
+            candles.forEach((c) => {
+                if (candlesLit) {
+                    const d = c.userData;
+                    const flicker = 0.9 + Math.sin(t * 25 + d.phase) * 0.1 + Math.sin(t * 40 + d.phase * 2) * 0.05;
+                    d.flame.scale.set(0.7 * flicker, 1.3 * flicker, 0.7 * flicker);
+                    d.innerFlame.scale.set(0.5 * flicker, 1.1 * flicker, 0.5 * flicker);
+                    d.flameLight.intensity = 0.3 + Math.sin(t * 20 + d.phase) * 0.15;
+                    d.flame.material.opacity = 0.8 + Math.sin(t * 15 + d.phase) * 0.2;
+                    d.flame.visible = true;
+                    d.innerFlame.visible = true;
+                } else {
+                    c.userData.flame.visible = false;
+                    c.userData.innerFlame.visible = false;
+                    c.userData.flameLight.intensity = 0;
+                }
+            });
+
+            // Cake gentle rotation
+            cakeGroup.rotation.y = Math.sin(t * 0.15) * 0.1;
+
+            // Confetti fall
+            const positions = confettiParticles.geometry.attributes.position.array;
+            for (let i = 0; i < confettiCount; i++) {
+                positions[i * 3] += confettiVel[i].x;
+                positions[i * 3 + 1] += confettiVel[i].y * (celebrationMode ? 2.5 : 1);
+                positions[i * 3 + 2] += confettiVel[i].z;
+
+                if (positions[i * 3 + 1] < -1) {
+                    positions[i * 3 + 1] = 20 + Math.random() * 10;
+                    positions[i * 3] = (Math.random() - 0.5) * 40;
+                    positions[i * 3 + 2] = (Math.random() - 0.5) * 30;
+                }
+            }
+            confettiParticles.geometry.attributes.position.needsUpdate = true;
+            confettiParticles.rotation.y = t * 0.02;
+
+            // Stars twinkle via opacity pulse
+            starsMat.opacity = 0.7 + Math.sin(t * 2) * 0.3;
+            stars.rotation.y = t * 0.01;
+
+            // Lights animation
+            pinkLight.intensity = 1.2 + Math.sin(t * 1.5) * 0.4;
+            purpleLight.intensity = 1.0 + Math.sin(t * 1.2 + 1) * 0.3;
+            goldLight.intensity = 0.8 + Math.sin(t * 2) * 0.3;
+
+            // Ring pulse
+            ring.material.opacity = 0.1 + Math.sin(t * 2) * 0.08;
+            ring.scale.setScalar(1 + Math.sin(t * 1.5) * 0.05);
+
+            // Camera orbit
+            cameraAngle += 0.0015;
+            if (celebrationMode) {
+                celebrationTimer += 0.016;
+                camera.position.x = Math.sin(cameraAngle * 2) * (16 - celebrationTimer * 0.5);
+                camera.position.z = Math.cos(cameraAngle * 2) * (16 - celebrationTimer * 0.5);
+                camera.position.y = 5 + Math.sin(t * 2) * 1;
+                if (celebrationTimer > 8) {
+                    celebrationMode = false;
+                    celebrationTimer = 0;
+                }
+            } else {
+                camera.position.x = Math.sin(cameraAngle) * 18;
+                camera.position.z = Math.cos(cameraAngle) * 18;
+                camera.position.y = 5 + Math.sin(t * 0.3) * 0.5;
+            }
+            camera.lookAt(0, 2.5, 0);
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // ===== RESIZE =====
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // ===== HTML CONFETTI BURST =====
+        function burstConfetti(count = 80) {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#ec4899', '#a855f7', '#f59e0b', '#3b82f6', '#10b981', '#f472b6', '#fff', '#ef4444'];
+            for (let i = 0; i < count; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                const c = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.background = c;
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.width = (6 + Math.random() * 8) + 'px';
+                piece.style.height = (6 + Math.random() * 8) + 'px';
+                piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                piece.style.animationDuration = (2 + Math.random() * 3) + 's';
+                piece.style.animationDelay = Math.random() * 0.5 + 's';
+                container.appendChild(piece);
+                setTimeout(() => piece.remove(), 5000);
+            }
+        }
+
+        // ===== SPARKLE EFFECT ON BUTTONS =====
+        function createSparkles(e) {
+            for (let i = 0; i < 12; i++) {
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                const rect = e.target.getBoundingClientRect();
+                s.style.left = (rect.left + rect.width / 2) + 'px';
+                s.style.top = (rect.top + rect.height / 2) + 'px';
+                s.style.setProperty('--tx', ((Math.random() - 0.5) * 120) + 'px');
+                s.style.setProperty('--ty', ((Math.random() - 0.5) * 120 - 40) + 'px');
+                s.style.background = ['#fbbf24', '#f472b6', '#c084fc', '#fff'][Math.floor(Math.random() * 4)];
+                document.body.appendChild(s);
+                setTimeout(() => s.remove(), 1500);
+            }
+        }
+
+        // ===== INTERACTIONS =====
+        const rsvpBtn = document.getElementById('rsvp-btn');
+        const rsvpBtn2 = document.getElementById('rsvp-btn-2');
+        const celebrateBtn = document.getElementById('celebrate-btn');
+        const rsvpSuccess = document.getElementById('rsvp-success');
+
+        function handleRSVP(e) {
+            createSparkles(e);
+            burstConfetti(100);
+            celebrationMode = true;
+            celebrationTimer = 0;
+            candlesLit = true;
+            rsvpSuccess.style.display = 'block';
+            rsvpBtn.style.display = 'none';
+            if (rsvpBtn2) rsvpBtn2.textContent = "✓ You're Invited!";
+
+            // Boost lights
+            pinkLight.intensity = 3;
+            purpleLight.intensity = 2.5;
+            goldLight.intensity = 2;
+            setTimeout(() => {
+                pinkLight.intensity = 1.5;
+                purpleLight.intensity = 1.2;
+                goldLight.intensity = 1;
+            }, 3000);
+        }
+
+        rsvpBtn.addEventListener('click', handleRSVP);
+        rsvpBtn2.addEventListener('click', handleRSVP);
+
+        celebrateBtn.addEventListener('click', (e) => {
+            createSparkles(e);
+            burstConfetti(60);
+            candlesLit = !candlesLit;
+            celebrationMode = true;
+            celebrationTimer = 0;
+            celebrateBtn.textContent = candlesLit ? '✨ Blow Out Candles' : '✨ Light the Candles';
+
+            if (candlesLit) {
+                goldLight.intensity = 2.5;
+                setTimeout(() => { goldLight.intensity = 1; }, 2000);
+            }
+        });
+
+        // Initial confetti
+        setTimeout(() => burstConfetti(50), 800);
+
+        // Mouse parallax on card
+        const card = document.querySelector('.glass-card');
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth < 768) return;
+            const x = (e.clientX / window.innerWidth - 0.5) * 10;
+            const y = (e.clientY / window.innerHeight - 0.5) * 10;
+            if (card) {
+                card.style.transform = `perspective(1000px) rotateY(${x * 0.3}deg) rotateX(${-y * 0.3}deg)`;
+            }
+        });
+    </script>
+</body>
+
+</html>

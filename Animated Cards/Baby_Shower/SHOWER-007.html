@@ -1,0 +1,466 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Baby Shower Invitation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive, sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #e1bee7 50%, #bbdefb 100%);
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #welcome {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px 60px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(216, 27, 96, 0.2);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            animation: floatCard 3s ease-in-out infinite;
+        }
+
+        #welcome:hover {
+            animation: none;
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 25px 45px rgba(216, 27, 96, 0.3);
+        }
+
+        @keyframes floatCard {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        #welcome h1 {
+            margin: 0;
+            color: #d81b60;
+            font-size: 3rem;
+            text-shadow: 2px 2px 0px #f8bbd0;
+        }
+
+        #welcome p {
+            margin: 15px 0 0;
+            color: #880e4f;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin-top: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        #invitation {
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.8s ease;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 30px;
+            max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            transform: translateY(30px) scale(0.95);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid #f8bbd0;
+        }
+
+        #invitation.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+        }
+
+        #invitation h2 {
+            color: #d81b60;
+            font-size: 2.5rem;
+            margin: 0 0 15px 0;
+        }
+
+        #invitation p {
+            color: #4a148c;
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .details {
+            margin: 30px 0;
+            padding: 20px;
+            background: #fce4ec;
+            border-radius: 15px;
+        }
+
+        .detail-item {
+            margin: 10px 0;
+            font-weight: bold;
+            color: #00796b;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .rsvp {
+            margin-top: 20px;
+            font-style: italic;
+            color: #d81b60;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="canvas-container"></div>
+    <div id="overlay">
+        <div id="welcome" onclick="showInvitation()">
+            <h1>Baby Shower</h1>
+            <p>Click to Open Your Invitation</p>
+            <div class="icon">👶</div>
+        </div>
+        <div id="invitation">
+            <h2>Join Us!</h2>
+            <p>We are thrilled to announce the upcoming arrival of our little bundle of joy.</p>
+            <p>Please join us for a celebration filled with love, laughter, and tiny socks!</p>
+            <div class="details">
+                <div class="detail-item"><span>📅</span> Saturday, October 28th</div>
+                <div class="detail-item"><span>⏰</span> 2:00 PM - 5:00 PM</div>
+                <div class="detail-item"><span>📍</span> 123 Cradle Lane, Sweetville</div>
+            </div>
+            <p class="rsvp">Kindly RSVP by October 15th</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        function showInvitation() {
+            const welcome = document.getElementById('welcome');
+            const invitation = document.getElementById('invitation');
+            welcome.style.opacity = '0';
+            welcome.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                welcome.style.display = 'none';
+                invitation.classList.add('active');
+            }, 400);
+        }
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 2, 12);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.8;
+        controls.maxDistance = 25;
+        controls.minDistance = 5;
+        controls.enablePan = false;
+
+        const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambient);
+
+        const dirLight = new THREE.DirectionalLight(0xfff0f5, 0.8);
+        dirLight.position.set(5, 10, 7);
+        dirLight.castShadow = true;
+        dirLight.shadow.mapSize.width = 1024;
+        dirLight.shadow.mapSize.height = 1024;
+        dirLight.shadow.camera.near = 0.5;
+        dirLight.shadow.camera.far = 50;
+        dirLight.shadow.camera.left = -10;
+        dirLight.shadow.camera.right = 10;
+        dirLight.shadow.camera.top = 10;
+        dirLight.shadow.camera.bottom = -10;
+        scene.add(dirLight);
+
+        const pointLight = new THREE.PointLight(0xff80ab, 0.6, 20);
+        pointLight.position.set(-5, -5, 5);
+        scene.add(pointLight);
+
+        const floorGeo = new THREE.PlaneGeometry(100, 100);
+        const floorMat = new THREE.ShadowMaterial({ opacity: 0.15 });
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.rotation.x = -Math.PI / 2;
+        floor.position.y = -5;
+        floor.receiveShadow = true;
+        scene.add(floor);
+
+        function createTextTexture(text, bgColor, textColor) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, 512, 512);
+            ctx.fillStyle = 'rgba(255,255,255,0.2)';
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    ctx.beginPath();
+                    ctx.arc(i * 51.2 + 25, j * 51.2 + 25, 10, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+            ctx.lineWidth = 25;
+            ctx.strokeRect(15, 15, 482, 482);
+            ctx.fillStyle = textColor;
+            ctx.font = 'bold 260px "Comic Sans MS", cursive, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, 256, 276);
+            const tex = new THREE.CanvasTexture(canvas);
+            tex.anisotropy = 4;
+            return tex;
+        }
+
+        const blockColors = ['#ffcdd2', '#bbdefb', '#c8e6c9', '#fff9c4'];
+        const letters = ['B', 'A', 'B', 'Y'];
+        const blockPositions = [[-4, 1, 0], [-2, -2, 2], [2, 2, -1], [4, -1, 1]];
+        const blocks = [];
+
+        for (let i = 0; i < 4; i++) {
+            const tex = createTextTexture(letters[i], blockColors[i], '#ffffff');
+            const materials = [
+                new THREE.MeshStandardMaterial({ color: blockColors[i], roughness: 0.5 }),
+                new THREE.MeshStandardMaterial({ color: blockColors[i], roughness: 0.5 }),
+                new THREE.MeshStandardMaterial({ color: blockColors[i], roughness: 0.5 }),
+                new THREE.MeshStandardMaterial({ color: blockColors[i], roughness: 0.5 }),
+                new THREE.MeshStandardMaterial({ map: tex, roughness: 0.5 }),
+                new THREE.MeshStandardMaterial({ color: blockColors[i], roughness: 0.5 })
+            ];
+            const geo = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+            const mesh = new THREE.Mesh(geo, materials);
+            mesh.position.set(...blockPositions[i]);
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            scene.add(mesh);
+            blocks.push({
+                mesh: mesh,
+                baseY: mesh.position.y,
+                offset: Math.random() * Math.PI * 2,
+                speed: 0.5 + Math.random() * 0.5,
+                rotSpeed: (Math.random() - 0.5) * 0.02
+            });
+        }
+
+        const bottleGroup = new THREE.Group();
+        const bottleMat = new THREE.MeshPhysicalMaterial({
+            color: 0xe1f5fe, transparent: true, opacity: 0.5, roughness: 0.1, metalness: 0.1, clearcoat: 1.0, clearcoatRoughness: 0.2
+        });
+        const milkMat = new THREE.MeshStandardMaterial({ color: 0xfff8e1, roughness: 0.2 });
+        const nippleMat = new THREE.MeshStandardMaterial({ color: 0xffe0b2, roughness: 0.4 });
+
+        const bodyGeo = new THREE.CylinderGeometry(0.9, 0.9, 2.2, 32);
+        const body = new THREE.Mesh(bodyGeo, bottleMat);
+        body.position.y = 0;
+        body.castShadow = true;
+        body.receiveShadow = true;
+        bottleGroup.add(body);
+
+        const milkGeo = new THREE.CylinderGeometry(0.85, 0.85, 1.4, 32);
+        const milk = new THREE.Mesh(milkGeo, milkMat);
+        milk.position.y = -0.3;
+        milk.castShadow = true;
+        bottleGroup.add(milk);
+
+        const neckGeo = new THREE.CylinderGeometry(0.5, 0.9, 0.5, 32);
+        const neck = new THREE.Mesh(neckGeo, bottleMat);
+        neck.position.y = 1.35;
+        neck.castShadow = true;
+        bottleGroup.add(neck);
+
+        const nippleGeo = new THREE.CylinderGeometry(0.15, 0.5, 0.7, 32);
+        const nipple = new THREE.Mesh(nippleGeo, nippleMat);
+        nipple.position.y = 2.05;
+        nipple.castShadow = true;
+        bottleGroup.add(nipple);
+
+        const ringGeo = new THREE.TorusGeometry(0.55, 0.12, 16, 32);
+        const ring = new THREE.Mesh(ringGeo, nippleMat);
+        ring.rotation.x = Math.PI / 2;
+        ring.position.y = 1.55;
+        ring.castShadow = true;
+        bottleGroup.add(ring);
+
+        bottleGroup.position.set(0, 0, 3);
+        bottleGroup.scale.set(0.8, 0.8, 0.8);
+        scene.add(bottleGroup);
+
+        const clouds = [];
+        function createCloud(x, y, z, scale) {
+            const cloudGroup = new THREE.Group();
+            const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1 });
+            const geo1 = new THREE.SphereGeometry(1, 16, 16);
+            const parts = [
+                { p: [0, 0, 0], s: 1 }, { p: [1.2, -0.2, 0], s: 0.8 }, { p: [-1.2, -0.2, 0], s: 0.8 },
+                { p: [0.6, 0.4, 0], s: 0.7 }, { p: [-0.6, 0.4, 0], s: 0.7 }, { p: [0, -0.4, 0], s: 1.1 }
+            ];
+            parts.forEach(part => {
+                const m = new THREE.Mesh(geo1, mat);
+                m.position.set(...part.p);
+                m.scale.set(part.s, part.s, part.s);
+                m.castShadow = true;
+                cloudGroup.add(m);
+            });
+            cloudGroup.position.set(x, y, z);
+            cloudGroup.scale.set(scale, scale, scale);
+            scene.add(cloudGroup);
+            clouds.push({ mesh: cloudGroup, baseY: y, offset: Math.random() * Math.PI * 2, speed: 0.2 + Math.random() * 0.3 });
+        }
+        createCloud(-5, 3, -2, 1.5);
+        createCloud(6, 4, -4, 2);
+        createCloud(-4, -3, -5, 1.2);
+        createCloud(5, -2, -1, 1.8);
+
+        const heartShape = new THREE.Shape();
+        heartShape.moveTo(0, 0.5);
+        heartShape.bezierCurveTo(0, 0.5, -0.5, 1.0, -0.5, 1.5);
+        heartShape.bezierCurveTo(-0.5, 2.0, 0, 2.5, 0, 3.0);
+        heartShape.bezierCurveTo(0, 2.5, 0.5, 2.0, 0.5, 1.5);
+        heartShape.bezierCurveTo(0.5, 1.0, 0, 0.5, 0, 0.5);
+
+        const smallHearts = [];
+        for (let i = 0; i < 8; i++) {
+            const hGeo = new THREE.ExtrudeGeometry(heartShape, { depth: 0.2, bevelEnabled: false });
+            hGeo.center();
+            const hMat = new THREE.MeshStandardMaterial({ color: [0xff80ab, 0xffcdd2, 0xf8bbd0, 0xb2ebf2][i % 4], roughness: 0.4 });
+            const h = new THREE.Mesh(hGeo, hMat);
+            h.scale.set(0.15, 0.15, 0.15);
+            const angle = (i / 8) * Math.PI * 2;
+            const radius = 4 + Math.random() * 2;
+            h.position.set(Math.cos(angle) * radius, (Math.random() - 0.5) * 6, Math.sin(angle) * radius);
+            scene.add(h);
+            smallHearts.push({ mesh: h, baseY: h.position.y, speed: 0.5 + Math.random(), offset: Math.random() * Math.PI * 2, rotSpeed: (Math.random() - 0.5) * 0.05 });
+        }
+
+        function createCircleTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 32; canvas.height = 32;
+            const ctx = canvas.getContext('2d');
+            ctx.beginPath();
+            ctx.arc(16, 16, 14, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        const starsGeo = new THREE.BufferGeometry();
+        const starsCount = 200;
+        const starsPos = new Float32Array(starsCount * 3);
+        for (let i = 0; i < starsCount * 3; i++) {
+            starsPos[i] = (Math.random() - 0.5) * 40;
+        }
+        starsGeo.setAttribute('position', new THREE.BufferAttribute(starsPos, 3));
+        const starsMat = new THREE.PointsMaterial({
+            size: 0.2, color: 0xffffff, transparent: true, opacity: 0.8, map: createCircleTexture(), depthWrite: false, blending: THREE.AdditiveBlending
+        });
+        const stars = new THREE.Points(starsGeo, starsMat);
+        scene.add(stars);
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        const clock = new THREE.Clock();
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = clock.getElapsedTime();
+
+            blocks.forEach(b => {
+                b.mesh.position.y = b.baseY + Math.sin(time * b.speed + b.offset) * 0.4;
+                b.mesh.rotation.x += b.rotSpeed;
+                b.mesh.rotation.y += b.rotSpeed * 1.5;
+            });
+
+            bottleGroup.position.y = Math.sin(time * 0.8) * 0.4;
+            bottleGroup.rotation.y += 0.01;
+            bottleGroup.rotation.z = Math.sin(time * 0.5) * 0.1;
+
+            clouds.forEach(c => {
+                c.mesh.position.y = c.baseY + Math.sin(time * c.speed + c.offset) * 0.5;
+                c.mesh.rotation.y += 0.002;
+            });
+
+            smallHearts.forEach(sh => {
+                sh.mesh.position.y = sh.baseY + Math.sin(time * sh.speed + sh.offset) * 0.5;
+                sh.mesh.rotation.y += sh.rotSpeed;
+                sh.mesh.rotation.z += sh.rotSpeed * 0.5;
+            });
+
+            stars.rotation.y = time * 0.02;
+
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+
+</html>

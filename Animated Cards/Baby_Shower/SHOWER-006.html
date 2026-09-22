@@ -1,0 +1,998 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👶 Baby Shower Invitation 👶</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;600;700&family=Sacramento&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow-x: hidden;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #e8f5e9 25%, #e3f2fd 50%, #fff3e0 75%, #fce4ec 100%);
+            background-size: 400% 400%;
+            animation: bgShift 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @keyframes bgShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        #canvas-container {
+            width: 100%;
+            height: 55vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-title {
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            color: #ad1457;
+            text-shadow: 0 2px 15px rgba(173, 20, 87, 0.3), 0 0 60px rgba(255, 255, 255, 0.8);
+            text-align: center;
+            animation: floatTitle 3s ease-in-out infinite;
+            user-select: none;
+        }
+
+        .main-title span {
+            display: inline-block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .main-title span:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .main-title span:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .main-title span:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes floatTitle {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-5px) scale(1.01);
+            }
+        }
+
+        .invitation-card {
+            max-width: 700px;
+            width: 90%;
+            margin: -30px auto 40px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px 35px;
+            box-shadow:
+                0 20px 60px rgba(173, 20, 87, 0.12),
+                0 0 0 1px rgba(255, 255, 255, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .card-emoji span {
+            display: inline-block;
+            animation: pop 0.6s ease-out backwards;
+        }
+
+        .card-emoji span:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .card-emoji span:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .card-emoji span:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .card-emoji span:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        .card-emoji span:nth-child(5) {
+            animation-delay: 1.0s;
+        }
+
+        @keyframes pop {
+            from {
+                opacity: 0;
+                transform: scale(0) rotate(-180deg);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .card-subtitle {
+            font-family: 'Sacramento', cursive;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: #7b1fa2;
+            margin-bottom: 5px;
+        }
+
+        .couple-names {
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(1.4rem, 3.5vw, 2rem);
+            color: #ad1457;
+            margin: 15px 0;
+        }
+
+        .divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #f48fb1, #ce93d8, #f48fb1, transparent);
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 12px 0;
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
+            color: #555;
+        }
+
+        .detail-row .icon {
+            font-size: 1.4rem;
+            width: 35px;
+            text-align: center;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #7b1fa2;
+            min-width: 60px;
+        }
+
+        .rsvp-btn {
+            margin-top: 25px;
+            padding: 14px 45px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #ec407a, #ab47bc);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            pointer-events: all;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(236, 64, 122, 0.35);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .rsvp-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(236, 64, 122, 0.5);
+            background: linear-gradient(135deg, #f06292, #ba68c8);
+        }
+
+        .rsvp-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .gift-note {
+            margin-top: 18px;
+            font-size: 0.85rem;
+            color: #999;
+            font-style: italic;
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: particleFloat linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.3;
+            }
+
+            90% {
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translateY(-10vh) rotate(720deg) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .hint-text {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(173, 20, 87, 0.5);
+            font-size: 0.8rem;
+            animation: pulse 2s ease-in-out infinite;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #bbb;
+            font-size: 0.8rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            .invitation-card {
+                padding: 25px 20px;
+                margin: -20px 10px 30px;
+                border-radius: 22px;
+            }
+
+            .detail-row {
+                font-size: 0.9rem;
+                gap: 8px;
+            }
+
+            #canvas-container {
+                height: 45vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="floating-particles" id="particles"></div>
+
+    <div id="canvas-container">
+        <div class="overlay">
+            <div class="main-title">
+                <span>B</span><span>a</span><span>b</span><span>y</span>
+                &nbsp;
+                <span>S</span><span>h</span><span>o</span><span>w</span><span>e</span><span>r</span>
+            </div>
+        </div>
+        <div class="hint-text">✨ Drag to explore the 3D scene ✨</div>
+    </div>
+
+    <div class="invitation-card">
+        <div class="card-emoji">
+            <span>👶</span><span>🎀</span><span>🍼</span><span>🧸</span><span>✨</span>
+        </div>
+        <div class="card-subtitle">You're Invited to a</div>
+        <div class="couple-names">Baby Shower Celebration!</div>
+        <div class="divider"></div>
+
+        <div class="detail-row">
+            <span class="icon">📅</span>
+            <span class="detail-label">Date:</span>
+            <span>Saturday, August 23rd, 2025</span>
+        </div>
+        <div class="detail-row">
+            <span class="icon">🕑</span>
+            <span class="detail-label">Time:</span>
+            <span>2:00 PM – 5:00 PM</span>
+        </div>
+        <div class="detail-row">
+            <span class="icon">📍</span>
+            <span class="detail-label">Venue:</span>
+            <span>The Rose Garden Pavilion</span>
+        </div>
+        <div class="detail-row">
+            <span class="icon">🏠</span>
+            <span class="detail-label">Address:</span>
+            <span>123 Blossom Lane, Meadowville</span>
+        </div>
+
+        <button class="rsvp-btn" onclick="showRSVP()">🎀 RSVP Now 🎀</button>
+        <div class="gift-note">Registry information available upon request 💕</div>
+    </div>
+
+    <footer>Made with 💖 for our little miracle on the way</footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // ── Floating particles background ──
+        (function createParticles() {
+            const container = document.getElementById('particles');
+            const colors = ['#f48fb1', '#ce93d8', '#81d4fa', '#a5d6a7', '#ffcc80', '#ef9a9a', '#fff59d'];
+            for (let i = 0; i < 35; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 12 + 4;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                p.style.animationDuration = (Math.random() * 12 + 10) + 's';
+                p.style.animationDelay = (Math.random() * 15) + 's';
+                container.appendChild(p);
+            }
+        })();
+
+        function showRSVP() {
+            const btn = document.querySelector('.rsvp-btn');
+            btn.textContent = '🎉 You\'re on the list! 🎉';
+            btn.style.background = 'linear-gradient(135deg, #66bb6a, #26a69a)';
+            btn.style.pointerEvents = 'none';
+            setTimeout(() => {
+                btn.innerHTML = '🎀 RSVP Now 🎀';
+                btn.style.background = 'linear-gradient(135deg, #ec407a, #ab47bc)';
+                btn.style.pointerEvents = 'auto';
+            }, 3000);
+        }
+
+        // ── Three.js 3D Scene ──
+        (function init3D() {
+            const container = document.getElementById('canvas-container');
+
+            const scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0xfce4ec, 0.018);
+
+            const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera.position.set(0, 2, 12);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.1;
+            container.insertBefore(renderer.domElement, container.firstChild);
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffe0f0, 0.6);
+            scene.add(ambientLight);
+
+            const mainLight = new THREE.DirectionalLight(0xfff5ee, 1.2);
+            mainLight.position.set(5, 10, 7);
+            mainLight.castShadow = true;
+            mainLight.shadow.mapSize.width = 1024;
+            mainLight.shadow.mapSize.height = 1024;
+            mainLight.shadow.camera.near = 0.5;
+            mainLight.shadow.camera.far = 30;
+            scene.add(mainLight);
+
+            const pinkLight = new THREE.PointLight(0xf48fb1, 0.8, 20);
+            pinkLight.position.set(-5, 3, 3);
+            scene.add(pinkLight);
+
+            const blueLight = new THREE.PointLight(0x81d4fa, 0.6, 20);
+            blueLight.position.set(5, 3, -3);
+            scene.add(blueLight);
+
+            const purpleLight = new THREE.PointLight(0xce93d8, 0.5, 15);
+            purpleLight.position.set(0, 6, 0);
+            scene.add(purpleLight);
+
+            // Materials
+            const pinkMat = new THREE.MeshPhysicalMaterial({ color: 0xf48fb1, roughness: 0.3, metalness: 0.05, clearcoat: 0.5 });
+            const blueMat = new THREE.MeshPhysicalMaterial({ color: 0x81d4fa, roughness: 0.3, metalness: 0.05, clearcoat: 0.5 });
+            const yellowMat = new THREE.MeshPhysicalMaterial({ color: 0xfff59d, roughness: 0.4, metalness: 0.0, emissive: 0xfff59d, emissiveIntensity: 0.15 });
+            const purpleMat = new THREE.MeshPhysicalMaterial({ color: 0xce93d8, roughness: 0.3, metalness: 0.1, clearcoat: 0.4 });
+            const greenMat = new THREE.MeshPhysicalMaterial({ color: 0xa5d6a7, roughness: 0.35, metalness: 0.05 });
+            const whiteMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.2, metalness: 0.0, clearcoat: 0.8 });
+            const goldMat = new THREE.MeshPhysicalMaterial({ color: 0xffd54f, roughness: 0.2, metalness: 0.7 });
+            const coralMat = new THREE.MeshPhysicalMaterial({ color: 0xef9a9a, roughness: 0.3, metalness: 0.05, clearcoat: 0.3 });
+
+            const meshes = [];
+
+            // ── Baby Bottle ──
+            function createBottle(x, y, z, mat) {
+                const group = new THREE.Group();
+
+                // Body
+                const bodyGeo = new THREE.CylinderGeometry(0.45, 0.55, 1.8, 16);
+                const body = new THREE.Mesh(bodyGeo, new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.15, metalness: 0.0, clearcoat: 0.9, transparent: true, opacity: 0.7 }));
+                body.castShadow = true;
+                group.add(body);
+
+                // Ring
+                const ringGeo = new THREE.TorusGeometry(0.48, 0.06, 12, 24);
+                const ring = new THREE.Mesh(ringGeo, mat);
+                ring.position.y = 0.9;
+                ring.rotation.x = Math.PI / 2;
+                group.add(ring);
+
+                // Cap
+                const capGeo = new THREE.CylinderGeometry(0.35, 0.42, 0.4, 16);
+                const cap = new THREE.Mesh(capGeo, mat);
+                cap.position.y = 1.1;
+                cap.castShadow = true;
+                group.add(cap);
+
+                // Nipple
+                const nippleGeo = new THREE.SphereGeometry(0.22, 12, 12, 0, Math.PI * 2, 0, Math.PI / 2);
+                const nipple = new THREE.Mesh(nippleGeo, new THREE.MeshPhysicalMaterial({ color: 0xffcc80, roughness: 0.5 }));
+                nipple.position.y = 1.35;
+                group.add(nipple);
+
+                group.position.set(x, y, z);
+                scene.add(group);
+                meshes.push({ mesh: group, baseY: y, type: 'float', speed: 0.8 + Math.random() * 0.5, phase: Math.random() * Math.PI * 2 });
+                return group;
+            }
+
+            createBottle(-3.5, 0, 1, pinkMat);
+            createBottle(3.8, -0.5, -1, blueMat);
+
+            // ── Baby Rattle ──
+            function createRattle(x, y, z, mat) {
+                const group = new THREE.Group();
+
+                // Handle
+                const handleGeo = new THREE.CylinderGeometry(0.08, 0.08, 1.5, 10);
+                const handle = new THREE.Mesh(handleGeo, goldMat);
+                handle.castShadow = true;
+                group.add(handle);
+
+                // Ball top
+                const ballGeo = new THREE.SphereGeometry(0.35, 16, 16);
+                const ball = new THREE.Mesh(ballGeo, mat);
+                ball.position.y = 0.9;
+                ball.castShadow = true;
+                group.add(ball);
+
+                // Small bumps on ball
+                for (let i = 0; i < 6; i++) {
+                    const bumpGeo = new THREE.SphereGeometry(0.07, 8, 8);
+                    const bump = new THREE.Mesh(bumpGeo, whiteMat);
+                    const theta = (i / 6) * Math.PI * 2;
+                    bump.position.set(Math.cos(theta) * 0.35, 0.9 + Math.sin(theta * 2) * 0.15, Math.sin(theta) * 0.35);
+                    group.add(bump);
+                }
+
+                // Bottom knob
+                const knobGeo = new THREE.SphereGeometry(0.15, 10, 10);
+                const knob = new THREE.Mesh(knobGeo, goldMat);
+                knob.position.y = -0.8;
+                group.add(knob);
+
+                group.position.set(x, y, z);
+                scene.add(group);
+                meshes.push({ mesh: group, baseY: y, type: 'spin', speed: 0.5 + Math.random() * 0.5, phase: Math.random() * Math.PI * 2 });
+                return group;
+            }
+
+            createRattle(-1.5, 1.5, 3, coralMat);
+            createRattle(2, 0.5, 2.5, greenMat);
+
+            // ── Teddy Bear ──
+            function createTeddy(x, y, z, mat) {
+                const group = new THREE.Group();
+
+                // Body
+                const bodyGeo = new THREE.SphereGeometry(0.6, 16, 16);
+                const body = new THREE.Mesh(bodyGeo, mat);
+                body.scale.set(1, 1.1, 0.9);
+                body.castShadow = true;
+                group.add(body);
+
+                // Head
+                const headGeo = new THREE.SphereGeometry(0.45, 16, 16);
+                const head = new THREE.Mesh(headGeo, mat);
+                head.position.y = 0.85;
+                head.castShadow = true;
+                group.add(head);
+
+                // Ears
+                for (let side of [-1, 1]) {
+                    const earGeo = new THREE.SphereGeometry(0.15, 10, 10);
+                    const ear = new THREE.Mesh(earGeo, mat);
+                    ear.position.set(side * 0.35, 1.2, 0);
+                    group.add(ear);
+
+                    const innerEarGeo = new THREE.SphereGeometry(0.08, 8, 8);
+                    const innerEar = new THREE.Mesh(innerEarGeo, pinkMat);
+                    innerEar.position.set(side * 0.35, 1.2, 0.08);
+                    group.add(innerEar);
+                }
+
+                // Eyes
+                for (let side of [-1, 1]) {
+                    const eyeGeo = new THREE.SphereGeometry(0.06, 8, 8);
+                    const eye = new THREE.Mesh(eyeGeo, new THREE.MeshPhysicalMaterial({ color: 0x333333, metalness: 0.8, roughness: 0.1 }));
+                    eye.position.set(side * 0.15, 0.92, 0.38);
+                    group.add(eye);
+                }
+
+                // Nose
+                const noseGeo = new THREE.SphereGeometry(0.06, 8, 8);
+                const nose = new THREE.Mesh(noseGeo, new THREE.MeshPhysicalMaterial({ color: 0x333333, metalness: 0.3 }));
+                nose.position.set(0, 0.82, 0.42);
+                group.add(nose);
+
+                // Arms
+                for (let side of [-1, 1]) {
+                    const armGeo = new THREE.CapsuleGeometry(0.12, 0.4, 6, 8);
+                    const arm = new THREE.Mesh(armGeo, mat);
+                    arm.position.set(side * 0.6, 0.1, 0);
+                    arm.rotation.z = side * 0.5;
+                    arm.castShadow = true;
+                    group.add(arm);
+                }
+
+                // Legs
+                for (let side of [-1, 1]) {
+                    const legGeo = new THREE.CapsuleGeometry(0.14, 0.35, 6, 8);
+                    const leg = new THREE.Mesh(legGeo, mat);
+                    leg.position.set(side * 0.3, -0.65, 0.1);
+                    leg.castShadow = true;
+                    group.add(leg);
+                }
+
+                // Bow
+                const bowGroup = new THREE.Group();
+                for (let side of [-1, 1]) {
+                    const bowGeo = new THREE.TorusGeometry(0.1, 0.04, 8, 12, Math.PI);
+                    const bow = new THREE.Mesh(bowGeo, pinkMat);
+                    bow.position.set(side * 0.12, 0, 0);
+                    bow.rotation.y = side * 0.3;
+                    bowGroup.add(bow);
+                }
+                const centerGeo = new THREE.SphereGeometry(0.05, 8, 8);
+                const center = new THREE.Mesh(centerGeo, pinkMat);
+                bowGroup.add(center);
+                bowGroup.position.set(0, 0.5, 0.35);
+                bowGroup.rotation.x = 0.3;
+                group.add(bowGroup);
+
+                group.position.set(x, y, z);
+                scene.add(group);
+                meshes.push({ mesh: group, baseY: y, type: 'rock', speed: 0.6, phase: Math.random() * Math.PI * 2 });
+                return group;
+            }
+
+            createTeddy(0, -0.3, 0, new THREE.MeshPhysicalMaterial({ color: 0xd7a87e, roughness: 0.7, metalness: 0.0 }));
+
+            // ── Stars ──
+            function createStar(x, y, z, size, mat) {
+                const shape = new THREE.Shape();
+                const outer = size;
+                const inner = size * 0.4;
+                for (let i = 0; i < 10; i++) {
+                    const r = i % 2 === 0 ? outer : inner;
+                    const angle = (i / 10) * Math.PI * 2 - Math.PI / 2;
+                    if (i === 0) shape.moveTo(Math.cos(angle) * r, Math.sin(angle) * r);
+                    else shape.lineTo(Math.cos(angle) * r, Math.sin(angle) * r);
+                }
+                shape.closePath();
+
+                const extrudeSettings = { depth: size * 0.2, bevelEnabled: true, bevelThickness: 0.02, bevelSize: 0.02, bevelSegments: 2 };
+                const geo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+                const mesh = new THREE.Mesh(geo, mat);
+                mesh.position.set(x, y, z);
+                mesh.castShadow = true;
+                scene.add(mesh);
+                meshes.push({ mesh, baseY: y, type: 'spin', speed: 0.3 + Math.random() * 0.7, phase: Math.random() * Math.PI * 2 });
+                return mesh;
+            }
+
+            createStar(-4, 3.5, -2, 0.35, yellowMat);
+            createStar(4.5, 2.5, -3, 0.3, goldMat);
+            createStar(-2, 4.5, -1, 0.25, pinkMat);
+            createStar(2.5, 4, -2.5, 0.28, purpleMat);
+            createStar(0, 5, -2, 0.32, blueMat);
+            createStar(-5, 1, -1, 0.22, yellowMat);
+            createStar(5.5, 4, 0, 0.26, coralMat);
+
+            // ── Clouds ──
+            function createCloud(x, y, z, scale) {
+                const group = new THREE.Group();
+                const cloudMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.9, metalness: 0.0, transparent: true, opacity: 0.65 });
+
+                const positions = [
+                    [0, 0, 0, 0.6], [-0.5, 0.15, 0.1, 0.45], [0.5, 0.1, -0.1, 0.5],
+                    [-0.2, 0.3, 0, 0.4], [0.3, 0.25, 0.15, 0.38], [0.7, 0.05, -0.05, 0.35]
+                ];
+
+                positions.forEach(([px, py, pz, r]) => {
+                    const geo = new THREE.SphereGeometry(r, 12, 12);
+                    const mesh = new THREE.Mesh(geo, cloudMat);
+                    mesh.position.set(px, py, pz);
+                    group.add(mesh);
+                });
+
+                group.position.set(x, y, z);
+                group.scale.setScalar(scale);
+                scene.add(group);
+                meshes.push({ mesh: group, baseY: y, type: 'drift', speed: 0.2, phase: Math.random() * Math.PI * 2, baseX: x });
+                return group;
+            }
+
+            createCloud(-6, 3, -5, 1.2);
+            createCloud(5, 4.5, -4, 0.9);
+            createCloud(-3, 5, -6, 0.7);
+            createCloud(7, 2.5, -6, 1.0);
+
+            // ── Balloons ──
+            function createBalloon(x, y, z, color) {
+                const group = new THREE.Group();
+
+                const balloonGeo = new THREE.SphereGeometry(0.5, 16, 16);
+                balloonGeo.scale(1, 1.3, 1);
+                const balloonMat = new THREE.MeshPhysicalMaterial({ color, roughness: 0.2, metalness: 0.05, clearcoat: 0.8, transparent: true, opacity: 0.85 });
+                const balloon = new THREE.Mesh(balloonGeo, balloonMat);
+                balloon.castShadow = true;
+                group.add(balloon);
+
+                // Knot
+                const knotGeo = new THREE.ConeGeometry(0.06, 0.12, 8);
+                const knot = new THREE.Mesh(knotGeo, balloonMat);
+                knot.position.y = -0.65;
+                knot.rotation.x = Math.PI;
+                group.add(knot);
+
+                // String
+                const stringGeo = new THREE.CylinderGeometry(0.008, 0.008, 2, 4);
+                const stringMat = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+                const string = new THREE.Mesh(stringGeo, stringMat);
+                string.position.y = -1.7;
+                group.add(string);
+
+                group.position.set(x, y, z);
+                scene.add(group);
+                meshes.push({ mesh: group, baseY: y, type: 'balloon', speed: 0.4 + Math.random() * 0.3, phase: Math.random() * Math.PI * 2 });
+                return group;
+            }
+
+            createBalloon(-5, 1, 2, 0xf48fb1);
+            createBalloon(-4.2, 2.5, 1, 0xce93d8);
+            createBalloon(5, 1.5, 2, 0x81d4fa);
+            createBalloon(4.5, 3, 1.5, 0xa5d6a7);
+            createBalloon(-2.5, 3.5, -1, 0xfff59d);
+            createBalloon(2, 4, -0.5, 0xef9a9a);
+
+            // ── Pacifier ──
+            function createPacifier(x, y, z) {
+                const group = new THREE.Group();
+
+                // Shield
+                const shieldGeo = new THREE.TorusGeometry(0.25, 0.06, 10, 20);
+                const shield = new THREE.Mesh(shieldGeo, purpleMat);
+                group.add(shield);
+
+                // Base
+                const baseGeo = new THREE.CylinderGeometry(0.15, 0.2, 0.08, 16);
+                const base = new THREE.Mesh(baseGeo, purpleMat);
+                base.position.z = 0.05;
+                base.rotation.x = Math.PI / 2;
+                group.add(base);
+
+                // Teat
+                const teatGeo = new THREE.SphereGeometry(0.1, 12, 12, 0, Math.PI * 2, 0, Math.PI / 2);
+                const teat = new THREE.Mesh(teatGeo, new THREE.MeshPhysicalMaterial({ color: 0xffcc80, roughness: 0.4 }));
+                teat.position.z = -0.12;
+                teat.rotation.x = Math.PI / 2;
+                group.add(teat);
+
+                // Handle ring
+                const ringGeo = new THREE.TorusGeometry(0.15, 0.025, 8, 16);
+                const ring = new THREE.Mesh(ringGeo, goldMat);
+                ring.position.z = 0.12;
+                ring.rotation.x = 0.3;
+                group.add(ring);
+
+                group.position.set(x, y, z);
+                scene.add(group);
+                meshes.push({ mesh: group, baseY: y, type: 'spin', speed: 0.4, phase: Math.random() * Math.PI * 2 });
+                return group;
+            }
+
+            createPacifier(-5.5, -0.5, 0.5);
+            createPacifier(5, -0.2, 0.8);
+
+            // ── Floating Hearts ──
+            function createHeart(x, y, z, size, mat) {
+                const shape = new THREE.Shape();
+                const s = size;
+                shape.moveTo(0, s * 0.3);
+                shape.bezierCurveTo(0, s * 0.7, -s * 0.7, s * 0.7, -s * 0.7, s * 0.3);
+                shape.bezierCurveTo(-s * 0.7, -s * 0.2, 0, -s * 0.5, 0, -s * 0.8);
+                shape.bezierCurveTo(0, -s * 0.5, s * 0.7, -s * 0.2, s * 0.7, s * 0.3);
+                shape.bezierCurveTo(s * 0.7, s * 0.7, 0, s * 0.7, 0, s * 0.3);
+
+                const extSettings = { depth: size * 0.3, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.03, bevelSegments: 3 };
+                const geo = new THREE.ExtrudeGeometry(shape, extSettings);
+                const mesh = new THREE.Mesh(geo, mat);
+                mesh.position.set(x, y, z);
+                mesh.castShadow = true;
+                scene.add(mesh);
+                meshes.push({ mesh, baseY: y, type: 'float', speed: 0.6 + Math.random() * 0.4, phase: Math.random() * Math.PI * 2 });
+                return mesh;
+            }
+
+            createHeart(-3, 3, 1, 0.25, pinkMat);
+            createHeart(3.5, 3.5, 0.5, 0.2, coralMat);
+            createHeart(0, 4, 2, 0.3, new THREE.MeshPhysicalMaterial({ color: 0xf8bbd0, roughness: 0.3, clearcoat: 0.6 }));
+
+            // ── Gift Box ──
+            function createGiftBox(x, y, z) {
+                const group = new THREE.Group();
+
+                const boxGeo = new THREE.BoxGeometry(0.8, 0.6, 0.8);
+                const box = new THREE.Mesh(boxGeo, pinkMat);
+                box.castShadow = true;
+                box.receiveShadow = true;
+                group.add(box);
+
+                // Lid
+                const lidGeo = new THREE.BoxGeometry(0.9, 0.12, 0.9);
+                const lid = new THREE.Mesh(lidGeo, new THREE.MeshPhysicalMaterial({ color: 0xec407a, roughness: 0.25, metalness: 0.1, clearcoat: 0.5 }));
+                lid.position.y = 0.36;
+                lid.castShadow = true;
+                group.add(lid);
+
+                // Ribbon vertical
+                const rGeo1 = new THREE.BoxGeometry(0.12, 0.72, 0.82);
+                const ribbonMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.3, metalness: 0.2 });
+                const ribbon1 = new THREE.Mesh(rGeo1, ribbonMat);
+                ribbon1.position.y = 0.05;
+                group.add(ribbon1);
+
+                // Ribbon horizontal
+                const rGeo2 = new THREE.BoxGeometry(0.82, 0.72, 0.12);
+                const ribbon2 = new THREE.Mesh(rGeo2, ribbonMat);
+                ribbon2.position.y = 0.05;
+                group.add(ribbon2);
+
+                // Bow
+                for (let side of [-1, 1]) {
+                    const bowGeo = new THREE.SphereGeometry(0.1, 10, 10);
+                    bowGeo.scale(1.5, 0.6, 1);
+                    const bow = new THREE.Mesh(bowGeo, new THREE.MeshPhysicalMaterial({ color: 0xf8bbd0, roughness: 0.3 }));
+                    bow.position.set(side * 0.12, 0.5, 0);
+                    bow.rotation.z = side * 0.3;
+                    group.add(bow);
+                }
+
+                group.position.set(x, y, z);
+                scene.add(group);
+                meshes.push({ mesh: group, baseY: y, type: 'float', speed: 0.5, phase: Math.random() * Math.PI * 2 });
+                return group;
+            }
+
+            createGiftBox(3, -0.5, 3);
+            createGiftBox(-4, -0.8, 2.5);
+
+            // ── Orbit Controls (manual) ──
+            let isDragging = false;
+            let prevMouse = { x: 0, y: 0 };
+            let cameraAngle = { theta: 0, phi: 0.3 };
+            let targetAngle = { theta: 0, phi: 0.3 };
+            let cameraRadius = 12;
+
+            container.addEventListener('pointerdown', (e) => {
+                isDragging = true;
+                prevMouse = { x: e.clientX, y: e.clientY };
+            });
+            window.addEventListener('pointerup', () => isDragging = false);
+            window.addEventListener('pointermove', (e) => {
+                if (!isDragging) return;
+                const dx = e.clientX - prevMouse.x;
+                const dy = e.clientY - prevMouse.y;
+                targetAngle.theta -= dx * 0.005;
+                targetAngle.phi = Math.max(-0.5, Math.min(0.8, targetAngle.phi + dy * 0.005));
+                prevMouse = { x: e.clientX, y: e.clientY };
+            });
+            container.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                cameraRadius = Math.max(6, Math.min(20, cameraRadius + e.deltaY * 0.01));
+            }, { passive: false });
+
+            // Touch support
+            let lastTouchDist = 0;
+            container.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                    prevMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+                }
+                if (e.touches.length === 2) {
+                    lastTouchDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                }
+            });
+            container.addEventListener('touchend', () => isDragging = false);
+            container.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                if (e.touches.length === 1 && isDragging) {
+                    const dx = e.touches[0].clientX - prevMouse.x;
+                    const dy = e.touches[0].clientY - prevMouse.y;
+                    targetAngle.theta -= dx * 0.005;
+                    targetAngle.phi = Math.max(-0.5, Math.min(0.8, targetAngle.phi + dy * 0.005));
+                    prevMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+                }
+                if (e.touches.length === 2) {
+                    const dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                    cameraRadius = Math.max(6, Math.min(20, cameraRadius - (dist - lastTouchDist) * 0.03));
+                    lastTouchDist = dist;
+                }
+            }, { passive: false });
+
+            // ── Animation Loop ──
+            const clock = new THREE.Clock();
+
+            function animate() {
+                requestAnimationFrame(animate);
+                const t = clock.getElapsedTime();
+
+                // Smooth camera
+                cameraAngle.theta += (targetAngle.theta - cameraAngle.theta) * 0.05;
+                cameraAngle.phi += (targetAngle.phi - cameraAngle.phi) * 0.05;
+
+                // Auto-rotate slowly
+                targetAngle.theta += 0.001;
+
+                camera.position.x = Math.sin(cameraAngle.theta) * Math.cos(cameraAngle.phi) * cameraRadius;
+                camera.position.y = Math.sin(cameraAngle.phi) * cameraRadius + 2;
+                camera.position.z = Math.cos(cameraAngle.theta) * Math.cos(cameraAngle.phi) * cameraRadius;
+                camera.lookAt(0, 1, 0);
+
+                // Animate meshes
+                meshes.forEach(obj => {
+                    const { mesh, baseY, type, speed, phase, baseX } = obj;
+                    switch (type) {
+                        case 'float':
+                            mesh.position.y = baseY + Math.sin(t * speed + phase) * 0.3;
+                            mesh.rotation.y += 0.003;
+                            break;
+                        case 'spin':
+                            mesh.position.y = baseY + Math.sin(t * speed * 0.5 + phase) * 0.2;
+                            mesh.rotation.y += 0.008 * speed;
+                            mesh.rotation.x = Math.sin(t * 0.3 + phase) * 0.1;
+                            break;
+                        case 'rock':
+                            mesh.position.y = baseY + Math.sin(t * 0.7) * 0.08;
+                            mesh.rotation.z = Math.sin(t * 0.5) * 0.05;
+                            mesh.rotation.x = Math.sin(t * 0.3) * 0.03;
+                            break;
+                        case 'drift':
+                            mesh.position.x = (baseX || 0) + Math.sin(t * speed + phase) * 0.5;
+                            mesh.position.y = baseY + Math.sin(t * speed * 0.5 + phase) * 0.15;
+                            break;
+                        case 'balloon':
+                            mesh.position.y = baseY + Math.sin(t * speed + phase) * 0.4;
+                            mesh.position.x += Math.sin(t * 0.7 + phase) * 0.001;
+                            mesh.rotation.z = Math.sin(t * 0.8 + phase) * 0.08;
+                            break;
+                    }
+                });
+
+                // Animate lights
+                pinkLight.intensity = 0.8 + Math.sin(t * 0.5) * 0.2;
+                blueLight.intensity = 0.6 + Math.sin(t * 0.7 + 1) * 0.15;
+                purpleLight.position.x = Math.sin(t * 0.3) * 3;
+                purpleLight.position.z = Math.cos(t * 0.4) * 3;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Resize
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        })();
+    </script>
+</body>
+
+</html>

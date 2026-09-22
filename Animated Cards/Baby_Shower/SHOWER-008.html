@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oh Baby! — 3D Baby Shower Invitation</title>
+    <style>
+        :root {
+            --accent: #f4a3c1;
+            --accent2: #c9b7f2;
+            --text: #b4476b;
+            --panel: rgba(255, 255, 255, 0.72);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+            background: #fbe4ec;
+            font-family: Georgia, 'Times New Roman', serif;
+            color: var(--text);
+        }
+
+        #c {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            touch-action: none;
+        }
+
+        #vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0) 55%, rgba(255, 255, 255, 0.35) 100%);
+        }
+
+        .ui {
+            position: fixed;
+            z-index: 5;
+        }
+
+        #title {
+            top: 18px;
+            left: 22px;
+            pointer-events: none;
+            animation: fadeDown 1.4s ease both;
+        }
+
+        #title h1 {
+            margin: 0;
+            font-family: 'Brush Script MT', 'Segoe Script', 'Snell Roundhand', cursive;
+            font-weight: normal;
+            font-size: clamp(38px, 6vw, 64px);
+            line-height: 1;
+            color: var(--text);
+            text-shadow: 0 2px 12px rgba(255, 255, 255, 0.8);
+        }
+
+        #title p {
+            margin: 6px 0 0 4px;
+            font-size: clamp(12px, 1.6vw, 15px);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        #themes {
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 8px;
+            animation: fadeDown 1.4s ease both;
+        }
+
+        .chip {
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            background: var(--panel);
+            backdrop-filter: blur(8px);
+            color: var(--text);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-family: inherit;
+            font-size: 13px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all .25s ease;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .chip:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+        }
+
+        .chip.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: #fff;
+        }
+
+        .chip .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+        #hint {
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--panel);
+            backdrop-filter: blur(8px);
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-size: 13px;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            animation: fadeUp 1.6s ease both;
+            transition: opacity .5s;
+            pointer-events: none;
+        }
+
+        #panel {
+            bottom: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(92vw, 420px);
+            background: var(--panel);
+            backdrop-filter: blur(14px);
+            border: 2px solid rgba(255, 255, 255, 0.95);
+            border-radius: 26px;
+            padding: 22px 26px 24px;
+            text-align: center;
+            box-shadow: 0 18px 60px rgba(0, 0, 0, 0.12);
+            transition: bottom .8s cubic-bezier(.2, .9, .3, 1.1);
+        }
+
+        #panel.show {
+            bottom: 24px;
+        }
+
+        #panel h2 {
+            margin: 0;
+            font-family: 'Brush Script MT', 'Segoe Script', 'Snell Roundhand', cursive;
+            font-weight: normal;
+            font-size: 46px;
+            line-height: 1;
+            color: var(--text);
+        }
+
+        #panel .sub {
+            margin: 8px 0 2px;
+            font-style: italic;
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        #panel h3 {
+            margin: 4px 0 10px;
+            font-size: 26px;
+            letter-spacing: 1px;
+            font-weight: normal;
+        }
+
+        #panel p {
+            margin: 3px 0;
+            font-size: 14px;
+        }
+
+        #panel .divider {
+            width: 60px;
+            height: 2px;
+            background: var(--accent);
+            margin: 12px auto;
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
+        #rsvp {
+            margin-top: 12px;
+            border: none;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 999px;
+            font-family: inherit;
+            font-size: 15px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        #rsvp:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+        }
+
+        #close {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            border: none;
+            background: transparent;
+            color: var(--text);
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.6;
+        }
+
+        #close:hover {
+            opacity: 1;
+        }
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #fbe4ec;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Brush Script MT', 'Segoe Script', cursive;
+            font-size: 52px;
+            color: var(--text);
+            animation: loaderOut 1.2s ease 0.4s forwards;
+            pointer-events: none;
+        }
+
+        @keyframes loaderOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translate(-50%, 14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        @media (max-width:600px) {
+            #themes {
+                top: auto;
+                bottom: 70px;
+                right: 50%;
+                transform: translateX(50%);
+            }
+
+            #hint {
+                font-size: 11px;
+                padding: 8px 14px;
+            }
+
+            #panel {
+                padding: 18px 18px 20px;
+            }
+
+            #panel h2 {
+                font-size: 38px;
+            }
+
+            #panel.show {
+                bottom: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+    <div id="vignette"></div>
+
+    <div id="title" class="ui">
+        <h1>Oh Baby!</h1>
+        <p>A shower of love is coming</p>
+    </div>
+
+    <div id="themes" class="ui">
+        <button class="chip active" data-theme="girl"><span class="dot" style="background:#f4a3c1"></span>Girl</button>
+        <button class="chip" data-theme="boy"><span class="dot" style="background:#8fc1ee"></span>Boy</button>
+        <button class="chip" data-theme="neutral"><span class="dot" style="background:#b9dfae"></span>Neutral</button>
+    </div>
+
+    <div id="hint" class="ui">✨ Click the card to open your invitation · Drag to look around</div>
+
+    <div id="panel" class="ui">
+        <button id="close" aria-label="close">×</button>
+        <h2 id="p-head">Oh Baby!</h2>
+        <p class="sub">Please join us for a baby shower honoring</p>
+        <h3 id="p-parents">Emma &amp; James</h3>
+        <div class="divider"></div>
+        <p id="p-date"></p>
+        <p id="p-time"></p>
+        <p id="p-venue"></p>
+        <p id="p-address"></p>
+        <p id="p-rsvp" style="margin-top:8px;font-style:italic;"></p>
+        <button id="rsvp">RSVP 🎀</button>
+    </div>
+
+    <div id="loader">Oh Baby!</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        (function () {
+            // ---------- Invitation details (edit here) ----------
+            const DETAILS = {
+                headline: 'Oh Baby!',
+                parents: 'Emma & James',
+                babyName: 'Baby Parker',
+                date: 'Saturday, June 14th',
+                time: '2:00 in the afternoon',
+                venue: 'The Garden Room',
+                address: '123 Blossom Lane, Springfield',
+                rsvp: 'Kindly RSVP by June 1st'
+            };
+            document.getElementById('p-head').textContent = DETAILS.headline;
+            document.getElementById('p-parents').textContent = DETAILS.parents;
+            document.getElementById('p-date').textContent = DETAILS.date;
+            document.getElementById('p-time').textContent = DETAILS.time;
+            document.getElementById('p-venue').textContent = DETAILS.venue;
+            document.getElementById('p-address').textContent = DETAILS.address;
+            document.getElementById('p-rsvp').textContent = DETAILS.rsvp;
+
+            // ---------- Themes ----------
+            const THEMES = {
+                girl: {
+                    bg: '#fbe3ec', ground: '#fff0f5', card: '#fffafc', text: '#b34a70', accent: '#f2a1bf', accent2: '#c9b7f2',
+                    balloons: ['#f7a8c4', '#fbd0df', '#c9b7f2', '#ffe4a3', '#a9e5d8', '#fff5f8', '#f7a8c4'],
+                    blocks: ['#f9b8cf', '#c9b7f2', '#ffe6a7', '#a8e6d9'], gifts: ['#f7a8c4', '#c9b7f2'], ribbon: ['#ffffff', '#ffe6a7']
+                },
+                boy: {
+                    bg: '#e1edfb', ground: '#eef5fd', card: '#fbfdff', text: '#3f6ea8', accent: '#8fc1ee', accent2: '#c9b7f2',
+                    balloons: ['#8fc1ee', '#b9dcf7', '#c9b7f2', '#ffe4a3', '#a9e5d8', '#f4f9ff', '#8fc1ee'],
+                    blocks: ['#9dc9f0', '#c9b7f2', '#ffe6a7', '#a8e6d9'], gifts: ['#8fc1ee', '#a9e5d8'], ribbon: ['#ffffff', '#ffe6a7']
+                },
+                neutral: {
+                    bg: '#e9f4ea', ground: '#f3faf3', card: '#fffef9', text: '#5f8a52', accent: '#b9dfae', accent2: '#ffc9a3',
+                    balloons: ['#b9dfae', '#ffe4a3', '#ffc9a3', '#c9b7f2', '#a9e5d8', '#ffffff', '#b9dfae'],
+                    blocks: ['#ffe6a7', '#b9dfae', '#ffc9a3', '#c9b7f2'], gifts: ['#ffe4a3', '#b9dfae'], ribbon: ['#ffffff', '#ffc9a3']
+                }
+            };
+            let theme = THEMES.girl;
+
+            // ---------- Renderer / Scene ----------
+            const canvas = document.getElementById('c');
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.outputEncoding = THREE.sRGBEncoding;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.15;
+
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(theme.bg);
+            scene.fog = new THREE.Fog(theme.bg, 20, 48);
+
+            const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 120);
+            camera.position.set(1.5, 3.4, 12.5);
+
+            const controls = new THREE.OrbitControls(camera, canvas);
+            controls.target.set(0, 2.1, 0);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.06;
+            controls.enablePan = false;
+            controls.minDistance = 5;
+            controls.maxDistance = 22;
+            controls.minPolarAngle = 0.35;
+            controls.maxPolarAngle = Math.PI / 2 - 0.04;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 0.5;
+            let idleTimer = null;
+            controls.addEventListener('start', () => { controls.autoRotate = false; clearTimeout(idleTimer); });
+            controls.addEventListener('end', () => { clearTimeout(idleTimer); idleTimer = setTimeout(() => { if (!cardOpen) controls.autoRotate = true; }, 4500); });
+
+            // ---------- Lights ----------
+            const hemi = new THREE.HemisphereLight(0xffffff, 0xffe0ea, 0.8);
+            scene.add(hemi);
+            const sun = new THREE.DirectionalLight(0xfff5e8, 1.15);
+            sun.position.set(7, 13, 8);
+            sun.castShadow = true;
+            sun.shadow.mapSize.set(2048, 2048);
+            sun.shadow.camera.left = -14; sun.shadow.camera.right = 14;
+            sun.shadow.camera.top = 14; sun.shadow.camera.bottom = -14;
+            sun.shadow.camera.near = 1; sun.shadow.camera.far = 45;
+            sun.shadow.bias = -0.0006;
+            sun.shadow.radius = 4;
+            scene.add(sun);
+            const fill = new THREE.PointLight(0xbfe3ff, 0.55, 45);
+            fill.position.set(-9, 6, -6);
+            scene.add(fill);
+            const warm = new THREE.PointLight(0xffd6e8, 0.4, 40);
+            warm.position.set(6, 4, 8);
+            scene.add(warm);
+
+            // ---------- Ground ----------
+            const groundMat = new THREE.MeshStandardMaterial({ color: theme.ground, roughness: 1 });
+            const ground = new THREE.Mesh(new THREE.CircleGeometry(50, 72), groundMat);
+            ground.rotation.x = -Math.PI / 2;
+            ground.receiveShadow = true;
+            scene.add(ground);
+
+            // ---------- Canvas texture helpers ----------
+            function makeCanvas(w, h) { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
+            function roundRect(ctx, x, y, w, h, r) {
+                ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+                ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+            }
+            function dots(ctx, w, h, color, count, rmin, rmax, alpha) {
+                ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = color;
+                for (let i = 0; i < count; i++) { const r = rmin + Math.random() * (rmax - rmin); ctx.beginPath(); ctx.arc(Math.random() * w, Math.random() * h, r, 0, Math.PI * 2); ctx.fill(); }
+                ctx.restore();
+            }
+            function heart(ctx, x, y, s, color) {
+                ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(x, y + s * 0.7);
+                ctx.bezierCurveTo(x - s * 1.15, y - s * 0.1, x - s * 0.55, y - s * 0.95, x, y - s * 0.35);
+                ctx.bezierCurveTo(x + s * 0.55, y - s * 0.95, x + s * 1.15, y - s * 0.1, x, y + s * 0.7);
+                ctx.fill();
+            }
+            function foot(ctx, x, y, s, color, flip, rot) {
+                ctx.save(); ctx.translate(x, y); ctx.rotate(rot || 0); ctx.scale(flip ? -1 : 1, 1); ctx.fillStyle = color;
+                ctx.beginPath(); ctx.ellipse(0, 0, s * 0.40, s * 0.60, 0.12, 0, Math.PI * 2); ctx.fill();
+                const toes = [[-0.22, -0.80, 0.17], [0.02, -0.86, 0.13], [0.22, -0.82, 0.11], [0.38, -0.70, 0.10], [0.48, -0.54, 0.09]];
+                toes.forEach(t => { ctx.beginPath(); ctx.arc(t[0] * s, t[1] * s, t[2] * s, 0, Math.PI * 2); ctx.fill(); });
+                ctx.restore();
+            }
+            function spaced(ctx, text, x, y, sp) {
+                let total = 0; for (const ch of text) total += ctx.measureText(ch).width + sp; total -= sp;
+                let cx = x - total / 2; const prev = ctx.textAlign; ctx.textAlign = 'left';
+                for (const ch of text) { ctx.fillText(ch, cx, y); cx += ctx.measureText(ch).width + sp; }
+                ctx.textAlign = prev;
+            }
+            const SCRIPT = "'Brush Script MT','Segoe Script','Snell Roundhand','Apple Chancery',cursive";
+            const SERIF = "Georgia,'Times New Roman',serif";
+            function tex(c) { const t = new THREE.CanvasTexture(c); t.anisotropy = renderer.capabilities.getMaxAnisotropy(); t.encoding = THREE.sRGBEncoding; return t; }
+
+            function frontCoverTexture(p) {
+                const W = 768, H = 1024, c = makeCanvas(W, H), ctx = c.getContext('2d');
+                ctx.fillStyle = p.card; ctx.fillRect(0, 0, W, H);
+                dots(ctx, W, H, p.accent, 90, 4, 14, 0.25);
+                dots(ctx, W, H, p.accent2, 50, 3, 9, 0.25);
+                ctx.strokeStyle = p.accent; ctx.lineWidth = 8; roundRect(ctx, 38, 38, W - 76, H - 76, 44); ctx.stroke();
+                ctx.strokeStyle = p.accent2; ctx.lineWidth = 3; roundRect(ctx, 58, 58, W - 116, H - 116, 32); ctx.stroke();
+                heart(ctx, W / 2, 270, 95, p.accent);
+                heart(ctx, W / 2 - 150, 210, 30, p.accent2);
+                heart(ctx, W / 2 + 160, 225, 24, p.accent2);
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = p.text;
+                ctx.font = "italic 170px " + SCRIPT; ctx.fillText(p.headline, W / 2, 520);
+                ctx.font = "34px " + SERIF; spaced(ctx, "YOU'RE INVITED TO A", W / 2, 645, 6);
+                ctx.font = "bold 74px " + SERIF; ctx.fillText("Baby Shower", W / 2, 735);
+                foot(ctx, W / 2 - 48, 890, 60, p.accent, false, -0.25);
+                foot(ctx, W / 2 + 48, 880, 60, p.accent, true, 0.25);
+                return tex(c);
+            }
+            function insideLeftTexture(p) {
+                const W = 768, H = 1024, c = makeCanvas(W, H), ctx = c.getContext('2d');
+                ctx.fillStyle = p.card; ctx.fillRect(0, 0, W, H);
+                dots(ctx, W, H, p.accent2, 60, 3, 10, 0.22);
+                ctx.strokeStyle = p.accent2; ctx.lineWidth = 4; roundRect(ctx, 48, 48, W - 96, H - 96, 36); ctx.stroke();
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = p.text;
+                ctx.font = "italic 92px " + SCRIPT; ctx.fillText("Twinkle, twinkle", W / 2, 250); ctx.fillText("little star...", W / 2, 350);
+                ctx.font = "italic 36px " + SERIF;
+                ctx.fillText("how we wonder who you are!", W / 2, 450);
+                for (let i = 0; i < 7; i++) { const s = 22 + Math.random() * 20; star(ctx, 120 + i * 90 + (Math.random() * 30 - 15), 560 + Math.sin(i) * 40, s, i % 2 ? p.accent : p.accent2); }
+                ctx.fillStyle = p.text;
+                ctx.font = "34px " + SERIF;
+                ctx.fillText("A sweet little one is on the way,", W / 2, 700);
+                ctx.fillText("and we can't wait to celebrate!", W / 2, 752);
+                heart(ctx, W / 2, 880, 55, p.accent);
+                return tex(c);
+            }
+            function star(ctx, x, y, r, color) {
+                ctx.fillStyle = color; ctx.beginPath();
+                for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5; const rr = i % 2 ? r * 0.45 : r; ctx.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); }
+                ctx.closePath(); ctx.fill();
+            }
+            function insideRightTexture(p) {
+                const W = 768, H = 1024, c = makeCanvas(W, H), ctx = c.getContext('2d');
+                ctx.fillStyle = p.card; ctx.fillRect(0, 0, W, H);
+                dots(ctx, W, H, p.accent, 55, 3, 10, 0.2);
+                ctx.strokeStyle = p.accent; ctx.lineWidth = 4; roundRect(ctx, 48, 48, W - 96, H - 96, 36); ctx.stroke();
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = p.text;
+                ctx.font = "italic 34px " + SERIF; ctx.fillText("Please join us to celebrate", W / 2, 150);
+                ctx.fillText("the arrival of", W / 2, 200);
+                ctx.font = "italic 120px " + SCRIPT; ctx.fillText(DETAILS.babyName, W / 2, 300);
+                ctx.font = "30px " + SERIF; spaced(ctx, "HONORING", W / 2, 400, 6);
+                ctx.font = "bold 58px " + SERIF; ctx.fillText(DETAILS.parents, W / 2, 465);
+                ctx.fillStyle = p.accent; ctx.fillRect(W / 2 - 90, 525, 180, 4);
+                heart(ctx, W / 2, 527, 14, p.accent);
+                ctx.fillStyle = p.text;
+                ctx.font = "bold 40px " + SERIF; ctx.fillText(DETAILS.date, W / 2, 600);
+                ctx.font = "36px " + SERIF; ctx.fillText(DETAILS.time, W / 2, 655);
+                ctx.font = "bold 38px " + SERIF; ctx.fillText(DETAILS.venue, W / 2, 740);
+                ctx.font = "32px " + SERIF; ctx.fillText(DETAILS.address, W / 2, 790);
+                ctx.font = "italic 32px " + SERIF; ctx.fillText(DETAILS.rsvp, W / 2, 890);
+                return tex(c);
+            }
+            function backTexture(p) {
+                const W = 768, H = 1024, c = makeCanvas(W, H), ctx = c.getContext('2d');
+                ctx.fillStyle = p.card; ctx.fillRect(0, 0, W, H);
+                dots(ctx, W, H, p.accent, 120, 4, 14, 0.28);
+                dots(ctx, W, H, p.accent2, 70, 3, 9, 0.28);
+                heart(ctx, W / 2, H / 2, 70, p.accent);
+                return tex(c);
+            }
+            function blockTexture(bg, letter, textColor) {
+                const S = 256, c = makeCanvas(S, S), ctx = c.getContext('2d');
+                ctx.fillStyle = bg; ctx.fillRect(0, 0, S, S);
+                ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = 12; roundRect(ctx, 18, 18, S - 36, S - 36, 18); ctx.stroke();
+                ctx.fillStyle = textColor; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.font = "bold 170px " + SERIF; ctx.fillText(letter, S / 2, S / 2 + 8);
+                heart(ctx, 40, 40, 9, 'rgba(255,255,255,0.9)'); heart(ctx, S - 40, 40, 9, 'rgba(255,255,255,0.9)');
+                heart(ctx, 40, S - 40, 9, 'rgba(255,255,255,0.9)'); heart(ctx, S - 40, S - 40, 9, 'rgba(255,255,255,0.9)');
+                return tex(c);
+            }
+            function sparkleTexture() {
+                const c = makeCanvas(64, 64), ctx = c.getContext('2d');
+                const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+                g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.3, 'rgba(255,255,255,0.8)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+                ctx.fillStyle = g; ctx.fillRect(0, 0, 64, 64);
+                return new THREE.CanvasTexture(c);
+            }
+
+            // ---------- The invitation card ----------
+            const CW = 3, CH = 4, CT = 0.05;
+            const cardGroup = new THREE.Group();
+            cardGroup.position.set(0, 2.35, 0);
+            scene.add(cardGroup);
+            const paperMat = new THREE.MeshStandardMaterial({ color: theme.card, roughness: 0.9 });
+            const frontMat = new THREE.MeshStandardMaterial({ roughness: 0.85 });
+            const insideLeftMat = new THREE.MeshStandardMaterial({ roughness: 0.85 });
+            const insideRightMat = new THREE.MeshStandardMaterial({ roughness: 0.85 });
+            const backMat = new THREE.MeshStandardMaterial({ roughness: 0.85 });
+
+            const cardBase = new THREE.Mesh(new THREE.BoxGeometry(CW, CH, CT), [paperMat, paperMat, paperMat, paperMat, insideRightMat, backMat]);
+            cardBase.castShadow = true; cardBase.receiveShadow = true;
+            cardBase.userData.type = 'card';
+            cardGroup.add(cardBase);
+
+            const coverPivot = new THREE.Group();
+            coverPivot.position.set(-CW / 2, 0, CT + 0.004);
+            cardGroup.add(coverPivot);
+            const cardCover = new THREE.Mesh(new THREE.BoxGeometry(CW, CH, CT), [paperMat, paperMat, paperMat, paperMat, frontMat, insideLeftMat]);
+            cardCover.position.set(CW / 2, 0, 0);
+            cardCover.castShadow = true; cardCover.receiveShadow = true;
+            cardCover.userData.type = 'card';
+            coverPivot.add(cardCover);
+
+            let cardOpen = false;
+            let coverTarget = 0;
+
+            // ---------- Baby blocks ----------
+            const blockDefs = [
+                { l: 'B', pos: [-4.7, 0.5, 0.9], ry: 0.25 },
+                { l: 'A', pos: [-3.5, 0.5, 1.45], ry: -0.18 },
+                { l: 'B', pos: [-4.1, 1.5, 1.18], ry: 0.08 },
+                { l: 'Y', pos: [-2.5, 0.5, -0.4], ry: 0.55 }
+            ];
+            const blocks = blockDefs.map((d, i) => {
+                const mat = new THREE.MeshStandardMaterial({ roughness: 0.6 });
+                const m = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), mat);
+                m.position.set(...d.pos); m.rotation.y = d.ry;
+                m.castShadow = true; m.receiveShadow = true;
+                m.userData = { type: 'block', baseY: d.pos[1], baseRy: d.ry, hop: 0, letter: d.l, idx: i };
+                scene.add(m);
+                return m;
+            });
+
+            // ---------- Balloons ----------
+            const balloons = [];
+            function makeBalloon(color) {
+                const g = new THREE.Group();
+                const mat = new THREE.MeshPhysicalMaterial({ color, roughness: 0.22, metalness: 0, clearcoat: 0.9, clearcoatRoughness: 0.2 });
+                const body = new THREE.Mesh(new THREE.SphereGeometry(0.55, 32, 24), mat);
+                body.scale.set(1, 1.16, 1); body.castShadow = true;
+                const knot = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.15, 12), mat); knot.position.y = -0.7;
+                const pts = []; for (let i = 0; i <= 12; i++) pts.push(new THREE.Vector3(Math.sin(i * 0.7) * 0.06, -0.77 - i * 0.24, Math.cos(i * 0.5) * 0.04));
+                const string = new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.85 }));
+                const weight = new THREE.Mesh(new THREE.SphereGeometry(0.06, 10, 10), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.5 }));
+                weight.position.copy(pts[pts.length - 1]);
+                g.add(body, knot, string, weight);
+                return { group: g, body, mat };
+            }
+            const balloonCount = 8;
+            for (let i = 0; i < balloonCount; i++) {
+                const a = (i / balloonCount) * Math.PI * 2 + 0.4;
+                const r = 5.2 + (i % 3) * 0.8;
+                const b = makeBalloon(theme.balloons[i % theme.balloons.length]);
+                b.base = new THREE.Vector3(Math.cos(a) * r, 3.4 + Math.random() * 2.2, Math.sin(a) * r);
+                b.phase = Math.random() * Math.PI * 2; b.speed = 0.6 + Math.random() * 0.5;
+                b.state = 'alive'; b.timer = 0; b.rise = 0; b.idx = i;
+                b.body.userData = { type: 'balloon', ref: b };
+                b.group.position.copy(b.base);
+                scene.add(b.group);
+                balloons.push(b);
+            }
+
+            // ---------- Gifts ----------
+            const giftMats = [];
+            function makeGift(size, boxColor, ribbonColor) {
+                const g = new THREE.Group();
+                const boxMat = new THREE.MeshStandardMaterial({ color: boxColor, roughness: 0.55 });
+                const ribMat = new THREE.MeshStandardMaterial({ color: ribbonColor, roughness: 0.4 });
+                giftMats.push({ box: boxMat, rib: ribMat });
+                const box = new THREE.Mesh(new THREE.BoxGeometry(size, size * 0.8, size), boxMat);
+                box.position.y = size * 0.4; box.castShadow = true; box.receiveShadow = true;
+                const r1 = new THREE.Mesh(new THREE.BoxGeometry(size * 1.02, size * 0.82, size * 0.18), ribMat); r1.position.y = size * 0.4;
+                const r2 = new THREE.Mesh(new THREE.BoxGeometry(size * 0.18, size * 0.82, size * 1.02), ribMat); r2.position.y = size * 0.4;
+                const loop1 = new THREE.Mesh(new THREE.TorusGeometry(size * 0.16, size * 0.045, 10, 24), ribMat);
+                loop1.position.set(-size * 0.16, size * 0.8 + size * 0.14, 0); loop1.rotation.y = Math.PI / 2; loop1.rotation.z = 0.3;
+                const loop2 = loop1.clone(); loop2.position.x = size * 0.16; loop2.rotation.z = -0.3;
+                const knot = new THREE.Mesh(new THREE.SphereGeometry(size * 0.07, 12, 12), ribMat); knot.position.y = size * 0.8 + size * 0.05;
+                [r1, r2, loop1, loop2, knot].forEach(m => { m.castShadow = true; });
+                g.add(box, r1, r2, loop1, loop2, knot);
+                return g;
+            }
+            const gift1 = makeGift(1.3, theme.gifts[0], theme.ribbon[0]); gift1.position.set(3.4, 0, 1.3); gift1.rotation.y = -0.35; scene.add(gift1);
+            const gift2 = makeGift(0.9, theme.gifts[1], theme.ribbon[1]); gift2.position.set(4.6, 0, -0.3); gift2.rotation.y = 0.5; scene.add(gift2);
+
+            // ---------- Rattle ----------
+            const rattle = new THREE.Group();
+            const rattleMatA = new THREE.MeshPhysicalMaterial({ color: theme.accent, roughness: 0.25, clearcoat: 0.8 });
+            const rattleMatB = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4 });
+            const rHead = new THREE.Mesh(new THREE.SphereGeometry(0.42, 32, 24), rattleMatA); rHead.position.y = 0.6;
+            const rBand = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.05, 12, 40), rattleMatB); rBand.position.y = 0.6; rBand.rotation.x = Math.PI / 2;
+            const rHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 1.0, 16), rattleMatB); rHandle.position.y = -0.1;
+            const rRing = new THREE.Mesh(new THREE.TorusGeometry(0.26, 0.07, 12, 32), rattleMatA); rRing.position.y = -0.85;
+            [rHead, rBand, rHandle, rRing].forEach(m => { m.castShadow = true; rattle.add(m); });
+            rattle.position.set(3.9, 3.3, 0.6); rattle.rotation.z = 0.35;
+            scene.add(rattle);
+
+            // ---------- Clouds ----------
+            const cloudsGroup = new THREE.Group(); scene.add(cloudsGroup);
+            const cloudMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1 });
+            function makeCloud(scale) {
+                const g = new THREE.Group();
+                const parts = [[0, 0, 0, 1], [-1.1, -0.15, 0.1, 0.75], [1.05, -0.1, -0.1, 0.8], [0.4, 0.45, 0.2, 0.7], [-0.5, 0.4, -0.2, 0.6], [1.8, -0.3, 0, 0.5]];
+                parts.forEach(p => { const m = new THREE.Mesh(new THREE.SphereGeometry(p[3], 20, 16), cloudMat); m.position.set(p[0], p[1], p[2]); g.add(m); });
+                g.scale.setScalar(scale);
+                return g;
+            }
+            for (let i = 0; i < 8; i++) {
+                const a = (i / 8) * Math.PI * 2 + Math.random() * 0.5;
+                const r = 12 + Math.random() * 7;
+                const c = makeCloud(0.8 + Math.random() * 0.9);
+                c.position.set(Math.cos(a) * r, 6 + Math.random() * 4, Math.sin(a) * r);
+                c.rotation.y = Math.random() * Math.PI;
+                cloudsGroup.add(c);
+            }
+
+            // ---------- Stars ----------
+            const starCount = 350;
+            const starPos = new Float32Array(starCount * 3);
+            for (let i = 0; i < starCount; i++) {
+                starPos[i * 3] = (Math.random() - 0.5) * 44;
+                starPos[i * 3 + 1] = 3 + Math.random() * 13;
+                starPos[i * 3 + 2] = (Math.random() - 0.5) * 44;
+            }
+            const starGeo = new THREE.BufferGeometry(); starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+            const starMat = new THREE.PointsMaterial({ size: 0.28, map: sparkleTexture(), transparent: true, depthWrite: false, opacity: 0.9, color: theme.accent, sizeAttenuation: true });
+            const stars = new THREE.Points(starGeo, starMat); scene.add(stars);
+
+            // ---------- Confetti ----------
+            class Confetti {
+                constructor(colors) {
+                    this.geo = new THREE.PlaneGeometry(0.16, 0.1);
+                    this.mats = colors.map(c => new THREE.MeshBasicMaterial({ color: c, side: THREE.DoubleSide }));
+                    this.items = [];
+                    for (let i = 0; i < 260; i++) {
+                        const m = new THREE.Mesh(this.geo, this.mats[i % this.mats.length]); m.visible = false; scene.add(m);
+                        this.items.push({ m, v: new THREE.Vector3(), rv: new THREE.Vector3(), life: 0 });
+                    }
+                }
+                setColors(colors) { this.mats.forEach((m, i) => m.color.set(colors[i % colors.length])); }
+                burst(pos, n, spread, up) {
+                    let k = 0;
+                    for (const it of this.items) {
+                        if (k >= n) break; if (it.life > 0) continue;
+                        it.life = 1; it.m.visible = true; it.m.position.copy(pos); it.m.scale.setScalar(1);
+                        it.v.set((Math.random() - 0.5) * spread, Math.random() * spread * 0.7 + (up || 1), (Math.random() - 0.5) * spread);
+                        it.rv.set(Math.random() * 8 - 4, Math.random() * 8 - 4, Math.random() * 8 - 4);
+                        it.m.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
+                        k++;
+                    }
+                }
+                update(dt) {
+                    for (const it of this.items) {
+                        if (it.life <= 0) continue;
+                        it.life -= dt * 0.35;
+                        it.v.y -= 3.2 * dt; it.v.multiplyScalar(0.985);
+                        it.m.position.addScaledVector(it.v, dt);
+                        it.m.rotation.x += it.rv.x * dt; it.m.rotation.y += it.rv.y * dt; it.m.rotation.z += it.rv.z * dt;
+                        if (it.m.position.y < 0.03) { it.m.position.y = 0.03; it.v.set(0, 0, 0); it.rv.set(0, 0, 0); it.m.rotation.set(-Math.PI / 2, 0, it.m.rotation.z); }
+                        if (it.life < 0.3) it.m.scale.setScalar(Math.max(0.001, it.life / 0.3));
+                        if (it.life <= 0) it.m.visible = false;
+                    }
+                }
+            }
+            const confetti = new Confetti(theme.balloons);
+
+            // ---------- Apply theme ----------
+            function applyTheme(name) {
+                theme = THEMES[name];
+                const p = Object.assign({}, theme, { headline: DETAILS.headline });
+                scene.background.set(theme.bg); scene.fog.color.set(theme.bg);
+                document.body.style.background = theme.bg;
+                groundMat.color.set(theme.ground);
+                paperMat.color.set(theme.card);
+                [[frontMat, frontCoverTexture], [insideLeftMat, insideLeftTexture], [insideRightMat, insideRightTexture], [backMat, backTexture]].forEach(([m, fn]) => {
+                    if (m.map) m.map.dispose(); m.map = fn(p); m.needsUpdate = true;
+                });
+                blocks.forEach((b, i) => { if (b.material.map) b.material.map.dispose(); b.material.map = blockTexture(theme.blocks[i % theme.blocks.length], b.userData.letter, theme.text); b.material.needsUpdate = true; });
+                balloons.forEach((b, i) => b.mat.color.set(theme.balloons[i % theme.balloons.length]));
+                giftMats.forEach((g, i) => { g.box.color.set(theme.gifts[i % theme.gifts.length]); g.rib.color.set(theme.ribbon[i % theme.ribbon.length]); });
+                rattleMatA.color.set(theme.accent);
+                starMat.color.set(theme.accent);
+                confetti.setColors(theme.balloons);
+                const root = document.documentElement.style;
+                root.setProperty('--accent', theme.accent); root.setProperty('--accent2', theme.accent2); root.setProperty('--text', theme.text);
+                document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.theme === name));
+            }
+            applyTheme('girl');
+            document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+                applyTheme(c.dataset.theme);
+                confetti.burst(new THREE.Vector3(0, 5.5, 0), 70, 5, 1.5);
+            }));
+
+            // ---------- Interaction ----------
+            const raycaster = new THREE.Raycaster();
+            const ndc = new THREE.Vector2();
+            const clickables = [cardBase, cardCover, ...blocks, ...balloons.map(b => b.body)];
+            const panel = document.getElementById('panel');
+            const hint = document.getElementById('hint');
+
+            function setCardOpen(open) {
+                cardOpen = open;
+                coverTarget = open ? -Math.PI * 0.93 : 0;
+                panel.classList.toggle('show', open);
+                if (open) {
+                    controls.autoRotate = false;
+                    hint.textContent = '🎈 Pop the balloons · Tap the blocks · Drag to explore';
+                    const wp = new THREE.Vector3(); cardGroup.getWorldPosition(wp); wp.y += 1.2;
+                    confetti.burst(wp, 110, 5, 2.5);
+                } else {
+                    hint.textContent = '✨ Click the card to open your invitation · Drag to look around';
+                }
+            }
+            document.getElementById('close').addEventListener('click', () => setCardOpen(false));
+            const rsvpBtn = document.getElementById('rsvp');
+            rsvpBtn.addEventListener('click', () => {
+                rsvpBtn.textContent = "See you there! 💕";
+                for (let i = 0; i < 4; i++) confetti.burst(new THREE.Vector3((Math.random() - 0.5) * 8, 5 + Math.random() * 2, (Math.random() - 0.5) * 6), 50, 5, 2);
+                blocks.forEach((b, i) => setTimeout(() => { if (b.userData.hop <= 0) b.userData.hop = 0.001; }, i * 120));
+            });
+
+            function pickAt(clientX, clientY) {
+                ndc.x = (clientX / window.innerWidth) * 2 - 1;
+                ndc.y = -(clientY / window.innerHeight) * 2 + 1;
+                raycaster.setFromCamera(ndc, camera);
+                const hits = raycaster.intersectObjects(clickables, false);
+                return hits.length ? hits[0] : null;
+            }
+            function popBalloon(b) {
+                if (b.state !== 'alive') return;
+                const wp = new THREE.Vector3(); b.body.getWorldPosition(wp);
+                confetti.burst(wp, 45, 4.5, 1);
+                b.state = 'gone'; b.timer = 2.4; b.group.visible = false; b.group.scale.setScalar(0.001);
+            }
+            let downPos = null;
+            canvas.addEventListener('pointerdown', e => { downPos = { x: e.clientX, y: e.clientY }; });
+            canvas.addEventListener('pointerup', e => {
+                if (!downPos) return;
+                const dx = e.clientX - downPos.x, dy = e.clientY - downPos.y; downPos = null;
+                if (dx * dx + dy * dy > 36) return;
+                const hit = pickAt(e.clientX, e.clientY);
+                if (!hit) return;
+                const u = hit.object.userData;
+                if (u.type === 'card') setCardOpen(!cardOpen);
+                else if (u.type === 'block') { if (u.hop <= 0) u.hop = 0.001; }
+                else if (u.type === 'balloon') popBalloon(u.ref);
+            });
+            let hoverTick = 0;
+            canvas.addEventListener('pointermove', e => {
+                if (e.pointerType === 'touch') return;
+                const now = performance.now(); if (now - hoverTick < 60) return; hoverTick = now;
+                canvas.style.cursor = pickAt(e.clientX, e.clientY) ? 'pointer' : 'grab';
+            });
+
+            // ---------- Resize ----------
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            // ---------- Animate ----------
+            const clock = new THREE.Clock();
+            function angleDiff(a, b) { let d = (b - a) % (Math.PI * 2); if (d > Math.PI) d -= Math.PI * 2; if (d < -Math.PI) d += Math.PI * 2; return d; }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                const dt = Math.min(clock.getDelta(), 0.05);
+                const t = clock.elapsedTime;
+
+                // card: float, face camera, open/close
+                cardGroup.position.y = 2.35 + Math.sin(t * 1.1) * 0.09;
+                cardGroup.rotation.x = Math.sin(t * 0.7) * 0.03;
+                const desiredYaw = Math.atan2(camera.position.x - cardGroup.position.x, camera.position.z - cardGroup.position.z) + Math.sin(t * 0.5) * 0.05;
+                cardGroup.rotation.y += angleDiff(cardGroup.rotation.y, desiredYaw) * 0.06;
+                coverPivot.rotation.y += (coverTarget - coverPivot.rotation.y) * Math.min(1, dt * 4);
+
+                // blocks
+                blocks.forEach(b => {
+                    const u = b.userData;
+                    if (u.hop > 0) {
+                        u.hop += dt * 1.6;
+                        if (u.hop >= 1) { u.hop = 0; b.position.y = u.baseY; b.rotation.y = u.baseRy; b.rotation.z = 0; }
+                        else { const s = Math.sin(u.hop * Math.PI); b.position.y = u.baseY + s * 1.2; b.rotation.y = u.baseRy + s * 0.9; b.rotation.z = Math.sin(u.hop * Math.PI * 2) * 0.15; }
+                    }
+                });
+
+                // balloons
+                balloons.forEach(b => {
+                    if (b.state === 'gone') { b.timer -= dt; if (b.timer <= 0) { b.state = 'spawning'; b.timer = 0; b.group.visible = true; } return; }
+                    if (b.state === 'spawning') {
+                        b.timer += dt; const k = Math.min(b.timer / 1.3, 1); const e = 1 - Math.pow(1 - k, 3);
+                        b.group.scale.setScalar(Math.max(0.001, e)); b.rise = (1 - e) * -3;
+                        if (k >= 1) { b.state = 'alive'; b.rise = 0; b.group.scale.setScalar(1); }
+                    }
+                    b.group.position.set(
+                        b.base.x + Math.sin(t * 0.5 + b.phase) * 0.25,
+                        b.base.y + Math.sin(t * b.speed + b.phase) * 0.35 + b.rise,
+                        b.base.z + Math.cos(t * 0.4 + b.phase) * 0.25
+                    );
+                    b.group.rotation.z = Math.sin(t * 0.8 + b.phase) * 0.08;
+                    b.group.rotation.x = Math.cos(t * 0.6 + b.phase) * 0.06;
+                });
+
+                // rattle, clouds, stars
+                rattle.rotation.y += dt * 0.7;
+                rattle.position.y = 3.3 + Math.sin(t * 1.3) * 0.15;
+                rattle.rotation.z = 0.35 + Math.sin(t * 0.9) * 0.1;
+                cloudsGroup.rotation.y += dt * 0.02;
+                starMat.opacity = 0.65 + Math.sin(t * 2.2) * 0.25;
+                starMat.size = 0.26 + Math.sin(t * 1.7) * 0.05;
+
+                confetti.update(dt);
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            animate();
+        })();
+    </script>
+</body>
+
+</html>

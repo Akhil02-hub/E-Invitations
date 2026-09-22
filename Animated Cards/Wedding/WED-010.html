@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emma &amp; James — A Wedding Invitation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a961;
+            --gold-bright: #e8c876;
+            --gold-deep: #8b6f3f;
+            --cream: #f5ecd7;
+            --burgundy: #6b2c2c;
+            --ink: #3a2817;
+            --bg-dark: #0d0805;
+            --bg-warm: #1a1208;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: radial-gradient(ellipse at 50% 40%, var(--bg-warm) 0%, var(--bg-dark) 70%);
+            color: var(--cream);
+            position: relative;
+        }
+
+        #container {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+        }
+
+        canvas {
+            display: block;
+            touch-action: none;
+        }
+
+        .vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 35%, rgba(0, 0, 0, 0.55) 80%, rgba(0, 0, 0, 0.9) 100%);
+            z-index: 3;
+        }
+
+        .grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 4;
+            opacity: 0.045;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at center, var(--bg-warm) 0%, var(--bg-dark) 70%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-monogram {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(3rem, 8vw, 5rem);
+            color: var(--gold);
+            text-shadow: 0 0 50px rgba(201, 169, 97, 0.5);
+            opacity: 0;
+            animation: fadeUp 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+            position: relative;
+        }
+
+        .loader-monogram::after {
+            content: '';
+            position: absolute;
+            bottom: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .loader-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+            color: var(--gold-deep);
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+        }
+
+        .loader-bar {
+            width: min(240px, 50vw);
+            height: 1px;
+            background: rgba(201, 169, 97, 0.15);
+            margin-top: 2rem;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeUp 1.5s ease 1.2s forwards;
+        }
+
+        .loader-bar-fill {
+            height: 100%;
+            width: 40%;
+            background: linear-gradient(90deg, transparent, var(--gold-bright), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-150%);
+            }
+
+            100% {
+                transform: translateX(350%);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #ui {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .brand {
+            position: absolute;
+            top: clamp(1.5rem, 4vw, 2.5rem);
+            left: clamp(1.5rem, 4vw, 2.5rem);
+        }
+
+        .brand-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            color: var(--gold);
+            letter-spacing: 0.05em;
+            line-height: 1;
+            text-shadow: 0 0 30px rgba(201, 169, 97, 0.3);
+        }
+
+        .brand-tag {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 0.7rem;
+            color: rgba(232, 220, 192, 0.45);
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            margin-top: 0.4rem;
+        }
+
+        .date-stamp {
+            position: absolute;
+            top: clamp(1.5rem, 4vw, 2.5rem);
+            right: clamp(1.5rem, 4vw, 2.5rem);
+            text-align: right;
+        }
+
+        .date-stamp .day {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            color: var(--gold);
+            font-weight: 300;
+            line-height: 1;
+        }
+
+        .date-stamp .month {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 0.75rem;
+            color: rgba(232, 220, 192, 0.5);
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+        }
+
+        .bottom-bar {
+            position: absolute;
+            bottom: clamp(1.5rem, 4vw, 2.5rem);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            width: max-content;
+            max-width: 90vw;
+        }
+
+        .hint {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 0.85rem;
+            color: rgba(232, 220, 192, 0.55);
+            letter-spacing: 0.2em;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+            white-space: nowrap;
+        }
+
+        .hint.visible {
+            opacity: 1;
+        }
+
+        .hint .dot {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            margin: 0 0.8rem;
+            vertical-align: middle;
+            opacity: 0.6;
+        }
+
+        .action-btn {
+            pointer-events: auto;
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.12), rgba(201, 169, 97, 0.04));
+            border: 1px solid rgba(201, 169, 97, 0.35);
+            color: var(--cream);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            padding: 0.9rem 2rem;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(232, 200, 118, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .action-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold-bright);
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.2), rgba(201, 169, 97, 0.08));
+            box-shadow: 0 0 30px rgba(201, 169, 97, 0.25);
+        }
+
+        .action-btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+
+        .action-btn.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+        }
+
+        .corner-deco {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            pointer-events: none;
+            opacity: 0.25;
+        }
+
+        .corner-deco svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 1;
+        }
+
+        .corner-deco.tl {
+            top: 18px;
+            left: 18px;
+        }
+
+        .corner-deco.tr {
+            top: 18px;
+            right: 18px;
+            transform: scaleX(-1);
+        }
+
+        .corner-deco.bl {
+            bottom: 18px;
+            left: 18px;
+            transform: scaleY(-1);
+        }
+
+        .corner-deco.br {
+            bottom: 18px;
+            right: 18px;
+            transform: scale(-1, -1);
+        }
+
+        @media (max-width: 768px) {
+            .brand-name {
+                font-size: 1.1rem;
+            }
+
+            .brand-tag {
+                font-size: 0.6rem;
+                letter-spacing: 0.3em;
+            }
+
+            .date-stamp .day {
+                font-size: 1.3rem;
+            }
+
+            .date-stamp .month {
+                font-size: 0.65rem;
+            }
+
+            .action-btn {
+                font-size: 0.7rem;
+                padding: 0.7rem 1.3rem;
+                letter-spacing: 0.2em;
+            }
+
+            .hint {
+                font-size: 0.7rem;
+                letter-spacing: 0.15em;
+            }
+
+            .hint .dot {
+                margin: 0 0.5rem;
+            }
+
+            .corner-deco {
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .corner-deco {
+                display: none;
+            }
+
+            .hint {
+                font-size: 0.65rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loader">
+        <div class="loader-monogram">E &amp; J</div>
+        <div class="loader-sub">Emma &amp; James</div>
+        <div class="loader-bar">
+            <div class="loader-bar-fill"></div>
+        </div>
+    </div>
+
+    <div id="container"></div>
+
+    <div class="vignette"></div>
+    <div class="grain"></div>
+
+    <div id="ui">
+        <div class="corner-deco tl">
+            <svg viewBox="0 0 70 70">
+                <path d="M 0 35 Q 18 35, 26 26 Q 35 18, 35 0" />
+                <path d="M 0 26 Q 13 26, 19 19 Q 26 13, 26 0" opacity="0.5" />
+                <circle cx="26" cy="26" r="2" fill="currentColor" stroke="none" />
+                <path d="M 5 35 Q 5 28, 10 25" opacity="0.4" />
+            </svg>
+        </div>
+        <div class="corner-deco tr">
+            <svg viewBox="0 0 70 70">
+                <path d="M 0 35 Q 18 35, 26 26 Q 35 18, 35 0" />
+                <path d="M 0 26 Q 13 26, 19 19 Q 26 13, 26 0" opacity="0.5" />
+                <circle cx="26" cy="26" r="2" fill="currentColor" stroke="none" />
+                <path d="M 5 35 Q 5 28, 10 25" opacity="0.4" />
+            </svg>
+        </div>
+        <div class="corner-deco bl">
+            <svg viewBox="0 0 70 70">
+                <path d="M 0 35 Q 18 35, 26 26 Q 35 18, 35 0" />
+                <path d="M 0 26 Q 13 26, 19 19 Q 26 13, 26 0" opacity="0.5" />
+                <circle cx="26" cy="26" r="2" fill="currentColor" stroke="none" />
+            </svg>
+        </div>
+        <div class="corner-deco br">
+            <svg viewBox="0 0 70 70">
+                <path d="M 0 35 Q 18 35, 26 26 Q 35 18, 35 0" />
+                <path d="M 0 26 Q 13 26, 19 19 Q 26 13, 26 0" opacity="0.5" />
+                <circle cx="26" cy="26" r="2" fill="currentColor" stroke="none" />
+            </svg>
+        </div>
+
+        <div class="brand">
+            <div class="brand-name">Emma &amp; James</div>
+            <div class="brand-tag">Are getting married</div>
+        </div>
+
+        <div class="date-stamp">
+            <div class="day">15</div>
+            <div class="month">June 2025</div>
+        </div>
+
+        <div class="bottom-bar">
+            <button class="action-btn" id="openBtn">Open Invitation</button>
+            <div class="hint" id="hint">
+                <span>Drag to rotate</span>
+                <span class="dot"></span>
+                <span>Click card to open</span>
+                <span class="dot"></span>
+                <span>Scroll to zoom</span>
+            </div>
+        </div>
+    </div>
+
+    <script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+        import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+        import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+        import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
+
+        // ========== Configuration ==========
+        const CONFIG = {
+            cardWidth: 4.2,
+            cardHeight: 6.0,
+            cardThickness: 0.045,
+            petalCount: 160,
+            sparkleCount: 100,
+            openDuration: 1.9
+        };
+
+        const loaderEl = document.getElementById('loader');
+        const hintEl = document.getElementById('hint');
+        const openBtn = document.getElementById('openBtn');
+
+        function hideLoader() {
+            if (loaderEl) loaderEl.classList.add('hidden');
+        }
+        // Safety net: never leave the user staring at the loader forever.
+        const loaderSafety = setTimeout(hideLoader, 12000);
+
+        try {
+
+            /* ============================================================
+               SCENE / RENDERER
+               ============================================================ */
+            const container = document.getElementById('container');
+            const scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x0d0805, 0.032);
+
+            const camera = new THREE.PerspectiveCamera(38, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.set(0, 1.8, 11);
+
+            const renderer = new THREE.WebGLRenderer({
+                antialias: true,
+                alpha: false,
+                powerPreference: 'high-performance'
+            });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.15;
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(renderer.domElement);
+
+            /* ============================================================
+               CONTROLS
+               ============================================================ */
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.08;
+            controls.minDistance = 5.5;
+            controls.maxDistance = 18;
+            controls.maxPolarAngle = Math.PI * 0.78;
+            controls.minPolarAngle = Math.PI * 0.18;
+            controls.target.set(0, 0, 0);
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 0.45;
+            controls.enablePan = false;
+
+            /* ============================================================
+               LIGHTING
+               ============================================================ */
+            const ambient = new THREE.AmbientLight(0xfff0d8, 0.38);
+            scene.add(ambient);
+
+            const keyLight = new THREE.DirectionalLight(0xffe4b8, 1.5);
+            keyLight.position.set(4, 7, 5);
+            keyLight.castShadow = true;
+            keyLight.shadow.mapSize.set(2048, 2048);
+            keyLight.shadow.camera.near = 0.5;
+            keyLight.shadow.camera.far = 25;
+            keyLight.shadow.camera.left = -6;
+            keyLight.shadow.camera.right = 6;
+            keyLight.shadow.camera.top = 7;
+            keyLight.shadow.camera.bottom = -7;
+            keyLight.shadow.bias = -0.0008;
+            keyLight.shadow.radius = 4;
+            scene.add(keyLight);
+
+            const fillLight = new THREE.DirectionalLight(0xa8c5e0, 0.28);
+            fillLight.position.set(-5, 2, -3);
+            scene.add(fillLight);
+
+            const rimLight = new THREE.PointLight(0xff9050, 1.8, 14, 1.5);
+            rimLight.position.set(-2, 1, -3);
+            scene.add(rimLight);
+
+            const goldGlow = new THREE.PointLight(0xffc060, 1.2, 8, 2);
+            goldGlow.position.set(1.5, 0, 3);
+            scene.add(goldGlow);
+
+            const revealLight = new THREE.PointLight(0xffd700, 0, 10, 2);
+            revealLight.position.set(0, 0, 3);
+            scene.add(revealLight);
+
+            const warmFill = new THREE.PointLight(0xffa040, 0.5, 10, 2);
+            warmFill.position.set(0, -3, 4);
+            scene.add(warmFill);
+
+            /* ============================================================
+               HELPERS
+               ============================================================ */
+            await Promise.race([
+                document.fonts.ready,
+                new Promise(r => setTimeout(r, 3000))
+            ]);
+            await new Promise(r => setTimeout(r, 150));
+
+            function makeCanvas(w, h) {
+                const canvas = document.createElement('canvas');
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                return { canvas, ctx };
+            }
+
+            function addPaperTexture(ctx, w, h, baseColor = '#faf3e2', edgeColor = '#e0d4b3') {
+                const grad = ctx.createRadialGradient(w / 2, h / 2, w * 0.1, w / 2, h / 2, w * 0.75);
+                grad.addColorStop(0, baseColor);
+                grad.addColorStop(0.7, baseColor);
+                grad.addColorStop(1, edgeColor);
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, w, h);
+
+                const imgData = ctx.getImageData(0, 0, w, h);
+                const data = imgData.data;
+                for (let i = 0; i < data.length; i += 4) {
+                    const n = (Math.random() - 0.5) * 14;
+                    data[i] = Math.max(0, Math.min(255, data[i] + n));
+                    data[i + 1] = Math.max(0, Math.min(255, data[i + 1] + n));
+                    data[i + 2] = Math.max(0, Math.min(255, data[i + 2] + n));
+                }
+                ctx.putImageData(imgData, 0, 0);
+
+                ctx.globalAlpha = 0.035;
+                ctx.strokeStyle = '#8b6f3f';
+                ctx.lineWidth = 0.5;
+                for (let i = 0; i < 90; i++) {
+                    ctx.beginPath();
+                    const x = Math.random() * w;
+                    const y = Math.random() * h;
+                    const len = Math.random() * 40 + 10;
+                    const angle = Math.random() * Math.PI * 2;
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x + Math.cos(angle) * len, y + Math.sin(angle) * len);
+                    ctx.stroke();
+                }
+                ctx.globalAlpha = 1;
+            }
+
+            function drawOrnament(ctx, x, y, width, color = '#b8860b', lineWidth = 1.2) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.strokeStyle = color;
+                ctx.fillStyle = color;
+                ctx.lineWidth = lineWidth;
+                ctx.lineCap = 'round';
+
+                ctx.beginPath();
+                ctx.moveTo(0, -7);
+                ctx.lineTo(7, 0);
+                ctx.lineTo(0, 7);
+                ctx.lineTo(-7, 0);
+                ctx.closePath();
+                ctx.globalAlpha = 0.35;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(0, 0, 2.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.moveTo(-width / 2, 0);
+                ctx.bezierCurveTo(-width / 3, -3, -width / 6, -3, -10, 0);
+                ctx.moveTo(width / 2, 0);
+                ctx.bezierCurveTo(width / 3, -3, width / 6, -3, 10, 0);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(-width / 2, 0, 2, 0, Math.PI * 2);
+                ctx.arc(width / 2, 0, 2, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(-width / 2 + 6, 0, 5, Math.PI * 0.9, -0.1, true);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(width / 2 - 6, 0, 5, Math.PI + 0.1, 0.1, false);
+                ctx.stroke();
+
+                ctx.restore();
+            }
+
+            function drawCornerFlourish(ctx, x, y, rotation, scale = 1, color = '#b8860b') {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(rotation);
+                ctx.scale(scale, scale);
+                ctx.strokeStyle = color;
+                ctx.fillStyle = color;
+                ctx.lineWidth = 1.4;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+
+                ctx.beginPath();
+                ctx.moveTo(5, 65);
+                ctx.bezierCurveTo(5, 32, 12, 16, 28, 8);
+                ctx.bezierCurveTo(42, 2, 58, 5, 75, 5);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(18, 52);
+                ctx.bezierCurveTo(22, 36, 30, 26, 44, 18);
+                ctx.stroke();
+
+                function drawLeaf(cx, cy, angle, size, opacity = 1) {
+                    ctx.save();
+                    ctx.translate(cx, cy);
+                    ctx.rotate(angle);
+                    ctx.globalAlpha = opacity;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(size * 0.2, -size * 0.25, size * 0.7, -size * 0.2, size, 0);
+                    ctx.bezierCurveTo(size * 0.7, size * 0.2, size * 0.2, size * 0.25, 0, 0);
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.globalAlpha = opacity * 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(size, 0);
+                    ctx.stroke();
+                    ctx.globalAlpha = 1;
+                    ctx.restore();
+                }
+
+                drawLeaf(14, 42, -0.4, 24, 0.9);
+                drawLeaf(22, 30, -0.55, 20, 0.8);
+                drawLeaf(30, 22, -0.7, 16, 0.7);
+                drawLeaf(20, 47, 1.8, 18, 0.7);
+                drawLeaf(38, 16, -0.85, 14, 0.6);
+                drawLeaf(48, 10, -0.95, 11, 0.5);
+
+                ctx.translate(75, 5);
+                ctx.globalAlpha = 0.9;
+                for (let i = 0; i < 5; i++) {
+                    ctx.save();
+                    ctx.rotate(i * Math.PI * 2 / 5);
+                    ctx.beginPath();
+                    ctx.ellipse(0, -8, 4.5, 10, 0, 0, Math.PI * 2);
+                    ctx.globalAlpha = 0.75;
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.restore();
+                }
+                ctx.globalAlpha = 1;
+                ctx.beginPath();
+                ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
+                ctx.fillStyle = '#8b6f1f';
+                ctx.fill();
+
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(-4, 16, 1.5, 0, Math.PI * 2);
+                ctx.arc(10, 24, 1.2, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+            function addSpineShadow(ctx, w, h, side) {
+                const grad = side === 'right'
+                    ? ctx.createLinearGradient(w - 120, 0, w, 0)
+                    : ctx.createLinearGradient(0, 0, 120, 0);
+                if (side === 'right') {
+                    grad.addColorStop(0, 'rgba(60,40,20,0)');
+                    grad.addColorStop(1, 'rgba(60,40,20,0.28)');
+                } else {
+                    grad.addColorStop(0, 'rgba(60,40,20,0.28)');
+                    grad.addColorStop(1, 'rgba(60,40,20,0)');
+                }
+                ctx.fillStyle = grad;
+                if (side === 'right') {
+                    ctx.fillRect(w - 120, 0, 120, h);
+                } else {
+                    ctx.fillRect(0, 0, 120, h);
+                }
+            }
+
+            function toTexture(canvas) {
+                const texture = new THREE.CanvasTexture(canvas);
+                texture.colorSpace = THREE.SRGBColorSpace;
+                texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+                return texture;
+            }
+
+            /* ============================================================
+               TEXTURES
+               ============================================================ */
+
+            // --- Cover ---
+            function createCoverTexture() {
+                const w = 1200, h = 1700;
+                const { canvas, ctx } = makeCanvas(w, h);
+                addPaperTexture(ctx, w, h, '#faf3e2', '#e0d4b3');
+
+                ctx.strokeStyle = '#b8860b';
+                ctx.lineWidth = 3.5;
+                ctx.strokeRect(55, 55, w - 110, h - 110);
+                ctx.lineWidth = 1;
+                ctx.strokeRect(72, 72, w - 144, h - 144);
+
+                drawCornerFlourish(ctx, 72, 72, 0, 1.6);
+                drawCornerFlourish(ctx, w - 72, 72, Math.PI / 2, 1.6);
+                drawCornerFlourish(ctx, w - 72, h - 72, Math.PI, 1.6);
+                drawCornerFlourish(ctx, 72, h - 72, -Math.PI / 2, 1.6);
+
+                ctx.fillStyle = '#6b4f2c';
+                ctx.textAlign = 'center';
+                ctx.font = 'italic 38px "Cormorant Garamond"';
+                ctx.fillText('Together with their families', w / 2, 220);
+
+                drawOrnament(ctx, w / 2, 290, 320);
+
+                ctx.font = '400 110px "Playfair Display"';
+                ctx.fillStyle = '#2a1810';
+                ctx.fillText('Emma Charlotte', w / 2, 480);
+
+                ctx.font = '400 95px "Great Vibes"';
+                ctx.fillStyle = '#b8860b';
+                ctx.fillText('&', w / 2, 605);
+
+                ctx.font = '400 110px "Playfair Display"';
+                ctx.fillStyle = '#2a1810';
+                ctx.fillText('James Alexander', w / 2, 745);
+
+                drawOrnament(ctx, w / 2, 835, 320);
+
+                ctx.font = 'italic 34px "Cormorant Garamond"';
+                ctx.fillStyle = '#6b4f2c';
+                ctx.fillText('request the honour of your presence', w / 2, 905);
+                ctx.fillText('at their wedding celebration', w / 2, 955);
+
+                drawOrnament(ctx, w / 2, 1180, 360);
+
+                ctx.font = '500 42px "Playfair Display"';
+                ctx.fillStyle = '#2a1810';
+                ctx.fillText('JUNE', w / 2, 1250);
+
+                ctx.font = '700 88px "Playfair Display"';
+                ctx.fillStyle = '#b8860b';
+                ctx.fillText('FIFTEENTH', w / 2, 1340);
+
+                ctx.font = 'italic 32px "Cormorant Garamond"';
+                ctx.fillStyle = '#6b4f2c';
+                ctx.fillText('two thousand twenty five', w / 2, 1400);
+
+                drawOrnament(ctx, w / 2, 1480, 220);
+
+                ctx.font = 'italic 24px "Cormorant Garamond"';
+                ctx.fillStyle = '#8b6f3f';
+                ctx.fillText('— at half past four in the afternoon —', w / 2, 1560);
+
+                return toTexture(canvas);
+            }
+
+            // --- Inside Left (inside of the front cover) ---
+            function createInsideLeftTexture() {
+                const w = 1200, h = 1700;
+                const { canvas, ctx } = makeCanvas(w, h);
+                addPaperTexture(ctx, w, h, '#faf3e2', '#e0d4b3');
+                addSpineShadow(ctx, w, h, 'right');
+
+                ctx.strokeStyle = '#b8860b';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(55, 55);
+                ctx.lineTo(w - 30, 55);
+                ctx.moveTo(55, h - 55);
+                ctx.lineTo(w - 30, h - 55);
+                ctx.moveTo(55, 55);
+                ctx.lineTo(55, h - 55);
+                ctx.stroke();
+
+                drawCornerFlourish(ctx, 72, 72, 0, 1.4);
+                drawCornerFlourish(ctx, 72, h - 72, -Math.PI / 2, 1.4);
+
+                const cx = w / 2 - 60;
+                ctx.textAlign = 'center';
+
+                ctx.fillStyle = '#b8860b';
+                ctx.font = '500 32px "Playfair Display"';
+                ctx.fillText('— THE CEREMONY —', cx, 200);
+                drawOrnament(ctx, cx, 262, 260);
+
+                ctx.fillStyle = '#2a1810';
+                ctx.font = '500 46px "Playfair Display"';
+                ctx.fillText('St. Augustine', cx, 400);
+                ctx.fillText('Cathedral', cx, 458);
+
+                ctx.fillStyle = '#6b4f2c';
+                ctx.font = 'italic 30px "Cormorant Garamond"';
+                ctx.fillText('12 Cathedral Square', cx, 528);
+                ctx.fillText('Charleston, South Carolina', cx, 574);
+
+                drawOrnament(ctx, cx, 670, 240);
+
+                ctx.fillStyle = '#2a1810';
+                ctx.font = '500 38px "Playfair Display"';
+                ctx.fillText('Saturday, the fifteenth', cx, 790);
+                ctx.fillText('of June', cx, 840);
+
+                ctx.fillStyle = '#b8860b';
+                ctx.font = '400 92px "Playfair Display"';
+                ctx.fillText('4:30', cx, 960);
+
+                ctx.fillStyle = '#6b4f2c';
+                ctx.font = 'italic 30px "Cormorant Garamond"';
+                ctx.fillText('in the afternoon', cx, 1020);
+
+                drawOrnament(ctx, cx, 1130, 240);
+
+                ctx.fillStyle = '#2a1810';
+                ctx.font = '500 38px "Playfair Display"';
+                ctx.fillText('Dinner & Dancing', cx, 1250);
+
+                ctx.fillStyle = '#6b4f2c';
+                ctx.font = 'italic 28px "Cormorant Garamond"';
+                ctx.fillText('immediately following', cx, 1310);
+                ctx.fillText('at The Magnolia Room', cx, 1355);
+
+                drawOrnament(ctx, cx, 1470, 200);
+
+                ctx.fillStyle = '#8b6f3f';
+                ctx.font = 'italic 24px "Cormorant Garamond"';
+                ctx.fillText('— black tie optional —', cx, 1550);
+
+                return toTexture(canvas);
+            }
+
+            // --- Inside Right (inside of the back cover) ---
+            function createInsideRightTexture() {
+                const w = 1200, h = 1700;
+                const { canvas, ctx } = makeCanvas(w, h);
+                addPaperTexture(ctx, w, h, '#faf3e2', '#e0d4b3');
+                addSpineShadow(ctx, w, h, 'left');
+
+                ctx.strokeStyle = '#b8860b';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(30, 55);
+                ctx.lineTo(w - 55, 55);
+                ctx.moveTo(30, h - 55);
+                ctx.lineTo(w - 55, h - 55);
+                ctx.moveTo(w - 55, 55);
+                ctx.lineTo(w - 55, h - 55);
+                ctx.stroke();
+
+                drawCornerFlourish(ctx, w - 72, 72, Math.PI / 2, 1.4);
+                drawCornerFlourish(ctx, w - 72, h - 72, Math.PI, 1.4);
+
+                const cx = w / 2 + 60;
+                ctx.textAlign = 'center';
+
+                ctx.fillStyle = '#b8860b';
+                ctx.font = '500 32px "Playfair Display"';
+                ctx.fillText('— THE RECEPTION —', cx, 200);
+                drawOrnament(ctx, cx, 262, 260);
+
+                ctx.fillStyle = '#2a1810';
+                ctx.font = '500 46px "Playfair Display"';
+                ctx.fillText('The Magnolia Room', cx, 400);
+
+                ctx.fillStyle = '#6b4f2c';
+                ctx.font = 'italic 30px "Cormorant Garamond"';
+                ctx.fillText('88 Ashley Avenue', cx, 470);
+                ctx.fillText('Charleston, South Carolina', cx, 516);
+
+                drawOrnament(ctx, cx, 620, 240);
+
+                ctx.fillStyle = '#2a1810';
+                ctx.font = '500 34px "Playfair Display"';
+                ctx.fillText('Cocktails', cx, 730);
+                ctx.fillStyle = '#6b4f2c';
+                ctx.font = 'italic 28px "Cormorant Garamond"';
+                ctx.fillText('five o’clock', cx, 780);
+
+                ctx.fillStyle = '#2a1810';
+                ctx.font = '500 34px "Playfair Display"';
+                ctx.fillText('Dinner', cx, 880);
+                ctx.fillStyle = '#6b4f2c';
+                ctx.font = 'italic 28px "Cormorant Garamond"';
+                ctx.fillText('six o’clock', cx, 930);
+
+                ctx.fillStyle = '#2a1810';
+                ctx.font = '500 34px "Playfair Display"';
+                ctx.fillText('Dancing', cx, 1030);
+                ctx.fillStyle = '#6b4f2c';
+                ctx.font = 'italic 28px "Cormorant Garamond"';
+                ctx.fillText('until midnight', cx, 1080);
+
+                drawOrnament(ctx, cx, 1200, 240);
+
+                ctx.fillStyle = '#2a1810';
+                ctx.font = '500 34px "Playfair Display"';
+                ctx.fillText('Kindly Reply', cx, 1310);
+
+                ctx.fillStyle = '#6b4f2c';
+                ctx.font = 'italic 28px "Cormorant Garamond"';
+                ctx.fillText('by the first of May', cx, 1365);
+                ctx.fillText('emmaandjames@wedding.example', cx, 1415);
+
+                drawOrnament(ctx, cx, 1520, 200);
+
+                ctx.fillStyle = '#8b6f3f';
+                ctx.font = 'italic 24px "Cormorant Garamond"';
+                ctx.fillText('— we cannot wait to celebrate with you —', cx, 1590);
+
+                return toTexture(canvas);
+            }
+
+            // --- Back exterior ---
+            function createBackTexture() {
+                const w = 1200, h = 1700;
+                const { canvas, ctx } = makeCanvas(w, h);
+                addPaperTexture(ctx, w, h, '#f3e9d2', '#d9cbaa');
+
+                ctx.strokeStyle = 'rgba(184, 134, 11, 0.45)';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(60, 60, w - 120, h - 120);
+
+                drawCornerFlourish(ctx, 72, 72, 0, 1.2, 'rgba(184,134,11,0.55)');
+                drawCornerFlourish(ctx, w - 72, 72, Math.PI / 2, 1.2, 'rgba(184,134,11,0.55)');
+                drawCornerFlourish(ctx, w - 72, h - 72, Math.PI, 1.2, 'rgba(184,134,11,0.55)');
+                drawCornerFlourish(ctx, 72, h - 72, -Math.PI / 2, 1.2, 'rgba(184,134,11,0.55)');
+
+                ctx.textAlign = 'center';
+                ctx.fillStyle = '#b8860b';
+                ctx.font = '400 200px "Great Vibes"';
+                ctx.fillText('E & J', w / 2, h / 2);
+
+                drawOrnament(ctx, w / 2, h / 2 + 90, 260);
+
+                ctx.fillStyle = '#6b4f2c';
+                ctx.font = 'italic 32px "Cormorant Garamond"';
+                ctx.fillText('15 · 06 · 2025', w / 2, h / 2 + 170);
+
+                return toTexture(canvas);
+            }
+
+            /* ============================================================
+               CARD CONSTRUCTION
+               ============================================================ */
+            const W = CONFIG.cardWidth;
+            const H = CONFIG.cardHeight;
+            const T = CONFIG.cardThickness;
+
+            const cardGroup = new THREE.Group();
+            scene.add(cardGroup);
+
+            const coverTex = createCoverTexture();
+            const insideLeftTex = createInsideLeftTexture();
+            const insideRightTex = createInsideRightTexture();
+            const backTex = createBackTexture();
+
+            const paperMatOpts = { roughness: 0.92, metalness: 0.0 };
+
+            const coverMat = new THREE.MeshStandardMaterial({ map: coverTex, ...paperMatOpts });
+            const insideLeftMat = new THREE.MeshStandardMaterial({ map: insideLeftTex, ...paperMatOpts });
+            const insideRightMat = new THREE.MeshStandardMaterial({ map: insideRightTex, ...paperMatOpts });
+            const backMat = new THREE.MeshStandardMaterial({ map: backTex, ...paperMatOpts });
+            const edgeMat = new THREE.MeshStandardMaterial({
+                color: 0xc9a961,
+                roughness: 0.35,
+                metalness: 0.85
+            });
+
+            // BoxGeometry material order: [+x, -x, +y, -y, +z, -z]
+
+            // --- Back cover (its +z face is the right-hand inside page) ---
+            const backMesh = new THREE.Mesh(
+                new THREE.BoxGeometry(W, H, T),
+                [edgeMat, edgeMat, edgeMat, edgeMat, insideRightMat, backMat]
+            );
+            backMesh.position.set(W / 2, 0, 0);
+            backMesh.castShadow = true;
+            backMesh.receiveShadow = true;
+            cardGroup.add(backMesh);
+
+            // --- Front cover, hinged at the spine (x = 0) ---
+            const coverPivot = new THREE.Group();
+            coverPivot.position.set(0, 0, T / 2);
+            cardGroup.add(coverPivot);
+
+            const coverMesh = new THREE.Mesh(
+                new THREE.BoxGeometry(W, H, T),
+                [edgeMat, edgeMat, edgeMat, edgeMat, coverMat, insideLeftMat]
+            );
+            coverMesh.position.set(W / 2, 0, T / 2);
+            coverMesh.castShadow = true;
+            coverMesh.receiveShadow = true;
+            coverPivot.add(coverMesh);
+
+            // Closed card is centred when the group is shifted left by half a card.
+            cardGroup.position.x = -W / 2;
+
+            /* ============================================================
+               SHADOW CATCHER
+               ============================================================ */
+            const shadowPlane = new THREE.Mesh(
+                new THREE.PlaneGeometry(40, 40),
+                new THREE.ShadowMaterial({ opacity: 0.32 })
+            );
+            shadowPlane.rotation.x = -Math.PI / 2;
+            shadowPlane.position.y = -3.6;
+            shadowPlane.receiveShadow = true;
+            scene.add(shadowPlane);
+
+            /* ============================================================
+               BACKGROUND GRADIENT
+               ============================================================ */
+            (function createBackground() {
+                const { canvas, ctx } = makeCanvas(1024, 1024);
+                const g = ctx.createRadialGradient(512, 420, 40, 512, 512, 720);
+                g.addColorStop(0, '#1a1208');
+                g.addColorStop(0.55, '#0f0a05');
+                g.addColorStop(1, '#050301');
+                ctx.fillStyle = g;
+                ctx.fillRect(0, 0, 1024, 1024);
+                const tex = new THREE.CanvasTexture(canvas);
+                tex.colorSpace = THREE.SRGBColorSpace;
+                scene.background = tex;
+            })();
+
+            /* ============================================================
+               PETALS (instanced)
+               ============================================================ */
+            function createPetalTexture() {
+                const { canvas, ctx } = makeCanvas(128, 128);
+                ctx.clearRect(0, 0, 128, 128);
+
+                const g = ctx.createRadialGradient(64, 60, 4, 64, 64, 58);
+                g.addColorStop(0, 'rgba(255, 244, 232, 0.98)');
+                g.addColorStop(0.45, 'rgba(248, 214, 196, 0.85)');
+                g.addColorStop(1, 'rgba(214, 156, 140, 0.0)');
+
+                ctx.fillStyle = g;
+                ctx.beginPath();
+                ctx.ellipse(64, 64, 44, 27, Math.PI * 0.18, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.globalAlpha = 0.35;
+                ctx.strokeStyle = 'rgba(180, 120, 100, 0.9)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(24, 78);
+                ctx.quadraticCurveTo(64, 56, 104, 50);
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+
+                const tex = new THREE.CanvasTexture(canvas);
+                tex.colorSpace = THREE.SRGBColorSpace;
+                return tex;
+            }
+
+            const petalTex = createPetalTexture();
+            const petalGeo = new THREE.PlaneGeometry(0.34, 0.34);
+            const petalMat = new THREE.MeshBasicMaterial({
+                map: petalTex,
+                transparent: true,
+                depthWrite: false,
+                side: THREE.DoubleSide,
+                opacity: 0.85
+            });
+
+            const petals = new THREE.InstancedMesh(petalGeo, petalMat, CONFIG.petalCount);
+            petals.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+            petals.frustumCulled = false;
+            scene.add(petals);
+
+            const petalData = [];
+            const petalColor = new THREE.Color();
+            for (let i = 0; i < CONFIG.petalCount; i++) {
+                petalData.push({
+                    x: (Math.random() - 0.5) * 26,
+                    y: (Math.random() - 0.5) * 24,
+                    z: (Math.random() - 0.5) * 14 - 2,
+                    rx: Math.random() * Math.PI * 2,
+                    ry: Math.random() * Math.PI * 2,
+                    rz: Math.random() * Math.PI * 2,
+                    rotSpeed: (Math.random() - 0.5) * 1.6,
+                    fall: 0.35 + Math.random() * 0.55,
+                    swayPhase: Math.random() * Math.PI * 2,
+                    swaySpeed: 0.4 + Math.random() * 0.7,
+                    swayAmp: 0.3 + Math.random() * 0.8,
+                    scale: 0.55 + Math.random() * 1.0
+                });
+
+                petalColor.setHSL(0.06 + Math.random() * 0.04, 0.45 + Math.random() * 0.25, 0.72 + Math.random() * 0.18);
+                petals.setColorAt(i, petalColor);
+            }
+            if (petals.instanceColor) petals.instanceColor.needsUpdate = true;
+
+            /* ============================================================
+               SPARKLES
+               ============================================================ */
+            function createSparkleTexture() {
+                const { canvas, ctx } = makeCanvas(64, 64);
+                const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+                g.addColorStop(0, 'rgba(255, 245, 210, 1)');
+                g.addColorStop(0.25, 'rgba(255, 214, 140, 0.65)');
+                g.addColorStop(1, 'rgba(255, 200, 120, 0)');
+                ctx.fillStyle = g;
+                ctx.fillRect(0, 0, 64, 64);
+                const tex = new THREE.CanvasTexture(canvas);
+                tex.colorSpace = THREE.SRGBColorSpace;
+                return tex;
+            }
+
+            const sparkleGeo = new THREE.BufferGeometry();
+            const sparklePos = new Float32Array(CONFIG.sparkleCount * 3);
+            const sparklePhase = new Float32Array(CONFIG.sparkleCount);
+            for (let i = 0; i < CONFIG.sparkleCount; i++) {
+                sparklePos[i * 3] = (Math.random() - 0.5) * 22;
+                sparklePos[i * 3 + 1] = (Math.random() - 0.5) * 16;
+                sparklePos[i * 3 + 2] = (Math.random() - 0.5) * 12 - 1;
+                sparklePhase[i] = Math.random() * Math.PI * 2;
+            }
+            sparkleGeo.setAttribute('position', new THREE.BufferAttribute(sparklePos, 3));
+
+            const sparkleMat = new THREE.PointsMaterial({
+                map: createSparkleTexture(),
+                size: 0.28,
+                transparent: true,
+                depthWrite: false,
+                blending: THREE.AdditiveBlending,
+                opacity: 0.9,
+                sizeAttenuation: true,
+                color: 0xffd28a
+            });
+
+            const sparkles = new THREE.Points(sparkleGeo, sparkleMat);
+            scene.add(sparkles);
+
+            /* ============================================================
+               POST PROCESSING
+               ============================================================ */
+            const VignetteShader = {
+                uniforms: {
+                    tDiffuse: { value: null },
+                    uStrength: { value: 1.0 }
+                },
+                vertexShader: /* glsl */`
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+                fragmentShader: /* glsl */`
+    uniform sampler2D tDiffuse;
+    uniform float uStrength;
+    varying vec2 vUv;
+    void main() {
+      vec4 color = texture2D(tDiffuse, vUv);
+      vec2 p = (vUv - 0.5) * vec2(1.0, 0.92);
+      float d = length(p);
+      float v = smoothstep(0.80, 0.16, d);
+      color.rgb *= mix(0.60, 1.0, mix(1.0, v, uStrength));
+      // gentle warm lift in the shadows
+      color.rgb += vec3(0.012, 0.006, 0.0) * (1.0 - v);
+      gl_FragColor = color;
+    }
+  `
+            };
+
+            const composer = new EffectComposer(renderer);
+            composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            composer.setSize(window.innerWidth, window.innerHeight);
+
+            composer.addPass(new RenderPass(scene, camera));
+
+            const bloomPass = new UnrealBloomPass(
+                new THREE.Vector2(window.innerWidth, window.innerHeight),
+                0.55,   // strength
+                0.75,   // radius
+                0.85    // threshold
+            );
+            composer.addPass(bloomPass);
+
+            composer.addPass(new OutputPass());
+
+            const vignettePass = new ShaderPass(VignetteShader);
+            composer.addPass(vignettePass);
+
+            const fxaaPass = new ShaderPass(FXAAShader);
+            composer.addPass(fxaaPass);
+
+            function updateFXAA() {
+                const pr = renderer.getPixelRatio();
+                fxaaPass.material.uniforms['resolution'].value.set(
+                    1 / (window.innerWidth * pr),
+                    1 / (window.innerHeight * pr)
+                );
+            }
+            updateFXAA();
+
+            /* ============================================================
+               OPEN / CLOSE STATE
+               ============================================================ */
+            const OPEN_ANGLE = -Math.PI * 0.97;
+
+            let openT = 0;            // 0 = closed, 1 = open
+            let tweenFrom = 0;
+            let tweenTo = 0;
+            let tweenStart = 0;
+            let tweenActive = false;
+
+            const easeInOutCubic = t => t < 0.5
+                ? 4 * t * t * t
+                : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+            function tweenOpen(target) {
+                if (tweenActive && tweenTo === target) return;
+                if (!tweenActive && openT === target) return;
+                tweenFrom = openT;
+                tweenTo = target;
+                tweenStart = performance.now() / 1000;
+                tweenActive = true;
+            }
+
+            function isOpen() {
+                return tweenTo > 0.5;
+            }
+
+            function toggleOpen() {
+                const target = isOpen() ? 0 : 1;
+                tweenOpen(target);
+
+                if (target === 1) {
+                    openBtn.classList.add('hidden');
+                    hintEl.classList.add('visible');
+                    controls.autoRotate = false;
+                } else {
+                    openBtn.classList.remove('hidden');
+                    controls.autoRotate = true;
+                }
+            }
+
+            openBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!isOpen()) toggleOpen();
+            });
+
+            /* ============================================================
+               PICKING
+               ============================================================ */
+            const raycaster = new THREE.Raycaster();
+            const pointer = new THREE.Vector2();
+            let downX = 0, downY = 0;
+
+            renderer.domElement.addEventListener('pointerdown', (e) => {
+                downX = e.clientX;
+                downY = e.clientY;
+            });
+
+            renderer.domElement.addEventListener('pointerup', (e) => {
+                if (Math.hypot(e.clientX - downX, e.clientY - downY) > 8) return; // was a drag
+
+                pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+                pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+                raycaster.setFromCamera(pointer, camera);
+
+                const hits = raycaster.intersectObjects([coverMesh, backMesh], false);
+                if (hits.length > 0) toggleOpen();
+            });
+
+            /* ============================================================
+               RESIZE
+               ============================================================ */
+            function onResize() {
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+
+                camera.aspect = w / h;
+                camera.updateProjectionMatrix();
+
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                renderer.setSize(w, h);
+
+                composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                composer.setSize(w, h);
+
+                bloomPass.setSize(w, h);
+                updateFXAA();
+            }
+            window.addEventListener('resize', onResize);
+
+            /* ============================================================
+               ANIMATION LOOP
+               ============================================================ */
+            const clock = new THREE.Clock();
+            const dummy = new THREE.Object3D();
+
+            function animate() {
+                requestAnimationFrame(animate);
+
+                const dt = Math.min(clock.getDelta(), 0.05);
+                const t = clock.getElapsedTime();
+
+                // --- card open tween ---
+                if (tweenActive) {
+                    const p = Math.min(1, (performance.now() / 1000 - tweenStart) / CONFIG.openDuration);
+                    openT = tweenFrom + (tweenTo - tweenFrom) * easeInOutCubic(p);
+                    if (p >= 1) {
+                        openT = tweenTo;
+                        tweenActive = false;
+                    }
+                }
+
+                coverPivot.rotation.y = openT * OPEN_ANGLE;
+                cardGroup.position.x = -W / 2 * (1 - openT);
+
+                // reveal light ramps up as the card opens
+                revealLight.intensity += (openT * 1.4 - revealLight.intensity) * Math.min(1, dt * 3);
+                revealLight.position.set(0, 0, 2.5 + openT * 1.5);
+
+                // --- petals ---
+                for (let i = 0; i < CONFIG.petalCount; i++) {
+                    const p = petalData[i];
+
+                    p.y -= p.fall * dt;
+                    if (p.y < -12) {
+                        p.y = 12 + Math.random() * 3;
+                        p.x = (Math.random() - 0.5) * 26;
+                        p.z = (Math.random() - 0.5) * 14 - 2;
+                    }
+
+                    const px = p.x + Math.sin(t * p.swaySpeed + p.swayPhase) * p.swayAmp;
+                    const pz = p.z + Math.cos(t * p.swaySpeed * 0.8 + p.swayPhase) * p.swayAmp * 0.5;
+
+                    dummy.position.set(px, p.y, pz);
+                    dummy.rotation.set(
+                        p.rx + t * p.rotSpeed * 0.6,
+                        p.ry + t * p.rotSpeed,
+                        p.rz + t * p.rotSpeed * 0.4
+                    );
+                    dummy.scale.setScalar(p.scale);
+                    dummy.updateMatrix();
+                    petals.setMatrixAt(i, dummy.matrix);
+                }
+                petals.instanceMatrix.needsUpdate = true;
+
+                // --- sparkles ---
+                sparkleMat.opacity = 0.55 + Math.sin(t * 1.6) * 0.25;
+                sparkles.rotation.y = t * 0.03;
+
+                // --- lights breathe ---
+                goldGlow.intensity = 1.0 + Math.sin(t * 1.2) * 0.25;
+                rimLight.intensity = 1.6 + Math.sin(t * 0.8 + 1.5) * 0.3;
+
+                controls.update();
+                composer.render();
+            }
+
+            /* ============================================================
+               START
+               ============================================================ */
+            animate();
+            updateFXAA();
+
+            // Give the textures a frame to upload, then reveal.
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    clearTimeout(loaderSafety);
+                    hideLoader();
+                    setTimeout(() => hintEl.classList.add('visible'), 900);
+                });
+            });
+
+        } catch (err) {
+            clearTimeout(loaderSafety);
+            hideLoader();
+            console.error('Wedding invitation failed to initialise:', err);
+        }
+    </script>
+</body>
+
+</html>

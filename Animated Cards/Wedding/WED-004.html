@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Isabella & Alessandro — Wedding Invitation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --gold: #d4af37;
+            --ivory: #f7efe3;
+            --wine: #2a0f16;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0c0508;
+            font-family: "Cormorant Garamond", serif;
+            color: var(--ivory);
+            touch-action: none;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        #vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+            background:
+                radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(8, 2, 4, 0.55) 100%),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0%, transparent 18%, transparent 82%, rgba(0, 0, 0, 0.4) 100%);
+        }
+
+        #grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0.045;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(ellipse at center, #2a1218 0%, #0c0508 70%);
+            transition: opacity 0.9s ease, visibility 0.9s ease;
+        }
+
+        #loader.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #loader .monogram {
+            font-family: "Great Vibes", cursive;
+            font-size: clamp(64px, 12vw, 120px);
+            color: var(--gold);
+            line-height: 1;
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.35);
+        }
+
+        #loader .amp {
+            font-family: "Great Vibes", cursive;
+            font-size: clamp(28px, 5vw, 42px);
+            color: #c9a96e;
+            margin: -6px 0 4px;
+            opacity: 0.85;
+        }
+
+        #loader .sub {
+            font-family: "Cinzel", serif;
+            letter-spacing: 0.46em;
+            font-size: 11px;
+            color: #c9a96e;
+            margin-top: 18px;
+            text-transform: uppercase;
+        }
+
+        #loader .bar {
+            width: 140px;
+            height: 1px;
+            margin-top: 28px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #loader .bar::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, #fff6d4, transparent);
+            animation: shimmer 1.4s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        #ui {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 4;
+            pointer-events: none;
+            text-align: center;
+            padding: 0 24px 36px;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 1.2s ease 0.3s, transform 1.2s ease 0.3s;
+        }
+
+        #ui.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #ui .hint {
+            font-family: "Cinzel", serif;
+            font-size: 11px;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: rgba(247, 239, 227, 0.72);
+        }
+
+        #ui .hint span {
+            color: var(--gold);
+        }
+
+        #corner {
+            position: fixed;
+            top: 28px;
+            left: 0;
+            right: 0;
+            z-index: 4;
+            text-align: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.4s ease 0.6s;
+        }
+
+        #corner.show {
+            opacity: 1;
+        }
+
+        #corner p {
+            font-family: "Cinzel", serif;
+            font-size: 10px;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            color: rgba(212, 175, 55, 0.8);
+        }
+
+        @media (max-width: 640px) {
+            #ui {
+                padding-bottom: 22px;
+            }
+
+            #ui .hint {
+                letter-spacing: 0.18em;
+                font-size: 9px;
+            }
+
+            #corner {
+                top: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loader">
+        <div class="monogram">I</div>
+        <div class="amp">&amp;</div>
+        <div class="monogram" style="margin-top:-10px">A</div>
+        <div class="sub">The Invitation</div>
+        <div class="bar"></div>
+    </div>
+    <div id="corner">
+        <p>Twenty First of June &middot; MMXXV</p>
+    </div>
+    <div id="ui">
+        <p class="hint">Click the card to open &nbsp;<span>·</span>&nbsp; Drag to turn &nbsp;<span>·</span>&nbsp; Scroll
+            to draw near</p>
+    </div>
+    <div id="vignette"></div>
+    <div id="grain"></div>
+
+    <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.1/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.1/examples/jsm/"
+    }
+  }
+  </script>
+    <script type="module">
+        import * as THREE from "three";
+        import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+        import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+        const CARD_W = 1.52;
+        const CARD_H = 2.14;
+        const CARD_D = 0.018;
+
+        const state = {
+            open: 0,
+            targetOpen: 0,
+            time: 0,
+            pointer: new THREE.Vector2(),
+            down: { x: 0, y: 0 },
+        };
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0c0508);
+        scene.fog = new THREE.FogExp2(0x0c0508, 0.055);
+
+        const camera = new THREE.PerspectiveCamera(38, innerWidth / innerHeight, 0.1, 80);
+        camera.position.set(0.35, 0.15, 4.6);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: "high-performance" });
+        renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+        renderer.setSize(innerWidth, innerHeight);
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.15;
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        document.body.prepend(renderer.domElement);
+
+        const pmrem = new THREE.PMREMGenerator(renderer);
+        scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+        pmrem.dispose();
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.06;
+        controls.minDistance = 2.4;
+        controls.maxDistance = 7.5;
+        controls.maxPolarAngle = Math.PI * 0.72;
+        controls.minPolarAngle = Math.PI * 0.22;
+        controls.target.set(0, 0.05, 0);
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.55;
+        controls.enablePan = false;
+
+        const hemi = new THREE.HemisphereLight(0xffe6c9, 0x1a050c, 0.55);
+        scene.add(hemi);
+
+        const key = new THREE.DirectionalLight(0xfff0d4, 1.35);
+        key.position.set(3.2, 5.5, 4.2);
+        key.castShadow = true;
+        key.shadow.mapSize.set(1024, 1024);
+        key.shadow.camera.near = 1;
+        key.shadow.camera.far = 18;
+        key.shadow.camera.left = -4;
+        key.shadow.camera.right = 4;
+        key.shadow.camera.top = 4;
+        key.shadow.camera.bottom = -4;
+        key.shadow.bias = -0.0008;
+        scene.add(key);
+
+        const fill = new THREE.DirectionalLight(0xb08090, 0.35);
+        fill.position.set(-4, 1.5, -2);
+        scene.add(fill);
+
+        const rim = new THREE.PointLight(0xffc978, 2.4, 12, 2);
+        rim.position.set(-1.6, 2.2, 2.4);
+        scene.add(rim);
+
+        const candle = new THREE.PointLight(0xffaa55, 1.6, 8, 2);
+        candle.position.set(1.4, -0.4, 1.8);
+        scene.add(candle);
+
+        const goldMat = new THREE.MeshStandardMaterial({
+            color: 0xe0b84e,
+            metalness: 0.92,
+            roughness: 0.18,
+            envMapIntensity: 1.2,
+        });
+        const roseGoldMat = new THREE.MeshStandardMaterial({
+            color: 0xc4876a,
+            metalness: 0.88,
+            roughness: 0.22,
+            envMapIntensity: 1.1,
+        });
+        const pearlMat = new THREE.MeshStandardMaterial({
+            color: 0xf3e6d4,
+            metalness: 0.35,
+            roughness: 0.25,
+            envMapIntensity: 0.9,
+        });
+
+        function paperNoise(ctx, w, h, alpha) {
+            const img = ctx.getImageData(0, 0, w, h);
+            const d = img.data;
+            for (let i = 0; i < d.length; i += 4) {
+                const n = (Math.random() - 0.5) * alpha;
+                d[i] = Math.min(255, Math.max(0, d[i] + n));
+                d[i + 1] = Math.min(255, Math.max(0, d[i + 1] + n));
+                d[i + 2] = Math.min(255, Math.max(0, d[i + 2] + n));
+            }
+            ctx.putImageData(img, 0, 0);
+        }
+
+        function drawCornerFlourish(ctx, x, y, rot, scale) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(rot);
+            ctx.scale(scale, scale);
+            ctx.strokeStyle = "#c4a35a";
+            ctx.lineWidth = 1.6;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.bezierCurveTo(18, 0, 28, 12, 42, 12);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.bezierCurveTo(0, 18, 12, 28, 12, 42);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(8, 8);
+            ctx.bezierCurveTo(22, 8, 30, 20, 36, 28);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(14, 14, 3.2, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function drawDiamond(ctx, x, y, s) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(Math.PI / 4);
+            ctx.strokeStyle = "#c4a35a";
+            ctx.lineWidth = 1.4;
+            ctx.strokeRect(-s, -s, s * 2, s * 2);
+            ctx.restore();
+        }
+
+        function drawHairline(ctx, x1, x2, y) {
+            const g = ctx.createLinearGradient(x1, y, x2, y);
+            g.addColorStop(0, "rgba(196,163,90,0)");
+            g.addColorStop(0.2, "rgba(196,163,90,0.9)");
+            g.addColorStop(0.8, "rgba(196,163,90,0.9)");
+            g.addColorStop(1, "rgba(196,163,90,0)");
+            ctx.strokeStyle = g;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(x1, y);
+            ctx.lineTo(x2, y);
+            ctx.stroke();
+        }
+
+        function fillIvory(ctx, w, h, top, bot) {
+            const g = ctx.createLinearGradient(0, 0, 0, h);
+            g.addColorStop(0, top);
+            g.addColorStop(1, bot);
+            ctx.fillStyle = g;
+            ctx.fillRect(0, 0, w, h);
+        }
+
+        function createFrontCanvas() {
+            const w = 1024, h = 1448;
+            const c = document.createElement("canvas");
+            c.width = w; c.height = h;
+            const ctx = c.getContext("2d");
+            fillIvory(ctx, w, h, "#fbf6ee", "#eddcc3");
+            paperNoise(ctx, w, h, 14);
+
+            ctx.strokeStyle = "#c4a35a";
+            ctx.lineWidth = 10;
+            ctx.strokeRect(42, 42, w - 84, h - 84);
+            ctx.lineWidth = 2;
+            ctx.strokeRect(58, 58, w - 116, h - 116);
+            ctx.lineWidth = 1;
+            ctx.strokeRect(70, 70, w - 140, h - 140);
+
+            drawCornerFlourish(ctx, 92, 92, 0, 1.15);
+            drawCornerFlourish(ctx, w - 92, 92, Math.PI / 2, 1.15);
+            drawCornerFlourish(ctx, w - 92, h - 92, Math.PI, 1.15);
+            drawCornerFlourish(ctx, 92, h - 92, -Math.PI / 2, 1.15);
+
+            ctx.fillStyle = "#7a5a28";
+            ctx.textAlign = "center";
+            ctx.font = "500 20px Cinzel";
+            ctx.letterSpacing = "10px";
+            ctx.fillText("THE WEDDING CELEBRATION OF", w / 2, 250);
+
+            drawHairline(ctx, 220, 804, 290);
+            drawDiamond(ctx, w / 2, 290, 5);
+
+            ctx.fillStyle = "#3d2418";
+            ctx.font = "118px Great Vibes";
+            ctx.fillText("Isabella", w / 2, 470);
+
+            ctx.fillStyle = "#b0893e";
+            ctx.font = "italic 36px Cormorant Garamond";
+            ctx.fillText("and", w / 2, 545);
+
+            ctx.fillStyle = "#3d2418";
+            ctx.font = "118px Great Vibes";
+            ctx.fillText("Alessandro", w / 2, 680);
+
+            drawHairline(ctx, 250, 774, 740);
+            drawDiamond(ctx, w / 2, 740, 5);
+
+            ctx.fillStyle = "#7a5a28";
+            ctx.font = "500 28px Cinzel";
+            ctx.fillText("21  ·  06  ·  2025", w / 2, 830);
+
+            ctx.font = "italic 28px Cormorant Garamond";
+            ctx.fillStyle = "#5c4030";
+            ctx.fillText("at six o'clock in the evening", w / 2, 890);
+
+            ctx.font = "600 26px Cinzel";
+            ctx.fillStyle = "#7a5a28";
+            ctx.fillText("VILLA AURORA", w / 2, 980);
+            ctx.font = "italic 24px Cormorant Garamond";
+            ctx.fillStyle = "#5c4030";
+            ctx.fillText("Tuscany, Italy", w / 2, 1024);
+
+            ctx.beginPath();
+            ctx.arc(w / 2, 1200, 52, 0, Math.PI * 2);
+            const seal = ctx.createRadialGradient(w / 2 - 10, 1190, 8, w / 2, 1200, 52);
+            seal.addColorStop(0, "#9a2a32");
+            seal.addColorStop(1, "#5c1218");
+            ctx.fillStyle = seal;
+            ctx.fill();
+            ctx.strokeStyle = "#c4a35a";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            ctx.fillStyle = "#e8c97a";
+            ctx.font = "42px Great Vibes";
+            ctx.fillText("I & A", w / 2, 1214);
+
+            ctx.font = "500 14px Cinzel";
+            ctx.fillStyle = "#8a6a3a";
+            ctx.fillText("THE HONOUR OF YOUR PRESENCE", w / 2, 1320);
+            return c;
+        }
+
+        function createInsideCoverCanvas() {
+            const w = 1024, h = 1448;
+            const c = document.createElement("canvas");
+            c.width = w; c.height = h;
+            const ctx = c.getContext("2d");
+            fillIvory(ctx, w, h, "#f8f1e6", "#e7d5bc");
+            paperNoise(ctx, w, h, 12);
+            ctx.strokeStyle = "#c4a35a";
+            ctx.lineWidth = 6;
+            ctx.strokeRect(48, 48, w - 96, h - 96);
+            ctx.lineWidth = 1.2;
+            ctx.strokeRect(64, 64, w - 128, h - 128);
+            drawCornerFlourish(ctx, 88, 88, 0, 1);
+            drawCornerFlourish(ctx, w - 88, 88, Math.PI / 2, 1);
+            drawCornerFlourish(ctx, w - 88, h - 88, Math.PI, 1);
+            drawCornerFlourish(ctx, 88, h - 88, -Math.PI / 2, 1);
+
+            ctx.textAlign = "center";
+            ctx.fillStyle = "#7a5a28";
+            ctx.font = "500 16px Cinzel";
+            ctx.fillText("A NOTE FROM THE COUPLE", w / 2, 280);
+
+            drawHairline(ctx, 260, 764, 320);
+            drawDiamond(ctx, w / 2, 320, 4);
+
+            ctx.fillStyle = "#4a3224";
+            ctx.font = "italic 34px Cormorant Garamond";
+            const lines = [
+                "Two souls, one promise.",
+                "We found in each other a home",
+                "more enduring than stone,",
+                "more tender than spring.",
+                "",
+                "With grateful hearts we ask you",
+                "to stand beside us as we begin",
+                "the sweetest chapter of our lives.",
+                "",
+                "Dinner, dancing, and delight",
+                "will follow the ceremony",
+                "beneath the villa lanterns."
+            ];
+            let y = 420;
+            lines.forEach((ln) => {
+                ctx.fillText(ln, w / 2, y);
+                y += 52;
+            });
+
+            ctx.font = "48px Great Vibes";
+            ctx.fillStyle = "#8a5a28";
+            ctx.fillText("Isabella  &  Alessandro", w / 2, 1180);
+            return c;
+        }
+
+        function createInnerPageCanvas() {
+            const w = 1024, h = 1448;
+            const c = document.createElement("canvas");
+            c.width = w; c.height = h;
+            const ctx = c.getContext("2d");
+            fillIvory(ctx, w, h, "#fbf7f0", "#ead9c0");
+            paperNoise(ctx, w, h, 12);
+            ctx.strokeStyle = "#c4a35a";
+            ctx.lineWidth = 8;
+            ctx.strokeRect(42, 42, w - 84, h - 84);
+            ctx.lineWidth = 1.5;
+            ctx.strokeRect(58, 58, w - 116, h - 116);
+            drawCornerFlourish(ctx, 90, 90, 0, 1.05);
+            drawCornerFlourish(ctx, w - 90, 90, Math.PI / 2, 1.05);
+            drawCornerFlourish(ctx, w - 90, h - 90, Math.PI, 1.05);
+            drawCornerFlourish(ctx, 90, h - 90, -Math.PI / 2, 1.05);
+
+            ctx.textAlign = "center";
+            ctx.fillStyle = "#7a5a28";
+            ctx.font = "500 15px Cinzel";
+            ctx.fillText("TOGETHER WITH THEIR FAMILIES", w / 2, 210);
+
+            ctx.fillStyle = "#3d2418";
+            ctx.font = "72px Great Vibes";
+            ctx.fillText("Isabella Moretti", w / 2, 320);
+            ctx.font = "italic 26px Cormorant Garamond";
+            ctx.fillStyle = "#b0893e";
+            ctx.fillText("and", w / 2, 372);
+            ctx.fillStyle = "#3d2418";
+            ctx.font = "72px Great Vibes";
+            ctx.fillText("Alessandro Ricci", w / 2, 460);
+
+            drawHairline(ctx, 240, 784, 510);
+            drawDiamond(ctx, w / 2, 510, 5);
+
+            ctx.fillStyle = "#5c4030";
+            ctx.font = "italic 26px Cormorant Garamond";
+            ctx.fillText("request the honour of your presence", w / 2, 575);
+            ctx.fillText("at the celebration of their marriage", w / 2, 615);
+
+            ctx.fillStyle = "#7a5a28";
+            ctx.font = "600 22px Cinzel";
+            ctx.fillText("SATURDAY, THE TWENTY-FIRST OF JUNE", w / 2, 700);
+            ctx.font = "500 20px Cinzel";
+            ctx.fillText("TWO THOUSAND TWENTY-FIVE", w / 2, 738);
+            ctx.font = "italic 24px Cormorant Garamond";
+            ctx.fillStyle = "#5c4030";
+            ctx.fillText("at six o'clock in the evening", w / 2, 786);
+
+            drawHairline(ctx, 300, 724, 830);
+            drawDiamond(ctx, w / 2, 830, 4);
+
+            ctx.fillStyle = "#7a5a28";
+            ctx.font = "600 24px Cinzel";
+            ctx.fillText("VILLA AURORA", w / 2, 900);
+            ctx.font = "italic 24px Cormorant Garamond";
+            ctx.fillStyle = "#5c4030";
+            ctx.fillText("Via dei Cipressi, 12", w / 2, 942);
+            ctx.fillText("Val d'Orcia, Tuscany", w / 2, 978);
+
+            ctx.fillStyle = "#7a5a28";
+            ctx.font = "500 16px Cinzel";
+            ctx.fillText("RECEPTION TO FOLLOW", w / 2, 1070);
+            ctx.font = "italic 22px Cormorant Garamond";
+            ctx.fillStyle = "#5c4030";
+            ctx.fillText("Black tie optional  ·  Dancing until midnight", w / 2, 1114);
+
+            ctx.fillStyle = "#8a6a3a";
+            ctx.font = "italic 22px Cormorant Garamond";
+            ctx.fillText("Kindly reply by the first of May", w / 2, 1220);
+            ctx.font = "48px Great Vibes";
+            ctx.fillStyle = "#8a5a28";
+            ctx.fillText("With love", w / 2, 1300);
+            return c;
+        }
+
+        function createBackCanvas() {
+            const w = 1024, h = 1448;
+            const c = document.createElement("canvas");
+            c.width = w; c.height = h;
+            const ctx = c.getContext("2d");
+            fillIvory(ctx, w, h, "#e9d8bf", "#d9c2a3");
+            paperNoise(ctx, w, h, 16);
+            ctx.strokeStyle = "#b8954a";
+            ctx.lineWidth = 8;
+            ctx.strokeRect(48, 48, w - 96, h - 96);
+            ctx.lineWidth = 1.5;
+            ctx.strokeRect(68, 68, w - 136, h - 136);
+            ctx.textAlign = "center";
+            ctx.fillStyle = "#7a5a28";
+            ctx.font = "160px Great Vibes";
+            ctx.fillText("I", w / 2 - 40, h / 2 + 20);
+            ctx.font = "72px Great Vibes";
+            ctx.fillText("&", w / 2 + 8, h / 2 + 8);
+            ctx.font = "160px Great Vibes";
+            ctx.fillText("A", w / 2 + 70, h / 2 + 40);
+            ctx.font = "500 16px Cinzel";
+            ctx.fillText("EST.  21  JUNE  2025", w / 2, h / 2 + 140);
+            return c;
+        }
+
+        function texFromCanvas(canvas) {
+            const t = new THREE.CanvasTexture(canvas);
+            t.colorSpace = THREE.SRGBColorSpace;
+            t.anisotropy = 8;
+            t.minFilter = THREE.LinearFilter;
+            t.needsUpdate = true;
+            return t;
+        }
+
+        function paperMat(map, side = THREE.FrontSide) {
+            return new THREE.MeshStandardMaterial({
+                map,
+                roughness: 0.82,
+                metalness: 0.04,
+                side,
+                envMapIntensity: 0.35,
+            });
+        }
+
+        function makeCircleTex(color, size, soft) {
+            const c = document.createElement("canvas");
+            c.width = c.height = size;
+            const ctx = c.getContext("2d");
+            const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+            g.addColorStop(0, color);
+            g.addColorStop(soft, color);
+            g.addColorStop(1, "rgba(0,0,0,0)");
+            ctx.fillStyle = g;
+            ctx.fillRect(0, 0, size, size);
+            const t = new THREE.CanvasTexture(c);
+            t.needsUpdate = true;
+            return t;
+        }
+
+        function makePetalTex() {
+            const c = document.createElement("canvas");
+            c.width = 128; c.height = 192;
+            const ctx = c.getContext("2d");
+            ctx.beginPath();
+            ctx.moveTo(64, 12);
+            ctx.bezierCurveTo(110, 40, 120, 110, 64, 180);
+            ctx.bezierCurveTo(8, 110, 18, 40, 64, 12);
+            const g = ctx.createLinearGradient(20, 20, 110, 170);
+            g.addColorStop(0, "rgba(232, 160, 170, 0.92)");
+            g.addColorStop(0.45, "rgba(196, 70, 90, 0.88)");
+            g.addColorStop(1, "rgba(140, 30, 50, 0.55)");
+            ctx.fillStyle = g;
+            ctx.fill();
+            const t = new THREE.CanvasTexture(c);
+            t.colorSpace = THREE.SRGBColorSpace;
+            return t;
+        }
+
+        function heartShape() {
+            const s = new THREE.Shape();
+            s.moveTo(0, 0.35);
+            s.bezierCurveTo(0.15, 0.7, 0.55, 0.65, 0.55, 0.28);
+            s.bezierCurveTo(0.55, 0.05, 0.2, -0.2, 0, -0.5);
+            s.bezierCurveTo(-0.2, -0.2, -0.55, 0.05, -0.55, 0.28);
+            s.bezierCurveTo(-0.55, 0.65, -0.15, 0.7, 0, 0.35);
+            return s;
+        }
+
+        const cardPick = [];
+        const cardRoot = new THREE.Group();
+        scene.add(cardRoot);
+
+        const coverPivot = new THREE.Group();
+        coverPivot.position.set(-CARD_W / 2, 0, CARD_D * 0.5 + 0.001);
+        cardRoot.add(coverPivot);
+
+        const coverGroup = new THREE.Group();
+        coverGroup.position.set(CARD_W / 2, 0, 0);
+        coverPivot.add(coverGroup);
+
+        function addCardFace(tex, w, h, z, parent, rotY = 0) {
+            const geo = new THREE.PlaneGeometry(w, h);
+            const mat = paperMat(tex);
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.position.z = z;
+            mesh.rotation.y = rotY;
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            parent.add(mesh);
+            cardPick.push(mesh);
+            return mesh;
+        }
+
+        const floorGeo = new THREE.CircleGeometry(7, 64);
+        const floorMat = new THREE.MeshStandardMaterial({
+            color: 0x14080b,
+            roughness: 0.9,
+            metalness: 0.1,
+        });
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.rotation.x = -Math.PI / 2;
+        floor.position.y = -1.55;
+        floor.receiveShadow = true;
+        scene.add(floor);
+
+        const petals = [];
+        const sparkleSys = { points: null };
+        const hearts = [];
+        const rings = new THREE.Group();
+        const pearls = [];
+
+        async function build() {
+            await document.fonts.load('118px "Great Vibes"');
+            await document.fonts.load('72px "Great Vibes"');
+            await document.fonts.load('500 22px Cinzel');
+            await document.fonts.load('italic 28px "Cormorant Garamond"');
+            await document.fonts.ready;
+
+            const frontTex = texFromCanvas(createFrontCanvas());
+            const insideTex = texFromCanvas(createInsideCoverCanvas());
+            const pageTex = texFromCanvas(createInnerPageCanvas());
+            const backTex = texFromCanvas(createBackCanvas());
+
+            addCardFace(frontTex, CARD_W, CARD_H, CARD_D * 0.5 + 0.001, coverGroup, 0);
+            addCardFace(insideTex, CARD_W, CARD_H, -(CARD_D * 0.5 + 0.001), coverGroup, Math.PI);
+
+            const coverBoard = new THREE.Mesh(
+                new THREE.BoxGeometry(CARD_W - 0.01, CARD_H - 0.01, CARD_D),
+                new THREE.MeshStandardMaterial({ color: 0xd9c4a4, roughness: 0.85, metalness: 0.05 })
+            );
+            coverBoard.castShadow = true;
+            coverGroup.add(coverBoard);
+
+            const innerPage = addCardFace(pageTex, CARD_W, CARD_H, 0.002, cardRoot, 0);
+            innerPage.position.z = 0;
+
+            const backPage = addCardFace(backTex, CARD_W, CARD_H, -CARD_D - 0.004, cardRoot, Math.PI);
+            const backBoard = new THREE.Mesh(
+                new THREE.BoxGeometry(CARD_W - 0.01, CARD_H - 0.01, CARD_D),
+                new THREE.MeshStandardMaterial({ color: 0xcbb392, roughness: 0.85, metalness: 0.05 })
+            );
+            backBoard.position.z = -CARD_D * 0.5 - 0.002;
+            backBoard.castShadow = true;
+            cardRoot.add(backBoard);
+
+            const edgeMat = new THREE.MeshStandardMaterial({ color: 0xc4a35a, metalness: 0.7, roughness: 0.3 });
+            const spine = new THREE.Mesh(new THREE.BoxGeometry(0.012, CARD_H, CARD_D * 2.2), edgeMat);
+            spine.position.set(-CARD_W / 2, 0, -CARD_D * 0.2);
+            cardRoot.add(spine);
+
+            function goldFrameBits(parent, zSign) {
+                const t = 0.018;
+                const bits = [
+                    [-CARD_W / 2 + 0.06, CARD_H / 2 - 0.06],
+                    [CARD_W / 2 - 0.06, CARD_H / 2 - 0.06],
+                    [-CARD_W / 2 + 0.06, -CARD_H / 2 + 0.06],
+                    [CARD_W / 2 - 0.06, -CARD_H / 2 + 0.06],
+                ];
+                bits.forEach(([x, y]) => {
+                    const m = new THREE.Mesh(new THREE.TorusGeometry(0.035, 0.006, 8, 20), goldMat);
+                    m.position.set(x, y, zSign * (CARD_D * 0.5 + 0.008));
+                    parent.add(m);
+                });
+                const bead = new THREE.Mesh(new THREE.SphereGeometry(0.012, 12, 12), pearlMat);
+                bead.position.set(0, CARD_H / 2 - 0.07, zSign * (CARD_D * 0.5 + 0.01));
+                parent.add(bead);
+            }
+            goldFrameBits(coverGroup, 1);
+
+            const ringGeo = new THREE.TorusGeometry(0.16, 0.028, 20, 64);
+            const r1 = new THREE.Mesh(ringGeo, goldMat);
+            const r2 = new THREE.Mesh(ringGeo, roseGoldMat);
+            r1.rotation.x = Math.PI / 2.15;
+            r2.rotation.x = Math.PI / 2.15;
+            r2.rotation.y = Math.PI / 2.6;
+            r2.position.x = 0.12;
+            r1.position.x = -0.05;
+            r1.castShadow = r2.castShadow = true;
+            rings.add(r1, r2);
+            rings.position.set(1.55, 0.85, 0.4);
+            scene.add(rings);
+
+            const extrude = { depth: 0.045, bevelEnabled: true, bevelThickness: 0.012, bevelSize: 0.01, bevelSegments: 2 };
+            const hgeo = new THREE.ExtrudeGeometry(heartShape(), extrude);
+            hgeo.center();
+            for (let i = 0; i < 7; i++) {
+                const mat = i % 2 ? goldMat : roseGoldMat;
+                const m = new THREE.Mesh(hgeo, mat);
+                const sc = 0.18 + Math.random() * 0.16;
+                m.scale.setScalar(sc);
+                m.position.set((Math.random() - 0.5) * 4.2, (Math.random() - 0.5) * 2.6, (Math.random() - 0.5) * 3.2);
+                m.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+                m.castShadow = true;
+                m.userData = {
+                    spin: (Math.random() - 0.5) * 0.4,
+                    bob: Math.random() * Math.PI * 2,
+                    amp: 0.08 + Math.random() * 0.1,
+                    baseY: m.position.y,
+                };
+                scene.add(m);
+                hearts.push(m);
+            }
+
+            for (let i = 0; i < 18; i++) {
+                const p = new THREE.Mesh(new THREE.SphereGeometry(0.018 + Math.random() * 0.02, 12, 12), pearlMat);
+                p.position.set((Math.random() - 0.5) * 3.8, (Math.random() - 0.5) * 2.4, (Math.random() - 0.5) * 2.8);
+                p.userData = { bob: Math.random() * 6.28, amp: 0.06, baseY: p.position.y, spin: 0.2 };
+                scene.add(p);
+                pearls.push(p);
+            }
+
+            const petalTex = makePetalTex();
+            const petalMat = new THREE.MeshStandardMaterial({
+                map: petalTex,
+                transparent: true,
+                side: THREE.DoubleSide,
+                depthWrite: false,
+                roughness: 0.7,
+                metalness: 0,
+                alphaTest: 0.12,
+            });
+            const petalGeo = new THREE.PlaneGeometry(0.14, 0.2);
+            for (let i = 0; i < 48; i++) {
+                const p = new THREE.Mesh(petalGeo, petalMat);
+                p.position.set((Math.random() - 0.5) * 6, Math.random() * 6 - 1, (Math.random() - 0.5) * 5);
+                p.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
+                p.userData = {
+                    speed: 0.12 + Math.random() * 0.22,
+                    sway: 0.4 + Math.random() * 1.2,
+                    swayAmp: 0.15 + Math.random() * 0.25,
+                    rot: (Math.random() - 0.5) * 1.4,
+                    phase: Math.random() * 6.28,
+                };
+                scene.add(p);
+                petals.push(p);
+            }
+
+            const sparkCount = 220;
+            const spos = new Float32Array(sparkCount * 3);
+            const scols = new Float32Array(sparkCount * 3);
+            for (let i = 0; i < sparkCount; i++) {
+                spos[i * 3] = (Math.random() - 0.5) * 8;
+                spos[i * 3 + 1] = (Math.random() - 0.5) * 5;
+                spos[i * 3 + 2] = (Math.random() - 0.5) * 6;
+                const gld = Math.random();
+                scols[i * 3] = 1;
+                scols[i * 3 + 1] = 0.82 + gld * 0.15;
+                scols[i * 3 + 2] = 0.45 + gld * 0.3;
+            }
+            const sgeo = new THREE.BufferGeometry();
+            sgeo.setAttribute("position", new THREE.BufferAttribute(spos, 3));
+            sgeo.setAttribute("color", new THREE.BufferAttribute(scols, 3));
+            const smat = new THREE.PointsMaterial({
+                map: makeCircleTex("rgba(255,240,200,1)", 64, 0.25),
+                size: 0.07,
+                transparent: true,
+                depthWrite: false,
+                blending: THREE.AdditiveBlending,
+                vertexColors: true,
+                opacity: 0.85,
+            });
+            sparkleSys.points = new THREE.Points(sgeo, smat);
+            scene.add(sparkleSys.points);
+
+            document.getElementById("loader").classList.add("hide");
+            document.getElementById("ui").classList.add("show");
+            document.getElementById("corner").classList.add("show");
+        }
+
+        const raycaster = new THREE.Raycaster();
+
+        renderer.domElement.addEventListener("pointerdown", (e) => {
+            state.down.x = e.clientX;
+            state.down.y = e.clientY;
+            controls.autoRotate = false;
+        });
+
+        renderer.domElement.addEventListener("pointerup", (e) => {
+            const dx = e.clientX - state.down.x;
+            const dy = e.clientY - state.down.y;
+            if (dx * dx + dy * dy > 36) return;
+            state.pointer.x = (e.clientX / innerWidth) * 2 - 1;
+            state.pointer.y = -(e.clientY / innerHeight) * 2 + 1;
+            raycaster.setFromCamera(state.pointer, camera);
+            const hits = raycaster.intersectObjects(cardPick, true);
+            if (hits.length) {
+                state.targetOpen = state.targetOpen > 0.5 ? 0 : 1;
+            }
+        });
+
+        window.addEventListener("resize", () => {
+            camera.aspect = innerWidth / innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(innerWidth, innerHeight);
+        });
+
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const dt = Math.min(clock.getDelta(), 0.05);
+            state.time += dt;
+            const t = state.time;
+
+            state.open += (state.targetOpen - state.open) * (1 - Math.pow(0.012, dt));
+            coverPivot.rotation.y = -state.open * Math.PI * 0.96;
+            cardRoot.position.x = THREE.MathUtils.lerp(0, 0.42, state.open);
+            cardRoot.position.y = Math.sin(t * 0.7) * 0.045;
+            cardRoot.rotation.z = Math.sin(t * 0.35) * 0.018;
+            cardRoot.rotation.x = Math.sin(t * 0.28) * 0.012;
+
+            rings.rotation.y = t * 0.35;
+            rings.position.y = 0.85 + Math.sin(t * 0.9) * 0.08;
+            rings.rotation.z = Math.sin(t * 0.4) * 0.15;
+
+            hearts.forEach((h, i) => {
+                h.rotation.y += h.userData.spin * dt;
+                h.position.y = h.userData.baseY + Math.sin(t * 0.7 + h.userData.bob) * h.userData.amp;
+            });
+            pearls.forEach((p) => {
+                p.position.y = p.userData.baseY + Math.sin(t * 0.8 + p.userData.bob) * p.userData.amp;
+            });
+
+            petals.forEach((p) => {
+                const u = p.userData;
+                p.position.y -= u.speed * dt;
+                p.position.x += Math.sin(t * u.sway + u.phase) * u.swayAmp * dt;
+                p.rotation.z += u.rot * dt;
+                p.rotation.x += u.rot * 0.4 * dt;
+                if (p.position.y < -2.2) {
+                    p.position.y = 3.6 + Math.random();
+                    p.position.x = (Math.random() - 0.5) * 6;
+                    p.position.z = (Math.random() - 0.5) * 5;
+                }
+            });
+
+            if (sparkleSys.points) {
+                sparkleSys.points.rotation.y = t * 0.03;
+                const pos = sparkleSys.points.geometry.attributes.position.array;
+                for (let i = 0; i < pos.length; i += 3) {
+                    pos[i + 1] += Math.sin(t * 0.6 + i) * 0.0008;
+                }
+                sparkleSys.points.geometry.attributes.position.needsUpdate = true;
+            }
+
+            rim.intensity = 2.1 + Math.sin(t * 1.7) * 0.4;
+            candle.intensity = 1.3 + Math.sin(t * 2.4) * 0.35 + Math.sin(t * 5.1) * 0.12;
+
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        build().then(animate);
+    </script>
+</body>
+
+</html>

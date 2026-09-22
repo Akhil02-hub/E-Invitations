@@ -1,0 +1,2253 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Isabella · Twenty-Five — You're Invited</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Jost:wght@200;300;400;500&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box
+        }
+
+        :root {
+            --ink: #171512;
+            --ink-soft: #6f6a63;
+            --gold: #c8a253;
+            --gold-deep: #8f6f26;
+            --gold-light: #e8d3a0;
+            --blush: #fbeef0;
+            --lav: #f2eefb;
+            --mint: #eaf5f0;
+            --peach: #fdf1e5;
+            --line: rgba(23, 21, 18, .10);
+            --glass: rgba(255, 255, 255, .58);
+            --shadow-soft: 0 26px 60px -32px rgba(23, 21, 18, .35);
+            --ease: cubic-bezier(.22, .8, .28, 1);
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font-family: 'Jost', system-ui, sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(1200px 720px at 10% -12%, #fdf0f2 0%, rgba(253, 240, 242, 0) 62%),
+                radial-gradient(1000px 680px at 96% 4%, #f8f2e4 0%, rgba(248, 242, 228, 0) 58%),
+                radial-gradient(900px 900px at 50% 122%, #f1eefb 0%, rgba(241, 238, 251, 0) 62%),
+                #ffffff;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        ::selection {
+            background: rgba(200, 162, 83, .22)
+        }
+
+        /* ---------- BACKGROUND LAYERS ---------- */
+        #bg3d {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            display: block;
+            pointer-events: none;
+        }
+
+        .vignette {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background: radial-gradient(64% 54% at 50% 46%, rgba(255, 255, 255, .62) 0%, rgba(255, 255, 255, .24) 55%, rgba(255, 255, 255, 0) 100%);
+        }
+
+        /* ---------- TOP BAR ---------- */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 26px;
+            padding-top: calc(16px + env(safe-area-inset-top));
+            pointer-events: none;
+        }
+
+        .topbar>* {
+            pointer-events: auto
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .mono {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(200, 162, 83, .55);
+            background: rgba(255, 255, 255, .65);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            color: var(--gold-deep);
+            font-weight: 600;
+            box-shadow: 0 10px 24px -16px rgba(143, 111, 38, .8);
+        }
+
+        .brand-txt {
+            font-family: 'Jost', sans-serif;
+            font-size: 10.5px;
+            letter-spacing: .34em;
+            text-transform: uppercase;
+            color: #8b857b;
+        }
+
+        .progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            z-index: 55;
+            background: rgba(23, 21, 18, .05);
+        }
+
+        .progress span {
+            display: block;
+            height: 100%;
+            width: 20%;
+            background: linear-gradient(90deg, #e6cf9a, #c8a253, #8f6f26);
+            transition: width .8s var(--ease);
+            box-shadow: 0 0 12px rgba(200, 162, 83, .7);
+        }
+
+        /* ---------- BUTTONS ---------- */
+        .btn {
+            font-family: 'Jost', sans-serif;
+            font-size: 11.5px;
+            font-weight: 400;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            padding: 15px 30px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: transform .4s var(--ease), box-shadow .4s var(--ease), background .4s, color .4s, border-color .4s;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn.sm {
+            padding: 11px 22px;
+            font-size: 10.5px
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #e2c588 0%, #c8a253 45%, #a9863a 100%);
+            color: #fff;
+            box-shadow: 0 16px 34px -16px rgba(168, 133, 58, .85), inset 0 1px 0 rgba(255, 255, 255, .45);
+        }
+
+        .btn-gold::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .75), transparent);
+            transform: skewX(-18deg);
+            transition: left .75s var(--ease);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 22px 44px -18px rgba(168, 133, 58, .95)
+        }
+
+        .btn-gold:hover::after {
+            left: 140%
+        }
+
+        .btn-ghost {
+            background: rgba(255, 255, 255, .62);
+            border-color: rgba(23, 21, 18, .13);
+            color: var(--ink);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .btn-ghost:hover {
+            border-color: rgba(200, 162, 83, .85);
+            color: var(--gold-deep);
+            transform: translateY(-2px)
+        }
+
+        /* ---------- DECK / PAGES ---------- */
+        .deck {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            perspective: 1700px;
+            perspective-origin: 50% 50%
+        }
+
+        .page {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 92px 26px 108px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translate3d(0, 30px, -160px) rotateX(7deg);
+            transition: opacity .68s ease, transform .95s var(--ease), visibility .68s;
+            transform-style: preserve-3d;
+        }
+
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+            transform: none
+        }
+
+        .page-inner {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1080px;
+            max-height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6px 4px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .page-inner::-webkit-scrollbar {
+            display: none
+        }
+
+        /* reveal animation */
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 28px, 0) scale(.985)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .page.active .reveal {
+            animation: rise .95s var(--ease) both;
+            animation-delay: calc(var(--i, 0) * 85ms + 90ms);
+        }
+
+        /* ---------- COVER ORBITS (CSS 3D) ---------- */
+        .orbit {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            display: grid;
+            place-items: center;
+            pointer-events: none;
+            perspective: 1000px;
+        }
+
+        .ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(200, 162, 83, .34);
+        }
+
+        .r1 {
+            width: min(78vw, 540px);
+            aspect-ratio: 1;
+            animation: spin1 28s linear infinite
+        }
+
+        .r2 {
+            width: min(62vw, 414px);
+            aspect-ratio: 1;
+            border-color: rgba(200, 162, 83, .22);
+            animation: spin2 38s linear infinite
+        }
+
+        .r3 {
+            width: min(46vw, 300px);
+            aspect-ratio: 1;
+            border-style: dashed;
+            border-color: rgba(200, 162, 83, .32);
+            animation: spin3 22s linear infinite
+        }
+
+        @keyframes spin1 {
+            from {
+                transform: rotateX(74deg) rotateZ(0)
+            }
+
+            to {
+                transform: rotateX(74deg) rotateZ(360deg)
+            }
+        }
+
+        @keyframes spin2 {
+            from {
+                transform: rotateX(70deg) rotateZ(360deg)
+            }
+
+            to {
+                transform: rotateX(70deg) rotateZ(0)
+            }
+        }
+
+        @keyframes spin3 {
+            from {
+                transform: rotateX(78deg) rotateZ(0)
+            }
+
+            to {
+                transform: rotateX(78deg) rotateZ(-360deg)
+            }
+        }
+
+        /* ---------- TYPOGRAPHY ---------- */
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 10.5px;
+            letter-spacing: .42em;
+            text-transform: uppercase;
+            color: #8b857b;
+            margin-bottom: 26px;
+        }
+
+        .eyebrow .ln {
+            display: block;
+            width: 44px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold))
+        }
+
+        .eyebrow .ln:last-child {
+            background: linear-gradient(90deg, var(--gold), transparent)
+        }
+
+        .cover-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            font-size: clamp(58px, 13vw, 150px);
+            line-height: .96;
+            letter-spacing: -.015em;
+            margin: 0;
+            background: linear-gradient(168deg, #1d1a16 0%, #3c362c 42%, #7d6a44 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .cover-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: clamp(18px, 3.4vw, 30px);
+            color: #5d574e;
+            margin: 10px 0 0;
+        }
+
+        .cover-sub .word {
+            background: linear-gradient(120deg, #b8923f, #e8d3a0, #b8923f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 500;
+            font-style: normal;
+            letter-spacing: .02em;
+        }
+
+        .ornament {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: var(--gold);
+            font-size: 12px;
+            margin: 30px 0 22px;
+        }
+
+        .ornament::before,
+        .ornament::after {
+            content: '';
+            width: 70px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(200, 162, 83, .75), transparent);
+        }
+
+        .cover-date {
+            font-family: 'Jost', sans-serif;
+            font-size: 13px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: #3c362c;
+            margin: 0;
+        }
+
+        .cover-venue {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 17px;
+            color: #8b857b;
+            margin: 12px 0 0;
+        }
+
+        .cover-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 38px
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            font-size: clamp(36px, 7vw, 68px);
+            line-height: 1.02;
+            margin: 0 0 12px;
+            letter-spacing: -.01em;
+            background: linear-gradient(170deg, #1d1a16, #544c3e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-sub {
+            font-family: 'Jost', sans-serif;
+            font-size: 11px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: #918a7f;
+            margin: 0 0 40px;
+        }
+
+        .lede {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(16px, 2.1vw, 20px);
+            font-style: italic;
+            color: #6f6a63;
+            max-width: 620px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        /* ---------- GLASS CARDS ---------- */
+        .card {
+            position: relative;
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, .85);
+            border-radius: 24px;
+            padding: 30px 26px;
+            backdrop-filter: blur(16px) saturate(1.2);
+            -webkit-backdrop-filter: blur(16px) saturate(1.2);
+            box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, .9);
+            transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .45s;
+            transform-origin: center;
+            height: 100%;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(140deg, rgba(255, 255, 255, .75), rgba(255, 255, 255, 0) 55%);
+            pointer-events: none;
+            opacity: .9;
+        }
+
+        .card:hover {
+            box-shadow: 0 34px 70px -34px rgba(23, 21, 18, .42), inset 0 1px 0 rgba(255, 255, 255, .95);
+            border-color: rgba(200, 162, 83, .4)
+        }
+
+        .tilt {
+            transform: perspective(950px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+            will-change: transform;
+        }
+
+        .icon-wrap {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            margin: 0 auto 18px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(140deg, #fff, #f6f1e6);
+            border: 1px solid rgba(200, 162, 83, .28);
+            box-shadow: 0 12px 24px -16px rgba(143, 111, 38, .75);
+            color: var(--gold-deep);
+        }
+
+        .icon-wrap svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.4;
+            stroke-linecap: round;
+            stroke-linejoin: round
+        }
+
+        .card h3 {
+            font-family: 'Jost', sans-serif;
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: #9a9389;
+            margin: 0 0 10px;
+        }
+
+        .card .big {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(21px, 2.6vw, 27px);
+            line-height: 1.25;
+            color: #241f18;
+            margin: 0 0 8px;
+            font-weight: 500;
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 13.5px;
+            line-height: 1.7;
+            color: #7d776e;
+            font-weight: 300
+        }
+
+        .card .accent {
+            color: var(--gold-deep);
+            font-weight: 400
+        }
+
+        .details-grid {
+            display: grid;
+            width: 100%;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .reveal-cell {
+            display: flex
+        }
+
+        /* ---------- COUNTDOWN ---------- */
+        .countdown {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 44px;
+        }
+
+        .cd-box {
+            min-width: 92px;
+            padding: 18px 12px 14px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, .66);
+            border: 1px solid rgba(255, 255, 255, .9);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 20px 40px -28px rgba(23, 21, 18, .4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .cd-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 34px;
+            line-height: 1;
+            font-weight: 500;
+            color: #241f18;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .cd-lbl {
+            font-size: 9.5px;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: #9a9389
+        }
+
+        /* ---------- TIMELINE ---------- */
+        .timeline {
+            width: 100%;
+            max-width: 820px;
+            margin: 0 auto;
+            text-align: left
+        }
+
+        .tl-row {
+            display: grid;
+            grid-template-columns: 130px 44px 1fr;
+            align-items: stretch;
+            padding: 6px 0;
+        }
+
+        .tl-time {
+            font-family: 'Jost', sans-serif;
+            font-size: 12px;
+            letter-spacing: .16em;
+            color: var(--gold-deep);
+            text-align: right;
+            padding-top: 18px;
+            white-space: nowrap;
+            font-weight: 400;
+        }
+
+        .tl-mid {
+            position: relative;
+            display: flex;
+            justify-content: center
+        }
+
+        .tl-mid::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            transform: translateX(-50%);
+            background: linear-gradient(to bottom, rgba(200, 162, 83, .06), rgba(200, 162, 83, .55), rgba(200, 162, 83, .06));
+        }
+
+        .tl-row:first-child .tl-mid::before {
+            top: 34px
+        }
+
+        .tl-row:last-child .tl-mid::before {
+            bottom: calc(100% - 34px)
+        }
+
+        .tl-dot {
+            position: relative;
+            z-index: 2;
+            margin-top: 24px;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid rgba(200, 162, 83, .85);
+            box-shadow: 0 0 0 5px rgba(200, 162, 83, .12);
+            transition: transform .45s var(--ease), box-shadow .45s;
+        }
+
+        .tl-row:hover .tl-dot {
+            transform: scale(1.45);
+            box-shadow: 0 0 0 7px rgba(200, 162, 83, .18)
+        }
+
+        .tl-body {
+            padding: 16px 20px 18px;
+            border-radius: 18px;
+            transition: background .45s, transform .45s var(--ease), box-shadow .45s;
+        }
+
+        .tl-row:hover .tl-body {
+            background: rgba(255, 255, 255, .62);
+            box-shadow: 0 18px 40px -30px rgba(23, 21, 18, .5);
+            transform: translateX(4px)
+        }
+
+        .tl-body h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 500;
+            margin: 0 0 5px;
+            color: #241f18;
+        }
+
+        .tl-body p {
+            margin: 0;
+            font-size: 13.5px;
+            font-weight: 300;
+            color: #7d776e;
+            line-height: 1.65
+        }
+
+        /* ---------- 3D CUBE ---------- */
+        .cube-stage {
+            width: min(310px, 68vw);
+            aspect-ratio: 1;
+            margin: 0 auto 26px;
+            perspective: 1400px;
+            cursor: grab;
+            touch-action: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .cube-stage:active {
+            cursor: grabbing
+        }
+
+        .cube {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateX(-14deg) rotateY(0deg);
+        }
+
+        .face {
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 1px solid rgba(255, 255, 255, .85);
+            box-shadow: inset 0 0 60px rgba(255, 255, 255, .6), 0 30px 60px -34px rgba(23, 21, 18, .45);
+            overflow: hidden;
+            backface-visibility: hidden;
+        }
+
+        .face::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(140deg, rgba(255, 255, 255, .7), rgba(255, 255, 255, 0) 60%);
+        }
+
+        .face .emo {
+            font-size: 38px;
+            line-height: 1;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 6px 12px rgba(23, 21, 18, .12))
+        }
+
+        .face .lbl {
+            position: relative;
+            z-index: 2;
+            font-family: 'Jost', sans-serif;
+            font-size: 10px;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: #5d574e;
+        }
+
+        .f1 {
+            background: linear-gradient(150deg, #fdf1e5, #f8e3d1)
+        }
+
+        .f2 {
+            background: linear-gradient(150deg, #fbeef0, #f6dfe4)
+        }
+
+        .f3 {
+            background: linear-gradient(150deg, #f5f1e2, #eee3c6)
+        }
+
+        .f4 {
+            background: linear-gradient(150deg, #f2eefb, #e6dff7)
+        }
+
+        .f5 {
+            background: linear-gradient(150deg, #eaf5f0, #dcefe6)
+        }
+
+        .f6 {
+            background: linear-gradient(150deg, #f0f4fa, #e2ebf6)
+        }
+
+        .cube-hint {
+            font-size: 10.5px;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: #a09889;
+            margin: 0 0 30px;
+        }
+
+        .moments-copy {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(16px, 2.2vw, 21px);
+            color: #6f6a63;
+            line-height: 1.65;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        /* ---------- RSVP FORM ---------- */
+        .rsvp-wrap {
+            width: 100%;
+            max-width: 660px;
+            margin: 0 auto
+        }
+
+        .rsvp-card {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, .88);
+            border-radius: 28px;
+            padding: 38px 34px;
+            backdrop-filter: blur(18px) saturate(1.2);
+            -webkit-backdrop-filter: blur(18px) saturate(1.2);
+            box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, .95);
+            position: relative;
+        }
+
+        .form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            text-align: left
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .field.full {
+            grid-column: 1/-1
+        }
+
+        .field label {
+            font-size: 9.5px;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: #9a9389;
+            font-weight: 400;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            font-family: 'Jost', sans-serif;
+            font-size: 15px;
+            font-weight: 300;
+            padding: 14px 16px;
+            border-radius: 14px;
+            color: var(--ink);
+            border: 1px solid rgba(23, 21, 18, .12);
+            background: rgba(255, 255, 255, .72);
+            outline: none;
+            transition: border-color .3s, box-shadow .3s, background .3s;
+            width: 100%;
+        }
+
+        .field textarea {
+            resize: vertical;
+            min-height: 92px
+        }
+
+        .field select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238f8a80' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: rgba(200, 162, 83, .85);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(200, 162, 83, .14);
+        }
+
+        .field input::placeholder,
+        .field textarea::placeholder {
+            color: #b6b0a6
+        }
+
+        .choice-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .choice {
+            flex: 1 1 180px;
+            position: relative;
+        }
+
+        .choice input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none
+        }
+
+        .choice span {
+            display: block;
+            text-align: center;
+            cursor: pointer;
+            padding: 14px 14px;
+            border-radius: 14px;
+            font-size: 12px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            border: 1px solid rgba(23, 21, 18, .12);
+            background: rgba(255, 255, 255, .7);
+            color: #7d776e;
+            transition: .35s var(--ease);
+        }
+
+        .choice input:checked+span {
+            border-color: rgba(200, 162, 83, .9);
+            background: linear-gradient(135deg, #fdf6e7, #f6ead0);
+            color: var(--gold-deep);
+            box-shadow: 0 14px 30px -20px rgba(143, 111, 38, .9);
+        }
+
+        .form-submit {
+            grid-column: 1/-1;
+            display: flex;
+            justify-content: center;
+            margin-top: 8px
+        }
+
+        .form-note {
+            grid-column: 1/-1;
+            text-align: center;
+            font-size: 11.5px;
+            color: #a09889;
+            letter-spacing: .06em;
+            margin: 2px 0 0;
+        }
+
+        /* success */
+        .success {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 4px;
+            text-align: center
+        }
+
+        .success[hidden] {
+            display: none
+        }
+
+        .check-ring {
+            width: 78px;
+            height: 78px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(140deg, #fff, #f7f1e2);
+            border: 1px solid rgba(200, 162, 83, .4);
+            box-shadow: 0 20px 44px -26px rgba(143, 111, 38, .9);
+        }
+
+        .check-ring svg {
+            width: 34px;
+            height: 34px;
+            stroke: var(--gold-deep);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round
+        }
+
+        .success h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 30px;
+            font-weight: 500;
+            margin: 6px 0 0;
+            color: #241f18;
+        }
+
+        .success p {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 300;
+            color: #7d776e;
+            line-height: 1.7;
+            max-width: 400px
+        }
+
+        /* ---------- PAGER / CONTROLS ---------- */
+        .pager {
+            position: fixed;
+            right: 26px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            padding: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(23, 21, 18, .24);
+            background: transparent;
+            cursor: pointer;
+            transition: .4s var(--ease);
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .dot:hover {
+            border-color: var(--gold);
+            transform: scale(1.2)
+        }
+
+        .dot.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            transform: scale(1.4);
+            box-shadow: 0 0 0 5px rgba(200, 162, 83, .14);
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 22px;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding-bottom: env(safe-area-inset-bottom);
+            pointer-events: none;
+        }
+
+        .controls>* {
+            pointer-events: auto
+        }
+
+        .nav-btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(23, 21, 18, .12);
+            background: rgba(255, 255, 255, .68);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            cursor: pointer;
+            transition: .4s var(--ease);
+            color: #5d574e;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .nav-btn:hover {
+            border-color: rgba(200, 162, 83, .85);
+            color: var(--gold-deep);
+            transform: translateY(-2px)
+        }
+
+        .nav-btn:disabled {
+            opacity: .3;
+            cursor: default;
+            transform: none
+        }
+
+        .nav-btn svg {
+            width: 15px;
+            height: 15px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.6;
+            stroke-linecap: round;
+            stroke-linejoin: round
+        }
+
+        .counter {
+            font-size: 11px;
+            letter-spacing: .24em;
+            color: #9a9389;
+            font-variant-numeric: tabular-nums;
+            min-width: 74px;
+            text-align: center;
+        }
+
+        .counter b {
+            color: #3c362c;
+            font-weight: 500
+        }
+
+        /* ---------- BURST ---------- */
+        #burst {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            pointer-events: none;
+            overflow: hidden
+        }
+
+        .burst-piece {
+            position: fixed;
+            width: 9px;
+            height: 14px;
+            top: 0;
+            left: 0;
+            animation: burst 2.9s cubic-bezier(.2, .6, .3, 1) forwards;
+        }
+
+        @keyframes burst {
+            0% {
+                transform: translate(-50%, -50%) scale(.35) rotate(0deg);
+                opacity: 0
+            }
+
+            10% {
+                opacity: 1
+            }
+
+            100% {
+                transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(var(--rot)) scale(1);
+                opacity: 0
+            }
+        }
+
+        /* ---------- SCROLL CUE ---------- */
+        .scroll-cue {
+            position: absolute;
+            bottom: 96px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            font-size: 9.5px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: #a89f90;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .scroll-cue .bar {
+            width: 1px;
+            height: 44px;
+            background: linear-gradient(to bottom, rgba(200, 162, 83, .9), rgba(200, 162, 83, 0));
+            animation: cue 2.4s ease-in-out infinite;
+            transform-origin: top;
+        }
+
+        @keyframes cue {
+
+            0%,
+            100% {
+                transform: scaleY(.4);
+                opacity: .4
+            }
+
+            50% {
+                transform: scaleY(1);
+                opacity: 1
+            }
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width:1024px) {
+            .details-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media (max-width:760px) {
+            .page {
+                padding: 84px 18px 112px
+            }
+
+            .topbar {
+                padding: 12px 16px;
+                padding-top: calc(12px + env(safe-area-inset-top))
+            }
+
+            .brand-txt {
+                display: none
+            }
+
+            .pager {
+                right: 10px;
+                gap: 11px
+            }
+
+            .dot {
+                width: 7px;
+                height: 7px
+            }
+
+            .cover-actions {
+                gap: 10px
+            }
+
+            .btn {
+                padding: 14px 24px;
+                font-size: 11px
+            }
+
+            .rsvp-card {
+                padding: 26px 20px;
+                border-radius: 24px
+            }
+
+            .form {
+                grid-template-columns: 1fr
+            }
+
+            .tl-row {
+                grid-template-columns: 30px 1fr;
+                grid-template-rows: auto auto;
+                padding: 4px 0
+            }
+
+            .tl-mid {
+                grid-column: 1;
+                grid-row: 1/3
+            }
+
+            .tl-time {
+                grid-column: 2;
+                grid-row: 1;
+                text-align: left;
+                padding: 14px 0 0;
+                align-self: end;
+                font-size: 11px
+            }
+
+            .tl-body {
+                grid-column: 2;
+                grid-row: 2;
+                padding: 6px 0 22px
+            }
+
+            .tl-dot {
+                margin-top: 20px
+            }
+
+            .tl-row:hover .tl-body {
+                transform: none;
+                background: transparent;
+                box-shadow: none
+            }
+
+            .countdown {
+                gap: 8px
+            }
+
+            .cd-box {
+                min-width: 74px;
+                padding: 14px 8px 12px
+            }
+
+            .cd-num {
+                font-size: 26px
+            }
+
+            .scroll-cue {
+                bottom: 104px
+            }
+
+            .cube-stage {
+                width: min(260px, 64vw)
+            }
+
+            .card {
+                padding: 24px 18px;
+                border-radius: 20px
+            }
+        }
+
+        @media (max-width:420px) {
+            .details-grid {
+                grid-template-columns: 1fr
+            }
+
+            .eyebrow {
+                font-size: 9px;
+                letter-spacing: .32em;
+                gap: 10px
+            }
+
+            .eyebrow .ln {
+                width: 26px
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            * {
+                animation-duration: .001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .001ms !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="bg3d"></canvas>
+    <div class="vignette"></div>
+
+    <div class="progress"><span id="progressBar"></span></div>
+
+    <header class="topbar">
+        <div class="brand">
+            <span class="mono">I</span>
+            <span class="brand-txt">Isabella &nbsp;·&nbsp; XXV</span>
+        </div>
+        <button class="btn btn-gold sm" data-goto="5">RSVP</button>
+    </header>
+
+    <main class="deck" id="deck">
+
+        <!-- ============ PAGE 1 — COVER ============ -->
+        <section class="page" id="page-1" data-page="1">
+            <div class="orbit" aria-hidden="true">
+                <span class="ring r1"></span>
+                <span class="ring r2"></span>
+                <span class="ring r3"></span>
+            </div>
+
+            <div class="page-inner">
+                <div class="eyebrow reveal" style="--i:0"><span class="ln"></span>You're Invited<span class="ln"></span>
+                </div>
+                <h1 class="cover-name reveal" style="--i:1">Isabella</h1>
+                <p class="cover-sub reveal" style="--i:2">is turning <span class="word">Twenty-Five</span></p>
+                <div class="ornament reveal" style="--i:3">✦</div>
+                <p class="cover-date reveal" style="--i:4" id="coverDate">Saturday, June 14 · Seven in the Evening</p>
+                <p class="cover-venue reveal" style="--i:5">The Rosewood Conservatory · Napa Valley, California</p>
+                <div class="cover-actions reveal" style="--i:6">
+                    <button class="btn btn-gold" data-goto="2">View Details</button>
+                    <button class="btn btn-ghost" data-goto="5">Reserve Your Seat</button>
+                </div>
+            </div>
+
+            <div class="scroll-cue"><span>Scroll</span><span class="bar"></span></div>
+        </section>
+
+        <!-- ============ PAGE 2 — DETAILS ============ -->
+        <section class="page" id="page-2" data-page="2">
+            <div class="page-inner">
+                <div class="reveal" style="--i:0">
+                    <h2 class="section-title">The Details</h2>
+                    <p class="section-sub">Everything you need to know</p>
+                </div>
+
+                <div class="details-grid">
+                    <div class="reveal-cell reveal" style="--i:1">
+                        <div class="card tilt">
+                            <div class="icon-wrap">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="3" y="5" width="18" height="16" rx="3" />
+                                    <path d="M8 3v4M16 3v4M3 11h18" />
+                                    <circle cx="12" cy="16" r="1.2" />
+                                </svg>
+                            </div>
+                            <h3>When</h3>
+                            <p class="big" id="detailDate">Saturday, June 14</p>
+                            <p>Seven in the evening<br>until midnight</p>
+                        </div>
+                    </div>
+
+                    <div class="reveal-cell reveal" style="--i:2">
+                        <div class="card tilt">
+                            <div class="icon-wrap">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z" />
+                                    <circle cx="12" cy="10" r="2.6" />
+                                </svg>
+                            </div>
+                            <h3>Where</h3>
+                            <p class="big">Rosewood<br>Conservatory</p>
+                            <p>1420 Vineyard Lane<br>Napa Valley, CA</p>
+                        </div>
+                    </div>
+
+                    <div class="reveal-cell reveal" style="--i:3">
+                        <div class="card tilt">
+                            <div class="icon-wrap">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M6 3l3 4-2 2 4 4 2-2 4 3-2 5a15 15 0 0 1-9-9z" />
+                                    <path d="M15 3h5v5" />
+                                </svg>
+                            </div>
+                            <h3>Attire</h3>
+                            <p class="big">Garden Formal</p>
+                            <p>Soft whites, champagne<br>and <span class="accent">gold accents</span></p>
+                        </div>
+                    </div>
+
+                    <div class="reveal-cell reveal" style="--i:4">
+                        <div class="card tilt">
+                            <div class="icon-wrap">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 3v3M12 18v3M4.2 7.5l2.6 1.5M17.2 15l2.6 1.5M4.2 16.5l2.6-1.5M17.2 9l2.6-1.5" />
+                                    <circle cx="12" cy="12" r="3.4" />
+                                </svg>
+                            </div>
+                            <h3>The Evening</h3>
+                            <p class="big">Dinner · Dancing</p>
+                            <p>Four-course tasting menu &amp;<br>a late-night dessert bar</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="countdown reveal" style="--i:5" id="countdown">
+                    <div class="cd-box"><span class="cd-num" id="cdD">00</span><span class="cd-lbl">Days</span></div>
+                    <div class="cd-box"><span class="cd-num" id="cdH">00</span><span class="cd-lbl">Hours</span></div>
+                    <div class="cd-box"><span class="cd-num" id="cdM">00</span><span class="cd-lbl">Minutes</span></div>
+                    <div class="cd-box"><span class="cd-num" id="cdS">00</span><span class="cd-lbl">Seconds</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ PAGE 3 — SCHEDULE ============ -->
+        <section class="page" id="page-3" data-page="3">
+            <div class="page-inner">
+                <div class="reveal" style="--i:0">
+                    <h2 class="section-title">The Evening</h2>
+                    <p class="section-sub">A timeline of celebrations</p>
+                </div>
+
+                <div class="timeline">
+                    <div class="tl-row reveal" style="--i:1">
+                        <div class="tl-time">6:30 PM</div>
+                        <div class="tl-mid"><span class="tl-dot"></span></div>
+                        <div class="tl-body">
+                            <h4>Arrival &amp; Cocktails</h4>
+                            <p>Sparkling welcome on the terrace, with canapés and golden-hour light.</p>
+                        </div>
+                    </div>
+
+                    <div class="tl-row reveal" style="--i:2">
+                        <div class="tl-time">7:30 PM</div>
+                        <div class="tl-mid"><span class="tl-dot"></span></div>
+                        <div class="tl-body">
+                            <h4>Dinner is Served</h4>
+                            <p>A seasonal four-course tasting menu, paired with Napa wines.</p>
+                        </div>
+                    </div>
+
+                    <div class="tl-row reveal" style="--i:3">
+                        <div class="tl-time">9:00 PM</div>
+                        <div class="tl-mid"><span class="tl-dot"></span></div>
+                        <div class="tl-body">
+                            <h4>The Toast</h4>
+                            <p>Raise a glass — a few words, a few tears, twenty-five wonderful years.</p>
+                        </div>
+                    </div>
+
+                    <div class="tl-row reveal" style="--i:4">
+                        <div class="tl-time">9:30 PM</div>
+                        <div class="tl-mid"><span class="tl-dot"></span></div>
+                        <div class="tl-body">
+                            <h4>Cake &amp; Candles</h4>
+                            <p>Make a wish. Then make it count.</p>
+                        </div>
+                    </div>
+
+                    <div class="tl-row reveal" style="--i:5">
+                        <div class="tl-time">10:00 PM</div>
+                        <div class="tl-mid"><span class="tl-dot"></span></div>
+                        <div class="tl-body">
+                            <h4>Dancing</h4>
+                            <p>Live sets from DJ Marlowe, all the way until the last song.</p>
+                        </div>
+                    </div>
+
+                    <div class="tl-row reveal" style="--i:6">
+                        <div class="tl-time">12:00 AM</div>
+                        <div class="tl-mid"><span class="tl-dot"></span></div>
+                        <div class="tl-body">
+                            <h4>Farewell</h4>
+                            <p>Late-night treats and golden goodbyes beneath the stars.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ PAGE 4 — MOMENTS ============ -->
+        <section class="page" id="page-4" data-page="4">
+            <div class="page-inner">
+                <div class="reveal" style="--i:0">
+                    <h2 class="section-title">Moments</h2>
+                    <p class="section-sub">Twenty-five years in six frames</p>
+                </div>
+
+                <div class="cube-stage reveal" style="--i:1" id="cubeStage">
+                    <div class="cube" id="cube">
+                        <div class="face f1"><span class="emo">🎂</span><span class="lbl">Cake &amp; Candles</span>
+                        </div>
+                        <div class="face f2"><span class="emo">🥂</span><span class="lbl">The Toast</span></div>
+                        <div class="face f3"><span class="emo">✨</span><span class="lbl">Confetti</span></div>
+                        <div class="face f4"><span class="emo">💫</span><span class="lbl">Dancing</span></div>
+                        <div class="face f5"><span class="emo">🎁</span><span class="lbl">Little Surprises</span></div>
+                        <div class="face f6"><span class="emo">📸</span><span class="lbl">Memories</span></div>
+                    </div>
+                </div>
+
+                <p class="cube-hint reveal" style="--i:2">Drag to spin</p>
+
+                <p class="moments-copy reveal" style="--i:3">
+                    Bring your favourite memory, your best dance move,<br>
+                    and a wish for the decade ahead — we'll take care of the rest.
+                </p>
+            </div>
+        </section>
+
+        <!-- ============ PAGE 5 — RSVP ============ -->
+        <section class="page" id="page-5" data-page="5">
+            <div class="page-inner">
+                <div class="reveal" style="--i:0">
+                    <h2 class="section-title">Répondez</h2>
+                    <p class="section-sub">Kindly respond by May 30</p>
+                </div>
+
+                <div class="rsvp-wrap reveal" style="--i:1">
+                    <div class="rsvp-card">
+                        <form class="form" id="rsvpForm" novalidate>
+                            <div class="field">
+                                <label for="fullname">Full Name</label>
+                                <input type="text" id="fullname" name="fullname" placeholder="Jane Doe" required>
+                            </div>
+                            <div class="field">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="jane@email.com" required>
+                            </div>
+
+                            <div class="field">
+                                <label for="guests">Number of Guests</label>
+                                <select id="guests" name="guests">
+                                    <option value="1">Just me</option>
+                                    <option value="2">2 guests</option>
+                                    <option value="3">3 guests</option>
+                                    <option value="4">4 guests</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="note">Dietary Notes (optional)</label>
+                                <input type="text" id="note" name="note" placeholder="Vegetarian, allergies…">
+                            </div>
+
+                            <div class="field full">
+                                <label>Will you attend?</label>
+                                <div class="choice-row">
+                                    <label class="choice">
+                                        <input type="radio" name="attend" value="yes" checked>
+                                        <span>Joyfully Accepts</span>
+                                    </label>
+                                    <label class="choice">
+                                        <input type="radio" name="attend" value="no">
+                                        <span>Regretfully Declines</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="field full">
+                                <label for="message">A Wish for Isabella (optional)</label>
+                                <textarea id="message" name="message" placeholder="Write something lovely…"></textarea>
+                            </div>
+
+                            <div class="form-submit">
+                                <button type="submit" class="btn btn-gold">Send My Reply</button>
+                            </div>
+                            <p class="form-note">Your response is sent with love — no spam, ever.</p>
+                        </form>
+
+                        <div class="success" id="success" hidden>
+                            <div class="check-ring">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M4 12.5l5.2 5.2L20 6.8" />
+                                </svg>
+                            </div>
+                            <h3 id="successTitle">Thank you!</h3>
+                            <p id="successText">Your reply has been received. We can't wait to celebrate with you on the
+                                fourteenth.</p>
+                            <button class="btn btn-ghost sm" id="resetBtn" type="button" style="margin-top:8px">Send
+                                another reply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="pager" id="pager" aria-label="Page navigation"></nav>
+
+    <div class="controls">
+        <button class="nav-btn" id="prevBtn" aria-label="Previous page">
+            <svg viewBox="0 0 24 24">
+                <path d="M15 5l-7 7 7 7" />
+            </svg>
+        </button>
+        <div class="counter"><b id="curNum">01</b> / <span id="totNum">05</span></div>
+        <button class="nav-btn" id="nextBtn" aria-label="Next page">
+            <svg viewBox="0 0 24 24">
+                <path d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    </div>
+
+    <div id="burst"></div>
+
+    <script>
+        /* =========================================================
+           1. THREE.JS BACKGROUND — falling stars + confetti (3D)
+           ========================================================= */
+        (function () {
+            const canvas = document.getElementById('bg3d');
+            if (!canvas || typeof THREE === 'undefined') return;
+
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            let renderer, scene, camera, clock;
+            const items = [];
+            let HALF_W = 40, HALF_H = 30;
+
+            const STAR_COUNT = window.innerWidth < 700 ? 42 : 78;
+            const CONF_COUNT = window.innerWidth < 700 ? 44 : 84;
+
+            const CONFETTI_COLORS = [
+                0xe6cf9a, 0xf3c9d3, 0xc9bcec, 0xb7e0d1, 0xf7d9a8, 0xc8a253, 0xf0e4c3, 0xdcd2f2
+            ];
+
+            /* ---- textures ---- */
+            function makeStarTexture() {
+                const s = 128;
+                const c = document.createElement('canvas');
+                c.width = c.height = s;
+                const ctx = c.getContext('2d');
+                const cx = s / 2, cy = s / 2;
+                const spikes = 5;
+                const outer = s * 0.46;
+                const inner = outer * 0.42;
+
+                ctx.beginPath();
+                for (let i = 0; i < spikes * 2; i++) {
+                    const r = (i % 2 === 0) ? outer : inner;
+                    const a = (Math.PI / spikes) * i - Math.PI / 2;
+                    const x = cx + Math.cos(a) * r;
+                    const y = cy + Math.sin(a) * r;
+                    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+
+                const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, outer);
+                g.addColorStop(0, '#fffaf0');
+                g.addColorStop(0.45, '#f0d9a0');
+                g.addColorStop(1, '#c8a253');
+                ctx.fillStyle = g;
+                ctx.shadowColor = 'rgba(232,211,160,0.95)';
+                ctx.shadowBlur = 16;
+                ctx.fill();
+                ctx.fill();
+
+                const tex = new THREE.CanvasTexture(c);
+                tex.needsUpdate = true;
+                return tex;
+            }
+
+            function makeConfettiTexture() {
+                const w = 64, h = 96;
+                const c = document.createElement('canvas');
+                c.width = w; c.height = h;
+                const ctx = c.getContext('2d');
+                const r = 14;
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.moveTo(6 + r, 6);
+                ctx.lineTo(w - 6 - r, 6);
+                ctx.quadraticCurveTo(w - 6, 6, w - 6, 6 + r);
+                ctx.lineTo(w - 6, h - 6 - r);
+                ctx.quadraticCurveTo(w - 6, h - 6, w - 6 - r, h - 6);
+                ctx.lineTo(6 + r, h - 6);
+                ctx.quadraticCurveTo(6, h - 6, 6, h - 6 - r);
+                ctx.lineTo(6, 6 + r);
+                ctx.quadraticCurveTo(6, 6, 6 + r, 6);
+                ctx.closePath();
+                ctx.fill();
+                const tex = new THREE.CanvasTexture(c);
+                tex.needsUpdate = true;
+                return tex;
+            }
+
+            const rand = (a, b) => a + Math.random() * (b - a);
+
+            function updateBounds() {
+                const dist = camera.position.z;
+                const vFov = THREE.MathUtils.degToRad(camera.fov / 2);
+                HALF_H = Math.tan(vFov) * dist;
+                HALF_W = HALF_H * camera.aspect;
+            }
+
+            function spawn(item, fromTop) {
+                const x = rand(-HALF_W * 1.05, HALF_W * 1.05);
+                const y = fromTop ? rand(HALF_H * 1.05, HALF_H * 1.55) : rand(-HALF_H, HALF_H);
+                const z = rand(-26, 10);
+                item.mesh.position.set(x, y, z);
+            }
+
+            function init() {
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 320);
+                camera.position.set(0, 0, 62);
+
+                renderer = new THREE.WebGLRenderer({
+                    canvas: canvas,
+                    alpha: true,
+                    antialias: true,
+                    powerPreference: 'high-performance'
+                });
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setClearColor(0x000000, 0);
+
+                updateBounds();
+
+                const starTex = makeStarTexture();
+                const confTex = makeConfettiTexture();
+
+                /* --- stars (sprites, always facing camera, rotating) --- */
+                for (let i = 0; i < STAR_COUNT; i++) {
+                    const mat = new THREE.SpriteMaterial({
+                        map: starTex,
+                        transparent: true,
+                        depthWrite: false,
+                        opacity: rand(0.35, 0.95),
+                        color: 0xffffff
+                    });
+                    const sprite = new THREE.Sprite(mat);
+                    const s = rand(0.9, 3.4);
+                    sprite.scale.set(s, s, 1);
+                    mat.rotation = Math.random() * Math.PI * 2;
+
+                    const item = {
+                        mesh: sprite,
+                        sprite: true,
+                        speed: rand(2.2, 7.5),
+                        rx: 0, ry: 0, rz: rand(-0.7, 0.7),
+                        sway: rand(0.4, 1.3),
+                        swayAmp: rand(0.6, 2.4),
+                        phase: Math.random() * Math.PI * 2,
+                        t: 0
+                    };
+                    spawn(item, false);
+                    scene.add(sprite);
+                    items.push(item);
+                }
+
+                /* --- confetti (planes tumbling in 3D) --- */
+                for (let i = 0; i < CONF_COUNT; i++) {
+                    const w = rand(0.7, 1.7);
+                    const h = w * rand(1.5, 2.3);
+                    const geo = new THREE.PlaneGeometry(w, h);
+                    const mat = new THREE.MeshBasicMaterial({
+                        map: confTex,
+                        color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+                        transparent: true,
+                        opacity: rand(0.55, 0.98),
+                        side: THREE.DoubleSide,
+                        depthWrite: false
+                    });
+                    const mesh = new THREE.Mesh(geo, mat);
+
+                    const item = {
+                        mesh: mesh,
+                        sprite: false,
+                        speed: rand(2.8, 8.5),
+                        rx: rand(-1.8, 1.8),
+                        ry: rand(-2.6, 2.6),
+                        rz: rand(-1.6, 1.6),
+                        sway: rand(0.5, 1.6),
+                        swayAmp: rand(0.8, 3.0),
+                        phase: Math.random() * Math.PI * 2,
+                        t: 0
+                    };
+                    spawn(item, false);
+                    scene.add(mesh);
+                    items.push(item);
+                }
+
+                clock = new THREE.Clock();
+
+                if (reduceMotion) {
+                    renderer.render(scene, camera);
+                    return;
+                }
+
+                animate();
+                window.addEventListener('resize', onResize);
+            }
+
+            function onResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+                updateBounds();
+            }
+
+            /* --- mouse parallax --- */
+            const mouse = { x: 0, y: 0 };
+            window.addEventListener('mousemove', function (e) {
+                mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = (e.clientY / window.innerHeight) * 2 - 1;
+            }, { passive: true });
+
+            let frame = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                const dt = Math.min(clock.getDelta(), 0.05);
+
+                for (let i = 0; i < items.length; i++) {
+                    const o = items[i];
+                    const p = o.mesh.position;
+
+                    p.y -= o.speed * dt;
+                    o.t += dt;
+                    p.x += Math.sin(o.t * o.sway + o.phase) * o.swayAmp * dt;
+
+                    if (o.sprite) {
+                        o.mesh.material.rotation += o.rz * dt;
+                    } else {
+                        o.mesh.rotation.x += o.rx * dt;
+                        o.mesh.rotation.y += o.ry * dt;
+                        o.mesh.rotation.z += o.rz * dt;
+                    }
+
+                    if (p.y < -HALF_H * 1.25 || Math.abs(p.x) > HALF_W * 1.75) {
+                        spawn(o, true);
+                        o.t = 0;
+                    }
+                }
+
+                /* camera parallax */
+                camera.position.x += (mouse.x * 3.2 - camera.position.x) * 0.045;
+                camera.position.y += (-mouse.y * 2.4 - camera.position.y) * 0.045;
+                camera.lookAt(0, 0, 0);
+
+                /* very slow global drift for depth */
+                frame += dt;
+                scene.rotation.y = Math.sin(frame * 0.06) * 0.05;
+
+                renderer.render(scene, camera);
+            }
+
+            try { init(); } catch (err) { console.warn('3D background unavailable:', err); }
+        })();
+
+
+        /* =========================================================
+           2. PAGE NAVIGATION (deck slides)
+           ========================================================= */
+        (function () {
+            const pages = Array.from(document.querySelectorAll('.page'));
+            const total = pages.length;
+            const pager = document.getElementById('pager');
+            const progressBar = document.getElementById('progressBar');
+            const curNum = document.getElementById('curNum');
+            const totNum = document.getElementById('totNum');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            let current = 0;
+
+            totNum.textContent = String(total).padStart(2, '0');
+
+            /* build dots */
+            pages.forEach((p, i) => {
+                const b = document.createElement('button');
+                b.className = 'dot';
+                b.setAttribute('aria-label', 'Go to page ' + (i + 1));
+                b.addEventListener('click', () => go(i));
+                pager.appendChild(b);
+            });
+            const dots = Array.from(pager.querySelectorAll('.dot'));
+
+            function updateUI() {
+                dots.forEach((d, i) => d.classList.toggle('active', i === current));
+                progressBar.style.width = ((current + 1) / total * 100) + '%';
+                curNum.textContent = String(current + 1).padStart(2, '0');
+                prevBtn.disabled = current === 0;
+                nextBtn.disabled = current === total - 1;
+            }
+
+            function go(index) {
+                index = Math.max(0, Math.min(total - 1, index));
+                if (index === current) return;
+
+                pages[current].classList.remove('active');
+                current = index;
+                const page = pages[current];
+                page.classList.add('active');
+
+                const inner = page.querySelector('.page-inner');
+                if (inner) inner.scrollTop = 0;
+
+                updateUI();
+            }
+
+            window.__goToPage = function (n) { go(n - 1); };
+
+            prevBtn.addEventListener('click', () => go(current - 1));
+            nextBtn.addEventListener('click', () => go(current + 1));
+
+            document.querySelectorAll('[data-goto]').forEach(btn => {
+                btn.addEventListener('click', () => go(parseInt(btn.dataset.goto, 10) - 1));
+            });
+
+            /* keyboard */
+            window.addEventListener('keydown', function (e) {
+                const tag = (e.target.tagName || '').toLowerCase();
+                if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown') {
+                    e.preventDefault(); go(current + 1);
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
+                    e.preventDefault(); go(current - 1);
+                } else if (e.key === 'Home') {
+                    e.preventDefault(); go(0);
+                } else if (e.key === 'End') {
+                    e.preventDefault(); go(total - 1);
+                }
+            });
+
+            /* wheel navigation (respects inner scroll) */
+            let wheelLock = false;
+            window.addEventListener('wheel', function (e) {
+                if (wheelLock) return;
+                if (Math.abs(e.deltaY) < 14) return;
+
+                const inner = pages[current].querySelector('.page-inner');
+                if (inner && inner.scrollHeight > inner.clientHeight + 6) {
+                    const atTop = inner.scrollTop <= 1;
+                    const atBottom = inner.scrollTop + inner.clientHeight >= inner.scrollHeight - 2;
+                    if (e.deltaY > 0 && !atBottom) return;
+                    if (e.deltaY < 0 && !atTop) return;
+                }
+
+                wheelLock = true;
+                setTimeout(() => { wheelLock = false; }, 850);
+
+                if (e.deltaY > 0) go(current + 1); else go(current - 1);
+            }, { passive: true });
+
+            /* touch swipe */
+            let touchStartX = 0, touchStartY = 0, startScroll = 0, touching = false;
+            window.addEventListener('touchstart', function (e) {
+                if (e.touches.length !== 1) return;
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                const inner = pages[current].querySelector('.page-inner');
+                startScroll = inner ? inner.scrollTop : 0;
+                touching = true;
+            }, { passive: true });
+
+            window.addEventListener('touchend', function (e) {
+                if (!touching) return;
+                touching = false;
+                const inner = pages[current].querySelector('.page-inner');
+                if (inner && Math.abs(inner.scrollTop - startScroll) > 8) return;
+
+                const dx = e.changedTouches[0].clientX - touchStartX;
+                const dy = e.changedTouches[0].clientY - touchStartY;
+
+                if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+                    if (dx < 0) go(current + 1); else go(current - 1);
+                } else if (Math.abs(dy) > 80 && Math.abs(dy) > Math.abs(dx) * 1.6) {
+                    if (dy < 0) go(current + 1); else go(current - 1);
+                }
+            }, { passive: true });
+
+            /* init */
+            pages[0].classList.add('active');
+            updateUI();
+        })();
+
+
+        /* =========================================================
+           3. DATE + COUNTDOWN
+           ========================================================= */
+        (function () {
+            const now = new Date();
+            let target = new Date(now.getFullYear(), 5, 14, 19, 0, 0);
+            if (target - now < 0) target = new Date(now.getFullYear() + 1, 5, 14, 19, 0, 0);
+
+            const weekday = target.toLocaleDateString('en-US', { weekday: 'long' });
+            const monthDay = target.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+            const year = target.getFullYear();
+
+            const coverDate = document.getElementById('coverDate');
+            const detailDate = document.getElementById('detailDate');
+            if (coverDate) coverDate.textContent = weekday + ', ' + monthDay + ' · Seven in the Evening';
+            if (detailDate) detailDate.textContent = weekday + ', ' + monthDay;
+
+            const cdD = document.getElementById('cdD');
+            const cdH = document.getElementById('cdH');
+            const cdM = document.getElementById('cdM');
+            const cdS = document.getElementById('cdS');
+            const pad = n => String(Math.max(0, n)).padStart(2, '0');
+
+            function tick() {
+                const diff = target - new Date();
+                if (diff <= 0) {
+                    cdD.textContent = cdH.textContent = cdM.textContent = cdS.textContent = '00';
+                    return;
+                }
+                const s = Math.floor(diff / 1000);
+                cdD.textContent = pad(Math.floor(s / 86400));
+                cdH.textContent = pad(Math.floor((s % 86400) / 3600));
+                cdM.textContent = pad(Math.floor((s % 3600) / 60));
+                cdS.textContent = pad(s % 60);
+            }
+            tick();
+            setInterval(tick, 1000);
+        })();
+
+
+        /* =========================================================
+           4. CARD TILT (3D hover motion)
+           ========================================================= */
+        (function () {
+            const hoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+            if (!hoverCapable) return;
+
+            document.querySelectorAll('.tilt').forEach(function (el) {
+                el.addEventListener('pointermove', function (e) {
+                    const r = el.getBoundingClientRect();
+                    const px = (e.clientX - r.left) / r.width - 0.5;
+                    const py = (e.clientY - r.top) / r.height - 0.5;
+                    el.style.setProperty('--ry', (px * 15).toFixed(2) + 'deg');
+                    el.style.setProperty('--rx', (-py * 15).toFixed(2) + 'deg');
+                });
+                el.addEventListener('pointerleave', function () {
+                    el.style.setProperty('--ry', '0deg');
+                    el.style.setProperty('--rx', '0deg');
+                });
+            });
+        })();
+
+
+        /* =========================================================
+           5. 3D ROTATING CUBE (drag + auto spin)
+           ========================================================= */
+        (function () {
+            const stage = document.getElementById('cubeStage');
+            const cube = document.getElementById('cube');
+            if (!stage || !cube) return;
+
+            const faces = Array.from(cube.querySelectorAll('.face'));
+            let size = 0;
+
+            function layout() {
+                size = stage.clientWidth;
+                const half = size / 2;
+                const transforms = [
+                    'translateZ(' + half + 'px)',
+                    'rotateY(180deg) translateZ(' + half + 'px)',
+                    'rotateY(90deg) translateZ(' + half + 'px)',
+                    'rotateY(-90deg) translateZ(' + half + 'px)',
+                    'rotateX(90deg) translateZ(' + half + 'px)',
+                    'rotateX(-90deg) translateZ(' + half + 'px)'
+                ];
+                faces.forEach(function (f, i) { f.style.transform = transforms[i]; });
+            }
+            layout();
+            window.addEventListener('resize', layout);
+
+            let rotX = -14, rotY = 8;
+            let autoY = 14;            /* degrees per second */
+            let dragging = false;
+            let lastX = 0, lastY = 0;
+            let velX = 0, velY = 0;
+            let last = performance.now();
+
+            stage.addEventListener('pointerdown', function (e) {
+                dragging = true;
+                lastX = e.clientX; lastY = e.clientY;
+                velX = 0; velY = 0;
+                stage.setPointerCapture(e.pointerId);
+            });
+
+            stage.addEventListener('pointermove', function (e) {
+                if (!dragging) return;
+                const dx = e.clientX - lastX;
+                const dy = e.clientY - lastY;
+                lastX = e.clientX; lastY = e.clientY;
+                rotY += dx * 0.45;
+                rotX -= dy * 0.45;
+                rotX = Math.max(-75, Math.min(75, rotX));
+                velY = dx * 0.45;
+                velX = -dy * 0.45;
+            });
+
+            function endDrag(e) {
+                dragging = false;
+                if (e && e.pointerId !== undefined && stage.hasPointerCapture && stage.hasPointerCapture(e.pointerId)) {
+                    stage.releasePointerCapture(e.pointerId);
+                }
+            }
+            stage.addEventListener('pointerup', endDrag);
+            stage.addEventListener('pointercancel', endDrag);
+            stage.addEventListener('pointerleave', endDrag);
+
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            function loop(now) {
+                requestAnimationFrame(loop);
+                const dt = Math.min((now - last) / 1000, 0.05);
+                last = now;
+
+                if (!dragging) {
+                    velY *= 0.94;
+                    velX *= 0.94;
+                    rotY += (reduceMotion ? 0 : autoY * dt) + velY;
+                    rotX += velX;
+                    rotX = Math.max(-75, Math.min(75, rotX));
+                    rotX += (0 - rotX) * 0.0025;
+                }
+
+                cube.style.transform = 'rotateX(' + rotX.toFixed(2) + 'deg) rotateY(' + rotY.toFixed(2) + 'deg)';
+            }
+            requestAnimationFrame(loop);
+        })();
+
+
+        /* =========================================================
+           6. RSVP FORM + CONFETTI BURST
+           ========================================================= */
+        (function () {
+            const form = document.getElementById('rsvpForm');
+            const success = document.getElementById('success');
+            const successTitle = document.getElementById('successTitle');
+            const successText = document.getElementById('successText');
+            const resetBtn = document.getElementById('resetBtn');
+            const burstEl = document.getElementById('burst');
+
+            if (!form) return;
+
+            const COLORS = ['#d8b876', '#e8a9b8', '#b9a7e0', '#9fd3bf', '#f2c98a', '#c8a253', '#f4e2b8'];
+
+            function burst() {
+                const n = 70;
+                for (let i = 0; i < n; i++) {
+                    const el = document.createElement('span');
+                    el.className = 'burst-piece';
+                    el.style.left = (50 + (Math.random() - 0.5) * 16) + '%';
+                    el.style.top = '38%';
+                    el.style.background = COLORS[i % COLORS.length];
+                    el.style.setProperty('--dx', ((Math.random() - 0.5) * 85).toFixed(1) + 'vw');
+                    el.style.setProperty('--dy', ((-Math.random() * 62) - 6).toFixed(1) + 'vh');
+                    el.style.setProperty('--rot', (Math.random() * 900 - 450).toFixed(0) + 'deg');
+                    el.style.animationDelay = (Math.random() * 0.3).toFixed(2) + 's';
+                    el.style.borderRadius = Math.random() > 0.55 ? '50%' : '2px';
+                    el.style.width = (6 + Math.random() * 7).toFixed(1) + 'px';
+                    el.style.height = (9 + Math.random() * 10).toFixed(1) + 'px';
+                    burstEl.appendChild(el);
+                    (function (node) {
+                        setTimeout(function () { node.remove(); }, 3800);
+                    })(el);
+                }
+            }
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const name = document.getElementById('fullname').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const attend = (form.querySelector('input[name="attend"]:checked') || {}).value || 'yes';
+
+                if (!name) {
+                    document.getElementById('fullname').focus();
+                    document.getElementById('fullname').style.borderColor = 'rgba(212,120,120,.9)';
+                    setTimeout(function () {
+                        document.getElementById('fullname').style.borderColor = '';
+                    }, 1400);
+                    return;
+                }
+                if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    document.getElementById('email').focus();
+                    document.getElementById('email').style.borderColor = 'rgba(212,120,120,.9)';
+                    setTimeout(function () {
+                        document.getElementById('email').style.borderColor = '';
+                    }, 1400);
+                    return;
+                }
+
+                form.style.display = 'none';
+                success.hidden = false;
+
+                if (attend === 'yes') {
+                    successTitle.textContent = 'Wonderful, ' + name.split(' ')[0] + '!';
+                    successText.textContent = 'Your seat is reserved. We can\u2019t wait to celebrate with you on the fourteenth.';
+                    burst();
+                } else {
+                    successTitle.textContent = 'You\u2019ll be missed, ' + name.split(' ')[0] + '.';
+                    successText.textContent = 'Thank you for letting us know — a slice of cake will be raised in your honour.';
+                }
+            });
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function () {
+                    success.hidden = true;
+                    form.style.display = '';
+                    form.reset();
+                    document.getElementById('fullname').focus();
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

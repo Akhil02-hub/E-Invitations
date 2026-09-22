@@ -1,0 +1,1025 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>a little universe, for you</title>
+    <meta name="theme-color" content="#0b0708" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0708;
+            --ivory: #f2e8d8;
+            --gold: #d8ab52;
+            --gold-dim: rgba(216, 171, 82, .5);
+            --dim: rgba(242, 232, 216, .52);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--ivory);
+            font-family: 'Jost', sans-serif;
+            overflow: hidden;
+            overscroll-behavior: none
+        }
+
+        #stage {
+            position: fixed;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.8s ease
+        }
+
+        #stage.on {
+            opacity: 1
+        }
+
+        #stage canvas {
+            display: block
+        }
+
+        /* cinematography layers */
+        #vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(120% 95% at 50% 42%, transparent 50%, rgba(4, 2, 3, .62) 100%)
+        }
+
+        #grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: .05;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>")
+        }
+
+        /* reveal choreography */
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            visibility: hidden;
+            transition: opacity 1.2s cubic-bezier(.22, .61, .21, 1), transform 1.2s cubic-bezier(.22, .61, .21, 1), visibility 0s linear 1.2s
+        }
+
+        .reveal.show {
+            opacity: 1;
+            transform: none;
+            visibility: visible;
+            transition-delay: 0s, 0s, 0s
+        }
+
+        .reveal.gone {
+            opacity: 0;
+            transform: translateY(-14px);
+            visibility: hidden;
+            transition: opacity .9s ease, transform .9s ease, visibility 0s linear .9s
+        }
+
+        #topline {
+            position: fixed;
+            top: 4.2vh;
+            left: 0;
+            right: 0;
+            text-align: center;
+            pointer-events: none;
+            font-weight: 300;
+            font-size: .66rem;
+            letter-spacing: .42em;
+            text-transform: uppercase;
+            color: var(--dim)
+        }
+
+        #topline em {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 500;
+            font-size: 1.3rem;
+            letter-spacing: .06em;
+            text-transform: none;
+            color: var(--gold);
+            margin: 0 .2em;
+            vertical-align: -.14em
+        }
+
+        #ask,
+        #after {
+            position: fixed;
+            top: 7.5vh;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 0 22px;
+            pointer-events: none
+        }
+
+        .eyebrow {
+            font-weight: 300;
+            font-size: .64rem;
+            letter-spacing: .42em;
+            text-transform: uppercase;
+            color: var(--gold-dim)
+        }
+
+        #ask h1,
+        #after h1 {
+            margin-top: .6em;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: clamp(2.1rem, 5.6vw, 4.3rem);
+            line-height: 1.12;
+            color: var(--ivory)
+        }
+
+        #ask h1 em,
+        #after h1 em {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--gold)
+        }
+
+        #ask .sub,
+        #after .sub {
+            margin-top: 1.1em;
+            font-weight: 300;
+            font-size: .74rem;
+            letter-spacing: .26em;
+            color: var(--dim)
+        }
+
+        #ask::after {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 44px;
+            margin: 2.4vh auto 0;
+            background: var(--gold-dim)
+        }
+
+        #choices {
+            position: fixed;
+            bottom: 11vh;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            padding: 0 20px;
+            pointer-events: none
+        }
+
+        .choice {
+            pointer-events: auto;
+            background: transparent;
+            border: 1px solid var(--gold-dim);
+            color: var(--ivory);
+            font-family: 'Jost', sans-serif;
+            font-weight: 400;
+            font-size: .68rem;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+            padding: .95em 1.8em;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: background .35s ease, color .35s ease, border-color .35s ease
+        }
+
+        .choice:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #1c0d05
+        }
+
+        .choice.ghost {
+            border-color: rgba(242, 232, 216, .22);
+            color: var(--dim)
+        }
+
+        .choice.ghost:hover {
+            background: transparent;
+            border-color: var(--gold);
+            color: var(--gold)
+        }
+
+        .choice:focus-visible {
+            outline: 1px solid var(--gold);
+            outline-offset: 3px
+        }
+
+        #hint {
+            position: fixed;
+            bottom: 3.8vh;
+            left: 0;
+            right: 0;
+            text-align: center;
+            pointer-events: none;
+            font-weight: 300;
+            font-size: .6rem;
+            letter-spacing: .32em;
+            text-transform: uppercase;
+            color: rgba(242, 232, 216, .36)
+        }
+
+        #hint b {
+            font-weight: 400;
+            color: var(--gold)
+        }
+
+        #sound {
+            position: fixed;
+            top: 3.2vh;
+            right: 3.4vw;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            z-index: 10;
+            border: 1px solid rgba(242, 232, 216, .16);
+            background: rgba(11, 7, 8, .35);
+            color: var(--dim);
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: border-color .3s, color .3s
+        }
+
+        #sound:hover {
+            border-color: var(--gold-dim);
+            color: var(--gold)
+        }
+
+        #fatal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            place-items: center;
+            background: var(--bg);
+            z-index: 50;
+            text-align: center;
+            font-weight: 300;
+            font-size: .8rem;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--dim);
+            padding: 30px
+        }
+
+        @media (max-width:640px) {
+            #choices {
+                bottom: 13vh;
+                gap: 10px
+            }
+
+            .choice {
+                font-size: .62rem;
+                letter-spacing: .18em;
+                padding: .9em 1.3em
+            }
+
+            #topline {
+                font-size: .56rem;
+                letter-spacing: .3em
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="stage"></div>
+    <div id="vignette"></div>
+    <div id="grain"></div>
+
+    <header id="topline" class="reveal">a little universe, for <em data-name>my love</em></header>
+
+    <section id="ask" class="reveal">
+        <p class="eyebrow">okay — deep breath</p>
+        <h1><em data-name>my love</em>, will you be mine?</h1>
+        <p class="sub">today, tomorrow, and every ordinary day after</p>
+    </section>
+
+    <section id="after" class="reveal">
+        <p class="eyebrow">and so it is —</p>
+        <h1>Forever, <em>then.</em></h1>
+        <p class="sub" id="afterSub"></p>
+    </section>
+
+    <div id="choices" class="reveal">
+        <button class="choice" id="yesA">yes, forever</button>
+        <button class="choice ghost" id="yesB">yes, a hundred times over</button>
+    </div>
+
+    <p id="hint" class="reveal"></p>
+
+    <button id="sound" aria-label="toggle sound" aria-pressed="false">
+        <svg id="iconOn" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 5 6 9H3v6h3l5 4V5z" fill="currentColor" stroke="none" />
+            <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+            <path d="M18 6a8.5 8.5 0 0 1 0 12" />
+        </svg>
+        <svg id="iconOff" style="display:none" viewBox="0 0 24 24" width="16" height="16" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 5 6 9H3v6h3l5 4V5z" fill="currentColor" stroke="none" />
+            <path d="M16 9l5 6M21 9l-5 6" />
+        </svg>
+    </button>
+
+    <div id="fatal"><span>the little universe couldn't load — check your connection and refresh</span></div>
+
+    <script>
+        window.addEventListener('error', function () {
+            var d = document.getElementById('fatal'); if (d) d.style.display = 'grid';
+        }, true);
+    </script>
+
+    <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+        import { Reflector } from 'three/addons/objects/Reflector.js';
+        import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+        import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+        /* ================= personalise here ================= */
+        const HER_NAME = 'my love';   // <- write her name
+        /* ==================================================== */
+
+        document.querySelectorAll('[data-name]').forEach(el => el.textContent = HER_NAME);
+
+        const $ = id => document.getElementById(id);
+        const isLite = matchMedia('(pointer: coarse)').matches || innerWidth < 760;
+        const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* ---------- renderer / scene / camera ---------- */
+        let renderer;
+        try {
+            renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+        } catch (e) { $('fatal').style.display = 'grid'; throw e; }
+        renderer.setPixelRatio(Math.min(devicePixelRatio, isLite ? 1.8 : 2));
+        renderer.setSize(innerWidth, innerHeight);
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.1;
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        $('stage').appendChild(renderer.domElement);
+        const el = renderer.domElement;
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0b0708);
+        scene.fog = new THREE.FogExp2(0x0b0708, 0.055);
+
+        const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 0.1, 80);
+        const TARGET = new THREE.Vector3(0, 2.05, 0);
+
+        const pmrem = new THREE.PMREMGenerator(renderer);
+        scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.06).texture;
+        pmrem.dispose();
+
+        /* ---------- lights ---------- */
+        const keyLight = new THREE.SpotLight(0xffd9a6, 90, 0, THREE.MathUtils.degToRad(38), 0.55, 2);
+        keyLight.position.set(3.2, 8.5, 4.5);
+        keyLight.target.position.set(0, 0.7, 0);
+        keyLight.castShadow = true;
+        keyLight.shadow.mapSize.set(1024, 1024);
+        keyLight.shadow.camera.near = 2; keyLight.shadow.camera.far = 25;
+        keyLight.shadow.bias = -0.0002;
+        scene.add(keyLight, keyLight.target);
+
+        const rim = new THREE.DirectionalLight(0xffe2c4, 0.55);
+        rim.position.set(-6, 4.5, -5);
+        scene.add(rim);
+        scene.add(new THREE.HemisphereLight(0x2a1a1e, 0x090405, 0.55));
+
+        const boxGlow = new THREE.PointLight(0xff9a55, 0, 4.5, 2);
+        boxGlow.position.set(0, 0.4, 0);
+        scene.add(boxGlow);
+
+        /* ---------- floor: dim mirror, warm light pool, shadow catcher ---------- */
+        const mirror = new Reflector(new THREE.CircleGeometry(14, 72), {
+            textureWidth: isLite ? 512 : 1024,
+            textureHeight: isLite ? 512 : 1024,
+            color: 0x898989,
+            clipBias: 0.003
+        });
+        mirror.rotation.x = -Math.PI / 2;
+        scene.add(mirror);
+
+        const pool = new THREE.Mesh(
+            new THREE.CircleGeometry(14.6, 72),
+            new THREE.MeshStandardMaterial({
+                color: 0x140c0d, roughness: 0.9, metalness: 0,
+                transparent: true, opacity: 0.78, envMapIntensity: 0.15
+            })
+        );
+        pool.rotation.x = -Math.PI / 2; pool.position.y = 0.012; pool.renderOrder = 1;
+        scene.add(pool);
+
+        const shadowCatcher = new THREE.Mesh(new THREE.CircleGeometry(10, 48), new THREE.ShadowMaterial({ opacity: 0.42 }));
+        shadowCatcher.rotation.x = -Math.PI / 2; shadowCatcher.position.y = 0.03;
+        shadowCatcher.receiveShadow = true; shadowCatcher.renderOrder = 2;
+        scene.add(shadowCatcher);
+
+        /* ---------- tiny procedural textures ---------- */
+        function dotTexture() {
+            const c = document.createElement('canvas'); c.width = c.height = 64;
+            const g = c.getContext('2d');
+            const rg = g.createRadialGradient(32, 32, 0, 32, 32, 30);
+            rg.addColorStop(0, 'rgba(255,255,255,1)');
+            rg.addColorStop(0.4, 'rgba(255,255,255,0.55)');
+            rg.addColorStop(1, 'rgba(255,255,255,0)');
+            g.fillStyle = rg; g.fillRect(0, 0, 64, 64);
+            return new THREE.CanvasTexture(c);
+        }
+        function starTexture() {
+            const c = document.createElement('canvas'); c.width = c.height = 128;
+            const g = c.getContext('2d');
+            g.translate(64, 64);
+            let rg = g.createRadialGradient(0, 0, 0, 0, 0, 14);
+            rg.addColorStop(0, 'rgba(255,255,255,1)'); rg.addColorStop(1, 'rgba(255,255,255,0)');
+            g.fillStyle = rg; g.beginPath(); g.arc(0, 0, 14, 0, 7); g.fill();
+            for (let k = 0; k < 2; k++) {
+                const lg = g.createLinearGradient(-58, 0, 58, 0);
+                lg.addColorStop(0, 'rgba(255,255,255,0)'); lg.addColorStop(0.5, 'rgba(255,255,255,0.9)'); lg.addColorStop(1, 'rgba(255,255,255,0)');
+                g.fillStyle = lg; g.fillRect(-58, -1.4, 116, 2.8);
+                g.rotate(Math.PI / 2);
+            }
+            g.rotate(Math.PI / 4);
+            for (let k = 0; k < 2; k++) {
+                const lg2 = g.createLinearGradient(-30, 0, 30, 0);
+                lg2.addColorStop(0, 'rgba(255,255,255,0)'); lg2.addColorStop(0.5, 'rgba(255,255,255,0.5)'); lg2.addColorStop(1, 'rgba(255,255,255,0)');
+                g.fillStyle = lg2; g.fillRect(-30, -0.9, 60, 1.8);
+                g.rotate(Math.PI / 2);
+            }
+            return new THREE.CanvasTexture(c);
+        }
+
+        /* ---------- materials ---------- */
+        const velvet = new THREE.MeshPhysicalMaterial({
+            color: 0x5c1124, roughness: 0.92, metalness: 0,
+            sheen: 1.0, sheenRoughness: 0.55, sheenColor: new THREE.Color(0xc2435f),
+            envMapIntensity: 0.35
+        });
+        const velvetDark = velvet.clone(); velvetDark.color = new THREE.Color(0x4a0d1d);
+        const cream = new THREE.MeshStandardMaterial({ color: 0xefe2cb, roughness: 0.95, envMapIntensity: 0.25, side: THREE.DoubleSide });
+        const gold = new THREE.MeshPhysicalMaterial({ color: 0xe0a94f, metalness: 1, roughness: 0.16, envMapIntensity: 1.25 });
+
+        /* ---------- the velvet box ---------- */
+        const boxGroup = new THREE.Group(); scene.add(boxGroup);
+        const boxMeshes = [];
+        function part(geo, mat, x, y, z, parent = boxGroup) {
+            const m = new THREE.Mesh(geo, mat);
+            m.position.set(x, y, z);
+            m.castShadow = true; m.receiveShadow = true;
+            parent.add(m); boxMeshes.push(m);
+            return m;
+        }
+        part(new RoundedBoxGeometry(1.8, 0.2, 1.8, 3, 0.05), velvet, 0, 0.1, 0);            // bottom slab
+        part(new RoundedBoxGeometry(1.8, 0.4, 0.15, 3, 0.05), velvet, 0, 0.4, 0.825);       // walls
+        part(new RoundedBoxGeometry(1.8, 0.4, 0.15, 3, 0.05), velvet, 0, 0.4, -0.825);
+        part(new RoundedBoxGeometry(0.15, 0.4, 1.5, 3, 0.05), velvet, 0.825, 0.4, 0);
+        part(new RoundedBoxGeometry(0.15, 0.4, 1.5, 3, 0.05), velvet, -0.825, 0.4, 0);
+        part(new THREE.BoxGeometry(1.5, 0.05, 1.5), cream, 0, 0.205, 0);                    // inner floor
+        part(new RoundedBoxGeometry(1.3, 0.09, 1.3, 3, 0.04), velvetDark, 0, 0.275, 0);     // cushion
+
+        const lidPivot = new THREE.Group(); lidPivot.position.set(0, 0.6, -0.9); boxGroup.add(lidPivot);
+        part(new RoundedBoxGeometry(1.8, 0.32, 1.8, 3, 0.07), velvet, 0, 0.16, 0.9, lidPivot);
+        const lining = new THREE.Mesh(new THREE.PlaneGeometry(1.66, 1.66), cream);
+        lining.rotation.x = Math.PI / 2; lining.position.set(0, 0.005, 0.9); lidPivot.add(lining);
+        const clasp = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.035, 24), gold);
+        clasp.rotation.x = Math.PI / 2; clasp.position.set(0, 0.16, 1.81); lidPivot.add(clasp); boxMeshes.push(clasp);
+        [-0.62, 0.62].forEach(x => {
+            const h = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.36, 16), gold);
+            h.rotation.z = Math.PI / 2; h.position.set(x, 0.6, -0.9); boxGroup.add(h);
+        });
+
+        /* ---------- brilliant-cut diamond, built by hand ---------- */
+        function diamondGeometry(rad, crownH, pavD, tableR, seg) {
+            const v = [], girdle = [], table = [];
+            for (let i = 0; i < seg; i++) {
+                const aG = (i / seg) * Math.PI * 2;
+                girdle.push([Math.cos(aG) * rad, 0, Math.sin(aG) * rad]);
+                const aT = ((i + 0.5) / seg) * Math.PI * 2;
+                table.push([Math.cos(aT) * tableR, crownH, Math.sin(aT) * tableR]);
+            }
+            const apex = [0, -pavD, 0], tc = [0, crownH, 0];
+            const tri = (a, b, c) => v.push(a[0], a[1], a[2], b[0], b[1], b[2], c[0], c[1], c[2]);
+            for (let i = 0; i < seg; i++) {
+                const j = (i + 1) % seg;
+                tri(girdle[i], table[j], girdle[j]);   // crown facets
+                tri(girdle[i], table[i], table[j]);
+                tri(girdle[i], girdle[j], apex);       // pavilion
+                tri(tc, table[j], table[i]);           // table
+            }
+            const g = new THREE.BufferGeometry();
+            g.setAttribute('position', new THREE.Float32BufferAttribute(v, 3));
+            g.computeVertexNormals();
+            return g;
+        }
+
+        /* ---------- the ring ---------- */
+        const ringRoot = new THREE.Group(); scene.add(ringRoot);
+        const spinGroup = new THREE.Group(); ringRoot.add(spinGroup);
+        const tiltGroup = new THREE.Group(); spinGroup.add(tiltGroup);
+
+        const band = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.075, 40, 140), gold);
+        band.castShadow = true; tiltGroup.add(band);
+
+        const collar = new THREE.Mesh(new THREE.TorusGeometry(0.1, 0.02, 12, 40), gold);
+        collar.rotation.x = Math.PI / 2; collar.position.y = 0.6; collar.castShadow = true; tiltGroup.add(collar);
+
+        const prongGeo = new THREE.CylinderGeometry(0.015, 0.017, 0.11, 10);
+        const UP = new THREE.Vector3(0, 1, 0);
+        for (let i = 0; i < 4; i++) {
+            const a = Math.PI / 4 + i * Math.PI / 2;
+            const base = new THREE.Vector3(Math.cos(a) * 0.088, 0.57, Math.sin(a) * 0.088);
+            const top = new THREE.Vector3(Math.cos(a) * 0.028, 0.685, Math.sin(a) * 0.028);
+            const p = new THREE.Mesh(prongGeo, gold);
+            p.position.copy(base).lerp(top, 0.5);
+            p.quaternion.setFromUnitVectors(UP, top.clone().sub(base).normalize());
+            tiltGroup.add(p);
+        }
+
+        const diaMat = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff, metalness: 0.1, roughness: 0.02,
+            transparent: true, opacity: 0.92, flatShading: true,
+            clearcoat: 1, clearcoatRoughness: 0.04,
+            ior: 2.33, envMapIntensity: 2.6
+        });
+        const diamond = new THREE.Mesh(diamondGeometry(0.17, 0.08, 0.15, 0.095, 16), diaMat);
+        diamond.position.y = 0.635; diamond.castShadow = true;
+        tiltGroup.add(diamond);
+
+        /* ring starts lying flat inside the closed box, stone tucked toward the back */
+        let ringBaseY = 0.40, motionA = 0;
+        ringRoot.position.set(0, ringBaseY, 0.02);
+        tiltGroup.rotation.x = -Math.PI / 2;
+        const ringMeshes = [band, collar, diamond];
+
+        /* ---------- diamond twinkles ---------- */
+        const twGlobal = { v: 0 };
+        const twinkles = [];
+        for (let i = 0; i < 6; i++) {
+            const mat = new THREE.SpriteMaterial({
+                map: starTexture(), color: 0xfff3dd, transparent: true,
+                opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false
+            });
+            const s = new THREE.Sprite(mat);
+            s.position.set((Math.random() - 0.5) * 0.26, 0.62 + (Math.random() - 0.5) * 0.2, (Math.random() - 0.5) * 0.26);
+            s.renderOrder = 6;
+            tiltGroup.add(s);
+            twinkles.push({ s, spd: 2.2 + Math.random() * 2.6, ph: Math.random() * 6.28, base: 0.16 + Math.random() * 0.3 });
+        }
+
+        /* ---------- fireflies that will become the heart ---------- */
+        const FN = isLite ? 300 : 480;
+        const fHome = new Float32Array(FN * 3), fHeart = new Float32Array(FN * 3), fCol = new Float32Array(FN * 3);
+        const fPh = new Float32Array(FN), fSpd = new Float32Array(FN), fAmp = new Float32Array(FN);
+        const fDelay = new Float32Array(FN), fDur = new Float32Array(FN), fArc = new Float32Array(FN);
+
+        const HS = 1.32, HCY = 6, HC = new THREE.Vector3(0, 2.0, 0);
+        const heartXY = t => [16 * Math.sin(t) ** 3, 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)];
+        const palette = [[1, .79, .47], [1, .63, .52], [1, .93, .83], [1, .52, .62]]; // gold, blush, ivory, rose
+
+        for (let i = 0; i < FN; i++) {
+            const ang = Math.random() * Math.PI * 2, rad = 1.9 + Math.random() * 4.6;
+            fHome[i * 3] = Math.cos(ang) * rad;
+            fHome[i * 3 + 1] = 0.3 + Math.random() * 3.9;
+            fHome[i * 3 + 2] = Math.sin(ang) * rad;
+
+            const outline = i < FN * 0.66;
+            const t = outline ? (i / (FN * 0.66)) * Math.PI * 2 + (Math.random() - 0.5) * 0.03 : Math.random() * Math.PI * 2;
+            const r = outline ? 1 : Math.pow(Math.random(), 0.5) * 0.95;
+            const [hx, hy] = heartXY(t);
+            fHeart[i * 3] = hx / 17 * HS * r;
+            fHeart[i * 3 + 1] = (hy + HCY) / 17 * HS * r;
+            fHeart[i * 3 + 2] = (Math.random() - 0.5) * (outline ? 0.42 : 0.6);
+
+            const w = Math.random(), c = palette[w < 0.4 ? 0 : w < 0.62 ? 1 : w < 0.82 ? 2 : 3];
+            const b = outline ? 1 : 0.55;
+            fCol[i * 3] = c[0] * b; fCol[i * 3 + 1] = c[1] * b; fCol[i * 3 + 2] = c[2] * b;
+
+            fPh[i] = Math.random() * 6.28; fSpd[i] = 0.4 + Math.random() * 0.7; fAmp[i] = 0.18 + Math.random() * 0.3;
+            fDelay[i] = Math.random() * 1.35; fDur[i] = 1.5 + Math.random() * 0.8; fArc[i] = 0.2 + Math.random() * 0.6;
+        }
+
+        const fGeo = new THREE.BufferGeometry();
+        const fPosOut = new Float32Array(fHome), fColOut = new Float32Array(fCol);
+        fGeo.setAttribute('position', new THREE.BufferAttribute(fPosOut, 3));
+        fGeo.setAttribute('color', new THREE.BufferAttribute(fColOut, 3));
+        const fMat = new THREE.PointsMaterial({
+            size: isLite ? 0.095 : 0.075, map: dotTexture(), transparent: true,
+            depthWrite: false, blending: THREE.AdditiveBlending, vertexColors: true, fog: false, opacity: 0.9
+        });
+        const fireflies = new THREE.Points(fGeo, fMat);
+        fireflies.frustumCulled = false; fireflies.renderOrder = 5;
+        scene.add(fireflies);
+
+        let morphT0 = -1, heartSpin = 0;
+        const easeInOutCubic = u => u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;
+
+        function updateFireflies(dt) {
+            if (morphT0 >= 0) heartSpin += dt * 0.16;
+            const posA = fGeo.attributes.position, colA = fGeo.attributes.color;
+            const breath = 1 + Math.sin(now * 0.9) * 0.02;
+            for (let i = 0; i < FN; i++) {
+                const i3 = i * 3;
+                let me = 0;
+                if (morphT0 >= 0) me = easeInOutCubic(Math.min(1, Math.max(0, (now - morphT0 - fDelay[i]) / fDur[i])));
+                const wA = fAmp[i] * (1 - me);
+                const wx = Math.sin(now * fSpd[i] + fPh[i]) * wA;
+                const wy = Math.cos(now * fSpd[i] * 0.8 + fPh[i] * 1.7) * wA * 0.8;
+                const wz = Math.sin(now * fSpd[i] * 0.63 + fPh[i] * 2.6) * wA;
+                let x = fHome[i3] + wx, y = fHome[i3 + 1] + wy, z = fHome[i3 + 2] + wz;
+                if (me > 0) {
+                    const th = -0.55 * (1 - me) + heartSpin;
+                    const cs = Math.cos(th), sn = Math.sin(th);
+                    const hx = HC.x + fHeart[i3] * cs + fHeart[i3 + 2] * sn;
+                    const hy = HC.y + fHeart[i3 + 1] * breath + Math.sin(now * 1.3 + fPh[i]) * 0.03;
+                    const hz = HC.z - fHeart[i3] * sn + fHeart[i3 + 2] * cs;
+                    const arc = Math.sin(me * Math.PI) * fArc[i];
+                    x += (hx - x) * me; y += (hy + arc - y) * me; z += (hz - z) * me;
+                }
+                posA.setXYZ(i, x, Math.max(y, 0.14), z);
+                const gl = 1 + Math.sin(me * Math.PI) * 1.2;   // shimmer while travelling
+                colA.setXYZ(i, fCol[i3] * gl, fCol[i3 + 1] * gl, fCol[i3 + 2] * gl);
+            }
+            posA.needsUpdate = true; colA.needsUpdate = true;
+        }
+
+        /* ---------- sparkle bursts ---------- */
+        const BN = 200;
+        const bGeo = new THREE.BufferGeometry();
+        const bPos = new THREE.BufferAttribute(new Float32Array(BN * 3), 3);
+        const bVel = new Float32Array(BN * 3);
+        bGeo.setAttribute('position', bPos);
+        const bMat = new THREE.PointsMaterial({
+            size: 0.085, map: dotTexture(), color: 0xffd9a0, transparent: true,
+            opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending, fog: false
+        });
+        const burstPts = new THREE.Points(bGeo, bMat);
+        burstPts.frustumCulled = false; burstPts.renderOrder = 5; burstPts.visible = false;
+        scene.add(burstPts);
+        let bCount = 0, bLife = 0;
+
+        function burst(center, count, spd) {
+            const n = Math.min(count, BN);
+            for (let i = 0; i < n; i++) {
+                const th = Math.random() * Math.PI * 2, phi = Math.acos(2 * Math.random() - 1);
+                const dx = Math.sin(phi) * Math.cos(th), dy = Math.cos(phi), dz = Math.sin(phi) * Math.sin(th);
+                const v = spd * (0.35 + 0.65 * Math.random());
+                bVel[i * 3] = dx * v; bVel[i * 3 + 1] = Math.abs(dy) * v * 0.9 + 0.5; bVel[i * 3 + 2] = dz * v;
+                bPos.setXYZ(i, center.x + dx * 0.08, center.y + dy * 0.08, center.z + dz * 0.08);
+            }
+            bCount = n; bLife = 1; burstPts.visible = true;
+        }
+        function updateBurst(dt) {
+            if (bLife <= 0) return;
+            bLife -= dt / 1.7;
+            if (bLife <= 0) { burstPts.visible = false; bMat.opacity = 0; return; }
+            for (let i = 0; i < bCount; i++) {
+                let vx = bVel[i * 3] * (1 - 1.5 * dt);
+                let vy = bVel[i * 3 + 1] * (1 - 1.5 * dt) - 0.9 * dt;
+                let vz = bVel[i * 3 + 2] * (1 - 1.5 * dt);
+                bVel[i * 3] = vx; bVel[i * 3 + 1] = vy; bVel[i * 3 + 2] = vz;
+                bPos.setXYZ(i, bPos.getX(i) + vx * dt, bPos.getY(i) + vy * dt, bPos.getZ(i) + vz * dt);
+            }
+            bPos.needsUpdate = true;
+            bMat.opacity = Math.min(1, bLife * 2.5) * 0.95;
+        }
+
+        /* ---------- rose petals ---------- */
+        const petalShape = new THREE.Shape();
+        petalShape.moveTo(0, 0);
+        petalShape.bezierCurveTo(0.34, 0.08, 0.42, 0.52, 0, 0.92);
+        petalShape.bezierCurveTo(-0.42, 0.52, -0.34, 0.08, 0, 0);
+        const petalGeo = new THREE.ShapeGeometry(petalShape, 8);
+        {
+            const p = petalGeo.attributes.position;
+            for (let i = 0; i < p.count; i++) p.setZ(i, Math.sin((p.getY(i) / 0.92) * Math.PI) * 0.13);
+            petalGeo.computeVertexNormals();
+        }
+        const petalCols = [0xb82045, 0xd63a5e, 0x8e1533, 0xe87a90];
+        const petals = [];
+        for (let i = 0; i < 70; i++) {
+            const mat = new THREE.MeshStandardMaterial({
+                color: 0xffffff, roughness: 0.6, side: THREE.DoubleSide,
+                transparent: true, envMapIntensity: 0.4
+            });
+            const m = new THREE.Mesh(petalGeo, mat);
+            m.visible = false; scene.add(m);
+            petals.push({ m, active: false, x0: 0, y: 0, z0: 0, fall: 0, sway: 0, ph: 0, rx: 0, ry: 0, rz: 0 });
+        }
+        let petalUntil = -1, petalAcc = 0;
+        function startPetals(dur) { petalUntil = now + dur; }
+        function spawnPetal() {
+            const p = petals.find(p => !p.active); if (!p) return;
+            p.active = true; p.m.visible = true;
+            p.m.material.color.setHex(petalCols[Math.floor(Math.random() * petalCols.length)]);
+            p.m.material.opacity = 1;
+            p.m.scale.setScalar(0.55 + Math.random() * 0.5);
+            p.m.rotation.set(Math.random() * 6.28, Math.random() * 6.28, Math.random() * 6.28);
+            p.x0 = (Math.random() - 0.5) * 5.4; p.z0 = (Math.random() - 0.5) * 3.6; p.y = 4.4 + Math.random() * 2.2;
+            p.fall = 0.55 + Math.random() * 0.55; p.sway = 1.1 + Math.random() * 1.3; p.ph = Math.random() * 6.28;
+            p.rx = (Math.random() - 0.5) * 2.4; p.ry = (Math.random() - 0.5) * 2.4; p.rz = (Math.random() - 0.5) * 1.6;
+        }
+        function updatePetals(dt) {
+            if (petalUntil > now) {
+                petalAcc += dt;
+                while (petalAcc > 0.07) { petalAcc -= 0.07; spawnPetal(); }
+            }
+            for (const p of petals) {
+                if (!p.active) continue;
+                p.y -= p.fall * dt;
+                p.m.position.set(p.x0 + Math.sin(now * p.sway + p.ph) * 0.5, p.y, p.z0 + Math.sin(now * p.sway * 0.77 + p.ph * 1.4) * 0.32);
+                p.m.rotation.x += p.rx * dt; p.m.rotation.y += p.ry * dt; p.m.rotation.z += p.rz * dt;
+                if (p.y < 0.5) p.m.material.opacity = Math.max(0, p.y / 0.5);
+                if (p.y < 0.06) { p.active = false; p.m.visible = false; }
+            }
+        }
+
+        /* ---------- tiny tween engine ---------- */
+        const clock = new THREE.Clock();
+        let now = 0;
+        const tweens = [];
+        const easeOutCubic = u => 1 - Math.pow(1 - u, 3);
+        const easeInOutQuint = u => u < 0.5 ? 16 * u ** 5 : 1 - Math.pow(-2 * u + 2, 5) / 2;
+        const easeOutBack = u => { const c = 1.4; return 1 + (c + 1) * Math.pow(u - 1, 3) + c * Math.pow(u - 1, 2); };
+        function tween(dur, update, opts = {}) {
+            tweens.push({ start: now + (opts.delay || 0), dur, update, ease: opts.ease || easeInOutCubic, done: opts.done });
+        }
+        const wait = s => new Promise(res => tween(s, () => { }, { done: res }));
+        function runTweens() {
+            for (let i = tweens.length - 1; i >= 0; i--) {
+                const t = tweens[i], u = (now - t.start) / t.dur;
+                if (u < 0) continue;
+                if (u >= 1) { t.update(1); tweens.splice(i, 1); if (t.done) t.done(); }
+                else t.update(t.ease(u));
+            }
+        }
+
+        /* ---------- camera framing & controls ---------- */
+        let fit = 5.7, userTouched = false;
+        function computeFit() {
+            const t = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2);
+            return Math.max(2.2 / t, 1.35 / (t * camera.aspect), 4.6);
+        }
+        function placeCamera(r, phi, th) {
+            camera.position.setFromSphericalCoords(r, phi, th).add(TARGET);
+            camera.lookAt(TARGET);
+        }
+        const controls = new OrbitControls(camera, el);
+        controls.target.copy(TARGET);
+        controls.enableDamping = true; controls.dampingFactor = 0.06;
+        controls.enablePan = false;
+        controls.minDistance = 1.9;
+        controls.minPolarAngle = 0.3; controls.maxPolarAngle = 1.42;
+        controls.autoRotateSpeed = 0.55;
+        controls.enabled = false;
+        controls.addEventListener('start', () => { userTouched = true; controls.autoRotate = false; });
+
+        function introFly() {
+            if (reduced) { placeCamera(fit, 1.19, 0); controls.enabled = true; return; }
+            tween(2.8, u => {
+                placeCamera(
+                    THREE.MathUtils.lerp(fit * 1.9, fit, u),
+                    THREE.MathUtils.lerp(0.95, 1.19, u),
+                    THREE.MathUtils.lerp(0.85, 0, u)
+                );
+            }, { done: () => { controls.enabled = true; controls.autoRotate = true; } });
+        }
+
+        /* ---------- post: bloom for the diamond ---------- */
+        const composer = new EffectComposer(renderer);
+        composer.addPass(new RenderPass(scene, camera));
+        const bloomBase = isLite ? 0.5 : 0.6;
+        const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), bloomBase, 0.55, 0.72);
+        composer.addPass(bloom);
+        composer.addPass(new OutputPass());
+
+        /* ---------- sound (generated, gentle) ---------- */
+        let actx = null, master = null, muted = false;
+        function initAudio() {
+            if (actx) { if (actx.state === 'suspended') actx.resume(); return; }
+            try {
+                actx = new (window.AudioContext || window.webkitAudioContext)();
+                const comp = actx.createDynamicsCompressor();
+                master = actx.createGain(); master.gain.value = muted ? 0 : 0.55;
+                master.connect(comp); comp.connect(actx.destination);
+            } catch (e) { }
+        }
+        function note(f, t0, o = {}) {
+            if (!actx) return;
+            const osc = actx.createOscillator(), g = actx.createGain();
+            osc.type = o.type || 'sine'; osc.frequency.value = f;
+            const gain = o.gain || 0.1, at = o.attack || 0.02, de = o.decay || 1.5;
+            g.gain.setValueAtTime(0.0001, t0);
+            g.gain.exponentialRampToValueAtTime(gain, t0 + at);
+            g.gain.exponentialRampToValueAtTime(0.0001, t0 + at + de);
+            osc.connect(g); g.connect(master);
+            osc.start(t0); osc.stop(t0 + at + de + 0.15);
+        }
+        function playOpen() {
+            if (!actx) return; const t = actx.currentTime;
+            [523.25, 659.25, 784, 987.77, 1318.51].forEach((f, i) => {
+                note(f, t + i * 0.11, { gain: 0.09, decay: 1.8 });
+                note(f * 2, t + i * 0.11, { gain: 0.018, decay: 1.0, type: 'triangle' });
+            });
+            note(130.81, t + 0.05, { gain: 0.05, attack: 0.5, decay: 4.5 });
+            note(196.0, t + 0.05, { gain: 0.04, attack: 0.5, decay: 4.5 });
+        }
+        function playYes() {
+            if (!actx) return; const t = actx.currentTime;
+            [261.63, 329.63, 392, 523.25, 587.33, 783.99].forEach((f, i) => note(f, t + i * 0.08, { gain: 0.07, attack: 0.3, decay: 5 }));
+            note(1046.5, t + 0.55, { gain: 0.05, attack: 0.1, decay: 3.5 });
+            note(1318.51, t + 0.8, { gain: 0.03, attack: 0.1, decay: 3.5 });
+        }
+        $('sound').addEventListener('click', () => {
+            muted = !muted;
+            if (master) master.gain.value = muted ? 0 : 0.55;
+            $('iconOn').style.display = muted ? 'none' : 'block';
+            $('iconOff').style.display = muted ? 'block' : 'none';
+            $('sound').setAttribute('aria-pressed', String(muted));
+        });
+        document.addEventListener('pointerdown', initAudio, { once: true });
+
+        /* ---------- interaction: the box is alive ---------- */
+        const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+        let state = 'idle', opened = false, hoverBox = false, hoverRing = false;
+        let downX = 0, downY = 0, downT = 0;
+
+        function pick(cx, cy, arr) {
+            ndc.set((cx / innerWidth) * 2 - 1, -(cy / innerHeight) * 2 + 1);
+            ray.setFromCamera(ndc, camera);
+            return ray.intersectObjects(arr, false).length > 0;
+        }
+        el.addEventListener('pointermove', e => {
+            if (state === 'idle') {
+                hoverBox = pick(e.clientX, e.clientY, boxMeshes);
+                el.style.cursor = hoverBox ? 'pointer' : 'grab';
+            } else {
+                hoverRing = pick(e.clientX, e.clientY, ringMeshes);
+                el.style.cursor = hoverRing ? 'pointer' : 'grab';
+            }
+        });
+        el.addEventListener('pointerdown', e => { downX = e.clientX; downY = e.clientY; downT = now; el.style.cursor = 'grabbing'; });
+        el.addEventListener('pointerup', e => {
+            el.style.cursor = 'grab';
+            const moved = Math.hypot(e.clientX - downX, e.clientY - downY);
+            if (moved > 9 || now - downT > 0.9) return;
+            if (state === 'idle' && pick(e.clientX, e.clientY, boxMeshes)) openBox();
+            else if ((state === 'question' || state === 'celebrate') && pick(e.clientX, e.clientY, ringMeshes)) {
+                burst(new THREE.Vector3(ringRoot.position.x, ringRoot.position.y + 0.2, ringRoot.position.z), 70, 1.15);
+                if (actx) note([1046.5, 1318.5, 1568][Math.floor(Math.random() * 3)], actx.currentTime, { gain: 0.055, decay: 1.3 });
+            }
+        });
+        addEventListener('keydown', e => {
+            if ((e.key === 'Enter' || e.key === ' ') && state === 'idle') { e.preventDefault(); openBox(); }
+        });
+
+        function setHint(html) {
+            const h = $('hint');
+            if (!html) { h.classList.remove('show'); return; }
+            h.innerHTML = html; h.classList.add('show');
+        }
+
+        /* ---------- act I: the box opens, the ring rises ---------- */
+        let spinBase = 0, spinVel = 0;
+        async function openBox() {
+            if (opened) return; opened = true; state = 'opening';
+            hoverBox = false; el.style.cursor = 'grab';
+            setHint('');
+            $('topline').classList.add('gone');
+            playOpen();
+
+            tween(0.8, u => boxGlow.intensity = 13 * u, { ease: easeOutCubic });
+            tween(1.45, u => lidPivot.rotation.x = -1.92 * easeOutBack(u), { ease: u => u, delay: 0.12 });
+            wait(0.4).then(() => burst(new THREE.Vector3(0, 0.75, 0.2), 130, 1.5));
+            wait(0.55).then(() => {
+                const y0 = ringBaseY;
+                tween(2.4, u => {
+                    ringBaseY = THREE.MathUtils.lerp(y0, 1.95, u);
+                    tiltGroup.rotation.x = THREE.MathUtils.lerp(-Math.PI / 2, 0, u);
+                }, { ease: easeInOutQuint });
+            });
+            wait(1.5).then(() => tween(1.6, u => twGlobal.v = u, { ease: easeOutCubic }));
+            wait(1.5).then(() => tween(2.2, u => spinBase = 0.4 * u, { ease: easeOutCubic }));
+            wait(2.6).then(() => tween(1.0, u => boxGlow.intensity = THREE.MathUtils.lerp(13, 4.5, u)));
+            wait(2.9).then(() => tween(1.5, u => motionA = u, { ease: easeOutCubic }));
+
+            wait(1.9).then(() => { morphT0 = now; });   // the fireflies begin their journey
+            await wait(4.3);
+            state = 'question';
+            $('ask').classList.add('show');
+            $('choices').classList.add('show');
+        }
+
+        /* ---------- act II: her answer ---------- */
+        const yesLines = [
+            'you just made every firefly in this little universe jealous.',
+            'a hundred times over — and I intend to mean it every single time.'
+        ];
+        async function answer(v) {
+            if (state !== 'question') return; state = 'celebrate';
+            playYes();
+            $('ask').classList.add('gone');
+            $('choices').classList.add('gone');
+            burst(new THREE.Vector3(ringRoot.position.x, ringRoot.position.y + 0.3, ringRoot.position.z), v ? 200 : 150, 2.3);
+            tween(0.35, u => bloom.strength = THREE.MathUtils.lerp(bloomBase, bloomBase * 2.0, u), { ease: easeOutCubic });
+            tween(1.8, u => bloom.strength = THREE.MathUtils.lerp(bloomBase * 2.0, bloomBase * 1.15, u), { delay: 0.35 });
+            spinVel = 9;
+            tween(0.5, u => diaMat.emissive.setScalar(0.9 * u), { ease: easeOutCubic });
+            tween(2.0, u => diaMat.emissive.setScalar(0.9 * (1 - u)), { delay: 0.5 });
+            startPetals(5.5);
+            await wait(1.1);
+            $('afterSub').textContent = yesLines[v];
+            $('after').classList.add('show');
+            setHint('the heart is yours — <b>spin it, drift closer, stay a while</b>');
+        }
+        $('yesA').addEventListener('click', () => answer(0));
+        $('yesB').addEventListener('click', () => answer(1));
+
+        /* ---------- resize ---------- */
+        function onResize() {
+            camera.aspect = innerWidth / innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(innerWidth, innerHeight);
+            composer.setSize(innerWidth, innerHeight);
+            fit = computeFit();
+            controls.maxDistance = Math.max(18, fit * 2.3);
+        }
+        addEventListener('resize', onResize);
+
+        /* ---------- main loop ---------- */
+        function updateTwinkles() {
+            for (const t of twinkles) {
+                const k = Math.pow(0.5 + 0.5 * Math.sin(now * t.spd + t.ph), 3);
+                t.s.material.opacity = twGlobal.v * (0.15 + 0.85 * k);
+                t.s.scale.setScalar(t.base * (0.35 + 0.85 * k) * (0.4 + 0.6 * twGlobal.v));
+            }
+        }
+
+        function animateFrame() {
+            requestAnimationFrame(animateFrame);
+            const dt = Math.min(clock.getDelta(), 0.05);
+            now += dt;
+            runTweens();
+            controls.update();
+
+            if (opened) {
+                spinGroup.rotation.y += (spinBase + spinVel) * dt;
+                spinVel *= Math.exp(-1.2 * dt);
+                ringRoot.position.y = ringBaseY + Math.sin(now * 0.85) * 0.055 * motionA;
+                tiltGroup.rotation.z = Math.sin(now * 1.05) * 0.05 * motionA;
+                boxGlow.position.set(0, ringBaseY - 0.42, 0);
+            }
+            if (state === 'idle' && hoverBox) lidPivot.rotation.x = Math.sin(now * 26) * 0.014;  // it shivers when you hover
+
+            updateFireflies(dt);
+            updateBurst(dt);
+            updatePetals(dt);
+            updateTwinkles();
+            composer.render();
+        }
+
+        /* ---------- boot ---------- */
+        fit = computeFit();
+        controls.maxDistance = Math.max(18, fit * 2.3);
+        placeCamera(fit * 1.9, 0.95, 0.85);
+        onResize();
+        $('stage').classList.add('on');
+        introFly();
+        wait(0.45).then(() => $('topline').classList.add('show'));
+        wait(1.5).then(() => setHint('drag to wander · <b>then, tap the box</b>'));
+        animateFrame();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,656 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Shower Invitation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            background: #0a0a1a;
+            font-family: 'Georgia', serif;
+            cursor: pointer;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        #invitation {
+            text-align: center;
+            color: #fff;
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            transition: all 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
+            max-width: 500px;
+            padding: 30px;
+        }
+
+        #invitation.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        #invitation h1 {
+            font-size: 2.8em;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(255, 182, 193, 0.8), 0 0 60px rgba(255, 182, 193, 0.4);
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ffb6c1, #ffd1dc, #b0d4f1, #87ceeb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #invitation .subtitle {
+            font-size: 1.1em;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #ffd1dc;
+            text-shadow: 0 0 20px rgba(255, 209, 220, 0.5);
+            margin-bottom: 25px;
+        }
+
+        #invitation .details {
+            font-size: 1em;
+            line-height: 2;
+            color: #e8d5e0;
+            text-shadow: 0 0 15px rgba(232, 213, 224, 0.3);
+        }
+
+        #invitation .details .name {
+            font-size: 1.5em;
+            font-style: italic;
+            color: #ffb6c1;
+            text-shadow: 0 0 20px rgba(255, 182, 193, 0.6);
+        }
+
+        #invitation .divider {
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ffb6c1, transparent);
+            margin: 20px auto;
+        }
+
+        #invitation .date {
+            font-size: 1.2em;
+            color: #b0d4f1;
+            text-shadow: 0 0 20px rgba(176, 212, 241, 0.5);
+        }
+
+        #click-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 209, 220, 0.6);
+            font-size: 0.85em;
+            letter-spacing: 2px;
+            z-index: 10;
+            animation: pulse 2s ease-in-out infinite;
+            text-transform: uppercase;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div id="overlay">
+        <div id="invitation">
+            <div class="subtitle">You're Invited to a</div>
+            <h1>Baby Shower</h1>
+            <div class="divider"></div>
+            <div class="details">
+                Celebrating the upcoming arrival of<br>
+                <span class="name">Little Emma</span><br><br>
+                <span class="date">Saturday, August 23rd, 2025</span><br>
+                2:00 PM - 5:00 PM<br><br>
+                <span style="font-size:0.9em;">The Rose Garden Venue<br>123 Blossom Lane, Meadowville</span>
+            </div>
+            <div class="divider" style="margin-top:25px;"></div>
+            <div style="margin-top:15px; font-size:0.85em; color: rgba(255,209,220,0.7);">
+                RSVP to Sarah by August 10th<br>
+                <span style="letter-spacing:1px;">✨ With love & joy ✨</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="click-hint">✦ click anywhere to reveal ✦</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // ── Scene Setup ──
+        const canvas = document.getElementById('bg-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x0a0a1a, 0.035);
+
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 2, 12);
+
+        // ── Lights ──
+        const ambientLight = new THREE.AmbientLight(0xffd1dc, 0.4);
+        scene.add(ambientLight);
+
+        const mainLight = new THREE.PointLight(0xffb6c1, 2, 50);
+        mainLight.position.set(5, 8, 5);
+        scene.add(mainLight);
+
+        const secondaryLight = new THREE.PointLight(0xb0d4f1, 1.5, 50);
+        secondaryLight.position.set(-5, 6, -5);
+        scene.add(secondaryLight);
+
+        const rimLight = new THREE.PointLight(0xe8b0ff, 1, 30);
+        rimLight.position.set(0, -3, 8);
+        scene.add(rimLight);
+
+        // ── Materials ──
+        const pinkMat = new THREE.MeshPhongMaterial({
+            color: 0xffb6c1, emissive: 0x441111, shininess: 100, transparent: true, opacity: 0.9
+        });
+        const blueMat = new THREE.MeshPhongMaterial({
+            color: 0xb0d4f1, emissive: 0x111144, shininess: 100, transparent: true, opacity: 0.9
+        });
+        const goldMat = new THREE.MeshPhongMaterial({
+            color: 0xffd700, emissive: 0x443300, shininess: 200, transparent: true, opacity: 0.85
+        });
+        const whiteMat = new THREE.MeshPhongMaterial({
+            color: 0xffffff, emissive: 0x222222, shininess: 50, transparent: true, opacity: 0.8
+        });
+        const lilacMat = new THREE.MeshPhongMaterial({
+            color: 0xe8b0ff, emissive: 0x220044, shininess: 80, transparent: true, opacity: 0.85
+        });
+
+        // ── Build a Rattle ──
+        function createRattle(colorMat, x, y, z, scale) {
+            const group = new THREE.Group();
+            // Handle
+            const handleGeo = new THREE.CylinderGeometry(0.08, 0.08, 1.2, 16);
+            const handle = new THREE.Mesh(handleGeo, colorMat);
+            handle.position.y = 0;
+            group.add(handle);
+            // Ball
+            const ballGeo = new THREE.SphereGeometry(0.3, 24, 24);
+            const ball = new THREE.Mesh(ballGeo, colorMat);
+            ball.position.y = 0.7;
+            group.add(ball);
+            // Ring on ball
+            const ringGeo = new THREE.TorusGeometry(0.3, 0.03, 8, 24);
+            const ring = new THREE.Mesh(ringGeo, goldMat);
+            ring.position.y = 0.7;
+            ring.rotation.x = Math.PI / 2;
+            group.add(ring);
+            group.position.set(x, y, z);
+            group.scale.setScalar(scale);
+            return group;
+        }
+
+        // ── Build a Baby Bottle ──
+        function createBottle(colorMat, x, y, z, scale) {
+            const group = new THREE.Group();
+            // Body
+            const bodyGeo = new THREE.CylinderGeometry(0.2, 0.25, 1, 16);
+            const body = new THREE.Mesh(bodyGeo, new THREE.MeshPhongMaterial({
+                color: 0xffffff, transparent: true, opacity: 0.5, shininess: 200, specular: 0x444444
+            }));
+            body.position.y = 0;
+            group.add(body);
+            // Nipple
+            const nipGeo = new THREE.SphereGeometry(0.15, 16, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+            const nipple = new THREE.Mesh(nipGeo, new THREE.MeshPhongMaterial({ color: 0xffd1a4, shininess: 50 }));
+            nipple.position.y = 0.55;
+            group.add(nipple);
+            // Ring
+            const ringGeo = new THREE.TorusGeometry(0.22, 0.04, 8, 24);
+            const ring = new THREE.Mesh(ringGeo, colorMat);
+            ring.rotation.x = Math.PI / 2;
+            ring.position.y = 0.45;
+            group.add(ring);
+            // Liquid
+            const liquidGeo = new THREE.CylinderGeometry(0.18, 0.23, 0.7, 16);
+            const liquid = new THREE.Mesh(liquidGeo, colorMat);
+            liquid.position.y = -0.1;
+            group.add(liquid);
+            group.position.set(x, y, z);
+            group.scale.setScalar(scale);
+            return group;
+        }
+
+        // ── Build a Star ──
+        function createStar(mat, size) {
+            const shape = new THREE.Shape();
+            const pts = 5;
+            for (let i = 0; i < pts * 2; i++) {
+                const r = i % 2 === 0 ? size : size * 0.4;
+                const a = (i * Math.PI) / pts - Math.PI / 2;
+                if (i === 0) shape.moveTo(Math.cos(a) * r, Math.sin(a) * r);
+                else shape.lineTo(Math.cos(a) * r, Math.sin(a) * r);
+            }
+            shape.closePath();
+            const geo = new THREE.ExtrudeGeometry(shape, { depth: 0.1, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.03, bevelSegments: 3 });
+            return new THREE.Mesh(geo, mat);
+        }
+
+        // ── Build a Heart ──
+        function createHeart(mat, size) {
+            const shape = new THREE.Shape();
+            shape.moveTo(0, 0);
+            shape.bezierCurveTo(0, size * 0.5, -size, size * 0.5, -size, 0);
+            shape.bezierCurveTo(-size, -size * 0.5, 0, -size * 0.8, 0, -size);
+            shape.bezierCurveTo(0, -size * 0.8, size, -size * 0.5, size, 0);
+            shape.bezierCurveTo(size, size * 0.5, 0, size * 0.5, 0, 0);
+            const geo = new THREE.ExtrudeGeometry(shape, { depth: 0.15, bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.05, bevelSegments: 3 });
+            return new THREE.Mesh(geo, mat);
+        }
+
+        // ── Build a Cloud ──
+        function createCloud(mat) {
+            const group = new THREE.Group();
+            const spheres = [
+                { x: 0, y: 0, z: 0, r: 0.5 },
+                { x: 0.45, y: 0.05, z: 0, r: 0.4 },
+                { x: -0.45, y: 0.05, z: 0, r: 0.4 },
+                { x: 0.25, y: 0.2, z: 0.1, r: 0.35 },
+                { x: -0.25, y: 0.2, z: -0.1, r: 0.35 },
+            ];
+            spheres.forEach(s => {
+                const geo = new THREE.SphereGeometry(s.r, 16, 16);
+                const mesh = new THREE.Mesh(geo, mat);
+                mesh.position.set(s.x, s.y, s.z);
+                group.add(mesh);
+            });
+            return group;
+        }
+
+        // ── Build a Onesie shape ──
+        function createOnesie(mat) {
+            const group = new THREE.Group();
+            // Body
+            const bodyGeo = new THREE.BoxGeometry(0.7, 0.8, 0.25);
+            bodyGeo.translate(0, 0, 0);
+            const body = new THREE.Mesh(bodyGeo, mat);
+            group.add(body);
+            // Neck
+            const neckGeo = new THREE.CylinderGeometry(0.18, 0.2, 0.15, 16);
+            const neck = new THREE.Mesh(neckGeo, mat);
+            neck.position.y = 0.45;
+            group.add(neck);
+            // Legs
+            [-0.18, 0.18].forEach(x => {
+                const legGeo = new THREE.CylinderGeometry(0.12, 0.14, 0.35, 12);
+                const leg = new THREE.Mesh(legGeo, mat);
+                leg.position.set(x, -0.55, 0);
+                group.add(leg);
+            });
+            // Sleeves
+            [-0.5, 0.5].forEach(x => {
+                const armGeo = new THREE.CylinderGeometry(0.09, 0.11, 0.3, 12);
+                const arm = new THREE.Mesh(armGeo, mat);
+                arm.position.set(x, 0.2, 0);
+                arm.rotation.z = x > 0 ? -0.4 : 0.4;
+                group.add(arm);
+            });
+            return group;
+        }
+
+        // ── Build a Duck ──
+        function createDuck(mat) {
+            const group = new THREE.Group();
+            // Body
+            const bodyGeo = new THREE.SphereGeometry(0.4, 16, 16);
+            bodyGeo.scale(1.2, 0.9, 1);
+            const body = new THREE.Mesh(bodyGeo, mat);
+            group.add(body);
+            // Head
+            const headGeo = new THREE.SphereGeometry(0.25, 16, 16);
+            const head = new THREE.Mesh(headGeo, mat);
+            head.position.set(0.35, 0.35, 0);
+            group.add(head);
+            // Beak
+            const beakGeo = new THREE.ConeGeometry(0.1, 0.2, 8);
+            const beak = new THREE.Mesh(beakGeo, goldMat);
+            beak.rotation.z = -Math.PI / 2;
+            beak.position.set(0.6, 0.33, 0);
+            group.add(beak);
+            // Eye
+            const eyeGeo = new THREE.SphereGeometry(0.03, 8, 8);
+            const eye = new THREE.Mesh(eyeGeo, new THREE.MeshBasicMaterial({ color: 0x111111 }));
+            eye.position.set(0.48, 0.42, 0.1);
+            group.add(eye);
+            return group;
+        }
+
+        // ── Place all objects ──
+        const floatingObjects = [];
+
+        // Main center elements
+        const bigHeart = createHeart(pinkMat, 0.8);
+        bigHeart.position.set(0, 0.5, -2);
+        bigHeart.scale.setScalar(1.2);
+        scene.add(bigHeart);
+        floatingObjects.push({ mesh: bigHeart, baseY: 0.5, speed: 0.5, amplitude: 0.3, rotSpeed: 0.3 });
+
+        // Rattles
+        const rattle1 = createRattle(pinkMat, -3, 1, -1, 1.5);
+        scene.add(rattle1);
+        floatingObjects.push({ mesh: rattle1, baseY: 1, speed: 0.7, amplitude: 0.5, rotSpeed: 0.4 });
+
+        const rattle2 = createRattle(blueMat, 3.5, 2, -2, 1.2);
+        scene.add(rattle2);
+        floatingObjects.push({ mesh: rattle2, baseY: 2, speed: 0.6, amplitude: 0.4, rotSpeed: 0.3 });
+
+        // Bottles
+        const bottle1 = createBottle(pinkMat, -4, -0.5, -3, 1.3);
+        scene.add(bottle1);
+        floatingObjects.push({ mesh: bottle1, baseY: -0.5, speed: 0.4, amplitude: 0.3, rotSpeed: 0.2 });
+
+        const bottle2 = createBottle(blueMat, 4.5, 0, -1.5, 1.1);
+        scene.add(bottle2);
+        floatingObjects.push({ mesh: bottle2, baseY: 0, speed: 0.55, amplitude: 0.35, rotSpeed: 0.25 });
+
+        // Onesies
+        const onesie1 = createOnesie(pinkMat);
+        onesie1.position.set(-2.5, -1.5, -2);
+        onesie1.rotation.z = 0.15;
+        onesie1.scale.setScalar(1.3);
+        scene.add(onesie1);
+        floatingObjects.push({ mesh: onesie1, baseY: -1.5, speed: 0.45, amplitude: 0.25, rotSpeed: 0.15 });
+
+        const onesie2 = createOnesie(lilacMat);
+        onesie2.position.set(2, -2, -3);
+        onesie2.rotation.z = -0.1;
+        onesie2.scale.setScalar(1.0);
+        scene.add(onesie2);
+        floatingObjects.push({ mesh: onesie2, baseY: -2, speed: 0.35, amplitude: 0.2, rotSpeed: 0.2 });
+
+        // Ducks
+        const duck1 = createDuck(goldMat);
+        duck1.position.set(-1.5, 3, -2);
+        duck1.scale.setScalar(1.5);
+        scene.add(duck1);
+        floatingObjects.push({ mesh: duck1, baseY: 3, speed: 0.6, amplitude: 0.3, rotSpeed: 0.5 });
+
+        const duck2 = createDuck(pinkMat);
+        duck2.position.set(3, 3.5, -4);
+        duck2.scale.setScalar(1.0);
+        duck2.rotation.y = Math.PI;
+        scene.add(duck2);
+        floatingObjects.push({ mesh: duck2, baseY: 3.5, speed: 0.5, amplitude: 0.25, rotSpeed: 0.35 });
+
+        // Clouds
+        const cloudMat = new THREE.MeshPhongMaterial({ color: 0xffffff, emissive: 0x111111, transparent: true, opacity: 0.3 });
+        for (let i = 0; i < 6; i++) {
+            const cloud = createCloud(cloudMat);
+            cloud.position.set(
+                (Math.random() - 0.5) * 18,
+                (Math.random() - 0.3) * 8,
+                -5 - Math.random() * 10
+            );
+            cloud.scale.setScalar(0.8 + Math.random() * 1.5);
+            scene.add(cloud);
+            floatingObjects.push({ mesh: cloud, baseY: cloud.position.y, speed: 0.1 + Math.random() * 0.2, amplitude: 0.5 + Math.random() * 0.5, rotSpeed: 0.05 });
+        }
+
+        // Stars
+        const starColors = [goldMat, pinkMat, blueMat, lilacMat, whiteMat];
+        for (let i = 0; i < 25; i++) {
+            const star = createStar(starColors[i % starColors.length], 0.1 + Math.random() * 0.15);
+            star.position.set(
+                (Math.random() - 0.5) * 20,
+                (Math.random() - 0.3) * 12,
+                -2 - Math.random() * 15
+            );
+            star.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+            scene.add(star);
+            floatingObjects.push({ mesh: star, baseY: star.position.y, speed: 0.3 + Math.random() * 0.5, amplitude: 0.2 + Math.random() * 0.3, rotSpeed: 0.5 + Math.random() * 1.0 });
+        }
+
+        // Hearts
+        for (let i = 0; i < 15; i++) {
+            const heart = createHeart(starColors[i % starColors.length], 0.08 + Math.random() * 0.12);
+            heart.position.set(
+                (Math.random() - 0.5) * 16,
+                (Math.random() - 0.3) * 10,
+                -1 - Math.random() * 12
+            );
+            scene.add(heart);
+            floatingObjects.push({ mesh: heart, baseY: heart.position.y, speed: 0.4 + Math.random() * 0.6, amplitude: 0.3 + Math.random() * 0.4, rotSpeed: 0.8 + Math.random() * 1.2 });
+        }
+
+        // ── Particle System (Bokeh / Sparkles) ──
+        const particleCount = 300;
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+        const sizes = new Float32Array(particleCount);
+        const particleData = [];
+
+        const colorOptions = [
+            new THREE.Color(0xffb6c1),
+            new THREE.Color(0xb0d4f1),
+            new THREE.Color(0xffd1dc),
+            new THREE.Color(0xe8b0ff),
+            new THREE.Color(0xffd700),
+            new THREE.Color(0xffffff),
+        ];
+
+        for (let i = 0; i < particleCount; i++) {
+            const x = (Math.random() - 0.5) * 30;
+            const y = (Math.random() - 0.3) * 20;
+            const z = -Math.random() * 25;
+            positions[i * 3] = x;
+            positions[i * 3 + 1] = y;
+            positions[i * 3 + 2] = z;
+            const c = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+            colors[i * 3] = c.r;
+            colors[i * 3 + 1] = c.g;
+            colors[i * 3 + 2] = c.b;
+            sizes[i] = 0.05 + Math.random() * 0.15;
+            particleData.push({
+                baseY: y,
+                speed: 0.2 + Math.random() * 0.8,
+                amplitude: 0.5 + Math.random() * 1.0,
+                phase: Math.random() * Math.PI * 2
+            });
+        }
+
+        const particleGeo = new THREE.BufferGeometry();
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        particleGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+        const particleMat = new THREE.ShaderMaterial({
+            uniforms: { time: { value: 0 } },
+            vertexShader: `
+    attribute float size;
+    varying vec3 vColor;
+    void main() {
+      vColor = color;
+      vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+      gl_PointSize = size * (200.0 / -mvPosition.z);
+      gl_Position = projectionMatrix * mvPosition;
+    }
+  `,
+            fragmentShader: `
+    varying vec3 vColor;
+    void main() {
+      float d = length(gl_PointCoord - vec2(0.5));
+      if (d > 0.5) discard;
+      float alpha = 1.0 - smoothstep(0.2, 0.5, d);
+      gl_FragColor = vec4(vColor, alpha * 0.6);
+    }
+  `,
+            transparent: true,
+            vertexColors: true,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
+        });
+
+        const particles = new THREE.Points(particleGeo, particleMat);
+        scene.add(particles);
+
+        // ── Orbital Rings (decorative) ──
+        const ringGroup = new THREE.Group();
+        for (let i = 0; i < 3; i++) {
+            const ringGeo = new THREE.TorusGeometry(4 + i * 1.5, 0.02, 8, 64);
+            const ringMat = new THREE.MeshBasicMaterial({
+                color: i === 0 ? 0xffb6c1 : i === 1 ? 0xb0d4f1 : 0xe8b0ff,
+                transparent: true,
+                opacity: 0.2
+            });
+            const ring = new THREE.Mesh(ringGeo, ringMat);
+            ring.rotation.x = Math.PI / 3 + i * 0.2;
+            ring.rotation.z = i * 0.5;
+            ringGroup.add(ring);
+        }
+        ringGroup.position.set(0, 1, -3);
+        scene.add(ringGroup);
+
+        // ── Mouse tracking ──
+        let mouseX = 0, mouseY = 0;
+        let targetMouseX = 0, targetMouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        // ── Click to reveal ──
+        let revealed = false;
+        document.addEventListener('click', () => {
+            if (!revealed) {
+                revealed = true;
+                document.getElementById('invitation').classList.add('visible');
+                document.getElementById('click-hint').style.opacity = '0';
+                setTimeout(() => { document.getElementById('click-hint').style.display = 'none'; }, 1000);
+            }
+        });
+
+        // ── Touch support ──
+        document.addEventListener('touchstart', () => {
+            if (!revealed) {
+                revealed = true;
+                document.getElementById('invitation').classList.add('visible');
+                document.getElementById('click-hint').style.opacity = '0';
+                setTimeout(() => { document.getElementById('click-hint').style.display = 'none'; }, 1000);
+            }
+        });
+
+        // ── Resize ──
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // ── Animation Loop ──
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const t = clock.getElapsedTime();
+            const dt = clock.getDelta();
+
+            // Smooth camera from mouse
+            mouseX += (targetMouseX - mouseX) * 0.03;
+            mouseY += (targetMouseY - mouseY) * 0.03;
+            camera.position.x = mouseX * 2;
+            camera.position.y = 2 - mouseY * 1.5;
+            camera.lookAt(0, 0, -3);
+
+            // Animate floating objects
+            floatingObjects.forEach(obj => {
+                obj.mesh.position.y = obj.baseY + Math.sin(t * obj.speed) * obj.amplitude;
+                obj.mesh.rotation.y += obj.rotSpeed * 0.01;
+                obj.mesh.rotation.x += obj.rotSpeed * 0.005;
+            });
+
+            // Orbit rings
+            ringGroup.rotation.y = t * 0.1;
+            ringGroup.rotation.z = Math.sin(t * 0.15) * 0.1;
+
+            // Animate particles
+            const posAttr = particleGeo.getAttribute('position');
+            for (let i = 0; i < particleCount; i++) {
+                const pd = particleData[i];
+                posAttr.array[i * 3 + 1] = pd.baseY + Math.sin(t * pd.speed + pd.phase) * pd.amplitude;
+            }
+            posAttr.needsUpdate = true;
+            particleMat.uniforms.time.value = t;
+
+            // Animate lights
+            mainLight.position.x = Math.sin(t * 0.3) * 8;
+            mainLight.position.z = Math.cos(t * 0.3) * 8;
+            secondaryLight.position.x = Math.cos(t * 0.2) * 8;
+            secondaryLight.position.z = Math.sin(t * 0.2) * 8;
+
+            // Big heart gentle pulse
+            const pulse = 1.2 + Math.sin(t * 1.5) * 0.05;
+            bigHeart.scale.setScalar(pulse);
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Auto-reveal after 4 seconds
+        setTimeout(() => {
+            if (!revealed) {
+                revealed = true;
+                document.getElementById('invitation').classList.add('visible');
+                document.getElementById('click-hint').style.opacity = '0';
+                setTimeout(() => { document.getElementById('click-hint').style.display = 'none'; }, 1000);
+            }
+        }, 4000);
+    </script>
+</body>
+
+</html>

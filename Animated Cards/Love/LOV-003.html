@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will You Be Mine? 💖</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        script: ['"Great Vibes"', 'cursive'],
+                        display: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    },
+                    colors: {
+                        rose1: '#ff2d6f',
+                        rose2: '#ff7eb3',
+                        plum: '#1a0716',
+                        gold: '#ffd8a8'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(120% 90% at 20% 0%, #3b0a2a 0%, rgba(59, 10, 42, 0) 55%),
+                radial-gradient(100% 80% at 90% 20%, #4a0f2d 0%, rgba(74, 15, 45, 0) 60%),
+                radial-gradient(90% 70% at 50% 100%, #2a0722 0%, rgba(42, 7, 34, 0) 60%),
+                #120411;
+            color: #fbe9f2;
+            overflow-x: hidden;
+        }
+
+        #bg {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        #confetti {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .grad-text {
+            background: linear-gradient(100deg, #ffd8a8 0%, #ff9ac1 35%, #ff2d6f 70%, #ffb3d1 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .glass {
+            background: linear-gradient(160deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02));
+            border: 1px solid rgba(255, 255, 255, .12);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .glow-btn {
+            box-shadow: 0 10px 40px -8px rgba(255, 45, 111, .85), inset 0 1px 0 rgba(255, 255, 255, .35);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(34px);
+            transition: opacity .9s cubic-bezier(.16, 1, .3, 1), transform .9s cubic-bezier(.16, 1, .3, 1);
+        }
+
+        .reveal.in {
+            opacity: 1;
+            transform: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translate(-50%, -50%) scale(.4) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -260%) scale(1.25) rotate(var(--r, 20deg));
+                opacity: 0;
+            }
+        }
+
+        .pop-heart {
+            position: fixed;
+            z-index: 55;
+            pointer-events: none;
+            font-size: 26px;
+            animation: floatUp 1.5s ease-out forwards;
+        }
+
+        @keyframes bob {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .bob {
+            animation: bob 3.4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(.85);
+                opacity: .7
+            }
+
+            70% {
+                transform: scale(1.5);
+                opacity: 0
+            }
+
+            100% {
+                opacity: 0
+            }
+        }
+
+        .ring::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 9999px;
+            border: 2px solid rgba(255, 126, 179, .7);
+            animation: pulse-ring 2.4s ease-out infinite;
+        }
+
+        .polaroid {
+            transition: transform .5s cubic-bezier(.16, 1, .3, 1), box-shadow .5s;
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.06) translateY(-8px);
+            box-shadow: 0 30px 60px -20px rgba(255, 45, 111, .6);
+        }
+
+        .card-tilt {
+            transition: transform .45s cubic-bezier(.16, 1, .3, 1), border-color .45s, box-shadow .45s;
+        }
+
+        .card-tilt:hover {
+            transform: translateY(-8px) rotateX(4deg);
+            border-color: rgba(255, 126, 179, .45);
+            box-shadow: 0 26px 50px -24px rgba(255, 45, 111, .7);
+        }
+
+        .caret::after {
+            content: '|';
+            margin-left: 2px;
+            opacity: .8;
+            animation: blink 1s steps(1) infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0
+            }
+        }
+
+        .no-btn {
+            transition: transform .35s cubic-bezier(.34, 1.56, .64, 1), opacity .35s;
+        }
+
+        #modal {
+            transition: opacity .45s ease;
+        }
+
+        #modalCard {
+            transition: transform .6s cubic-bezier(.16, 1, .3, 1), opacity .6s;
+        }
+
+        ::selection {
+            background: #ff2d6f;
+            color: #fff;
+        }
+
+        .scrollbar-hint {
+            writing-mode: vertical-rl;
+            letter-spacing: .35em;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased">
+
+    <canvas id="bg"></canvas>
+    <canvas id="confetti"></canvas>
+
+    <!-- Music toggle -->
+    <button id="musicBtn"
+        class="fixed z-50 bottom-5 right-5 glass rounded-full px-4 py-3 text-sm flex items-center gap-2 hover:scale-105 active:scale-95 transition"
+        aria-label="Toggle music">
+        <span id="musicIcon">🎵</span><span id="musicLabel" class="hidden sm:inline">Play our song</span>
+    </button>
+
+    <div class="content">
+
+        <!-- HERO -->
+        <header class="min-h-[100svh] flex flex-col items-center justify-center text-center px-6 relative">
+            <p class="reveal font-script text-2xl sm:text-3xl text-rose2/90 mb-2">for the one who stole my heart</p>
+            <h1
+                class="reveal font-script text-6xl sm:text-8xl md:text-[7.5rem] leading-[1.05] grad-text drop-shadow-[0_6px_40px_rgba(255,45,111,.35)]">
+                Will You Be Mine?
+            </h1>
+            <p class="reveal mt-6 max-w-xl text-base sm:text-lg text-rose-100/75 font-light">
+                <span id="typer" class="caret"></span>
+            </p>
+
+            <div class="reveal mt-10 flex flex-col sm:flex-row items-center gap-4">
+                <a href="#question"
+                    class="relative glow-btn rounded-full px-8 py-4 font-medium text-white bg-gradient-to-r from-rose1 to-rose2 hover:scale-[1.04] active:scale-95 transition">
+                    Ask me the question 💍
+                </a>
+                <a href="#reasons"
+                    class="glass rounded-full px-8 py-4 text-rose-100/90 hover:bg-white/10 transition">Why I love
+                    you</a>
+            </div>
+
+            <div
+                class="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-rose-200/50 text-[11px] bob">
+                <span class="scrollbar-hint uppercase">scroll</span>
+                <span class="w-px h-10 bg-gradient-to-b from-rose2/70 to-transparent"></span>
+            </div>
+        </header>
+
+        <!-- REASONS -->
+        <section id="reasons" class="px-6 py-24 max-w-6xl mx-auto">
+            <div class="text-center mb-14">
+                <p class="reveal uppercase tracking-[.3em] text-[11px] text-rose2/80 mb-3">chapter one</p>
+                <h2 class="reveal font-display text-4xl sm:text-5xl grad-text">Reasons I Adore You</h2>
+                <p class="reveal mt-4 text-rose-100/60 max-w-lg mx-auto">There are a million. Here are six that make my
+                    heart skip on repeat.</p>
+            </div>
+
+            <div id="reasonGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+        </section>
+
+        <!-- TIMELINE -->
+        <section class="px-6 py-24 max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <p class="reveal uppercase tracking-[.3em] text-[11px] text-rose2/80 mb-3">chapter two</p>
+                <h2 class="reveal font-display text-4xl sm:text-5xl grad-text">Our Little Story</h2>
+            </div>
+
+            <div class="relative">
+                <div
+                    class="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-rose1/60 to-transparent">
+                </div>
+                <div id="timeline" class="space-y-12"></div>
+            </div>
+        </section>
+
+        <!-- MEMORIES -->
+        <section class="px-6 py-24 max-w-6xl mx-auto">
+            <div class="text-center mb-14">
+                <p class="reveal uppercase tracking-[.3em] text-[11px] text-rose2/80 mb-3">chapter three</p>
+                <h2 class="reveal font-display text-4xl sm:text-5xl grad-text">Frames In My Head</h2>
+                <p class="reveal mt-4 text-rose-100/60 max-w-lg mx-auto">Every one of these is a place I'd happily live
+                    forever.</p>
+            </div>
+            <div id="polaroids" class="flex flex-wrap justify-center gap-6"></div>
+        </section>
+
+        <!-- QUESTION -->
+        <section id="question" class="px-6 py-28">
+            <div class="reveal max-w-3xl mx-auto glass rounded-[2rem] p-8 sm:p-14 text-center relative overflow-hidden">
+                <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-rose1/25 blur-3xl"></div>
+                <div class="absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-rose2/20 blur-3xl"></div>
+
+                <div class="relative">
+                    <div
+                        class="mx-auto w-16 h-16 mb-6 relative ring rounded-full grid place-items-center bg-gradient-to-br from-rose1 to-rose2 text-2xl shadow-lg">
+                        💖</div>
+                    <p class="font-script text-3xl sm:text-4xl text-rose2 mb-2">So, my love…</p>
+                    <h2 class="font-display text-3xl sm:text-5xl leading-tight mb-5">Will you be mine — <span
+                            class="grad-text">today, tomorrow, and always?</span></h2>
+                    <p class="text-rose-100/70 max-w-xl mx-auto mb-10">
+                        I promise bad jokes, warm hugs, stolen fries, midnight talks and a hand to hold through every
+                        single season.
+                    </p>
+
+                    <div id="btnZone"
+                        class="relative h-40 sm:h-28 flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <button id="yesBtn"
+                            class="glow-btn rounded-full px-10 py-4 text-lg font-semibold text-white bg-gradient-to-r from-rose1 to-rose2 hover:scale-105 active:scale-95 transition">
+                            Yes, a thousand times 💕
+                        </button>
+                        <button id="noBtn"
+                            class="no-btn glass rounded-full px-8 py-4 text-rose-100/80 hover:bg-white/10">No</button>
+                    </div>
+                    <p id="noHint" class="mt-2 text-xs text-rose-200/40 h-4"></p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="px-6 pb-28 text-center">
+            <p class="font-script text-3xl grad-text">Yours, completely.</p>
+            <p class="mt-3 text-xs text-rose-200/40 tracking-widest uppercase">handcrafted with ♥ &amp; way too many
+                heartbeats</p>
+        </footer>
+    </div>
+
+    <!-- MODAL -->
+    <div id="modal"
+        class="fixed inset-0 z-[70] hidden opacity-0 items-center justify-center p-6 bg-black/70 backdrop-blur-md">
+        <div id="modalCard" class="glass rounded-[2rem] max-w-lg w-full p-10 text-center opacity-0 scale-90">
+            <div class="text-6xl mb-4">🎉💖🎉</div>
+            <h3 class="font-script text-5xl grad-text mb-4">She said YES!</h3>
+            <p class="text-rose-100/80 leading-relaxed">
+                You just made me the happiest person alive. Get ready for endless forehead kisses,
+                ridiculous playlists, and a lifetime of me looking at you like it's the first time.
+            </p>
+            <p class="font-display italic text-rose2 mt-6">I love you more than words, more than code, more than
+                infinity. ∞</p>
+            <button id="closeModal"
+                class="mt-8 rounded-full px-8 py-3 font-medium text-white bg-gradient-to-r from-rose1 to-rose2 glow-btn hover:scale-105 active:scale-95 transition">Forever
+                starts now</button>
+        </div>
+    </div>
+
+    <script>
+        /* ============================ CONTENT ============================ */
+        const REASONS = [
+            { i: '🌙', t: 'Your laugh', d: 'It is my favourite sound in the universe — better than any song ever written.' },
+            { i: '☕', t: 'Your kindness', d: 'The way you care about people (and stray cats) makes the world softer.' },
+            { i: '✨', t: 'Your eyes', d: 'I lose entire afternoons in them and I would not ask for a refund.' },
+            { i: '🎧', t: 'Your chaos', d: 'Dancing in the kitchen at 2 AM with you beats every fancy date on earth.' },
+            { i: '📚', t: 'Your mind', d: 'You explain your passions with fire in your voice and I fall for you again.' },
+            { i: '🏡', t: 'Your presence', d: 'You are not a place, but somehow you feel exactly like coming home.' }
+        ];
+
+        const STORY = [
+            { d: 'The first hello', x: 'A random conversation that I replayed in my head all night.' },
+            { d: 'The first laugh', x: 'You said something silly, I laughed too loud, and that was that.' },
+            { d: 'The first "us"', x: 'Two coffees, one shared umbrella, zero desire to go home.' },
+            { d: 'Every day since', x: 'Same butterflies. Louder. Every single morning.' }
+        ];
+
+        const POLAROIDS = [
+            { e: '🌅', c: 'that sunrise', g: 'from-[#ff9a8b] to-[#ff6a88]', r: '-6deg' },
+            { e: '🍜', c: 'our tiny table', g: 'from-[#a18cd1] to-[#fbc2eb]', r: '4deg' },
+            { e: '🎡', c: 'the ferris wheel', g: 'from-[#f6d365] to-[#fda085]', r: '-3deg' },
+            { e: '🌧️', c: 'one umbrella', g: 'from-[#84fab0] to-[#8fd3f4]', r: '7deg' },
+            { e: '🎂', c: 'your birthday', g: 'from-[#ff5f6d] to-[#ffc371]', r: '-5deg' }
+        ];
+
+        /* Build reason cards */
+        document.getElementById('reasonGrid').innerHTML = REASONS.map((r, i) => `
+  <article class="reveal card-tilt glass rounded-3xl p-7" style="transition-delay:${i * 70}ms">
+    <div class="text-3xl mb-4">${r.i}</div>
+    <h3 class="font-display text-xl mb-2">${r.t}</h3>
+    <p class="text-sm text-rose-100/65 leading-relaxed">${r.d}</p>
+  </article>`).join('');
+
+        /* Build timeline */
+        document.getElementById('timeline').innerHTML = STORY.map((s, i) => `
+  <div class="reveal relative pl-12 md:pl-0 md:grid md:grid-cols-2 md:gap-10 items-center" style="transition-delay:${i * 90}ms">
+    <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-gradient-to-br from-rose1 to-rose2 shadow-[0_0_20px_4px_rgba(255,45,111,.55)]"></div>
+    <div class="${i % 2 === 0 ? 'md:text-right md:pr-10' : 'md:col-start-2 md:pl-10'}">
+      <div class="glass rounded-2xl p-6 inline-block">
+        <h4 class="font-display text-lg text-gold">${s.d}</h4>
+        <p class="text-sm text-rose-100/65 mt-1">${s.x}</p>
+      </div>
+    </div>
+  </div>`).join('');
+
+        /* Build polaroids */
+        document.getElementById('polaroids').innerHTML = POLAROIDS.map((p, i) => `
+  <figure class="reveal polaroid bg-white/90 p-3 pb-5 rounded-lg shadow-2xl w-40 sm:w-48" style="transform:rotate(${p.r});transition-delay:${i * 70}ms">
+    <div class="aspect-square rounded bg-gradient-to-br ${p.g} grid place-items-center text-5xl">${p.e}</div>
+    <figcaption class="mt-3 text-center font-script text-2xl text-plum">${p.c}</figcaption>
+  </figure>`).join('');
+
+        /* ============================ REVEAL ============================ */
+        const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        /* ============================ TYPEWRITER ============================ */
+        const lines = [
+            "I built you a little universe…",
+            "every star in it is a thought about you.",
+            "Scroll slowly. Stay a while. 💫"
+        ];
+        const typer = document.getElementById('typer');
+        let li = 0, ci = 0, del = false;
+        (function type() {
+            const cur = lines[li];
+            typer.textContent = del ? cur.slice(0, ci--) : cur.slice(0, ci++);
+            let wait = del ? 28 : 55;
+            if (!del && ci > cur.length) { del = true; wait = 1700; }
+            if (del && ci < 0) { del = false; li = (li + 1) % lines.length; wait = 260; }
+            setTimeout(type, wait);
+        })();
+
+        /* ============================ THREE.JS SCENE ============================ */
+        let scene, camera, renderer, heartGroup, heartMesh, orbiters = [], points, pData;
+        const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+        const clock = new THREE.Clock();
+
+        function heartSprite() {
+            const c = document.createElement('canvas'); c.width = c.height = 64;
+            const g = c.getContext('2d');
+            g.translate(32, 20); g.scale(2.1, 2.1);
+            g.beginPath();
+            g.moveTo(0, 0);
+            g.bezierCurveTo(0, -3, -6, -3, -6, 2); g.bezierCurveTo(-6, 7, 0, 10, 0, 13);
+            g.bezierCurveTo(0, 10, 6, 7, 6, 2); g.bezierCurveTo(6, -3, 0, -3, 0, 0);
+            const grd = g.createLinearGradient(0, -4, 0, 13);
+            grd.addColorStop(0, '#ffffff'); grd.addColorStop(.4, '#ffb3d1'); grd.addColorStop(1, '#ff2d6f');
+            g.fillStyle = grd; g.fill();
+            const t = new THREE.Texture(c); t.needsUpdate = true; return t;
+        }
+
+        function makeHeartGeometry(depth) {
+            const s = new THREE.Shape();
+            const x = 0, y = 0;
+            s.moveTo(x + 5, y + 5);
+            s.bezierCurveTo(x + 5, y + 5, x + 4, y, x, y);
+            s.bezierCurveTo(x - 6, y, x - 6, y + 7, x - 6, y + 7);
+            s.bezierCurveTo(x - 6, y + 11, x - 3, y + 15.4, x + 5, y + 19);
+            s.bezierCurveTo(x + 12, y + 15.4, x + 16, y + 11, x + 16, y + 7);
+            s.bezierCurveTo(x + 16, y + 7, x + 16, y, x + 10, y);
+            s.bezierCurveTo(x + 7, y, x + 5, y + 5, x + 5, y + 5);
+            const geo = new THREE.ExtrudeGeometry(s, { depth: depth, bevelEnabled: true, bevelSegments: 8, bevelSize: 1.1, bevelThickness: 1.1, curveSegments: 24 });
+            geo.center();
+            return geo;
+        }
+
+        function initThree() {
+            const canvas = document.getElementById('bg');
+            renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setSize(innerWidth, innerHeight);
+
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, .1, 100);
+            camera.position.set(0, 0, 9);
+
+            scene.add(new THREE.AmbientLight(0xff9ec4, .55));
+            const d = new THREE.DirectionalLight(0xffffff, .9); d.position.set(4, 6, 8); scene.add(d);
+            const p1 = new THREE.PointLight(0xff2d6f, 2.2, 40); p1.position.set(-6, 2, 4); scene.add(p1);
+            const p2 = new THREE.PointLight(0x7aa2ff, 1.6, 40); p2.position.set(6, -3, 3); scene.add(p2);
+            const p3 = new THREE.PointLight(0xffd8a8, 1.2, 30); p3.position.set(0, 5, -4); scene.add(p3);
+
+            heartGroup = new THREE.Group();
+            heartGroup.position.set(0, .2, 0);
+            scene.add(heartGroup);
+
+            const mat = new THREE.MeshPhysicalMaterial({
+                color: 0xff2255, metalness: .35, roughness: .18, clearcoat: 1, clearcoatRoughness: .15,
+                emissive: 0x4a0018, emissiveIntensity: .9, reflectivity: .9
+            });
+            heartMesh = new THREE.Mesh(makeHeartGeometry(6), mat);
+            heartMesh.rotation.z = Math.PI;
+            heartMesh.scale.setScalar(.115);
+            heartGroup.add(heartMesh);
+
+            // glow halo
+            const halo = new THREE.Sprite(new THREE.SpriteMaterial({
+                map: heartSprite(), color: 0xff2d6f, transparent: true, opacity: .28, blending: THREE.AdditiveBlending, depthWrite: false
+            }));
+            halo.scale.setScalar(7.5); halo.position.z = -1.5;
+            heartGroup.add(halo);
+
+            // orbiting mini hearts
+            const miniGeo = makeHeartGeometry(4);
+            const miniMat = new THREE.MeshPhysicalMaterial({ color: 0xffb3d1, metalness: .2, roughness: .25, emissive: 0xff2d6f, emissiveIntensity: .35, clearcoat: 1 });
+            for (let i = 0; i < 7; i++) {
+                const m = new THREE.Mesh(miniGeo, miniMat);
+                m.scale.setScalar(.022 + Math.random() * .016);
+                m.rotation.z = Math.PI;
+                const a = (i / 7) * Math.PI * 2;
+                orbiters.push({ m, a, r: 3.1 + Math.random() * 1.5, s: .25 + Math.random() * .4, yo: (Math.random() - .5) * 2.4, sp: .4 + Math.random() * .6 });
+                heartGroup.add(m);
+            }
+
+            // particle heart field
+            const COUNT = window.innerWidth < 640 ? 550 : 1100;
+            const pos = new Float32Array(COUNT * 3);
+            pData = [];
+            for (let i = 0; i < COUNT; i++) {
+                const r = 6 + Math.random() * 11;
+                const th = Math.random() * Math.PI * 2;
+                const ph = Math.acos(2 * Math.random() - 1);
+                const x = r * Math.sin(ph) * Math.cos(th), y = (Math.random() - .5) * 20, z = r * Math.sin(ph) * Math.sin(th) * .6 - 4;
+                pos[i * 3] = x; pos[i * 3 + 1] = y; pos[i * 3 + 2] = z;
+                pData.push({ v: .25 + Math.random() * .7, w: Math.random() * Math.PI * 2, a: .4 + Math.random() * .8 });
+            }
+            const geo = new THREE.BufferGeometry();
+            geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+            points = new THREE.Points(geo, new THREE.PointsMaterial({
+                size: .42, map: heartSprite(), transparent: true, opacity: .85, depthWrite: false,
+                blending: THREE.AdditiveBlending, sizeAttenuation: true
+            }));
+            scene.add(points);
+
+            addEventListener('resize', onResize);
+            addEventListener('pointermove', e => {
+                mouse.tx = (e.clientX / innerWidth) * 2 - 1;
+                mouse.ty = (e.clientY / innerHeight) * 2 - 1;
+            }, { passive: true });
+            animate();
+        }
+        function onResize() {
+            camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+            renderer.setSize(innerWidth, innerHeight);
+        }
+        function beat(t) {
+            const p = (t % 1.15) / 1.15;
+            const a = Math.exp(-13 * p);
+            const b = Math.exp(-13 * Math.max(0, p - .2)) * .6;
+            return a + b;
+        }
+        let scrollP = 0;
+        addEventListener('scroll', () => {
+            const max = document.body.scrollHeight - innerHeight;
+            scrollP = max > 0 ? window.scrollY / max : 0;
+        }, { passive: true });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const t = clock.getElapsedTime();
+            mouse.x += (mouse.tx - mouse.x) * .05;
+            mouse.y += (mouse.ty - mouse.y) * .05;
+
+            const bs = 1 + beat(t) * .07;
+            heartMesh.scale.setScalar(.115 * bs);
+            heartGroup.rotation.y = t * .25 + mouse.x * .6;
+            heartGroup.rotation.x = -mouse.y * .35 + Math.sin(t * .4) * .06;
+            heartGroup.position.y = .2 + Math.sin(t * .7) * .18 + scrollP * 2.2;
+            heartGroup.position.z = -scrollP * 4.5;
+
+            orbiters.forEach(o => {
+                o.a += o.sp * .004;
+                o.m.position.set(Math.cos(o.a) * o.r, o.yo + Math.sin(o.a * 1.6 + o.r) * .7, Math.sin(o.a) * o.r * .7);
+                o.m.rotation.y += .01; o.m.rotation.z = Math.PI + Math.sin(t * o.sp) * .3;
+            });
+
+            const arr = points.geometry.attributes.position.array;
+            for (let i = 0; i < pData.length; i++) {
+                const d = pData[i];
+                arr[i * 3 + 1] += d.v * .012;
+                arr[i * 3] += Math.sin(t * d.a + d.w) * .004;
+                if (arr[i * 3 + 1] > 11) { arr[i * 3 + 1] = -11; }
+            }
+            points.geometry.attributes.position.needsUpdate = true;
+            points.rotation.y = t * .02 + mouse.x * .12;
+            points.material.opacity = .85 - scrollP * .3;
+
+            camera.position.x = mouse.x * .5;
+            camera.position.y = -mouse.y * .35;
+            camera.lookAt(0, .2, 0);
+
+            renderer.render(scene, camera);
+        }
+        initThree();
+
+        /* ============================ CLICK HEARTS ============================ */
+        const EMO = ['💖', '💕', '💗', '❤️', '🌸', '✨', '💞'];
+        addEventListener('click', e => {
+            for (let i = 0; i < 3; i++) {
+                const s = document.createElement('span');
+                s.className = 'pop-heart';
+                s.textContent = EMO[Math.floor(Math.random() * EMO.length)];
+                s.style.left = (e.clientX + (Math.random() - .5) * 40) + 'px';
+                s.style.top = (e.clientY + (Math.random() - .5) * 20) + 'px';
+                s.style.setProperty('--r', (Math.random() * 80 - 40) + 'deg');
+                s.style.animationDelay = (i * 70) + 'ms';
+                document.body.appendChild(s);
+                setTimeout(() => s.remove(), 1700);
+            }
+        });
+
+        /* ============================ NO BUTTON DODGE ============================ */
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const zone = document.getElementById('btnZone');
+        const hint = document.getElementById('noHint');
+        const TEXTS = ['No', 'Are you sure?', 'Really sure?', 'Think again 🥺', 'Last chance…', 'Pretty please?', 'You can\'t click me!'];
+        let tries = 0;
+        function dodge() {
+            tries++;
+            noBtn.textContent = TEXTS[Math.min(tries, TEXTS.length - 1)];
+            hint.textContent = tries > 1 ? 'the "No" button seems shy…' : '';
+            const w = zone.clientWidth, h = zone.clientHeight;
+            const x = (Math.random() - .5) * Math.min(w * 0.7, 280);
+            const y = (Math.random() - .5) * Math.min(h * 0.7, 90);
+            const sc = Math.max(.35, 1 - tries * 0.09);
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = '50%'; noBtn.style.top = '50%';
+            noBtn.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${sc}) rotate(${(Math.random() - .5) * 24}deg)`;
+            yesBtn.style.transform = `scale(${Math.min(1.35, 1 + tries * 0.05)})`;
+            if (tries >= 7) {
+                noBtn.style.opacity = 0;
+                hint.textContent = 'the "No" button ran away. it knows. 😌';
+                setTimeout(() => noBtn.remove(), 400);
+            }
+        }
+        noBtn.addEventListener('mouseenter', dodge);
+        noBtn.addEventListener('click', e => { e.preventDefault(); dodge(); });
+        noBtn.addEventListener('touchstart', e => { e.preventDefault(); dodge(); }, { passive: false });
+
+        /* ============================ CONFETTI ============================ */
+        const cc = document.getElementById('confetti'), cx = cc.getContext('2d');
+        let parts = [], raf = null;
+        function sizeCC() { cc.width = innerWidth * Math.min(devicePixelRatio, 2); cc.height = innerHeight * Math.min(devicePixelRatio, 2); cx.setTransform(1, 0, 0, 1, 0, 0); cx.scale(cc.width / innerWidth, cc.height / innerHeight); }
+        sizeCC(); addEventListener('resize', sizeCC);
+
+        function burst(n = 160) {
+            for (let i = 0; i < n; i++) {
+                parts.push({
+                    x: innerWidth / 2 + (Math.random() - .5) * 160,
+                    y: innerHeight / 2 + (Math.random() - .5) * 80,
+                    vx: (Math.random() - .5) * 13, vy: -Math.random() * 14 - 3,
+                    r: 7 + Math.random() * 13, rot: Math.random() * 6.28, vr: (Math.random() - .5) * .25,
+                    c: ['#ff2d6f', '#ff7eb3', '#ffd8a8', '#ffffff', '#ff9ac1', '#c084fc'][Math.floor(Math.random() * 6)],
+                    life: 1
+                });
+            }
+            if (!raf) loop();
+        }
+        function drawHeart(g, x, y, s, rot, col) {
+            g.save(); g.translate(x, y); g.rotate(rot); g.scale(s / 16, s / 16);
+            g.beginPath(); g.moveTo(0, -4);
+            g.bezierCurveTo(0, -8, -9, -8, -9, -1); g.bezierCurveTo(-9, 6, 0, 10, 0, 15);
+            g.bezierCurveTo(0, 10, 9, 6, 9, -1); g.bezierCurveTo(9, -8, 0, -8, 0, -4);
+            g.fillStyle = col; g.fill(); g.restore();
+        }
+        function loop() {
+            cx.clearRect(0, 0, innerWidth, innerHeight);
+            parts.forEach(p => {
+                p.vy += .32; p.vx *= .995; p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+                if (p.y > innerHeight + 60) p.life = 0;
+            });
+            parts = parts.filter(p => p.life > 0);
+            parts.forEach(p => drawHeart(cx, p.x, p.y, p.r, p.rot, p.c));
+            if (parts.length) { raf = requestAnimationFrame(loop); } else { raf = null; cx.clearRect(0, 0, innerWidth, innerHeight); }
+        }
+
+        /* ============================ YES / MODAL ============================ */
+        const modal = document.getElementById('modal'), modalCard = document.getElementById('modalCard');
+        yesBtn.addEventListener('click', () => {
+            burst(220);
+            setTimeout(() => burst(140), 450);
+            setTimeout(() => burst(140), 950);
+            modal.classList.remove('hidden'); modal.classList.add('flex');
+            requestAnimationFrame(() => {
+                modal.style.opacity = 1;
+                modalCard.style.opacity = 1;
+                modalCard.style.transform = 'scale(1)';
+            });
+            startMusic(true);
+        });
+        document.getElementById('closeModal').addEventListener('click', () => {
+            modal.style.opacity = 0; modalCard.style.opacity = 0; modalCard.style.transform = 'scale(.9)';
+            setTimeout(() => { modal.classList.add('hidden'); modal.classList.remove('flex'); }, 420);
+            burst(90);
+        });
+
+        /* ============================ SOFT MUSIC (WebAudio) ============================ */
+        let actx = null, playing = false, timer = null, step = 0, master = null;
+        const MEL = [0, 4, 7, 11, 12, 11, 7, 4, 2, 5, 9, 12, 14, 12, 9, 5];
+        function freq(semi) { return 261.63 * Math.pow(2, semi / 12); }
+        function note(f, t, dur, gain, type) {
+            const o = actx.createOscillator(), g = actx.createGain();
+            o.type = type || 'triangle'; o.frequency.value = f;
+            g.gain.setValueAtTime(0, t);
+            g.gain.linearRampToValueAtTime(gain, t + .03);
+            g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+            o.connect(g); g.connect(master); o.start(t); o.stop(t + dur + .05);
+        }
+        function startMusic(force) {
+            if (playing) return;
+            if (!actx) {
+                actx = new (window.AudioContext || window.webkitAudioContext)();
+                master = actx.createGain(); master.gain.value = .16;
+                const del = actx.createDelay(); del.delayTime.value = .32;
+                const fb = actx.createGain(); fb.gain.value = .28;
+                master.connect(actx.destination); master.connect(del); del.connect(fb); fb.connect(del); del.connect(actx.destination);
+            }
+            actx.resume();
+            playing = true;
+            document.getElementById('musicIcon').textContent = '⏸';
+            document.getElementById('musicLabel').textContent = 'Pause our song';
+            const tick = () => {
+                const t = actx.currentTime + .02;
+                const s = MEL[step % MEL.length];
+                note(freq(s + 12), t, 1.1, .35, 'triangle');
+                if (step % 4 === 0) note(freq(s - 12), t, 1.8, .25, 'sine');
+                if (step % 8 === 0) note(freq(s - 5), t, 2.2, .14, 'sine');
+                step++;
+            };
+            tick();
+            timer = setInterval(tick, 330);
+        }
+        function stopMusic() {
+            playing = false; clearInterval(timer);
+            document.getElementById('musicIcon').textContent = '🎵';
+            document.getElementById('musicLabel').textContent = 'Play our song';
+        }
+        document.getElementById('musicBtn').addEventListener('click', () => playing ? stopMusic() : startMusic());
+    </script>
+</body>
+
+</html>

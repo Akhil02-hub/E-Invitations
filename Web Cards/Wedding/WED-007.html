@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aria & Ethan — Wedding Invitation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=Cormorant+Garamond:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: #0b0810;
+            color: #f3e9dc;
+            font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
+        }
+
+        .script {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(circle at 50% 0%, rgba(212, 175, 120, 0.06), transparent 60%);
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .gold-text {
+            background: linear-gradient(120deg, #f6e3b4, #d4af78 40%, #f9e9c4 60%, #b8935a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gold-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4af78, transparent);
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(212, 175, 120, 0.25);
+            backdrop-filter: blur(6px);
+        }
+
+        .tilt-card {
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            transform-style: preserve-3d;
+        }
+
+        .tilt-card:hover {
+            box-shadow: 0 25px 60px -15px rgba(212, 175, 120, 0.35);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #f6e3b4, #d4af78);
+            color: #241b0f;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px -5px rgba(212, 175, 120, 0.5);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px -5px rgba(212, 175, 120, 0.7);
+        }
+
+        .countdown-box {
+            background: rgba(212, 175, 120, 0.06);
+            border: 1px solid rgba(212, 175, 120, 0.3);
+        }
+
+        ::selection {
+            background: #d4af78;
+            color: #241b0f;
+        }
+
+        input,
+        textarea,
+        select {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(212, 175, 120, 0.35);
+            color: #f3e9dc;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #d4af78;
+            box-shadow: 0 0 0 3px rgba(212, 175, 120, 0.15);
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: rgba(243, 233, 220, 0.4);
+        }
+
+        .divider-diamond {
+            width: 10px;
+            height: 10px;
+            background: #d4af78;
+            transform: rotate(45deg);
+            display: inline-block;
+        }
+
+        @keyframes floaty {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-14px);
+            }
+        }
+
+        .floaty {
+            animation: floaty 5s ease-in-out infinite;
+        }
+
+        .scroll-indicator {
+            animation: bounce2 2s infinite;
+        }
+
+        @keyframes bounce2 {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: .5;
+            }
+
+            50% {
+                transform: translateY(10px);
+                opacity: 1;
+            }
+        }
+
+        .gallery-img {
+            filter: grayscale(20%) brightness(0.85);
+            transition: all 0.5s ease;
+        }
+
+        .gallery-img:hover {
+            filter: grayscale(0%) brightness(1);
+            transform: scale(1.05);
+        }
+
+        nav a {
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0%;
+            height: 1px;
+            background: #d4af78;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="canvas-bg"></canvas>
+    <div class="noise-overlay"></div>
+
+    <!-- NAV -->
+    <nav class="content fixed top-0 w-full z-50 flex justify-center py-5 px-6 backdrop-blur-sm bg-black/10">
+        <div class="flex gap-6 md:gap-10 text-xs md:text-sm tracking-[0.2em] uppercase text-[#f3e9dc]/80">
+            <a href="#home">Home</a>
+            <a href="#story">Story</a>
+            <a href="#details">Details</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#rsvp">RSVP</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="home" class="content min-h-screen flex flex-col items-center justify-center text-center px-6 relative">
+        <p class="fade-up tracking-[0.4em] uppercase text-xs md:text-sm text-[#d4af78] mb-6">Together With Their
+            Families</p>
+        <h1 class="fade-up script text-6xl md:text-8xl lg:text-9xl gold-text leading-tight">Aria <span
+                class="text-[#f3e9dc]">&amp;</span> Ethan</h1>
+        <div class="fade-up flex items-center gap-4 my-8">
+            <div class="gold-line w-16 md:w-28"></div>
+            <span class="divider-diamond"></span>
+            <div class="gold-line w-16 md:w-28"></div>
+        </div>
+        <p class="fade-up display text-lg md:text-2xl tracking-wide text-[#f3e9dc]/90">are getting married</p>
+        <p class="fade-up display text-base md:text-lg text-[#d4af78] mt-3 tracking-widest">SATURDAY · NOVEMBER 8, 2025
+            · SANTORINI, GREECE</p>
+
+        <div class="fade-up mt-10">
+            <a href="#rsvp"
+                class="btn-gold px-8 py-3 rounded-full uppercase text-xs md:text-sm tracking-[0.2em] inline-block">Join
+                Our Celebration</a>
+        </div>
+
+        <div class="absolute bottom-8 scroll-indicator text-[#d4af78] text-xs tracking-widest">▼ SCROLL</div>
+    </section>
+
+    <!-- COUNTDOWN -->
+    <section class="content py-16 px-6 flex justify-center">
+        <div class="fade-up flex gap-4 md:gap-8 flex-wrap justify-center" id="countdown">
+            <div class="countdown-box rounded-2xl px-6 py-6 w-24 md:w-32 text-center">
+                <div class="display text-3xl md:text-5xl gold-text font-bold" id="days">00</div>
+                <div class="text-[10px] md:text-xs tracking-[0.2em] uppercase mt-2 text-[#f3e9dc]/60">Days</div>
+            </div>
+            <div class="countdown-box rounded-2xl px-6 py-6 w-24 md:w-32 text-center">
+                <div class="display text-3xl md:text-5xl gold-text font-bold" id="hours">00</div>
+                <div class="text-[10px] md:text-xs tracking-[0.2em] uppercase mt-2 text-[#f3e9dc]/60">Hours</div>
+            </div>
+            <div class="countdown-box rounded-2xl px-6 py-6 w-24 md:w-32 text-center">
+                <div class="display text-3xl md:text-5xl gold-text font-bold" id="minutes">00</div>
+                <div class="text-[10px] md:text-xs tracking-[0.2em] uppercase mt-2 text-[#f3e9dc]/60">Minutes</div>
+            </div>
+            <div class="countdown-box rounded-2xl px-6 py-6 w-24 md:w-32 text-center">
+                <div class="display text-3xl md:text-5xl gold-text font-bold" id="seconds">00</div>
+                <div class="text-[10px] md:text-xs tracking-[0.2em] uppercase mt-2 text-[#f3e9dc]/60">Seconds</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STORY -->
+    <section id="story" class="content py-24 px-6 max-w-5xl mx-auto">
+        <div class="fade-up text-center mb-16">
+            <p class="tracking-[0.3em] uppercase text-xs text-[#d4af78] mb-3">Our Journey</p>
+            <h2 class="script text-5xl md:text-6xl gold-text">The Story So Far</h2>
+        </div>
+
+        <div class="relative">
+            <div
+                class="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#d4af78]/50 to-transparent hidden md:block">
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10 mb-16 items-center">
+                <div class="fade-up glass-card tilt-card rounded-2xl p-8 md:text-right order-2 md:order-1">
+                    <p class="text-[#d4af78] text-sm tracking-widest mb-2">JUNE 2019</p>
+                    <h3 class="display text-2xl mb-3">First Meeting</h3>
+                    <p class="text-[#f3e9dc]/70 leading-relaxed">A chance encounter at a little café in Paris turned
+                        into hours of conversation neither of us wanted to end.</p>
+                </div>
+                <div class="order-1 md:order-2"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10 mb-16 items-center">
+                <div></div>
+                <div class="fade-up glass-card tilt-card rounded-2xl p-8">
+                    <p class="text-[#d4af78] text-sm tracking-widest mb-2">MARCH 2022</p>
+                    <h3 class="display text-2xl mb-3">Moving In Together</h3>
+                    <p class="text-[#f3e9dc]/70 leading-relaxed">We found our first home together — a tiny apartment
+                        filled with big dreams and even bigger laughter.</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div class="fade-up glass-card tilt-card rounded-2xl p-8 md:text-right order-2 md:order-1">
+                    <p class="text-[#d4af78] text-sm tracking-widest mb-2">DECEMBER 2024</p>
+                    <h3 class="display text-2xl mb-3">The Proposal</h3>
+                    <p class="text-[#f3e9dc]/70 leading-relaxed">Under a sky full of stars in Santorini, Ethan got down
+                        on one knee — and of course, Aria said yes.</p>
+                </div>
+                <div class="order-1 md:order-2"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DETAILS -->
+    <section id="details" class="content py-24 px-6 max-w-6xl mx-auto">
+        <div class="fade-up text-center mb-16">
+            <p class="tracking-[0.3em] uppercase text-xs text-[#d4af78] mb-3">Save The Date</p>
+            <h2 class="script text-5xl md:text-6xl gold-text">Wedding Details</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="fade-up glass-card tilt-card rounded-2xl p-10 text-center">
+                <div class="text-4xl mb-4">💍</div>
+                <h3 class="display text-2xl mb-3 text-[#d4af78]">Ceremony</h3>
+                <p class="text-[#f3e9dc]/70 leading-relaxed">4:00 PM<br />St. Nicholas Chapel<br />Oia, Santorini</p>
+            </div>
+            <div class="fade-up glass-card tilt-card rounded-2xl p-10 text-center">
+                <div class="text-4xl mb-4">🥂</div>
+                <h3 class="display text-2xl mb-3 text-[#d4af78]">Reception</h3>
+                <p class="text-[#f3e9dc]/70 leading-relaxed">6:30 PM<br />Cliffside Terrace<br />Villa Amara</p>
+            </div>
+            <div class="fade-up glass-card tilt-card rounded-2xl p-10 text-center">
+                <div class="text-4xl mb-4">👗</div>
+                <h3 class="display text-2xl mb-3 text-[#d4af78]">Dress Code</h3>
+                <p class="text-[#f3e9dc]/70 leading-relaxed">Formal Attire<br />Champagne &amp; Gold
+                    Tones<br />Preferred</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="content py-24 px-6 max-w-6xl mx-auto">
+        <div class="fade-up text-center mb-16">
+            <p class="tracking-[0.3em] uppercase text-xs text-[#d4af78] mb-3">Moments</p>
+            <h2 class="script text-5xl md:text-6xl gold-text">Our Gallery</h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 fade-up">
+            <img class="gallery-img rounded-xl w-full h-48 md:h-64 object-cover"
+                src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80" alt="">
+            <img class="gallery-img rounded-xl w-full h-48 md:h-64 object-cover mt-6"
+                src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&q=80" alt="">
+            <img class="gallery-img rounded-xl w-full h-48 md:h-64 object-cover"
+                src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&q=80" alt="">
+            <img class="gallery-img rounded-xl w-full h-48 md:h-64 object-cover mt-6"
+                src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=80" alt="">
+        </div>
+    </section>
+
+    <!-- RSVP -->
+    <section id="rsvp" class="content py-24 px-6 max-w-2xl mx-auto">
+        <div class="fade-up text-center mb-12">
+            <p class="tracking-[0.3em] uppercase text-xs text-[#d4af78] mb-3">We'd Love To See You</p>
+            <h2 class="script text-5xl md:text-6xl gold-text">Kindly RSVP</h2>
+            <p class="text-[#f3e9dc]/60 mt-4">Please respond by October 1st, 2025</p>
+        </div>
+
+        <form id="rsvp-form" class="fade-up glass-card rounded-2xl p-8 md:p-10 space-y-6">
+            <div>
+                <label class="block text-xs uppercase tracking-widest text-[#d4af78] mb-2">Full Name</label>
+                <input required type="text" placeholder="Your name" class="w-full rounded-lg px-4 py-3">
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-[#d4af78] mb-2">Email</label>
+                    <input required type="email" placeholder="you@example.com" class="w-full rounded-lg px-4 py-3">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-[#d4af78] mb-2">Guests</label>
+                    <select class="w-full rounded-lg px-4 py-3">
+                        <option>1 Guest</option>
+                        <option>2 Guests</option>
+                        <option>3 Guests</option>
+                        <option>4 Guests</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs uppercase tracking-widest text-[#d4af78] mb-2">Attendance</label>
+                <div class="flex gap-4">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="attend" checked class="accent-[#d4af78]"> Joyfully Accepts
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="attend" class="accent-[#d4af78]"> Regretfully Declines
+                    </label>
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs uppercase tracking-widest text-[#d4af78] mb-2">Message</label>
+                <textarea rows="4" placeholder="Leave a note for the couple..."
+                    class="w-full rounded-lg px-4 py-3"></textarea>
+            </div>
+            <button type="submit" class="btn-gold w-full py-4 rounded-full uppercase text-sm tracking-[0.2em]">Send
+                RSVP</button>
+            <p id="rsvp-success" class="text-center text-[#d4af78] hidden pt-2">Thank you! Your response has been
+                received. 💛</p>
+        </form>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="content py-16 px-6 text-center border-t border-[#d4af78]/20">
+        <p class="script text-4xl gold-text mb-4">Aria &amp; Ethan</p>
+        <p class="text-[#f3e9dc]/50 text-sm tracking-widest mb-2">NOVEMBER 8, 2025 · SANTORINI, GREECE</p>
+        <div class="flex justify-center gap-3 my-6 text-[#d4af78]">
+            <span class="divider-diamond"></span>
+            <span class="divider-diamond"></span>
+            <span class="divider-diamond"></span>
+        </div>
+        <p class="text-[#f3e9dc]/40 text-xs">With love, we can't wait to celebrate with you.</p>
+    </footer>
+
+    <script>
+        // ================= THREE.JS BACKGROUND =================
+        const canvas = document.getElementById('canvas-bg');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 30;
+
+        // Particle field (golden dust)
+        const particleCount = 800;
+        const positions = new Float32Array(particleCount * 3);
+        const scales = new Float32Array(particleCount);
+        for (let i = 0; i < particleCount; i++) {
+            positions[i * 3] = (Math.random() - 0.5) * 100;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 100;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 100;
+            scales[i] = Math.random();
+        }
+        const particleGeo = new THREE.BufferGeometry();
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        const particleMat = new THREE.PointsMaterial({
+            color: 0xd4af78,
+            size: 0.35,
+            transparent: true,
+            opacity: 0.7,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false
+        });
+        const particles = new THREE.Points(particleGeo, particleMat);
+        scene.add(particles);
+
+        // Torus rings (representing wedding rings) floating
+        function createRing(radius, tube, color, x, y, z) {
+            const geo = new THREE.TorusGeometry(radius, tube, 32, 100);
+            const mat = new THREE.MeshBasicMaterial({ color, wireframe: false, transparent: true, opacity: 0.35 });
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.position.set(x, y, z);
+            scene.add(mesh);
+            return mesh;
+        }
+
+        const ring1 = createRing(6, 0.15, 0xf6e3b4, -14, 6, -10);
+        const ring2 = createRing(4.5, 0.12, 0xd4af78, 14, -6, -15);
+        const ring3 = createRing(3, 0.1, 0xf9e9c4, 0, 10, -20);
+
+        // Ambient light for potential future meshes
+        scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            particles.rotation.y += 0.0006;
+            particles.rotation.x += 0.0002;
+
+            ring1.rotation.x += 0.003;
+            ring1.rotation.y += 0.004;
+            ring2.rotation.x -= 0.002;
+            ring2.rotation.y += 0.003;
+            ring3.rotation.z += 0.002;
+
+            camera.position.x += (mouseX * 4 - camera.position.x) * 0.02;
+            camera.position.y += (-mouseY * 4 - camera.position.y) * 0.02;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // ================= FADE UP ON SCROLL =================
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.fade-up').forEach((el, i) => {
+            el.style.transitionDelay = (i % 5) * 0.08 + 's';
+            observer.observe(el);
+        });
+
+        // ================= COUNTDOWN =================
+        const weddingDate = new Date('November 8, 2025 16:00:00').getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<p class="script text-4xl gold-text">The Big Day Has Arrived! 🎉</p>';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // ================= RSVP FORM =================
+        document.getElementById('rsvp-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            document.getElementById('rsvp-success').classList.remove('hidden');
+            this.querySelector('button[type="submit"]').style.opacity = '0.6';
+            this.querySelector('button[type="submit"]').textContent = 'Sent ✓';
+        });
+
+        // ================= TILT EFFECT ON CARDS =================
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -6;
+                const rotateY = ((x - centerX) / centerX) * 6;
+                card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+            });
+        });
+    </script>
+
+</body>
+
+</html>

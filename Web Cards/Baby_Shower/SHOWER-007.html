@@ -1,0 +1,2333 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oh Baby — Amelia's Baby Shower Invitation</title>
+    <meta name="description"
+        content="You're invited to a garden baby shower celebrating the arrival of baby Rose. June 14, 2026 — Willowbrook Gardens.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FBF6EF',
+                        sand: '#F3E9DC',
+                        ink: '#241E1A',
+                        moss: '#2F4436',
+                        sage: '#7D9B7C',
+                        clay: '#C4694E',
+                        blush: '#E7B7A2',
+                        gold: '#C99A4E'
+                    },
+                    fontFamily: {
+                        display: ['Fraunces', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #FBF6EF;
+            color: #241E1A;
+            font-family: 'Inter', system-ui, sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ---------- Scroll progress ---------- */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, #C4694E, #C99A4E, #7D9B7C);
+            z-index: 100;
+            transition: width .12s linear;
+        }
+
+        /* ---------- Reveal system ---------- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity .9s cubic-bezier(.19, 1, .22, 1), transform .9s cubic-bezier(.19, 1, .22, 1);
+            will-change: transform, opacity;
+        }
+
+        .reveal.in {
+            opacity: 1;
+            transform: none;
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-38px);
+            transition: opacity 1s cubic-bezier(.19, 1, .22, 1), transform 1s cubic-bezier(.19, 1, .22, 1);
+        }
+
+        .reveal-left.in {
+            opacity: 1;
+            transform: none;
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(.94);
+            transition: opacity 1s cubic-bezier(.19, 1, .22, 1), transform 1.1s cubic-bezier(.19, 1, .22, 1);
+        }
+
+        .reveal-scale.in {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* ---------- Kinetic hero type ---------- */
+        .kin-line {
+            overflow: hidden;
+            display: block;
+            padding-bottom: .06em;
+        }
+
+        .kin-word {
+            display: inline-block;
+            transform: translateY(110%) rotate(4deg);
+            opacity: 0;
+            transition: transform 1.15s cubic-bezier(.16, 1, .3, 1), opacity .9s ease;
+        }
+
+        .loaded .kin-word {
+            transform: translateY(0) rotate(0);
+            opacity: 1;
+        }
+
+        /* ---------- Floating ambient shapes ---------- */
+        .float-shape {
+            position: absolute;
+            border-radius: 999px;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        @keyframes floatA {
+
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0) rotate(0deg);
+            }
+
+            50% {
+                transform: translate3d(14px, -26px, 0) rotate(8deg);
+            }
+        }
+
+        @keyframes floatB {
+
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0) rotate(0deg);
+            }
+
+            50% {
+                transform: translate3d(-18px, 20px, 0) rotate(-10deg);
+            }
+        }
+
+        @keyframes floatC {
+
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate3d(10px, 16px, 0) scale(1.06);
+            }
+        }
+
+        .anim-a {
+            animation: floatA 11s ease-in-out infinite;
+        }
+
+        .anim-b {
+            animation: floatB 14s ease-in-out infinite;
+        }
+
+        .anim-c {
+            animation: floatC 9s ease-in-out infinite;
+        }
+
+        /* ---------- 3D tilt card ---------- */
+        .tilt-stage {
+            perspective: 1400px;
+            perspective-origin: 50% 50%;
+        }
+
+        .tilt-card {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform .55s cubic-bezier(.19, 1, .22, 1);
+            will-change: transform;
+        }
+
+        .tilt-layer {
+            transform-style: preserve-3d;
+        }
+
+        .depth-1 {
+            transform: translateZ(0px);
+        }
+
+        .depth-2 {
+            transform: translateZ(38px);
+        }
+
+        .depth-3 {
+            transform: translateZ(72px);
+        }
+
+        .depth-4 {
+            transform: translateZ(110px);
+        }
+
+        .card-sheen {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            background: linear-gradient(115deg, rgba(255, 255, 255, 0) 25%, rgba(255, 255, 255, .55) 45%, rgba(255, 255, 255, 0) 62%);
+            background-size: 220% 100%;
+            animation: sheen 7s ease-in-out infinite;
+            mix-blend-mode: soft-light;
+        }
+
+        @keyframes sheen {
+            0% {
+                background-position: 160% 0;
+            }
+
+            55%,
+            100% {
+                background-position: -60% 0;
+            }
+        }
+
+        /* ---------- Marquee ---------- */
+        .marquee {
+            display: flex;
+            width: max-content;
+            animation: slide 38s linear infinite;
+        }
+
+        .marquee:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes slide {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ---------- Buttons ---------- */
+        .btn-magnetic {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            transition: transform .35s cubic-bezier(.19, 1, .22, 1), box-shadow .35s ease, background-color .35s ease, color .35s ease;
+            box-shadow: 0 12px 30px -12px rgba(196, 105, 78, .55);
+        }
+
+        .btn-magnetic:hover {
+            box-shadow: 0 22px 48px -16px rgba(196, 105, 78, .65);
+        }
+
+        .btn-magnetic::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, .42) 48%, transparent 76%);
+            transform: translateX(-120%);
+            transition: transform .75s cubic-bezier(.19, 1, .22, 1);
+        }
+
+        .btn-magnetic:hover::after {
+            transform: translateX(120%);
+        }
+
+        .link-underline {
+            position: relative;
+        }
+
+        .link-underline::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            height: 2px;
+            width: 100%;
+            background: currentColor;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform .45s cubic-bezier(.19, 1, .22, 1);
+        }
+
+        .link-underline:hover::after,
+        .link-underline.active::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* ---------- Countdown ---------- */
+        .count-item {
+            position: relative;
+            background: linear-gradient(160deg, #FFFFFF 0%, #F7EEE4 100%);
+            border: 1px solid rgba(47, 68, 54, .10);
+            box-shadow: 0 26px 50px -28px rgba(47, 68, 54, .38);
+            transition: transform .5s cubic-bezier(.19, 1, .22, 1), box-shadow .5s ease;
+        }
+
+        .count-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 38px 70px -30px rgba(47, 68, 54, .45);
+        }
+
+        .count-num {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .pop {
+            animation: pop .5s cubic-bezier(.19, 1, .22, 1);
+        }
+
+        @keyframes pop {
+            0% {
+                transform: translateY(-8px) scale(1.07);
+                opacity: .55;
+            }
+
+            100% {
+                transform: none;
+                opacity: 1;
+            }
+        }
+
+        /* ---------- Detail cards ---------- */
+        .detail-card {
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+            border-radius: 26px;
+            border: 1px solid rgba(47, 68, 54, .09);
+            transition: transform .55s cubic-bezier(.19, 1, .22, 1), box-shadow .55s ease, border-color .55s ease;
+            box-shadow: 0 20px 44px -30px rgba(47, 68, 54, .35);
+        }
+
+        .detail-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 46px 80px -38px rgba(47, 68, 54, .5);
+            border-color: rgba(196, 105, 78, .28);
+        }
+
+        .detail-card .glow {
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(196, 105, 78, .18), rgba(196, 105, 78, 0) 70%);
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            transition: opacity .45s ease;
+            pointer-events: none;
+        }
+
+        .detail-card:hover .glow {
+            opacity: 1;
+        }
+
+        /* ---------- Timeline ---------- */
+        .timeline-track {
+            position: absolute;
+            left: 19px;
+            top: 8px;
+            bottom: 8px;
+            width: 3px;
+            background: rgba(47, 68, 54, .13);
+            border-radius: 999px;
+        }
+
+        .timeline-fill {
+            position: absolute;
+            left: 19px;
+            top: 8px;
+            width: 3px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, #C4694E, #C99A4E, #7D9B7C);
+            height: 0%;
+            transition: height .18s linear;
+        }
+
+        .tl-dot {
+            position: absolute;
+            left: 0;
+            width: 41px;
+            height: 41px;
+            border-radius: 999px;
+            background: #fff;
+            border: 2px solid rgba(196, 105, 78, .35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform .5s cubic-bezier(.19, 1, .22, 1), background-color .4s ease, border-color .4s ease;
+        }
+
+        .tl-item:hover .tl-dot {
+            transform: scale(1.12);
+            background: #C4694E;
+            border-color: #C4694E;
+            color: #fff;
+        }
+
+        /* ---------- Gallery ---------- */
+        .gal-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 22px;
+            clip-path: inset(0 0 100% 0);
+            transition: clip-path 1.05s cubic-bezier(.76, 0, .24, 1);
+        }
+
+        .gal-item.in {
+            clip-path: inset(0 0 0% 0);
+        }
+
+        .gal-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.1s cubic-bezier(.19, 1, .22, 1), filter .7s ease;
+        }
+
+        .gal-item:hover img {
+            transform: scale(1.09);
+            filter: saturate(1.12) contrast(1.03);
+        }
+
+        .gal-item .cap {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(36, 30, 26, .82), rgba(36, 30, 26, 0));
+            color: #fff;
+            transform: translateY(14px);
+            opacity: 0;
+            transition: transform .55s cubic-bezier(.19, 1, .22, 1), opacity .55s ease;
+        }
+
+        .gal-item:hover .cap {
+            transform: none;
+            opacity: 1;
+        }
+
+        /* ---------- Accordion ---------- */
+        .acc-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .55s cubic-bezier(.19, 1, .22, 1), opacity .45s ease;
+            opacity: 0;
+        }
+
+        .acc-item.open .acc-panel {
+            opacity: 1;
+        }
+
+        .acc-item .acc-icon {
+            transition: transform .45s cubic-bezier(.19, 1, .22, 1);
+        }
+
+        .acc-item.open .acc-icon {
+            transform: rotate(45deg);
+        }
+
+        .acc-item {
+            transition: background-color .45s ease, border-color .45s ease;
+        }
+
+        .acc-item.open {
+            background: #fff;
+            border-color: rgba(196, 105, 78, .3);
+        }
+
+        /* ---------- Form ---------- */
+        .field {
+            width: 100%;
+            background: #fff;
+            border: 1.5px solid rgba(47, 68, 54, .14);
+            border-radius: 14px;
+            padding: 15px 17px;
+            font-size: 15px;
+            color: #241E1A;
+            transition: border-color .35s ease, box-shadow .35s ease, transform .35s ease;
+            outline: none;
+        }
+
+        .field:focus {
+            border-color: #C4694E;
+            box-shadow: 0 0 0 4px rgba(196, 105, 78, .16);
+            transform: translateY(-2px);
+        }
+
+        .field.error {
+            border-color: #C0492F;
+            box-shadow: 0 0 0 4px rgba(192, 73, 47, .13);
+        }
+
+        .radio-pill input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .radio-pill span {
+            display: block;
+            padding: 12px 18px;
+            border-radius: 999px;
+            cursor: pointer;
+            border: 1.5px solid rgba(47, 68, 54, .16);
+            background: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all .35s cubic-bezier(.19, 1, .22, 1);
+        }
+
+        .radio-pill input:checked+span {
+            background: #2F4436;
+            color: #fff;
+            border-color: #2F4436;
+            transform: translateY(-2px);
+            box-shadow: 0 16px 30px -16px rgba(47, 68, 54, .6);
+        }
+
+        .radio-pill span:hover {
+            transform: translateY(-2px);
+            border-color: rgba(196, 105, 78, .5);
+        }
+
+        /* ---------- Nav ---------- */
+        #nav {
+            transition: background-color .5s ease, box-shadow .5s ease, padding .5s ease, backdrop-filter .5s ease;
+        }
+
+        #nav.scrolled {
+            background: rgba(251, 246, 239, .88);
+            backdrop-filter: blur(16px) saturate(1.2);
+            box-shadow: 0 12px 36px -22px rgba(36, 30, 26, .38);
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        #mobileMenu {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height .55s cubic-bezier(.19, 1, .22, 1), opacity .4s ease;
+        }
+
+        #mobileMenu.open {
+            max-height: 380px;
+            opacity: 1;
+        }
+
+        /* ---------- Section divider waves ---------- */
+        .soft-edge {
+            background: linear-gradient(180deg, rgba(243, 233, 220, 0) 0%, rgba(243, 233, 220, 1) 12%, rgba(243, 233, 220, 1) 88%, rgba(243, 233, 220, 0) 100%);
+        }
+
+        .grain {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: .35;
+            mix-blend-mode: multiply;
+            background-image: radial-gradient(rgba(47, 68, 54, .10) 1px, transparent 1px);
+            background-size: 26px 26px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 16px 8px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .72);
+            border: 1px solid rgba(196, 105, 78, .24);
+            font-size: 12.5px;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: #8A5240;
+            box-shadow: 0 16px 32px -22px rgba(196, 105, 78, .7);
+        }
+
+        .badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #C4694E;
+            box-shadow: 0 0 0 4px rgba(196, 105, 78, .18);
+        }
+
+        .stat-num {
+            font-variant-numeric: tabular-nums;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .12s !important;
+                scroll-behavior: auto !important;
+            }
+
+            .reveal,
+            .reveal-left,
+            .reveal-scale,
+            .kin-word {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+
+            .gal-item {
+                clip-path: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="progressBar"></div>
+
+    <!-- ================= NAV ================= -->
+    <header id="nav" class="fixed top-0 left-0 right-0 z-50 py-4 md:py-5">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8">
+            <div class="flex items-center justify-between">
+                <a href="#top" class="flex items-center gap-3 group">
+                    <div
+                        class="w-10 h-10 rounded-full bg-moss text-cream flex items-center justify-center font-display text-lg shadow-lg shadow-moss/25 transition-transform duration-500 group-hover:rotate-[10deg]">
+                        R
+                    </div>
+                    <div class="leading-tight">
+                        <div class="font-display font-semibold text-[17px] text-ink">Baby Rose</div>
+                        <div class="text-[11px] tracking-[.18em] uppercase text-clay font-semibold">June 14, 2026</div>
+                    </div>
+                </a>
+
+                <nav class="hidden lg:flex items-center gap-9">
+                    <a href="#details"
+                        class="link-underline text-[14px] font-medium text-ink/80 hover:text-clay transition-colors">Details</a>
+                    <a href="#schedule"
+                        class="link-underline text-[14px] font-medium text-ink/80 hover:text-clay transition-colors">Schedule</a>
+                    <a href="#gallery"
+                        class="link-underline text-[14px] font-medium text-ink/80 hover:text-clay transition-colors">Gallery</a>
+                    <a href="#registry"
+                        class="link-underline text-[14px] font-medium text-ink/80 hover:text-clay transition-colors">Registry</a>
+                    <a href="#faq"
+                        class="link-underline text-[14px] font-medium text-ink/80 hover:text-clay transition-colors">FAQ</a>
+                </nav>
+
+                <div class="flex items-center gap-3">
+                    <a href="#rsvp"
+                        class="btn-magnetic hidden sm:inline-flex items-center gap-2 bg-clay text-white text-[14px] font-semibold px-6 py-3 rounded-full">
+                        RSVP Now
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                    </a>
+                    <button id="menuBtn" aria-label="Open menu"
+                        class="lg:hidden w-11 h-11 rounded-full border border-ink/12 flex items-center justify-center bg-white/70">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round">
+                            <path d="M4 7h16M4 12h16M4 17h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="mobileMenu" class="lg:hidden">
+                <div class="mt-4 rounded-2xl bg-white/90 border border-ink/8 p-4 space-y-1 shadow-xl shadow-ink/5">
+                    <a href="#details"
+                        class="mobile-link block px-4 py-3 rounded-xl hover:bg-sand/70 font-medium">Details</a>
+                    <a href="#schedule"
+                        class="mobile-link block px-4 py-3 rounded-xl hover:bg-sand/70 font-medium">Schedule</a>
+                    <a href="#gallery"
+                        class="mobile-link block px-4 py-3 rounded-xl hover:bg-sand/70 font-medium">Gallery</a>
+                    <a href="#registry"
+                        class="mobile-link block px-4 py-3 rounded-xl hover:bg-sand/70 font-medium">Registry</a>
+                    <a href="#faq" class="mobile-link block px-4 py-3 rounded-xl hover:bg-sand/70 font-medium">FAQ</a>
+                    <a href="#rsvp"
+                        class="mobile-link block px-4 py-3 rounded-xl bg-clay text-white font-semibold text-center">RSVP
+                        Now</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= HERO ================= -->
+    <main id="top">
+        <section class="relative min-h-[100svh] flex items-center overflow-hidden pt-28 pb-16 md:pt-32">
+            <!-- ambient background -->
+            <div class="absolute inset-0 -z-10" style="background:
+      radial-gradient(1100px 620px at 82% 12%, rgba(231,183,162,.42), transparent 62%),
+      radial-gradient(900px 560px at 8% 82%, rgba(125,155,124,.28), transparent 62%),
+      linear-gradient(175deg, #FBF6EF 0%, #F7EDE2 52%, #FBF6EF 100%);"></div>
+            <div class="grain"></div>
+
+            <!-- floating shapes -->
+            <div class="float-shape anim-a" data-depth="18"
+                style="width:210px;height:210px;left:-60px;top:16%;background:radial-gradient(circle at 32% 28%, #F6D2C2, #E2A98F);opacity:.55;">
+            </div>
+            <div class="float-shape anim-b" data-depth="30"
+                style="width:130px;height:130px;right:6%;top:12%;background:radial-gradient(circle at 30% 26%, #DCE7D6, #9DBB99);opacity:.5;">
+            </div>
+            <div class="float-shape anim-c" data-depth="22"
+                style="width:86px;height:86px;left:12%;bottom:16%;background:radial-gradient(circle at 32% 28%, #F4E0B7, #D2A85D);opacity:.55;">
+            </div>
+            <div class="float-shape anim-a" data-depth="12"
+                style="width:260px;height:260px;right:-90px;bottom:6%;background:radial-gradient(circle at 34% 30%, #F0E4D4, #D9BC9D);opacity:.42;">
+            </div>
+
+            <div class="max-w-7xl mx-auto px-5 sm:px-8 w-full">
+                <div class="grid lg:grid-cols-[1.02fr_.98fr] gap-12 lg:gap-10 items-center">
+
+                    <!-- Copy -->
+                    <div class="relative z-10">
+                        <div class="badge reveal">
+                            <span class="dot"></span>
+                            You're Invited
+                        </div>
+
+                        <h1 class="mt-7 font-display text-ink font-semibold leading-[.92] tracking-[-.028em]"
+                            style="font-size: clamp(3.15rem, 9.2vw, 7.1rem);">
+                            <span class="kin-line"><span class="kin-word" style="transition-delay:.06s">Oh</span> <span
+                                    class="kin-word italic text-clay" style="transition-delay:.16s">baby,</span></span>
+                            <span class="kin-line"><span class="kin-word" style="transition-delay:.26s">what</span>
+                                <span class="kin-word" style="transition-delay:.34s">a</span></span>
+                            <span class="kin-line"><span class="kin-word text-moss"
+                                    style="transition-delay:.42s">wonderful</span></span>
+                            <span class="kin-line"><span class="kin-word text-moss"
+                                    style="transition-delay:.52s">celebration.</span></span>
+                        </h1>
+
+                        <p class="mt-7 text-[17px] sm:text-[19px] leading-relaxed text-ink/72 max-w-[540px] reveal"
+                            style="transition-delay:.18s">
+                            Join us for a sun-drenched garden shower honoring <strong
+                                class="font-semibold text-ink">Amelia &amp; Daniel</strong>
+                            as they await the arrival of baby Rose. Brunch, blooms, and a whole lot of love.
+                        </p>
+
+                        <div class="mt-9 flex flex-wrap items-center gap-3.5 reveal" style="transition-delay:.28s">
+                            <a href="#rsvp"
+                                class="btn-magnetic inline-flex items-center gap-2.5 bg-clay text-white font-semibold px-8 py-4 rounded-full text-[15px]">
+                                Reserve Your Seat
+                                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14M13 6l6 6-6 6" />
+                                </svg>
+                            </a>
+                            <a href="#details"
+                                class="inline-flex items-center gap-2.5 font-semibold px-8 py-4 rounded-full text-[15px] border border-ink/14 text-ink hover:bg-white/70 hover:border-ink/22 transition-all duration-500">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="5" width="18" height="16" rx="3" />
+                                    <path d="M8 3v4M16 3v4M3 10h18" />
+                                </svg>
+                                View Details
+                            </a>
+                        </div>
+
+                        <!-- quick stats -->
+                        <div class="mt-11 grid grid-cols-3 gap-4 max-w-[520px] reveal" style="transition-delay:.38s">
+                            <div class="border-l-2 border-clay/35 pl-4">
+                                <div class="stat-num font-display text-[27px] font-semibold text-ink leading-none">14
+                                </div>
+                                <div class="text-[11px] tracking-[.16em] uppercase text-ink/55 mt-1.5 font-semibold">
+                                    June 2026</div>
+                            </div>
+                            <div class="border-l-2 border-sage/45 pl-4">
+                                <div class="stat-num font-display text-[27px] font-semibold text-ink leading-none">
+                                    11<span class="text-[15px] align-top ml-0.5">am</span></div>
+                                <div class="text-[11px] tracking-[.16em] uppercase text-ink/55 mt-1.5 font-semibold">
+                                    Garden Brunch</div>
+                            </div>
+                            <div class="border-l-2 border-gold/50 pl-4">
+                                <div class="stat-num font-display text-[27px] font-semibold text-ink leading-none">42
+                                </div>
+                                <div class="text-[11px] tracking-[.16em] uppercase text-ink/55 mt-1.5 font-semibold">
+                                    Seats Only</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3D Card -->
+                    <div class="relative">
+                        <div class="tilt-stage reveal-scale" id="tiltStage" style="transition-delay:.15s">
+                            <div class="tilt-card" id="tiltCard">
+
+                                <!-- back decorative layer -->
+                                <div
+                                    class="tilt-layer depth-1 absolute -right-2 sm:right-2 top-8 w-[62%] h-[78%] rounded-[30px] bg-sage/25 rotate-[7deg]">
+                                </div>
+                                <div
+                                    class="tilt-layer depth-1 absolute -left-3 bottom-4 w-[52%] h-[52%] rounded-[26px] bg-blush/45 -rotate-[8deg]">
+                                </div>
+
+                                <!-- main card -->
+                                <div
+                                    class="tilt-layer depth-2 relative rounded-[30px] overflow-hidden shadow-[0_60px_110px_-42px_rgba(47,68,54,.55)] ring-1 ring-white/60">
+                                    <div
+                                        class="relative aspect-[4/5] sm:aspect-[4/4.6] w-full bg-gradient-to-br from-[#E9C6B4] via-[#D9A98D] to-[#B78266]">
+                                        <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1000&q=80"
+                                            alt="Soft floral arrangement for the baby shower"
+                                            class="absolute inset-0 w-full h-full object-cover" loading="eager"
+                                            onerror="this.style.display='none'">
+                                        <div class="absolute inset-0"
+                                            style="background:linear-gradient(180deg, rgba(47,68,54,.10) 0%, rgba(47,68,54,.06) 38%, rgba(36,30,26,.72) 100%);">
+                                        </div>
+                                        <div class="card-sheen"></div>
+
+                                        <!-- floating badge on card -->
+                                        <div class="tilt-layer depth-4 absolute top-6 left-6">
+                                            <div
+                                                class="px-4 py-2.5 rounded-full bg-white/92 text-moss text-[11px] font-bold tracking-[.19em] uppercase shadow-lg">
+                                                Save the Date
+                                            </div>
+                                        </div>
+
+                                        <div class="absolute bottom-0 left-0 right-0 p-7 sm:p-8">
+                                            <div class="tilt-layer depth-3">
+                                                <div
+                                                    class="text-white/85 text-[11px] font-semibold tracking-[.28em] uppercase">
+                                                    A Garden Baby Shower</div>
+                                                <div
+                                                    class="mt-2.5 font-display text-white text-[34px] sm:text-[42px] leading-[1.02] font-semibold">
+                                                    Hello, little<br><span class="italic text-[#F6D9C7]">Rose.</span>
+                                                </div>
+                                                <div class="mt-5 flex items-center gap-4 text-white/88">
+                                                    <div class="flex items-center gap-2 text-[13px]">
+                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="1.9"
+                                                            stroke-linecap="round">
+                                                            <rect x="3" y="5" width="18" height="16" rx="3" />
+                                                            <path d="M8 3v4M16 3v4M3 10h18" />
+                                                        </svg>
+                                                        Sun, Jun 14
+                                                    </div>
+                                                    <div class="w-1 h-1 rounded-full bg-white/50"></div>
+                                                    <div class="flex items-center gap-2 text-[13px]">
+                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="1.9"
+                                                            stroke-linecap="round">
+                                                            <circle cx="12" cy="12" r="9" />
+                                                            <path d="M12 7v5l3.2 2" />
+                                                        </svg>
+                                                        11:00 AM
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- floating info chips -->
+                                <div
+                                    class="tilt-layer depth-4 absolute -right-1 sm:right-2 top-[26%] bg-white rounded-2xl px-5 py-4 shadow-[0_30px_60px_-26px_rgba(47,68,54,.6)] ring-1 ring-ink/6">
+                                    <div class="text-[10px] tracking-[.2em] uppercase text-ink/50 font-semibold">Hosted
+                                        by</div>
+                                    <div class="font-display text-[17px] font-semibold text-ink mt-1 leading-tight">The
+                                        Miller Family</div>
+                                </div>
+
+                                <div
+                                    class="tilt-layer depth-4 absolute -left-2 sm:left-1 bottom-[16%] bg-moss text-white rounded-2xl px-5 py-4 shadow-[0_30px_60px_-26px_rgba(47,68,54,.7)]">
+                                    <div class="flex items-center gap-2.5">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                            <path d="M12 21s7-4.6 7-10a7 7 0 1 0-14 0c0 5.4 7 10 7 10Z" />
+                                            <circle cx="12" cy="11" r="2.6" />
+                                        </svg>
+                                        <div>
+                                            <div
+                                                class="text-[10px] tracking-[.18em] uppercase text-white/60 font-semibold">
+                                                Venue</div>
+                                            <div class="text-[13.5px] font-semibold leading-tight">Willowbrook Gardens
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- scroll cue -->
+            <a href="#countdown"
+                class="hidden md:flex absolute bottom-7 left-1/2 -translate-x-1/2 flex-col items-center gap-2.5 text-ink/55 hover:text-clay transition-colors duration-500">
+                <span class="text-[10px] tracking-[.32em] uppercase font-semibold">Scroll</span>
+                <span
+                    class="w-[26px] h-[42px] rounded-full border-2 border-ink/22 flex items-start justify-center p-1.5">
+                    <span class="w-[3px] h-[8px] rounded-full bg-clay"
+                        style="animation: floatA 1.9s ease-in-out infinite;"></span>
+                </span>
+            </a>
+        </section>
+
+        <!-- ================= MARQUEE ================= -->
+        <section class="relative py-5 bg-moss text-cream overflow-hidden">
+            <div class="marquee items-center gap-10 whitespace-nowrap">
+                <span class="flex items-center gap-10 pr-10">
+                    <span class="font-display italic text-[19px] sm:text-[23px]">Oh Baby</span><span
+                        class="w-1.5 h-1.5 rounded-full bg-blush"></span>
+                    <span class="text-[12px] tracking-[.32em] uppercase text-cream/80 font-semibold">June 14,
+                        2026</span><span class="w-1.5 h-1.5 rounded-full bg-blush"></span>
+                    <span class="font-display italic text-[19px] sm:text-[23px]">Willowbrook Gardens</span><span
+                        class="w-1.5 h-1.5 rounded-full bg-blush"></span>
+                    <span class="text-[12px] tracking-[.32em] uppercase text-cream/80 font-semibold">Garden
+                        Brunch</span><span class="w-1.5 h-1.5 rounded-full bg-blush"></span>
+                    <span class="font-display italic text-[19px] sm:text-[23px]">Celebrating Baby Rose</span><span
+                        class="w-1.5 h-1.5 rounded-full bg-blush"></span>
+                    <span class="text-[12px] tracking-[.32em] uppercase text-cream/80 font-semibold">RSVP by May
+                        30</span><span class="w-1.5 h-1.5 rounded-full bg-blush"></span>
+                </span>
+                <span class="flex items-center gap-10 pr-10" aria-hidden="true">
+                    <span class="font-display italic text-[19px] sm:text-[23px]">Oh Baby</span><span
+                        class="w-1.5 h-1.5 rounded-full bg-blush"></span>
+                    <span class="text-[12px] tracking-[.32em] uppercase text-cream/80 font-semibold">June 14,
+                        2026</span><span class="w-1.5 h-1.5 rounded-full bg-blush"></span>
+                    <span class="font-display italic text-[19px] sm:text-[23px]">Willowbrook Gardens</span><span
+                        class="w-1.5 h-1.5 rounded-full bg-blush"></span>
+                    <span class="text-[12px] tracking-[.32em] uppercase text-cream/80 font-semibold">Garden
+                        Brunch</span><span class="w-1.5 h-1.5 rounded-full bg-blush"></span>
+                    <span class="font-display italic text-[19px] sm:text-[23px]">Celebrating Baby Rose</span><span
+                        class="w-1.5 h-1.5 rounded-full bg-blush"></span>
+                    <span class="text-[12px] tracking-[.32em] uppercase text-cream/80 font-semibold">RSVP by May
+                        30</span><span class="w-1.5 h-1.5 rounded-full bg-blush"></span>
+                </span>
+            </div>
+        </section>
+
+        <!-- ================= COUNTDOWN ================= -->
+        <section id="countdown" class="relative py-24 sm:py-28 overflow-hidden">
+            <div class="absolute inset-0 -z-10"
+                style="background:radial-gradient(820px 420px at 50% 0%, rgba(231,183,162,.30), transparent 66%), linear-gradient(180deg,#FBF6EF,#F7F1E9);">
+            </div>
+            <div class="max-w-6xl mx-auto px-5 sm:px-8 text-center">
+                <div class="reveal">
+                    <div
+                        class="inline-flex items-center gap-2.5 text-[11px] tracking-[.28em] uppercase font-semibold text-clay">
+                        <span class="w-8 h-[1.5px] bg-clay/50"></span> The countdown is on <span
+                            class="w-8 h-[1.5px] bg-clay/50"></span>
+                    </div>
+                    <h2 class="mt-5 font-display text-ink font-semibold leading-[1.06] tracking-[-.022em]"
+                        style="font-size: clamp(2.15rem, 5.6vw, 3.9rem);">
+                        Until we celebrate <span class="italic text-clay">together</span>
+                    </h2>
+                    <p class="mt-5 text-ink/65 text-[17px] leading-relaxed max-w-[560px] mx-auto">
+                        Mark your calendar, plan your pastels, and get ready for a morning filled with games, cake, and
+                        happy tears.
+                    </p>
+                </div>
+
+                <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+                    <div class="count-item reveal rounded-[22px] px-5 py-8" style="transition-delay:.05s">
+                        <div class="count-num font-display text-[46px] sm:text-[58px] font-semibold text-moss leading-none"
+                            id="cdDays">00</div>
+                        <div class="mt-3 text-[11px] tracking-[.24em] uppercase text-ink/52 font-semibold">Days</div>
+                    </div>
+                    <div class="count-item reveal rounded-[22px] px-5 py-8" style="transition-delay:.13s">
+                        <div class="count-num font-display text-[46px] sm:text-[58px] font-semibold text-clay leading-none"
+                            id="cdHours">00</div>
+                        <div class="mt-3 text-[11px] tracking-[.24em] uppercase text-ink/52 font-semibold">Hours</div>
+                    </div>
+                    <div class="count-item reveal rounded-[22px] px-5 py-8" style="transition-delay:.21s">
+                        <div class="count-num font-display text-[46px] sm:text-[58px] font-semibold text-sage leading-none"
+                            id="cdMinutes">00</div>
+                        <div class="mt-3 text-[11px] tracking-[.24em] uppercase text-ink/52 font-semibold">Minutes</div>
+                    </div>
+                    <div class="count-item reveal rounded-[22px] px-5 py-8" style="transition-delay:.29s">
+                        <div class="count-num font-display text-[46px] sm:text-[58px] font-semibold text-gold leading-none"
+                            id="cdSeconds">00</div>
+                        <div class="mt-3 text-[11px] tracking-[.24em] uppercase text-ink/52 font-semibold">Seconds</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= DETAILS ================= -->
+        <section id="details" class="relative py-24 sm:py-28">
+            <div class="max-w-7xl mx-auto px-5 sm:px-8">
+                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+                    <div class="max-w-[620px]">
+                        <div
+                            class="reveal inline-flex items-center gap-2.5 text-[11px] tracking-[.28em] uppercase font-semibold text-sage">
+                            <span class="w-2 h-2 rounded-full bg-sage"></span> The Details
+                        </div>
+                        <h2 class="reveal mt-5 font-display text-ink font-semibold leading-[1.05] tracking-[-.022em]"
+                            style="font-size: clamp(2.25rem, 5.4vw, 3.75rem); transition-delay:.08s;">
+                            Everything you need<br class="hidden sm:block"> to know, <span
+                                class="italic text-clay">beautifully</span> planned.
+                        </h2>
+                    </div>
+                    <p class="reveal text-ink/62 text-[16.5px] leading-relaxed max-w-[360px]"
+                        style="transition-delay:.16s;">
+                        From the garden terrace to the dessert table — here's the full picture of how the day will
+                        unfold.
+                    </p>
+                </div>
+
+                <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- card 1 -->
+                    <div class="detail-card reveal p-8" style="transition-delay:.05s">
+                        <div class="glow"></div>
+                        <div
+                            class="w-[52px] h-[52px] rounded-2xl bg-clay/12 text-clay flex items-center justify-center">
+                            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="5" width="18" height="16" rx="3" />
+                                <path d="M8 3v4M16 3v4M3 10h18" />
+                                <path d="M8 14h3M8 17.5h6" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-6 font-display text-[23px] font-semibold text-ink leading-snug">Date &amp; Time
+                        </h3>
+                        <p class="mt-3 text-ink/62 text-[15px] leading-relaxed">
+                            Sunday, June 14, 2026<br>11:00 AM — 2:30 PM<br><span class="text-ink/45">Doors open at 10:40
+                                AM</span>
+                        </p>
+                        <div
+                            class="mt-6 pt-5 border-t border-ink/8 flex items-center gap-2 text-[13px] font-semibold text-clay">
+                            Add to calendar
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17 17 7M9 7h8v8" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- card 2 -->
+                    <div class="detail-card reveal p-8" style="transition-delay:.13s">
+                        <div class="glow"></div>
+                        <div
+                            class="w-[52px] h-[52px] rounded-2xl bg-sage/16 text-sage flex items-center justify-center">
+                            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 21s7-4.6 7-10a7 7 0 1 0-14 0c0 5.4 7 10 7 10Z" />
+                                <circle cx="12" cy="11" r="2.6" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-6 font-display text-[23px] font-semibold text-ink leading-snug">The Venue</h3>
+                        <p class="mt-3 text-ink/62 text-[15px] leading-relaxed">
+                            Willowbrook Gardens<br>128 Magnolia Lane, Sonoma, CA<br><span class="text-ink/45">Terrace
+                                &amp; Rose Pavilion</span>
+                        </p>
+                        <div
+                            class="mt-6 pt-5 border-t border-ink/8 flex items-center gap-2 text-[13px] font-semibold text-sage">
+                            Get directions
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17 17 7M9 7h8v8" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- card 3 -->
+                    <div class="detail-card reveal p-8" style="transition-delay:.21s">
+                        <div class="glow"></div>
+                        <div
+                            class="w-[52px] h-[52px] rounded-2xl bg-gold/18 text-gold flex items-center justify-center">
+                            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 8h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" />
+                                <path d="M3 4h18v4H3zM12 4v17" />
+                                <path
+                                    d="M12 4c-1.6-2.6-5.2-2.2-5.2.2 0 1.6 2.2 1.8 5.2 1.8M12 4c1.6-2.6 5.2-2.2 5.2.2 0 1.6-2.2 1.8-5.2 1.8" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-6 font-display text-[23px] font-semibold text-ink leading-snug">Dress Code</h3>
+                        <p class="mt-3 text-ink/62 text-[15px] leading-relaxed">
+                            Garden party chic — soft pastels, florals, and linen. Comfortable shoes for the lawn.
+                        </p>
+                        <div class="mt-6 flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-full ring-2 ring-white shadow-md"
+                                style="background:#E7B7A2"></span>
+                            <span class="w-7 h-7 rounded-full ring-2 ring-white shadow-md -ml-3"
+                                style="background:#A8BFA2"></span>
+                            <span class="w-7 h-7 rounded-full ring-2 ring-white shadow-md -ml-3"
+                                style="background:#E8C98D"></span>
+                            <span class="w-7 h-7 rounded-full ring-2 ring-white shadow-md -ml-3"
+                                style="background:#F2E7DA"></span>
+                            <span class="ml-2 text-[12px] font-semibold text-ink/50 tracking-wide">Palette
+                                inspiration</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SPLIT / QUOTE ================= -->
+        <section class="relative py-20 sm:py-24">
+            <div class="max-w-7xl mx-auto px-5 sm:px-8">
+                <div class="relative rounded-[32px] overflow-hidden">
+                    <div class="absolute inset-0">
+                        <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=1600&q=80"
+                            alt="Soft garden blooms" class="w-full h-full object-cover" loading="lazy"
+                            onerror="this.style.display='none'">
+                        <div class="absolute inset-0"
+                            style="background:linear-gradient(100deg, rgba(47,68,54,.92) 8%, rgba(47,68,54,.72) 46%, rgba(47,68,54,.22) 100%);">
+                        </div>
+                    </div>
+
+                    <div class="relative px-7 sm:px-12 lg:px-16 py-16 sm:py-20 lg:py-24 max-w-[720px]">
+                        <div class="reveal-left">
+                            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#E7B7A2"
+                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="opacity-90">
+                                <path
+                                    d="M9 7H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2v1a3 3 0 0 1-3 3M19 7h-4a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2v1a3 3 0 0 1-3 3" />
+                            </svg>
+                            <p class="mt-6 font-display text-white leading-[1.22] font-medium tracking-[-.018em]"
+                                style="font-size: clamp(1.72rem, 3.9vw, 2.72rem);">
+                                “A baby is something you carry inside you for nine months, in your arms for three years,
+                                and in your heart until the day you die.”
+                            </p>
+                            <div class="mt-7 flex items-center gap-4">
+                                <div class="w-11 h-[2px] bg-blush"></div>
+                                <div class="text-white/78 text-[13px] tracking-[.22em] uppercase font-semibold">Mary
+                                    Mason</div>
+                            </div>
+                        </div>
+
+                        <div class="mt-12 grid grid-cols-3 gap-6 max-w-[520px]">
+                            <div class="reveal" style="transition-delay:.05s">
+                                <div class="font-display text-white text-[32px] font-semibold leading-none stat-num">3
+                                </div>
+                                <div class="mt-2 text-white/62 text-[11px] tracking-[.2em] uppercase font-semibold">Fun
+                                    Games</div>
+                            </div>
+                            <div class="reveal" style="transition-delay:.13s">
+                                <div class="font-display text-white text-[32px] font-semibold leading-none stat-num">2
+                                </div>
+                                <div class="mt-2 text-white/62 text-[11px] tracking-[.2em] uppercase font-semibold">
+                                    Sweet Cakes</div>
+                            </div>
+                            <div class="reveal" style="transition-delay:.21s">
+                                <div class="font-display text-white text-[32px] font-semibold leading-none stat-num">∞
+                                </div>
+                                <div class="mt-2 text-white/62 text-[11px] tracking-[.2em] uppercase font-semibold">
+                                    Memories</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SCHEDULE ================= -->
+        <section id="schedule" class="relative py-24 sm:py-28 overflow-hidden">
+            <div class="absolute inset-0 -z-10"
+                style="background:linear-gradient(180deg,#FBF6EF 0%, #F4EDE3 46%, #FBF6EF 100%);"></div>
+            <div class="max-w-6xl mx-auto px-5 sm:px-8">
+                <div class="text-center max-w-[640px] mx-auto">
+                    <div
+                        class="reveal inline-flex items-center gap-2.5 text-[11px] tracking-[.28em] uppercase font-semibold text-clay">
+                        <span class="w-2 h-2 rounded-full bg-clay"></span> Order of the Day
+                    </div>
+                    <h2 class="reveal mt-5 font-display text-ink font-semibold leading-[1.06] tracking-[-.022em]"
+                        style="font-size: clamp(2.25rem, 5.4vw, 3.75rem); transition-delay:.08s;">
+                        A morning made of <span class="italic text-moss">little moments</span>
+                    </h2>
+                </div>
+
+                <div class="mt-16 relative pl-[62px] sm:pl-[76px]" id="timelineWrap">
+                    <div class="timeline-track"></div>
+                    <div class="timeline-fill" id="timelineFill"></div>
+
+                    <div class="space-y-9">
+                        <div class="tl-item reveal relative">
+                            <div class="tl-dot text-clay">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.9" stroke-linecap="round">
+                                    <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4Z" />
+                                    <path d="M6 2v3M10 2v3M14 2v3" />
+                                </svg>
+                            </div>
+                            <div
+                                class="bg-white/85 border border-ink/8 rounded-[20px] p-6 sm:p-7 shadow-[0_26px_52px_-38px_rgba(47,68,54,.7)]">
+                                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                                    <span class="text-[12px] font-bold tracking-[.2em] uppercase text-clay">11:00
+                                        AM</span>
+                                    <h3 class="font-display text-[21px] sm:text-[23px] font-semibold text-ink">Welcome
+                                        &amp; Garden Cocktails</h3>
+                                </div>
+                                <p class="mt-2.5 text-ink/62 text-[15px] leading-relaxed">Arrive to sparkling lemonade,
+                                    lavender spritzers, and a flower-crown station on the terrace.</p>
+                            </div>
+                        </div>
+
+                        <div class="tl-item reveal relative">
+                            <div class="tl-dot text-gold">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M3 11h18M5 11V8a7 7 0 0 1 14 0v3M4 11v6a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-6" />
+                                    <path d="M9 20v1M15 20v1" />
+                                </svg>
+                            </div>
+                            <div
+                                class="bg-white/85 border border-ink/8 rounded-[20px] p-6 sm:p-7 shadow-[0_26px_52px_-38px_rgba(47,68,54,.7)]">
+                                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                                    <span class="text-[12px] font-bold tracking-[.2em] uppercase text-gold">12:00
+                                        PM</span>
+                                    <h3 class="font-display text-[21px] sm:text-[23px] font-semibold text-ink">Brunch is
+                                        Served</h3>
+                                </div>
+                                <p class="mt-2.5 text-ink/62 text-[15px] leading-relaxed">A seasonal farm-to-table
+                                    spread under the wisteria pergola — with plenty of vegetarian options.</p>
+                            </div>
+                        </div>
+
+                        <div class="tl-item reveal relative">
+                            <div class="tl-dot text-sage">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="8" width="18" height="13" rx="2" />
+                                    <path d="M3 12h18M12 8v13" />
+                                    <path d="M12 8s-1.5-4-4-4-2.5 4 0 4h4ZM12 8s1.5-4 4-4 2.5 4 0 4h-4Z" />
+                                </svg>
+                            </div>
+                            <div
+                                class="bg-white/85 border border-ink/8 rounded-[20px] p-6 sm:p-7 shadow-[0_26px_52px_-38px_rgba(47,68,54,.7)]">
+                                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                                    <span class="text-[12px] font-bold tracking-[.2em] uppercase text-sage">12:45
+                                        PM</span>
+                                    <h3 class="font-display text-[21px] sm:text-[23px] font-semibold text-ink">Games
+                                        &amp; Gift Opening</h3>
+                                </div>
+                                <p class="mt-2.5 text-ink/62 text-[15px] leading-relaxed">Guess the baby food, wishes
+                                    for baby, and the much-anticipated gift table moment.</p>
+                            </div>
+                        </div>
+
+                        <div class="tl-item reveal relative">
+                            <div class="tl-dot text-moss">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 20h16M6 20v-5a6 6 0 0 1 12 0v5" />
+                                    <path d="M12 4v3M8.5 5.5 10 8M15.5 5.5 14 8" />
+                                    <circle cx="12" cy="12" r="1.6" />
+                                </svg>
+                            </div>
+                            <div
+                                class="bg-white/85 border border-ink/8 rounded-[20px] p-6 sm:p-7 shadow-[0_26px_52px_-38px_rgba(47,68,54,.7)]">
+                                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                                    <span class="text-[12px] font-bold tracking-[.2em] uppercase text-moss">1:45
+                                        PM</span>
+                                    <h3 class="font-display text-[21px] sm:text-[23px] font-semibold text-ink">Cake,
+                                        Toasts &amp; Farewell</h3>
+                                </div>
+                                <p class="mt-2.5 text-ink/62 text-[15px] leading-relaxed">Raise a glass to the
+                                    parents-to-be, cut the cake, and take home a little seeded favour.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= GALLERY ================= -->
+        <section id="gallery" class="relative py-24 sm:py-28">
+            <div class="max-w-7xl mx-auto px-5 sm:px-8">
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+                    <div class="max-w-[560px]">
+                        <div
+                            class="reveal inline-flex items-center gap-2.5 text-[11px] tracking-[.28em] uppercase font-semibold text-sage">
+                            <span class="w-2 h-2 rounded-full bg-sage"></span> Mood Board
+                        </div>
+                        <h2 class="reveal mt-5 font-display text-ink font-semibold leading-[1.05] tracking-[-.022em]"
+                            style="font-size: clamp(2.25rem, 5.2vw, 3.6rem); transition-delay:.08s;">
+                            The feeling we're <span class="italic text-clay">going for</span>
+                        </h2>
+                    </div>
+                    <a href="#rsvp"
+                        class="reveal inline-flex items-center gap-2.5 font-semibold text-ink border-b-2 border-clay/40 pb-2 hover:border-clay transition-colors duration-500 self-start">
+                        Join us for the day
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+                    <div class="gal-item h-[240px] sm:h-[330px] lg:row-span-2 lg:h-[684px]">
+                        <img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=80"
+                            alt="Golden garden light" loading="lazy"
+                            onerror="this.parentElement.style.background='linear-gradient(160deg,#E7B7A2,#B98263)';this.style.display='none'">
+                        <div class="cap">
+                            <div class="text-[11px] tracking-[.22em] uppercase text-white/70 font-semibold">Golden Hour
+                            </div>
+                            <div class="font-display text-[19px] font-semibold mt-1">Garden light</div>
+                        </div>
+                    </div>
+                    <div class="gal-item h-[240px] sm:h-[330px]">
+                        <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=800&q=80"
+                            alt="Soft pastel details" loading="lazy"
+                            onerror="this.parentElement.style.background='linear-gradient(160deg,#D8C4A8,#A98D6B)';this.style.display='none'">
+                        <div class="cap">
+                            <div class="text-[11px] tracking-[.22em] uppercase text-white/70 font-semibold">Palette
+                            </div>
+                            <div class="font-display text-[19px] font-semibold mt-1">Warm neutrals</div>
+                        </div>
+                    </div>
+                    <div class="gal-item h-[240px] sm:h-[330px]">
+                        <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=800&q=80"
+                            alt="Celebration table" loading="lazy"
+                            onerror="this.parentElement.style.background='linear-gradient(160deg,#C9D3BC,#7D9B7C)';this.style.display='none'">
+                        <div class="cap">
+                            <div class="text-[11px] tracking-[.22em] uppercase text-white/70 font-semibold">Table</div>
+                            <div class="font-display text-[19px] font-semibold mt-1">Brunch styling</div>
+                        </div>
+                    </div>
+                    <div class="gal-item h-[240px] sm:h-[330px]">
+                        <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800&q=80"
+                            alt="Fresh blooms" loading="lazy"
+                            onerror="this.parentElement.style.background='linear-gradient(160deg,#F0DDD0,#C4694E)';this.style.display='none'">
+                        <div class="cap">
+                            <div class="text-[11px] tracking-[.22em] uppercase text-white/70 font-semibold">Florals
+                            </div>
+                            <div class="font-display text-[19px] font-semibold mt-1">Wild &amp; soft</div>
+                        </div>
+                    </div>
+                    <div class="gal-item h-[240px] sm:h-[330px]">
+                        <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=800&q=80"
+                            alt="Green garden path" loading="lazy"
+                            onerror="this.parentElement.style.background='linear-gradient(160deg,#9DBB99,#2F4436)';this.style.display='none'">
+                        <div class="cap">
+                            <div class="text-[11px] tracking-[.22em] uppercase text-white/70 font-semibold">Setting
+                            </div>
+                            <div class="font-display text-[19px] font-semibold mt-1">Willowbrook</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= REGISTRY ================= -->
+        <section id="registry" class="relative py-24 sm:py-28 overflow-hidden">
+            <div class="absolute inset-0 -z-10"
+                style="background:linear-gradient(180deg,#F4EDE3, #EFE6D9 52%, #FBF6EF);"></div>
+            <div class="grain"></div>
+
+            <div class="max-w-7xl mx-auto px-5 sm:px-8">
+                <div class="text-center max-w-[620px] mx-auto">
+                    <div
+                        class="reveal inline-flex items-center gap-2.5 text-[11px] tracking-[.28em] uppercase font-semibold text-clay">
+                        <span class="w-2 h-2 rounded-full bg-clay"></span> Gifts &amp; Giving
+                    </div>
+                    <h2 class="reveal mt-5 font-display text-ink font-semibold leading-[1.06] tracking-[-.022em]"
+                        style="font-size: clamp(2.25rem, 5.2vw, 3.65rem); transition-delay:.08s;">
+                        Your presence is the <span class="italic text-clay">greatest gift</span>
+                    </h2>
+                    <p class="reveal mt-5 text-ink/64 text-[16.5px] leading-relaxed" style="transition-delay:.14s;">
+                        Should you wish to bring something, we've gathered a few favourites below. A card with your best
+                        wishes is always more than enough.
+                    </p>
+                </div>
+
+                <div class="mt-14 grid md:grid-cols-3 gap-6">
+                    <div class="detail-card reveal p-8 text-center" style="transition-delay:.05s">
+                        <div class="glow"></div>
+                        <div
+                            class="mx-auto w-[58px] h-[58px] rounded-2xl bg-clay/12 text-clay flex items-center justify-center">
+                            <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 9h18v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z" />
+                                <path d="M3 9l2-5h14l2 5" />
+                                <path
+                                    d="M12 9v12M8.5 9C6 9 6 4.8 8.6 4.8c2 0 3.4 4.2 3.4 4.2M15.5 9c2.5 0 2.5-4.2-.1-4.2-2 0-3.4 4.2-3.4 4.2" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-6 font-display text-[21px] font-semibold text-ink">The Nursery Registry</h3>
+                        <p class="mt-3 text-ink/62 text-[14.5px] leading-relaxed">Thoughtfully chosen essentials for the
+                            first six months — from swaddles to sound machines.</p>
+                        <div
+                            class="mt-6 inline-flex items-center gap-2 text-[13px] font-semibold text-clay link-underline cursor-pointer">
+                            View registry
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17 17 7M9 7h8v8" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="detail-card reveal p-8 text-center" style="transition-delay:.13s">
+                        <div class="glow"></div>
+                        <div
+                            class="mx-auto w-[58px] h-[58px] rounded-2xl bg-sage/16 text-sage flex items-center justify-center">
+                            <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M12 21c-4.6-3-8-6.2-8-10a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 3.8-3.4 7-8 10Z" />
+                                <path d="M12 8v13" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-6 font-display text-[21px] font-semibold text-ink">Bring a Book</h3>
+                        <p class="mt-3 text-ink/62 text-[14.5px] leading-relaxed">Instead of a card, please bring your
+                            favourite childhood storybook to build baby's first library.</p>
+                        <div
+                            class="mt-6 inline-flex items-center gap-2 text-[13px] font-semibold text-sage link-underline cursor-pointer">
+                            See suggestions
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17 17 7M9 7h8v8" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="detail-card reveal p-8 text-center" style="transition-delay:.21s">
+                        <div class="glow"></div>
+                        <div
+                            class="mx-auto w-[58px] h-[58px] rounded-2xl bg-gold/18 text-gold flex items-center justify-center">
+                            <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="9" />
+                                <path
+                                    d="M12 7v10M9.4 9.4c0-1.2 1.2-1.9 2.6-1.9s2.6.7 2.6 1.9c0 2.6-5.2 1.4-5.2 4 0 1.3 1.2 2 2.6 2s2.6-.7 2.6-2" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-6 font-display text-[21px] font-semibold text-ink">The Diaper Fund</h3>
+                        <p class="mt-3 text-ink/62 text-[14.5px] leading-relaxed">Contributions toward the
+                            not-so-glamorous (but very appreciated) essentials are welcome.</p>
+                        <div
+                            class="mt-6 inline-flex items-center gap-2 text-[13px] font-semibold text-gold link-underline cursor-pointer">
+                            Contribute
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17 17 7M9 7h8v8" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= RSVP ================= -->
+        <section id="rsvp" class="relative py-24 sm:py-28 overflow-hidden">
+            <div class="absolute inset-0 -z-10" style="background:
+      radial-gradient(900px 520px at 12% 12%, rgba(125,155,124,.22), transparent 60%),
+      radial-gradient(820px 520px at 92% 88%, rgba(231,183,162,.32), transparent 62%),
+      linear-gradient(180deg,#FBF6EF,#F6EEE5);"></div>
+
+            <div class="max-w-6xl mx-auto px-5 sm:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+                    <div>
+                        <div
+                            class="reveal inline-flex items-center gap-2.5 text-[11px] tracking-[.28em] uppercase font-semibold text-clay">
+                            <span class="w-2 h-2 rounded-full bg-clay"></span> Kindly Respond
+                        </div>
+                        <h2 class="reveal mt-5 font-display text-ink font-semibold leading-[1.03] tracking-[-.024em]"
+                            style="font-size: clamp(2.35rem, 5.6vw, 3.95rem); transition-delay:.08s;">
+                            Will you join<br>us in the <span class="italic text-moss">garden?</span>
+                        </h2>
+                        <p class="reveal mt-6 text-ink/65 text-[17px] leading-relaxed max-w-[470px]"
+                            style="transition-delay:.14s;">
+                            Please RSVP by <strong class="text-ink font-semibold">May 30, 2026</strong> so we can save
+                            you a seat, a slice of cake, and a perfectly arranged place setting.
+                        </p>
+
+                        <div class="reveal mt-9 space-y-4 max-w-[430px]" style="transition-delay:.2s">
+                            <div class="flex items-start gap-4 p-4 rounded-2xl bg-white/72 border border-ink/8">
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-clay/12 text-clay flex items-center justify-center shrink-0">
+                                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="5" width="18" height="16" rx="3" />
+                                        <path d="M8 3v4M16 3v4M3 10h18" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-ink text-[15px]">Sunday, June 14, 2026</div>
+                                    <div class="text-ink/58 text-[13.5px] mt-0.5">11:00 AM – 2:30 PM</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 p-4 rounded-2xl bg-white/72 border border-ink/8">
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-sage/16 text-sage flex items-center justify-center shrink-0">
+                                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 21s7-4.6 7-10a7 7 0 1 0-14 0c0 5.4 7 10 7 10Z" />
+                                        <circle cx="12" cy="11" r="2.6" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-ink text-[15px]">Willowbrook Gardens</div>
+                                    <div class="text-ink/58 text-[13.5px] mt-0.5">128 Magnolia Lane, Sonoma, CA</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 p-4 rounded-2xl bg-white/72 border border-ink/8">
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-gold/18 text-gold flex items-center justify-center shrink-0">
+                                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 6h16v12H4z" />
+                                        <path d="m4 7 8 6 8-6" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-ink text-[15px]">hello@babyrosecelebration.com</div>
+                                    <div class="text-ink/58 text-[13.5px] mt-0.5">Questions? We're happy to help.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form -->
+                    <div class="reveal-scale">
+                        <div
+                            class="relative bg-white rounded-[28px] p-7 sm:p-9 shadow-[0_56px_110px_-52px_rgba(47,68,54,.72)] border border-ink/7">
+                            <div class="absolute top-0 left-9 right-9 h-[3px] rounded-b-full"
+                                style="background:linear-gradient(90deg,#C4694E,#C99A4E,#7D9B7C);"></div>
+
+                            <form id="rsvpForm" novalidate>
+                                <h3 class="font-display text-[23px] font-semibold text-ink">RSVP Form</h3>
+                                <p class="mt-1.5 text-ink/55 text-[14px]">Takes less than a minute — we promise.</p>
+
+                                <div class="mt-7 space-y-5">
+                                    <div>
+                                        <label
+                                            class="block text-[12px] font-semibold tracking-[.14em] uppercase text-ink/58 mb-2"
+                                            for="fullName">Full Name</label>
+                                        <input class="field" type="text" id="fullName" name="fullName"
+                                            placeholder="e.g. Olivia Bennett" required>
+                                        <p class="err-msg hidden mt-1.5 text-[12.5px] text-[#C0492F] font-medium">Please
+                                            tell us your name.</p>
+                                    </div>
+
+                                    <div>
+                                        <label
+                                            class="block text-[12px] font-semibold tracking-[.14em] uppercase text-ink/58 mb-2"
+                                            for="email">Email Address</label>
+                                        <input class="field" type="email" id="email" name="email"
+                                            placeholder="you@example.com" required>
+                                        <p class="err-msg hidden mt-1.5 text-[12.5px] text-[#C0492F] font-medium">Please
+                                            enter a valid email address.</p>
+                                    </div>
+
+                                    <div>
+                                        <span
+                                            class="block text-[12px] font-semibold tracking-[.14em] uppercase text-ink/58 mb-2.5">Will
+                                            you be attending?</span>
+                                        <div class="flex flex-wrap gap-2.5">
+                                            <label class="radio-pill">
+                                                <input type="radio" name="attending" value="yes" checked>
+                                                <span>Joyfully accept</span>
+                                            </label>
+                                            <label class="radio-pill">
+                                                <input type="radio" name="attending" value="no">
+                                                <span>Regretfully decline</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label
+                                            class="block text-[12px] font-semibold tracking-[.14em] uppercase text-ink/58 mb-2"
+                                            for="guests">Number of Guests</label>
+                                        <select class="field appearance-none cursor-pointer" id="guests" name="guests">
+                                            <option value="1">Just me</option>
+                                            <option value="2">2 guests</option>
+                                            <option value="3">3 guests</option>
+                                            <option value="4">4 guests</option>
+                                            <option value="5">5+ guests</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label
+                                            class="block text-[12px] font-semibold tracking-[.14em] uppercase text-ink/58 mb-2"
+                                            for="message">Dietary Notes or a Message</label>
+                                        <textarea class="field resize-none" id="message" name="message" rows="3"
+                                            placeholder="Allergies, song requests, or a note for the parents-to-be…"></textarea>
+                                    </div>
+                                </div>
+
+                                <button type="submit"
+                                    class="btn-magnetic w-full mt-7 bg-clay text-white font-semibold py-4 rounded-[16px] text-[15.5px] flex items-center justify-center gap-2.5">
+                                    <span id="submitText">Send My RSVP</span>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14M13 6l6 6-6 6" />
+                                    </svg>
+                                </button>
+
+                                <p class="mt-4 text-center text-[12px] text-ink/45 leading-relaxed">
+                                    Your details are only used to plan the celebration.
+                                </p>
+                            </form>
+
+                            <!-- success -->
+                            <div id="rsvpSuccess" class="hidden text-center py-10">
+                                <div
+                                    class="mx-auto w-[76px] h-[76px] rounded-full bg-sage/16 text-sage flex items-center justify-center">
+                                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path id="checkPath" d="M20 6.5 9.4 17.2 4 11.8"
+                                            style="stroke-dasharray:32;stroke-dashoffset:32;" />
+                                    </svg>
+                                </div>
+                                <h3 class="mt-6 font-display text-[25px] font-semibold text-ink">Thank you, <span
+                                        id="successName" class="italic text-clay">friend</span>!</h3>
+                                <p class="mt-3 text-ink/62 text-[15px] leading-relaxed max-w-[330px] mx-auto">
+                                    Your response has been recorded. We can't wait to celebrate baby Rose with you in
+                                    the garden.
+                                </p>
+                                <button id="resetForm"
+                                    class="mt-7 inline-flex items-center gap-2 font-semibold text-ink border-b-2 border-clay/40 pb-1.5 hover:border-clay transition-colors">
+                                    Submit another response
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14M13 6l6 6-6 6" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= FAQ ================= -->
+        <section id="faq" class="relative py-24 sm:py-28">
+            <div class="max-w-4xl mx-auto px-5 sm:px-8">
+                <div class="text-center">
+                    <div
+                        class="reveal inline-flex items-center gap-2.5 text-[11px] tracking-[.28em] uppercase font-semibold text-sage">
+                        <span class="w-2 h-2 rounded-full bg-sage"></span> Good to Know
+                    </div>
+                    <h2 class="reveal mt-5 font-display text-ink font-semibold leading-[1.07] tracking-[-.022em]"
+                        style="font-size: clamp(2.15rem, 5vw, 3.35rem); transition-delay:.08s;">
+                        Frequently asked <span class="italic text-clay">questions</span>
+                    </h2>
+                </div>
+
+                <div class="mt-12 space-y-4" id="faqList">
+                    <div class="acc-item open border border-ink/10 rounded-[18px] bg-white/55 overflow-hidden">
+                        <button
+                            class="acc-btn w-full flex items-start justify-between gap-6 text-left px-6 sm:px-7 py-6">
+                            <span
+                                class="font-display text-[18px] sm:text-[20px] font-semibold text-ink leading-snug">What
+                                should I wear to the shower?</span>
+                            <span
+                                class="acc-icon shrink-0 w-9 h-9 rounded-full border border-ink/14 flex items-center justify-center text-clay mt-0.5">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.2" stroke-linecap="round">
+                                    <path d="M12 5v14M5 12h14" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div class="acc-panel">
+                            <div class="px-6 sm:px-7 pb-6 text-ink/62 text-[15px] leading-relaxed">
+                                Garden party chic is the vibe — think soft pastels, florals, linen, and breathable
+                                fabrics. The celebration is partly on grass, so block heels or wedges are your best
+                                friend.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="acc-item border border-ink/10 rounded-[18px] bg-white/55 overflow-hidden">
+                        <button
+                            class="acc-btn w-full flex items-start justify-between gap-6 text-left px-6 sm:px-7 py-6">
+                            <span
+                                class="font-display text-[18px] sm:text-[20px] font-semibold text-ink leading-snug">Can
+                                I bring a plus one?</span>
+                            <span
+                                class="acc-icon shrink-0 w-9 h-9 rounded-full border border-ink/14 flex items-center justify-center text-clay mt-0.5">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.2" stroke-linecap="round">
+                                    <path d="M12 5v14M5 12h14" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div class="acc-panel">
+                            <div class="px-6 sm:px-7 pb-6 text-ink/62 text-[15px] leading-relaxed">
+                                Absolutely — just let us know in the RSVP form so we can plan seating and catering
+                                accordingly. Little ones are warmly welcome too.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="acc-item border border-ink/10 rounded-[18px] bg-white/55 overflow-hidden">
+                        <button
+                            class="acc-btn w-full flex items-start justify-between gap-6 text-left px-6 sm:px-7 py-6">
+                            <span class="font-display text-[18px] sm:text-[20px] font-semibold text-ink leading-snug">Is
+                                there parking at the venue?</span>
+                            <span
+                                class="acc-icon shrink-0 w-9 h-9 rounded-full border border-ink/14 flex items-center justify-center text-clay mt-0.5">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.2" stroke-linecap="round">
+                                    <path d="M12 5v14M5 12h14" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div class="acc-panel">
+                            <div class="px-6 sm:px-7 pb-6 text-ink/62 text-[15px] leading-relaxed">
+                                Yes — complimentary valet is available at the Magnolia Lane entrance, plus a shaded
+                                self-park lot just past the rose pavilion.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="acc-item border border-ink/10 rounded-[18px] bg-white/55 overflow-hidden">
+                        <button
+                            class="acc-btn w-full flex items-start justify-between gap-6 text-left px-6 sm:px-7 py-6">
+                            <span
+                                class="font-display text-[18px] sm:text-[20px] font-semibold text-ink leading-snug">What
+                                happens if it rains?</span>
+                            <span
+                                class="acc-icon shrink-0 w-9 h-9 rounded-full border border-ink/14 flex items-center justify-center text-clay mt-0.5">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.2" stroke-linecap="round">
+                                    <path d="M12 5v14M5 12h14" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div class="acc-panel">
+                            <div class="px-6 sm:px-7 pb-6 text-ink/62 text-[15px] leading-relaxed">
+                                The Rose Pavilion is fully covered and heated, so the celebration goes on beautifully
+                                rain or shine. We'll email guests if plans shift.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CTA BANNER ================= -->
+        <section class="relative py-20 sm:py-24">
+            <div class="max-w-7xl mx-auto px-5 sm:px-8">
+                <div class="relative rounded-[32px] overflow-hidden">
+                    <div class="absolute inset-0">
+                        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&q=80"
+                            alt="Warm natural light" class="w-full h-full object-cover" loading="lazy"
+                            onerror="this.style.display='none'">
+                        <div class="absolute inset-0"
+                            style="background:linear-gradient(115deg, rgba(196,105,78,.94) 6%, rgba(168,92,68,.86) 44%, rgba(47,68,54,.72) 100%);">
+                        </div>
+                    </div>
+
+                    <div class="relative px-7 sm:px-12 lg:px-16 py-16 sm:py-20 text-center">
+                        <div class="reveal">
+                            <div
+                                class="inline-flex items-center gap-2.5 text-[11px] tracking-[.28em] uppercase font-semibold text-white/78">
+                                <span class="w-8 h-[1.5px] bg-white/50"></span> One last thing <span
+                                    class="w-8 h-[1.5px] bg-white/50"></span>
+                            </div>
+                            <h2 class="mt-6 font-display text-white font-semibold leading-[1.05] tracking-[-.022em]"
+                                style="font-size: clamp(2.15rem, 5.4vw, 3.85rem);">
+                                Let's make memories<br class="hidden sm:block"> that last a <span
+                                    class="italic">lifetime.</span>
+                            </h2>
+                            <p class="mt-6 text-white/82 text-[17px] leading-relaxed max-w-[540px] mx-auto">
+                                Seats are limited and the cake is already being planned. Send your RSVP and we'll take
+                                care of the rest.
+                            </p>
+                            <div class="mt-9 flex flex-wrap items-center justify-center gap-3.5">
+                                <a href="#rsvp"
+                                    class="btn-magnetic inline-flex items-center gap-2.5 bg-white text-clay font-semibold px-8 py-4 rounded-full text-[15px]">
+                                    RSVP Now
+                                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14M13 6l6 6-6 6" />
+                                    </svg>
+                                </a>
+                                <a href="#details"
+                                    class="inline-flex items-center gap-2.5 font-semibold px-8 py-4 rounded-full text-[15px] text-white border border-white/35 hover:bg-white/12 transition-all duration-500">
+                                    Review the Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="relative bg-moss text-cream/82 pt-20 pb-10 overflow-hidden">
+        <div class="absolute inset-0 opacity-[.16]"
+            style="background-image:radial-gradient(rgba(251,246,239,.5) 1px, transparent 1px); background-size:30px 30px;">
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
+            <div class="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
+                <div>
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-11 h-11 rounded-full bg-cream text-moss flex items-center justify-center font-display text-lg">
+                            R</div>
+                        <div>
+                            <div class="font-display text-[19px] font-semibold text-cream leading-tight">Baby Rose
+                                Shower</div>
+                            <div class="text-[11px] tracking-[.2em] uppercase text-cream/55 font-semibold mt-0.5">June
+                                14, 2026</div>
+                        </div>
+                    </div>
+                    <p class="mt-6 text-cream/62 text-[14.5px] leading-relaxed max-w-[300px]">
+                        A garden celebration of new life, hosted with love by the Miller &amp; Bennett families in
+                        Sonoma, California.
+                    </p>
+                    <div class="mt-6 flex items-center gap-3">
+                        <a href="#rsvp" aria-label="Email"
+                            class="w-10 h-10 rounded-full border border-cream/18 flex items-center justify-center hover:bg-cream/12 hover:-translate-y-1 transition-all duration-400">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="5" width="18" height="14" rx="2" />
+                                <path d="m3.5 6.5 8.5 6 8.5-6" />
+                            </svg>
+                        </a>
+                        <a href="#gallery" aria-label="Gallery"
+                            class="w-10 h-10 rounded-full border border-cream/18 flex items-center justify-center hover:bg-cream/12 hover:-translate-y-1 transition-all duration-400">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="16" rx="3" />
+                                <circle cx="8.5" cy="9.5" r="1.6" />
+                                <path d="m4 17 4.5-4.5 3.5 3.5 3-2.5L20 17" />
+                            </svg>
+                        </a>
+                        <a href="#details" aria-label="Location"
+                            class="w-10 h-10 rounded-full border border-cream/18 flex items-center justify-center hover:bg-cream/12 hover:-translate-y-1 transition-all duration-400">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 21s7-4.6 7-10a7 7 0 1 0-14 0c0 5.4 7 10 7 10Z" />
+                                <circle cx="12" cy="11" r="2.5" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-[11px] tracking-[.22em] uppercase text-cream/50 font-semibold">Event</h4>
+                    <ul class="mt-5 space-y-3">
+                        <li><a href="#details"
+                                class="text-cream/72 hover:text-cream hover:translate-x-1 inline-block transition-all duration-300 text-[14.5px]">Details</a>
+                        </li>
+                        <li><a href="#schedule"
+                                class="text-cream/72 hover:text-cream hover:translate-x-1 inline-block transition-all duration-300 text-[14.5px]">Schedule</a>
+                        </li>
+                        <li><a href="#gallery"
+                                class="text-cream/72 hover:text-cream hover:translate-x-1 inline-block transition-all duration-300 text-[14.5px]">Gallery</a>
+                        </li>
+                        <li><a href="#registry"
+                                class="text-cream/72 hover:text-cream hover:translate-x-1 inline-block transition-all duration-300 text-[14.5px]">Registry</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-[11px] tracking-[.22em] uppercase text-cream/50 font-semibold">Info</h4>
+                    <ul class="mt-5 space-y-3">
+                        <li><a href="#faq"
+                                class="text-cream/72 hover:text-cream hover:translate-x-1 inline-block transition-all duration-300 text-[14.5px]">FAQ</a>
+                        </li>
+                        <li><a href="#rsvp"
+                                class="text-cream/72 hover:text-cream hover:translate-x-1 inline-block transition-all duration-300 text-[14.5px]">RSVP</a>
+                        </li>
+                        <li><a href="#countdown"
+                                class="text-cream/72 hover:text-cream hover:translate-x-1 inline-block transition-all duration-300 text-[14.5px]">Countdown</a>
+                        </li>
+                        <li><a href="#top"
+                                class="text-cream/72 hover:text-cream hover:translate-x-1 inline-block transition-all duration-300 text-[14.5px]">Back
+                                to top</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-[11px] tracking-[.22em] uppercase text-cream/50 font-semibold">Stay in the loop</h4>
+                    <p class="mt-5 text-cream/62 text-[14px] leading-relaxed">Get a reminder the week of the
+                        celebration.</p>
+                    <form id="newsletterForm" class="mt-5 flex items-center gap-2.5">
+                        <input type="email" required placeholder="Your email"
+                            class="flex-1 min-w-0 bg-cream/10 border border-cream/18 rounded-full px-5 py-3 text-[14px] text-cream placeholder:text-cream/42 outline-none focus:border-cream/45 focus:bg-cream/14 transition-all duration-300">
+                        <button type="submit"
+                            class="shrink-0 bg-cream text-moss font-semibold text-[13.5px] px-5 py-3 rounded-full hover:bg-blush hover:text-ink transition-colors duration-300">
+                            Join
+                        </button>
+                    </form>
+                    <p id="newsletterMsg"
+                        class="mt-3 text-[12.5px] text-blush opacity-0 transition-opacity duration-400">Thanks — you're
+                        on the list!</p>
+                </div>
+            </div>
+
+            <div
+                class="mt-14 pt-8 border-t border-cream/12 flex flex-col sm:flex-row items-center justify-between gap-5">
+                <p class="text-cream/52 text-[12.5px] text-center sm:text-left">
+                    © 2026 Baby Rose Celebration. Designed with love for Amelia &amp; Daniel.
+                </p>
+                <div class="flex items-center gap-6">
+                    <a href="#top" class="text-cream/52 hover:text-cream text-[12.5px] transition-colors">Privacy</a>
+                    <a href="#top" class="text-cream/52 hover:text-cream text-[12.5px] transition-colors">Terms</a>
+                    <a href="#rsvp" class="text-cream/52 hover:text-cream text-[12.5px] transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+            (function () {
+                'use strict';
+
+                const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+                /* ---------- Hero kinetic type ---------- */
+                requestAnimationFrame(function () {
+                    setTimeout(function () {
+                        document.body.classList.add('loaded');
+                    }, 80);
+                });
+
+                /* ---------- Scroll progress + nav ---------- */
+                const progressBar = document.getElementById('progressBar');
+                const nav = document.getElementById('nav');
+
+                function onScrollUI() {
+                    const st = window.pageYOffset || document.documentElement.scrollTop;
+                    const h = document.documentElement.scrollHeight - window.innerHeight;
+                    if (progressBar) progressBar.style.width = (h > 0 ? (st / h) * 100 : 0) + '%';
+                    if (nav) nav.classList.toggle('scrolled', st > 30);
+                    updateTimeline();
+                }
+
+                /* ---------- Mobile menu ---------- */
+                const menuBtn = document.getElementById('menuBtn');
+                const mobileMenu = document.getElementById('mobileMenu');
+                if (menuBtn && mobileMenu) {
+                    menuBtn.addEventListener('click', function () {
+                        mobileMenu.classList.toggle('open');
+                    });
+                    document.querySelectorAll('.mobile-link').forEach(function (link) {
+                        link.addEventListener('click', function () {
+                            mobileMenu.classList.remove('open');
+                        });
+                    });
+                    document.addEventListener('click', function (e) {
+                        if (!mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+                            mobileMenu.classList.remove('open');
+                        }
+                    });
+                }
+
+                /* ---------- Reveal on scroll ---------- */
+                const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale, .gal-item');
+                if ('IntersectionObserver' in window) {
+                    const io = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (entry) {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('in');
+                                io.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+                    revealEls.forEach(function (el) { io.observe(el); });
+                } else {
+                    revealEls.forEach(function (el) { el.classList.add('in'); });
+                }
+
+                /* ---------- 3D tilt card ---------- */
+                const tiltStage = document.getElementById('tiltStage');
+                const tiltCard = document.getElementById('tiltCard');
+
+                if (tiltStage && tiltCard && !prefersReduced && window.matchMedia('(hover: hover)').matches) {
+                    let targetRX = 0, targetRY = 0, curRX = 0, curRY = 0;
+                    let rafId = null;
+
+                    function animateTilt() {
+                        curRX += (targetRX - curRX) * 0.085;
+                        curRY += (targetRY - curRY) * 0.085;
+                        tiltCard.style.transform =
+                            'rotateX(' + curRX.toFixed(2) + 'deg) rotateY(' + curRY.toFixed(2) + 'deg) translateZ(0)';
+                        if (Math.abs(targetRX - curRX) > 0.02 || Math.abs(targetRY - curRY) > 0.02) {
+                            rafId = requestAnimationFrame(animateTilt);
+                        } else {
+                            rafId = null;
+                        }
+                    }
+
+                    function kick() {
+                        if (!rafId) rafId = requestAnimationFrame(animateTilt);
+                    }
+
+                    tiltStage.addEventListener('mousemove', function (e) {
+                        const r = tiltStage.getBoundingClientRect();
+                        const px = (e.clientX - r.left) / r.width - 0.5;
+                        const py = (e.clientY - r.top) / r.height - 0.5;
+                        targetRY = px * 17;
+                        targetRX = -py * 15;
+                        kick();
+                    });
+
+                    tiltStage.addEventListener('mouseleave', function () {
+                        targetRX = 0;
+                        targetRY = 0;
+                        kick();
+                    });
+
+                    // gentle idle drift
+                    let idleT = 0;
+                    setInterval(function () {
+                        if (Math.abs(targetRX) < 0.1 && Math.abs(targetRY) < 0.1) {
+                            idleT += 0.32;
+                            targetRY = Math.sin(idleT) * 3.2;
+                            targetRX = Math.cos(idleT * 0.78) * 2.4;
+                            kick();
+                        }
+                    }, 90);
+                }
+
+                /* ---------- Hero parallax shapes ---------- */
+                const parallaxEls = Array.prototype.slice.call(document.querySelectorAll('.float-shape[data-depth]'));
+                if (parallaxEls.length && !prefersReduced && window.matchMedia('(hover: hover)').matches) {
+                    let mx = 0, my = 0, cx = 0, cy = 0;
+
+                    window.addEventListener('mousemove', function (e) {
+                        mx = (e.clientX / window.innerWidth - 0.5) * 2;
+                        my = (e.clientY / window.innerHeight - 0.5) * 2;
+                    }, { passive: true });
+
+                    (function loop() {
+                        cx += (mx - cx) * 0.06;
+                        cy += (my - cy) * 0.06;
+                        parallaxEls.forEach(function (el) {
+                            const d = parseFloat(el.getAttribute('data-depth')) || 12;
+                            el.style.marginLeft = (-cx * d).toFixed(2) + 'px';
+                            el.style.marginTop = (-cy * d * 0.72).toFixed(2) + 'px';
+                        });
+                        requestAnimationFrame(loop);
+                    })();
+                }
+
+                /* ---------- Countdown ---------- */
+                const cdDays = document.getElementById('cdDays');
+                const cdHours = document.getElementById('cdHours');
+                const cdMinutes = document.getElementById('cdMinutes');
+                const cdSeconds = document.getElementById('cdSeconds');
+
+                let target = new Date('2026-06-14T11:00:00');
+                if (isNaN(target.getTime())) {
+                    target = new Date();
+                    target.setMonth(5, 14);
+                    target.setHours(11, 0, 0, 0);
+                    if (target.getTime() < Date.now()) target.setFullYear(target.getFullYear() + 1);
+                }
+
+                function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+                function setNum(el, val) {
+                    if (!el) return;
+                    const v = pad(val);
+                    if (el.textContent !== v) {
+                        el.textContent = v;
+                        if (!prefersReduced) {
+                            el.classList.remove('pop');
+                            void el.offsetWidth;
+                            el.classList.add('pop');
+                        }
+                    }
+                }
+
+                function tick() {
+                    const diff = target.getTime() - Date.now();
+                    if (diff <= 0) {
+                        setNum(cdDays, 0); setNum(cdHours, 0); setNum(cdMinutes, 0); setNum(cdSeconds, 0);
+                        return;
+                    }
+                    const s = Math.floor(diff / 1000);
+                    setNum(cdDays, Math.floor(s / 86400));
+                    setNum(cdHours, Math.floor((s % 86400) / 3600));
+                    setNum(cdMinutes, Math.floor((s % 3600) / 60));
+                    setNum(cdSeconds, s % 60);
+                }
+
+                tick();
+                setInterval(tick, 1000);
+
+                /* ---------- Timeline scroll-linked fill ---------- */
+                const timelineWrap = document.getElementById('timelineWrap');
+                const timelineFill = document.getElementById('timelineFill');
+
+                function updateTimeline() {
+                    if (!timelineWrap || !timelineFill) return;
+                    const rect = timelineWrap.getBoundingClientRect();
+                    const vh = window.innerHeight;
+                    const total = rect.height + vh * 0.35;
+                    const passed = vh * 0.72 - rect.top;
+                    let pct = (passed / total) * 100;
+                    pct = Math.max(0, Math.min(100, pct));
+                    timelineFill.style.height = pct + '%';
+                }
+
+                /* ---------- Accordion ---------- */
+                const accItems = document.querySelectorAll('.acc-item');
+
+                function setPanelHeight(item) {
+                    const panel = item.querySelector('.acc-panel');
+                    if (!panel) return;
+                    if (item.classList.contains('open')) {
+                        panel.style.maxHeight = panel.scrollHeight + 'px';
+                    } else {
+                        panel.style.maxHeight = '0px';
+                    }
+                }
+
+                accItems.forEach(function (item) {
+                    const btn = item.querySelector('.acc-btn');
+                    if (!btn) return;
+                    setPanelHeight(item);
+                    btn.addEventListener('click', function () {
+                        const isOpen = item.classList.contains('open');
+                        accItems.forEach(function (other) {
+                            other.classList.remove('open');
+                            setPanelHeight(other);
+                        });
+                        if (!isOpen) {
+                            item.classList.add('open');
+                            setPanelHeight(item);
+                        }
+                    });
+                });
+
+                window.addEventListener('resize', function () {
+                    accItems.forEach(setPanelHeight);
+                });
+
+                /* ---------- Detail card cursor glow ---------- */
+                document.querySelectorAll('.detail-card').forEach(function (card) {
+                    const glow = card.querySelector('.glow');
+                    if (!glow) return;
+                    card.addEventListener('mousemove', function (e) {
+                        const r = card.getBoundingClientRect();
+                        glow.style.left = (e.clientX - r.left) + 'px';
+                        glow.style.top = (e.clientY - r.top) + 'px';
+                    });
+                });
+
+                /* ---------- Magnetic buttons ---------- */
+                if (!prefersReduced && window.matchMedia('(hover: hover)').matches) {
+                    document.querySelectorAll('.btn-magnetic').forEach(function (btn) {
+                        btn.addEventListener('mousemove', function (e) {
+                            const r = btn.getBoundingClientRect();
+                            const x = e.clientX - r.left - r.width / 2;
+                            const y = e.clientY - r.top - r.height / 2;
+                            btn.style.transform = 'translate(' + (x * 0.16).toFixed(2) + 'px,' + (y * 0.22).toFixed(2) + 'px)';
+                        });
+                        btn.addEventListener('mouseleave', function () {
+                            btn.style.transform = 'translate(0,0)';
+                        });
+                    });
+                }
+
+                /* ---------- RSVP form ---------- */
+                const form = document.getElementById('rsvpForm');
+                const successBox = document.getElementById('rsvpSuccess');
+                const successName = document.getElementById('successName');
+                const resetBtn = document.getElementById('resetForm');
+
+                function validateEmail(value) {
+                    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+                }
+
+                function showError(field, show) {
+                    if (!field) return;
+                    field.classList.toggle('error', show);
+                    const wrap = field.closest('div');
+                    const msg = wrap ? wrap.querySelector('.err-msg') : null;
+                    if (msg) msg.classList.toggle('hidden', !show);
+                    if (show && !prefersReduced) {
+                        field.animate(
+                            [{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }],
+                            { duration: 280, easing: 'ease-out' }
+                        );
+                    }
+                }
+
+                if (form) {
+                    const nameField = document.getElementById('fullName');
+                    const emailField = document.getElementById('email');
+
+                    [nameField, emailField].forEach(function (f) {
+                        if (!f) return;
+                        f.addEventListener('input', function () {
+                            if (f.classList.contains('error')) showError(f, false);
+                        });
+                    });
+
+                    form.addEventListener('submit', function (e) {
+                        e.preventDefault();
+
+                        const nameVal = nameField ? nameField.value.trim() : '';
+                        const emailVal = emailField ? emailField.value.trim() : '';
+
+                        let valid = true;
+                        if (!nameVal) { showError(nameField, true); valid = false; } else { showError(nameField, false); }
+                        if (!validateEmail(emailVal)) { showError(emailField, true); valid = false; } else { showError(emailField, false); }
+
+                        if (!valid) return;
+
+                        const submitBtn = form.querySelector('button[type="submit"]');
+                        const submitText = document.getElementById('submitText');
+                        if (submitBtn) {
+                            submitBtn.disabled = true;
+                            submitBtn.style.opacity = '0.72';
+                        }
+                        if (submitText) submitText.textContent = 'Sending…';
+
+                        setTimeout(function () {
+                            form.style.display = 'none';
+                            if (successBox) {
+                                successBox.classList.remove('hidden');
+                                if (successName) {
+                                    successName.textContent = nameVal.split(' ')[0] || 'friend';
+                                }
+                                const check = document.getElementById('checkPath');
+                                if (check && !prefersReduced) {
+                                    check.style.transition = 'stroke-dashoffset .7s cubic-bezier(.19,1,.22,1)';
+                                    requestAnimationFrame(function () {
+                                        check.style.strokeDashoffset = '0';
+                                    });
+                                } else if (check) {
+                                    check.style.strokeDashoffset = '0';
+                                }
+
+                                if (!prefersReduced && successBox.animate) {
+                                    successBox.animate(
+                                        [{ opacity: 0, transform: 'translateY(18px)' }, { opacity: 1, transform: 'translateY(0)' }],
+                                        { duration: 520, easing: 'cubic-bezier(.19,1,.22,1)', fill: 'both' }
+                                    );
+                                }
+                            }
+                        }, 620);
+                    });
+                }
+
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', function () {
+                        if (successBox) successBox.classList.add('hidden');
+                        if (form) {
+                            form.reset();
+                            form.style.display = '';
+                            const submitBtn = form.querySelector('button[type="submit"]');
+                            const submitText = document.getElementById('submitText');
+                            if (submitBtn) {
+                                submitBtn.disabled = false;
+                                submitBtn.style.opacity = '1';
+                            }
+                            if (submitText) submitText.textContent = 'Send My RSVP';
+                        }
+                        const check = document.getElementById('checkPath');
+                        if (check) check.style.strokeDashoffset = '32';
+                    });
+                }
+
+                /* ---------- Newsletter ---------- */
+                const newsletterForm = document.getElementById('newsletterForm');
+                const newsletterMsg = document.getElementById('newsletterMsg');
+                if (newsletterForm) {
+                    newsletterForm.addEventListener('submit', function (e) {
+                        e.preventDefault();
+                        const input = newsletterForm.querySelector('input[type="email"]');
+                        if (input && input.value.trim()) {
+                            if (newsletterMsg) {
+                                newsletterMsg.style.opacity = '1';
+                                setTimeout(function () { newsletterMsg.style.opacity = '0'; }, 3600);
+                            }
+                            input.value = '';
+                        }
+                    });
+                }
+
+                /* ---------- Active nav link on scroll ---------- */
+                const sections = ['details', 'schedule', 'gallery', 'registry', 'faq'];
+                const navLinks = Array.prototype.slice.call(document.querySelectorAll('#nav nav a'));
+
+                function updateActiveNav() {
+                    let current = '';
+                    sections.forEach(function (id) {
+                        const el = document.getElementById(id);
+                        if (!el) return;
+                        const rect = el.getBoundingClientRect();
+                        if (rect.top <= 160 && rect.bottom >= 160) current = id;
+                    });
+                    navLinks.forEach(function (link) {
+                        const href = link.getAttribute('href') || '';
+                        link.classList.toggle('active', href === '#' + current);
+                    });
+                }
+
+                /* ---------- Scroll listener (throttled) ---------- */
+                let ticking = false;
+                window.addEventListener('scroll', function () {
+                    if (!ticking) {
+                        ticking = true;
+                        requestAnimationFrame(function () {
+                            onScrollUI();
+                            updateActiveNav();
+                            ticking = false;
+                        });
+                    }
+                }, { passive: true });
+
+                window.addEventListener('resize', function () {
+                    updateTimeline();
+                    updateActiveNav();
+                });
+
+                // initial calls
+                onScrollUI();
+                updateActiveNav();
+                updateTimeline();
+
+            })();
+    </script>
+
+</body>
+
+</html>

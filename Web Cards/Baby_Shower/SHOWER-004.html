@@ -1,0 +1,1233 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Shower Invitation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;500;600;700&family=Sacramento&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #fce4ec 0%, #e8eaf6 25%, #e0f7fa 50%, #fff3e0 75%, #fce4ec 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            color: #5d4e6d;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .envelope-container {
+            perspective: 1000px;
+            margin-bottom: 30px;
+            cursor: pointer;
+        }
+
+        .envelope {
+            width: 280px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: envelopeFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes envelopeFloat {
+
+            0%,
+            100% {
+                transform: translateY(0) rotateX(5deg);
+            }
+
+            50% {
+                transform: translateY(-15px) rotateX(-5deg);
+            }
+        }
+
+        .envelope-body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8bbd0, #e1bee7);
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(156, 39, 176, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .envelope-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-top: 100px solid #f48fb1;
+        }
+
+        .envelope-heart {
+            font-size: 40px;
+            z-index: 2;
+            animation: heartPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        .hero-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(3rem, 8vw, 6rem);
+            color: #ad1457;
+            text-shadow: 2px 2px 4px rgba(173, 20, 87, 0.1);
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        .hero-subtitle {
+            font-family: 'Sacramento', cursive;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: #7b1fa2;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.8s;
+        }
+
+        .hero-tagline {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: #8e6e9e;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 1.1s;
+        }
+
+        .scroll-indicator {
+            margin-top: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 1.5s;
+        }
+
+        .scroll-arrow {
+            width: 30px;
+            height: 30px;
+            border-right: 3px solid #ad1457;
+            border-bottom: 3px solid #ad1457;
+            transform: rotate(45deg);
+            animation: scrollBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollBounce {
+
+            0%,
+            100% {
+                transform: rotate(45deg) translate(0, 0);
+                opacity: 1;
+            }
+
+            50% {
+                transform: rotate(45deg) translate(5px, 5px);
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Invitation Card */
+        .invitation-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: clamp(30px, 5vw, 60px);
+            max-width: 700px;
+            width: 100%;
+            margin: 60px auto;
+            box-shadow:
+                0 30px 80px rgba(156, 39, 176, 0.12),
+                0 0 0 1px rgba(255, 255, 255, 0.5),
+                inset 0 0 80px rgba(255, 255, 255, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        .invitation-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .invitation-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(248, 187, 208, 0.1) 0%, transparent 70%);
+            animation: shimmer 8s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .card-decoration {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.3;
+            animation: floatDecor 6s ease-in-out infinite;
+        }
+
+        .card-decoration:nth-child(1) {
+            top: 15px;
+            left: 20px;
+            animation-delay: 0s;
+        }
+
+        .card-decoration:nth-child(2) {
+            top: 15px;
+            right: 20px;
+            animation-delay: 1s;
+        }
+
+        .card-decoration:nth-child(3) {
+            bottom: 15px;
+            left: 20px;
+            animation-delay: 2s;
+        }
+
+        .card-decoration:nth-child(4) {
+            bottom: 15px;
+            right: 20px;
+            animation-delay: 3s;
+        }
+
+        @keyframes floatDecor {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(10deg);
+            }
+        }
+
+        .card-header {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #ad1457;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .card-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .card-divider .line {
+            height: 1px;
+            width: 60px;
+            background: linear-gradient(90deg, transparent, #f48fb1, transparent);
+        }
+
+        .card-divider .icon {
+            font-size: 20px;
+        }
+
+        .parents-names {
+            font-family: 'Sacramento', cursive;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: #7b1fa2;
+            margin: 15px 0;
+        }
+
+        .invite-text {
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
+            color: #6d597a;
+            line-height: 1.8;
+            margin: 20px 0;
+            font-weight: 400;
+        }
+
+        .baby-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            background: linear-gradient(135deg, #e91e63, #9c27b0, #3f51b5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20px 0;
+            animation: nameGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes nameGlow {
+
+            0%,
+            100% {
+                filter: brightness(1);
+            }
+
+            50% {
+                filter: brightness(1.2);
+            }
+        }
+
+        /* Details Section */
+        .details-section {
+            max-width: 900px;
+            width: 100%;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 0 20px;
+        }
+
+        .detail-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            padding: 35px 25px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(156, 39, 176, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transform: translateY(40px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .detail-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 60px rgba(156, 39, 176, 0.15);
+        }
+
+        .detail-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .detail-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.8rem;
+            color: #ad1457;
+            margin-bottom: 10px;
+        }
+
+        .detail-info {
+            font-size: 1.05rem;
+            color: #6d597a;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .detail-info strong {
+            color: #7b1fa2;
+            font-weight: 600;
+        }
+
+        /* Countdown */
+        .countdown-section {
+            text-align: center;
+            margin: 60px auto;
+            max-width: 700px;
+            padding: 0 20px;
+        }
+
+        .countdown-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: #ad1457;
+            margin-bottom: 30px;
+        }
+
+        .countdown-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px 15px;
+            min-width: 100px;
+            box-shadow: 0 10px 30px rgba(156, 39, 176, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .countdown-number {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.85rem;
+            color: #8e6e9e;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px;
+        }
+
+        /* RSVP Section */
+        .rsvp-section {
+            max-width: 600px;
+            width: 100%;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .rsvp-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: clamp(30px, 5vw, 50px);
+            box-shadow: 0 30px 80px rgba(156, 39, 176, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            text-align: center;
+            transform: translateY(40px);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        .rsvp-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .rsvp-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: #ad1457;
+            margin-bottom: 10px;
+        }
+
+        .rsvp-subtitle {
+            color: #8e6e9e;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: #7b1fa2;
+            margin-bottom: 8px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid #f3e5f5;
+            border-radius: 15px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1rem;
+            color: #5d4e6d;
+            background: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #ce93d8;
+            box-shadow: 0 0 20px rgba(206, 147, 216, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .attendance-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .attendance-option {
+            flex: 1;
+            position: relative;
+        }
+
+        .attendance-option input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .attendance-option label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+            border: 2px solid #f3e5f5;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .attendance-option input:checked+label {
+            border-color: #e91e63;
+            background: linear-gradient(135deg, #fce4ec, #f3e5f5);
+            color: #ad1457;
+            font-weight: 600;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            color: white;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(233, 30, 99, 0.3);
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(233, 30, 99, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Registry Section */
+        .registry-section {
+            text-align: center;
+            margin: 60px auto;
+            max-width: 600px;
+            padding: 0 20px;
+        }
+
+        .registry-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: #ad1457;
+            margin-bottom: 15px;
+        }
+
+        .registry-text {
+            color: #6d597a;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #8e6e9e;
+        }
+
+        .footer-hearts {
+            font-size: 24px;
+            margin-bottom: 10px;
+            animation: heartPulse 2s ease-in-out infinite;
+        }
+
+        .footer-text {
+            font-family: 'Sacramento', cursive;
+            font-size: 1.8rem;
+            color: #ad1457;
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            padding: 20px;
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            border-radius: 15px;
+            color: #2e7d32;
+            font-weight: 500;
+            margin-top: 20px;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* Floating elements */
+        .floating-elements {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-item {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.15;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.15;
+            }
+
+            90% {
+                opacity: 0.15;
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 600px) {
+            .countdown-item {
+                min-width: 75px;
+                padding: 15px 10px;
+            }
+
+            .attendance-options {
+                flex-direction: column;
+            }
+
+            .envelope {
+                width: 220px;
+                height: 160px;
+            }
+
+            .envelope-body::before {
+                border-left: 110px solid transparent;
+                border-right: 110px solid transparent;
+                border-top: 80px solid #f48fb1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="three-canvas"></canvas>
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="floating-elements" id="floatingElements"></div>
+
+    <div class="content-wrapper">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="envelope-container">
+                <div class="envelope">
+                    <div class="envelope-body">
+                        <span class="envelope-heart">🍼</span>
+                    </div>
+                </div>
+            </div>
+            <h1 class="hero-title">A Little One is on the Way!</h1>
+            <p class="hero-subtitle">You're Invited to a Baby Shower</p>
+            <p class="hero-tagline">Celebrating the upcoming arrival</p>
+            <div class="scroll-indicator">
+                <div class="scroll-arrow"></div>
+            </div>
+        </section>
+
+        <!-- Main Invitation Card -->
+        <div class="invitation-card" data-animate>
+            <span class="card-decoration">⭐</span>
+            <span class="card-decoration">🌸</span>
+            <span class="card-decoration">✨</span>
+            <span class="card-decoration">🌙</span>
+
+            <h2 class="card-header">A Baby Shower</h2>
+            <div class="card-divider">
+                <span class="line"></span>
+                <span class="icon">👶</span>
+                <span class="line"></span>
+            </div>
+            <p class="parents-names">in honor of</p>
+            <div class="baby-name">Baby Thompson</div>
+            <p class="invite-text">
+                Please join us for an afternoon of celebration, games, and joy as we prepare to welcome our little
+                bundle of joy into the world!
+            </p>
+            <div class="card-divider">
+                <span class="line"></span>
+                <span class="icon">💕</span>
+                <span class="line"></span>
+            </div>
+            <p class="parents-names">Sarah & James Thompson</p>
+        </div>
+
+        <!-- Details Section -->
+        <div class="details-section">
+            <div class="detail-card" data-animate>
+                <span class="detail-icon">📅</span>
+                <h3 class="detail-title">Date</h3>
+                <p class="detail-info">
+                    <strong>Saturday</strong><br>
+                    March 15, 2025<br>
+                    2:00 PM - 5:00 PM
+                </p>
+            </div>
+            <div class="detail-card" data-animate>
+                <span class="detail-icon">📍</span>
+                <h3 class="detail-title">Venue</h3>
+                <p class="detail-info">
+                    <strong>The Garden Room</strong><br>
+                    123 Blossom Lane<br>
+                    Springfield, IL 62701
+                </p>
+            </div>
+            <div class="detail-card" data-animate>
+                <span class="detail-icon">🎀</span>
+                <h3 class="detail-title">Theme</h3>
+                <p class="detail-info">
+                    <strong>"Twinkle Twinkle<br>Little Star"</strong><br>
+                    Pastel colors preferred
+                </p>
+            </div>
+        </div>
+
+        <!-- Countdown -->
+        <div class="countdown-section" data-animate>
+            <h2 class="countdown-title">Counting Down to the Big Day</h2>
+            <div class="countdown-grid">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RSVP Section -->
+        <div class="rsvp-section">
+            <div class="rsvp-card" data-animate>
+                <h2 class="rsvp-title">Kindly Respond</h2>
+                <p class="rsvp-subtitle">Please RSVP by March 1st, 2025</p>
+
+                <form id="rsvpForm">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Will you attend?</label>
+                        <div class="attendance-options">
+                            <div class="attendance-option">
+                                <input type="radio" name="attendance" id="yes" value="yes" required>
+                                <label for="yes">🎉 Joyfully Accept</label>
+                            </div>
+                            <div class="attendance-option">
+                                <input type="radio" name="attendance" id="no" value="no">
+                                <label for="no">😢 Regretfully Decline</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Guests</label>
+                        <select>
+                            <option value="1">1 Guest</option>
+                            <option value="2">2 Guests</option>
+                            <option value="3">3 Guests</option>
+                            <option value="4">4 Guests</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Message for the Parents (Optional)</label>
+                        <textarea placeholder="Share your wishes..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send RSVP ✨</button>
+                </form>
+                <div class="success-message" id="successMessage">
+                    🎉 Thank you for your RSVP! We can't wait to celebrate with you! 🎉
+                </div>
+            </div>
+        </div>
+
+        <!-- Registry Info -->
+        <div class="registry-section" data-animate>
+            <h2 class="registry-title">Gift Registry</h2>
+            <div class="card-divider" style="margin: 15px 0 20px;">
+                <span class="line"></span>
+                <span class="icon">🎁</span>
+                <span class="line"></span>
+            </div>
+            <p class="registry-text">
+                Your presence is the greatest gift! However, if you wish to bless the baby with a gift, we are
+                registered at:
+                <br><br>
+                <strong style="color: #7b1fa2;">BuyBuyBaby • Target • Amazon</strong>
+                <br><br>
+                <em style="font-size: 0.9rem; color: #8e6e9e;">Please contact Sarah for registry details</em>
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-hearts">💗 🍼 💗</div>
+            <p class="footer-text">We can't wait to celebrate with you!</p>
+        </div>
+    </div>
+
+    <script>
+        // Three.js 3D Background
+        const canvas = document.getElementById('three-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 30;
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+
+        const pointLight1 = new THREE.PointLight(0xf48fb1, 1, 100);
+        pointLight1.position.set(10, 10, 10);
+        scene.add(pointLight1);
+
+        const pointLight2 = new THREE.PointLight(0xce93d8, 0.8, 100);
+        pointLight2.position.set(-10, -10, 10);
+        scene.add(pointLight2);
+
+        // Create floating objects
+        const objects = [];
+
+        // Balloon-like spheres
+        function createBalloon(x, y, z, color, size) {
+            const geometry = new THREE.SphereGeometry(size, 32, 32);
+            const material = new THREE.MeshPhongMaterial({
+                color: color,
+                transparent: true,
+                opacity: 0.35,
+                shininess: 100,
+            });
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(x, y, z);
+            mesh.userData = {
+                originalY: y,
+                speed: 0.002 + Math.random() * 0.003,
+                amplitude: 1 + Math.random() * 2,
+                phase: Math.random() * Math.PI * 2,
+                rotSpeed: (Math.random() - 0.5) * 0.01
+            };
+            scene.add(mesh);
+            objects.push(mesh);
+        }
+
+        // Stars
+        function createStar(x, y, z, size) {
+            const geometry = new THREE.OctahedronGeometry(size, 0);
+            const material = new THREE.MeshPhongMaterial({
+                color: 0xffd54f,
+                transparent: true,
+                opacity: 0.4,
+                shininess: 150,
+            });
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(x, y, z);
+            mesh.userData = {
+                originalY: y,
+                speed: 0.003 + Math.random() * 0.004,
+                amplitude: 0.5 + Math.random() * 1.5,
+                phase: Math.random() * Math.PI * 2,
+                rotSpeed: 0.01 + Math.random() * 0.02
+            };
+            scene.add(mesh);
+            objects.push(mesh);
+        }
+
+        // Torus (rings)
+        function createRing(x, y, z, size, color) {
+            const geometry = new THREE.TorusGeometry(size, size * 0.3, 16, 32);
+            const material = new THREE.MeshPhongMaterial({
+                color: color,
+                transparent: true,
+                opacity: 0.25,
+                shininess: 80,
+            });
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(x, y, z);
+            mesh.userData = {
+                originalY: y,
+                speed: 0.002 + Math.random() * 0.003,
+                amplitude: 1 + Math.random() * 2,
+                phase: Math.random() * Math.PI * 2,
+                rotSpeed: 0.005 + Math.random() * 0.01
+            };
+            scene.add(mesh);
+            objects.push(mesh);
+        }
+
+        // Create objects
+        const colors = [0xf48fb1, 0xce93d8, 0x90caf9, 0xa5d6a7, 0xffcc80, 0xef9a9a, 0xb39ddb];
+
+        for (let i = 0; i < 15; i++) {
+            const x = (Math.random() - 0.5) * 50;
+            const y = (Math.random() - 0.5) * 40;
+            const z = (Math.random() - 0.5) * 20 - 5;
+            const size = 0.3 + Math.random() * 0.8;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            createBalloon(x, y, z, color, size);
+        }
+
+        for (let i = 0; i < 10; i++) {
+            const x = (Math.random() - 0.5) * 50;
+            const y = (Math.random() - 0.5) * 40;
+            const z = (Math.random() - 0.5) * 15 - 8;
+            const size = 0.2 + Math.random() * 0.5;
+            createStar(x, y, z, size);
+        }
+
+        for (let i = 0; i < 5; i++) {
+            const x = (Math.random() - 0.5) * 40;
+            const y = (Math.random() - 0.5) * 30;
+            const z = (Math.random() - 0.5) * 10 - 10;
+            const size = 0.5 + Math.random() * 1;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            createRing(x, y, z, size, color);
+        }
+
+        // Mouse interaction
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = Date.now() * 0.001;
+
+            objects.forEach(obj => {
+                const d = obj.userData;
+                obj.position.y = d.originalY + Math.sin(time * d.speed * 100 + d.phase) * d.amplitude;
+                obj.rotation.x += d.rotSpeed;
+                obj.rotation.y += d.rotSpeed * 0.7;
+            });
+
+            camera.position.x += (mouseX * 3 - camera.position.x) * 0.02;
+            camera.position.y += (-mouseY * 3 - camera.position.y) * 0.02;
+            camera.lookAt(0, 0, 0);
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Floating background elements
+        const floatingContainer = document.getElementById('floatingElements');
+        const emojis = ['⭐', '🌸', '✨', '💫', '🎀', '🍼', '🧸', '💕', '🌙', '☁️', '🦋', '🌷'];
+
+        function createFloatingItem() {
+            const item = document.createElement('div');
+            item.className = 'floating-item';
+            item.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            item.style.left = Math.random() * 100 + '%';
+            item.style.fontSize = (16 + Math.random() * 20) + 'px';
+            item.style.animationDuration = (15 + Math.random() * 20) + 's';
+            item.style.animationDelay = Math.random() * 5 + 's';
+            floatingContainer.appendChild(item);
+
+            setTimeout(() => item.remove(), 35000);
+        }
+
+        for (let i = 0; i < 12; i++) {
+            setTimeout(createFloatingItem, i * 2000);
+        }
+        setInterval(createFloatingItem, 3000);
+
+        // Countdown Timer
+        function updateCountdown() {
+            const eventDate = new Date('2025-03-15T14:00:00');
+            const now = new Date();
+            const diff = eventDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '🎉';
+                document.getElementById('hours').textContent = '🎉';
+                document.getElementById('minutes').textContent = '🎉';
+                document.getElementById('seconds').textContent = '🎉';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 150);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+        // RSVP Form
+        document.getElementById('rsvpForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            this.style.display = 'none';
+            document.getElementById('successMessage').classList.add('show');
+            triggerConfetti();
+        });
+
+        // Confetti
+        const confettiCanvas = document.getElementById('confetti-canvas');
+        const confettiCtx = confettiCanvas.getContext('2d');
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+        });
+
+        let confettiParticles = [];
+        let confettiActive = false;
+
+        function triggerConfetti() {
+            confettiActive = true;
+            confettiParticles = [];
+            const colors = ['#f48fb1', '#ce93d8', '#90caf9', '#a5d6a7', '#ffcc80', '#ef9a9a', '#b39ddb', '#ffd54f'];
+
+            for (let i = 0; i < 150; i++) {
+                confettiParticles.push({
+                    x: Math.random() * confettiCanvas.width,
+                    y: -20 - Math.random() * 200,
+                    w: 6 + Math.random() * 8,
+                    h: 4 + Math.random() * 6,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedY: 2 + Math.random() * 4,
+                    speedX: (Math.random() - 0.5) * 4,
+                    rotation: Math.random() * 360,
+                    rotSpeed: (Math.random() - 0.5) * 10,
+                    opacity: 1
+                });
+            }
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            if (!confettiActive) return;
+            confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+            let allDone = true;
+            confettiParticles.forEach(p => {
+                if (p.opacity <= 0) return;
+                allDone = false;
+                p.y += p.speedY;
+                p.x += p.speedX;
+                p.rotation += p.rotSpeed;
+                p.speedX *= 0.99;
+
+                if (p.y > confettiCanvas.height - 50) {
+                    p.opacity -= 0.02;
+                }
+
+                confettiCtx.save();
+                confettiCtx.translate(p.x, p.y);
+                confettiCtx.rotate(p.rotation * Math.PI / 180);
+                confettiCtx.globalAlpha = Math.max(0, p.opacity);
+                confettiCtx.fillStyle = p.color;
+                confettiCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                confettiCtx.restore();
+            });
+
+            if (!allDone) {
+                requestAnimationFrame(animateConfetti);
+            } else {
+                confettiActive = false;
+                confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            }
+        }
+    </script>
+</body>
+
+</html>

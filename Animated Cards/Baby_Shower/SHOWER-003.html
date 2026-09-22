@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Magical 3D Baby Shower Invitation</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Quicksand:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Three.js & Supporting Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #f6c8d5;
+            --primary-dark: #e599b2;
+            --accent: #ffd166;
+            --gold: #dfb15b;
+            --text-dark: #4a3e4d;
+            --bg-gradient: radial-gradient(circle at 50% 30%, #fff6f9 0%, #f7e8f0 40%, #e8dff5 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            background: #110d1c;
+            color: var(--text-dark);
+        }
+
+        #webgl-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Glassmorphism UI Overlay */
+        .ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 24px;
+        }
+
+        .interactive {
+            pointer-events: auto;
+        }
+
+        /* Top Header */
+        .header {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInDown 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.5s;
+        }
+
+        .header h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2.5rem, 6vw, 4.2rem);
+            color: #7d5a73;
+            text-shadow: 0 4px 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(246, 200, 213, 0.5);
+            margin-bottom: -5px;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(0.75rem, 2vw, 0.95rem);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #92758b;
+            font-weight: 600;
+        }
+
+        /* Bottom Controls Bar */
+        .bottom-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 10px;
+        }
+
+        .actions-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            padding: 12px 26px;
+            border-radius: 50px;
+            color: #5d4557;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(125, 90, 115, 0.15), 0 2px 5px rgba(255, 255, 255, 0.6) inset;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 14px 30px rgba(125, 90, 115, 0.22);
+            color: #c95d85;
+        }
+
+        .btn:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #fcd5e0 0%, #fad0c4 100%);
+            border: 1px solid #ffffff;
+            color: #6e4055;
+            box-shadow: 0 10px 25px rgba(244, 166, 193, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #ffdbe5 0%, #fae0d8 100%);
+            color: #55273d;
+        }
+
+        .btn-icon {
+            width: 46px;
+            height: 46px;
+            padding: 0;
+            border-radius: 50%;
+            justify-content: center;
+        }
+
+        /* Palette selector */
+        .theme-pills {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 5px;
+            border-radius: 30px;
+            display: flex;
+            gap: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .theme-btn {
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .theme-btn.active {
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #7d5a73;
+        }
+
+        .theme-pink {
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+        }
+
+        .theme-blue {
+            background: linear-gradient(135deg, #a0c4ff, #70a1ff);
+        }
+
+        .theme-neutral {
+            background: linear-gradient(135deg, #ffd6a5, #caffbf);
+        }
+
+        .theme-gold {
+            background: linear-gradient(135deg, #ffe5a3, #d4af37);
+        }
+
+        /* Floating Hint */
+        .hint-badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #8c7385;
+            letter-spacing: 0.5px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 6px 14px;
+            border-radius: 20px;
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            animation: pulseHint 2.5s infinite;
+        }
+
+        /* RSVP Modal */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(25, 15, 30, 0.45);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            padding: 20px;
+        }
+
+        .modal-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            border: 2px solid #ffffff;
+            border-radius: 28px;
+            padding: 36px 30px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 25px 50px rgba(74, 45, 68, 0.25);
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-backdrop.open .modal-card {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: #f1e3eb;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            color: #6e4055;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: #e4ccd9;
+        }
+
+        .modal-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            color: #7d5a73;
+            margin-bottom: 6px;
+        }
+
+        .modal-subtitle {
+            font-size: 0.88rem;
+            color: #735d6e;
+            margin-bottom: 22px;
+            line-height: 1.4;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #8c6f83;
+            margin-bottom: 5px;
+            margin-left: 4px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 14px;
+            border: 1px solid #e2cfdb;
+            background: rgba(255, 255, 255, 0.9);
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            color: #4a3343;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: #f6c8d5;
+            box-shadow: 0 0 0 4px rgba(246, 200, 213, 0.35);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .radio-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #e2cfdb;
+            background: #fff;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #6a4f61;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .radio-btn.selected {
+            background: #fce4ec;
+            border-color: #e599b2;
+            color: #a03c62;
+            font-weight: 700;
+        }
+
+        .form-submit {
+            width: 100%;
+            margin-top: 14px;
+            padding: 14px;
+            background: linear-gradient(135deg, #e599b2 0%, #d87093 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(216, 112, 147, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(216, 112, 147, 0.45);
+        }
+
+        /* Success Message */
+        .success-box {
+            display: none;
+            padding: 20px 10px;
+        }
+
+        .success-box h3 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            color: #7d5a73;
+            margin-bottom: 8px;
+        }
+
+        .success-box p {
+            color: #624b5d;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Music note indicator */
+        .music-indicator {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 20;
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, #fff7fa 0%, #f7e6ef 60%, #eedbf0 100%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease;
+        }
+
+        .loader-heart {
+            font-size: 3rem;
+            animation: heartBeat 1.3s infinite ease-in-out;
+            margin-bottom: 15px;
+        }
+
+        .loader-text {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            color: #8c6f83;
+            text-transform: uppercase;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseHint {
+
+            0%,
+            100% {
+                opacity: 0.7;
+                transform: translateY(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateY(-3px);
+            }
+        }
+
+        @keyframes heartBeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            14% {
+                transform: scale(1.25);
+            }
+
+            28% {
+                transform: scale(1);
+            }
+
+            42% {
+                transform: scale(1.15);
+            }
+
+            70% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 600px) {
+            .ui-layer {
+                padding: 16px;
+            }
+
+            .bottom-bar {
+                gap: 10px;
+            }
+
+            .btn {
+                padding: 10px 18px;
+                font-size: 0.85rem;
+            }
+
+            .modal-card {
+                padding: 28px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-heart">🍼</div>
+        <div class="loader-text">Preparing Sweet Celebration...</div>
+    </div>
+
+    <!-- 3D WebGL Canvas Container -->
+    <div id="webgl-container"></div>
+
+    <!-- Top Floating Sound Toggle -->
+    <div class="music-indicator interactive">
+        <button id="audio-toggle-btn" class="btn btn-icon" title="Toggle Magical Chime Music">
+            <span id="music-icon">🎵</span>
+        </button>
+    </div>
+
+    <!-- UI Overlay Layer -->
+    <div class="ui-layer">
+        <!-- Header -->
+        <header class="header">
+            <h1>A Little Star is on the Way!</h1>
+            <p>You're Invited to Celebrate With Us</p>
+        </header>
+
+        <!-- Bottom Controls -->
+        <footer class="bottom-bar interactive">
+            <div class="hint-badge">
+                <span>✨</span> Tap envelope or button to unseal the magic
+            </div>
+
+            <div class="actions-group">
+                <button id="open-card-btn" class="btn btn-primary">
+                    <span id="open-btn-icon">💌</span> <span id="open-btn-text">Open Invitation</span>
+                </button>
+                <button id="rsvp-btn" class="btn">
+                    <span>✍️</span> RSVP Now
+                </button>
+                <button id="gift-btn" class="btn">
+                    <span>🎁</span> Registry
+                </button>
+
+                <!-- Color Theme Selector -->
+                <div class="theme-pills">
+                    <button class="theme-btn theme-pink active" title="Blush Rose" data-theme="pink"></button>
+                    <button class="theme-btn theme-blue" title="Sky Blue" data-theme="blue"></button>
+                    <button class="theme-btn theme-neutral" title="Sage Mint" data-theme="neutral"></button>
+                    <button class="theme-btn theme-gold" title="Golden Dream" data-theme="gold"></button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- RSVP Modal Popup -->
+    <div id="rsvp-modal" class="modal-backdrop">
+        <div class="modal-card">
+            <button class="modal-close" id="modal-close-btn">&times;</button>
+
+            <div id="rsvp-form-container">
+                <h2 class="modal-title">Celebrate with Us</h2>
+                <p class="modal-subtitle">Join Emma & James for the celebration of baby Olivia's upcoming arrival!</p>
+
+                <form id="rsvp-form" onsubmit="handleFormSubmit(event)">
+                    <div class="form-group">
+                        <label>Your Full Name</label>
+                        <input type="text" class="form-input" placeholder="e.g. Aunt Sophia & Family" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Will You Attend?</label>
+                        <div class="radio-group">
+                            <div class="radio-btn selected" onclick="selectRadio(this, 'yes')">Joyfully Accept ✨</div>
+                            <div class="radio-btn" onclick="selectRadio(this, 'no')">Regretfully Decline 🤍</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Number of Guests</label>
+                        <input type="number" class="form-input" value="1" min="1" max="5">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Warm Wishes / Advice for Parents</label>
+                        <input type="text" class="form-input" placeholder="Leave a sweet blessing...">
+                    </div>
+
+                    <button type="submit" class="form-submit">Confirm RSVP & Send Love</button>
+                </form>
+            </div>
+
+            <div id="rsvp-success" class="success-box">
+                <div style="font-size: 3.5rem; margin-bottom: 10px;">🌟</div>
+                <h3>RSVP Received!</h3>
+                <p>Thank you for showering our little miracle with love and blessings. We can't wait to celebrate
+                    together!</p>
+                <button class="btn btn-primary" style="margin-top: 20px;" onclick="closeRSVP()">Back to
+                    Invitation</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main JavaScript Application Logic -->
+    <script>
+        /* -------------------------------------------------------------
+           1. Web Audio API Music Box Synthesizer (No external MP3s needed)
+           ------------------------------------------------------------- */
+        let audioCtx = null;
+        let isMusicPlaying = false;
+        let musicInterval = null;
+
+        const melodyNotes = [
+            // "Twinkle, Twinkle Little Star" / Brahms Lullaby hybrid chords in pentatonic scale
+            523.25, 523.25, 587.33, 659.25, 659.25, 587.33, 523.25, 493.88,
+            440.00, 440.00, 493.88, 523.25, 523.25, 493.88, 493.88,
+            523.25, 587.33, 659.25, 587.33, 523.25, 440.00, 392.00,
+            440.00, 493.88, 523.25, 392.00, 440.00, 523.25, 587.33, 659.25
+        ];
+
+        function playMusicBoxNote(freq, timeOffset = 0) {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            // Bell / Music box like harmonic
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime + timeOffset);
+
+            // Shimmer harmonic
+            const oscHarmonic = audioCtx.createOscillator();
+            const gainHarmonic = audioCtx.createGain();
+            oscHarmonic.type = 'triangle';
+            oscHarmonic.frequency.setValueAtTime(freq * 2, audioCtx.currentTime + timeOffset);
+
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime + timeOffset);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + timeOffset + 1.8);
+
+            gainHarmonic.gain.setValueAtTime(0.05, audioCtx.currentTime + timeOffset);
+            gainHarmonic.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + timeOffset + 1.2);
+
+            osc.connect(gain);
+            oscHarmonic.connect(gainHarmonic);
+            gain.connect(audioCtx.destination);
+            gainHarmonic.connect(audioCtx.destination);
+
+            osc.start(audioCtx.currentTime + timeOffset);
+            oscHarmonic.start(audioCtx.currentTime + timeOffset);
+            osc.stop(audioCtx.currentTime + timeOffset + 2.0);
+            oscHarmonic.stop(audioCtx.currentTime + timeOffset + 2.0);
+        }
+
+        let noteIdx = 0;
+        function startLullaby() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            isMusicPlaying = true;
+            document.getElementById('music-icon').textContent = '🔊';
+
+            musicInterval = setInterval(() => {
+                const note = melodyNotes[noteIdx % melodyNotes.length];
+                playMusicBoxNote(note);
+                // Bass root accompaniment occasionally
+                if (noteIdx % 4 === 0) {
+                    playMusicBoxNote(note * 0.5, 0.05);
+                }
+                noteIdx++;
+            }, 550);
+        }
+
+        function stopLullaby() {
+            isMusicPlaying = false;
+            document.getElementById('music-icon').textContent = '🔇';
+            clearInterval(musicInterval);
+        }
+
+        document.getElementById('audio-toggle-btn').addEventListener('click', () => {
+            if (isMusicPlaying) {
+                stopLullaby();
+            } else {
+                startLullaby();
+            }
+        });
+
+        /* -------------------------------------------------------------
+           2. Dynamic Canvas Texture Generation for 3D Invitation Card
+           ------------------------------------------------------------- */
+        let cardTexture, cardMaterial;
+        let currentThemeColor = '#f6c8d5';
+        let currentAccentColor = '#dfb15b';
+        let currentBgGrad = ['#fffafc', '#fceef4'];
+
+        function createCardCanvasTexture(theme = 'pink') {
+            const canvas = document.createElement('canvas');
+            canvas.width = 2048;
+            canvas.height = 1440;
+            const ctx = canvas.getContext('2d');
+
+            let headerColor = '#a2597b';
+            let goldColor = '#b58836';
+            let bodyColor = '#5c4856';
+            let accentFill = '#fceaf1';
+
+            if (theme === 'blue') {
+                headerColor = '#4672a9';
+                goldColor = '#3a86c8';
+                bodyColor = '#3c4e61';
+                accentFill = '#e6f0fa';
+            } else if (theme === 'neutral') {
+                headerColor = '#568268';
+                goldColor = '#b8943d';
+                bodyColor = '#48544c';
+                accentFill = '#eff8f2';
+            } else if (theme === 'gold') {
+                headerColor = '#8a6b25';
+                goldColor = '#c99a32';
+                bodyColor = '#4e4334';
+                accentFill = '#fcf7e8';
+            }
+
+            // Paper Background
+            const bgGrad = ctx.createRadialGradient(1024, 720, 200, 1024, 720, 1100);
+            bgGrad.addColorStop(0, '#ffffff');
+            bgGrad.addColorStop(1, accentFill);
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, 2048, 1440);
+
+            // Double Ornamental Gold Borders
+            ctx.strokeStyle = goldColor;
+            ctx.lineWidth = 6;
+            ctx.strokeRect(60, 60, 1928, 1320);
+
+            ctx.lineWidth = 2;
+            ctx.strokeRect(80, 80, 1888, 1280);
+
+            // Corner Filigree Ornaments
+            function drawCornerOrnaments(x, y, flipX, flipY) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.scale(flipX ? -1 : 1, flipY ? -1 : 1);
+                ctx.strokeStyle = goldColor;
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.arc(40, 40, 30, 0, Math.PI * 2);
+                ctx.moveTo(10, 40); ctx.lineTo(70, 40);
+                ctx.moveTo(40, 10); ctx.lineTo(40, 70);
+                ctx.stroke();
+                ctx.restore();
+            }
+            drawCornerOrnaments(100, 100, false, false);
+            drawCornerOrnaments(1948, 100, true, false);
+            drawCornerOrnaments(100, 1340, false, true);
+            drawCornerOrnaments(1948, 1340, true, true);
+
+            // Top Arch Motif
+            ctx.textAlign = 'center';
+            ctx.fillStyle = goldColor;
+            ctx.font = 'bold 36px "Cinzel", serif';
+            ctx.letterSpacing = '8px';
+            ctx.fillText("✦  JOIN US IN CELEBRATING  ✦", 1024, 180);
+
+            // Main Script Title
+            ctx.fillStyle = headerColor;
+            ctx.font = 'bold 150px "Great Vibes", cursive';
+            ctx.fillText("Baby Shower", 1024, 340);
+
+            // Subtitle
+            ctx.fillStyle = goldColor;
+            ctx.font = '600 42px "Cinzel", serif';
+            ctx.letterSpacing = '6px';
+            ctx.fillText("HONORING MOTHER-TO-BE", 1024, 430);
+
+            // Parents' Names
+            ctx.fillStyle = headerColor;
+            ctx.font = '700 85px "Quicksand", sans-serif';
+            ctx.fillText("Emma & James Harrison", 1024, 550);
+
+            // Welcoming Little
+            ctx.fillStyle = bodyColor;
+            ctx.font = 'italic 48px "Great Vibes", cursive';
+            ctx.fillText("welcoming their precious baby girl", 1024, 630);
+
+            // Baby Name Highlight
+            ctx.fillStyle = goldColor;
+            ctx.font = 'bold 72px "Cinzel", serif';
+            ctx.fillText("✨  OLIVIA GRACE  ✨", 1024, 730);
+
+            // Decorative Divider
+            ctx.beginPath();
+            ctx.moveTo(600, 780);
+            ctx.lineTo(1448, 780);
+            ctx.strokeStyle = goldColor;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Date & Time Box
+            ctx.fillStyle = bodyColor;
+            ctx.font = '700 44px "Quicksand", sans-serif';
+            ctx.fillText("SUNDAY, OCTOBER 25TH, 2025", 1024, 860);
+
+            ctx.font = '500 38px "Montserrat", sans-serif';
+            ctx.fillText("AT 2:00 IN THE AFTERNOON", 1024, 925);
+
+            // Location
+            ctx.font = '600 42px "Montserrat", sans-serif';
+            ctx.fillStyle = headerColor;
+            ctx.fillText("THE GLASS ROSE GARDEN ESTATE", 1024, 1020);
+
+            ctx.font = '400 36px "Montserrat", sans-serif';
+            ctx.fillStyle = bodyColor;
+            ctx.fillText("742 Whispering Pines Way, Beverly Hills, CA", 1024, 1075);
+
+            // Bottom RSVP Details
+            ctx.font = '600 34px "Cinzel", serif';
+            ctx.fillStyle = goldColor;
+            ctx.fillText("RSVP BY OCTOBER 10TH  •  GIFT REGISTRY ON BABYLIST", 1024, 1220);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.anisotropy = 16;
+            return texture;
+        }
+
+        /* -------------------------------------------------------------
+           3. Three.js 3D Scene Setup & Magical Visuals
+           ------------------------------------------------------------- */
+        let scene, camera, renderer, controls;
+        let envelopeGroup, cardMesh, flapMesh, ribbonGroup, sealMesh;
+        let cloudsGroup, balloonsGroup = [], floatingStarsGroup, blocksGroup, teddyGroup;
+        let pointLightInside, dirLight, hemiLight;
+        let isCardOpen = false;
+        let raycaster, mouse;
+
+        const container = document.getElementById('webgl-container');
+
+        function initScene() {
+            // Scene
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0xf7e8f0, 0.035);
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.set(0, 3.8, 13.5);
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.1;
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(renderer.domElement);
+
+            // Controls
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.06;
+            controls.maxDistance = 22;
+            controls.minDistance = 6;
+            controls.maxPolarAngle = Math.PI / 2 + 0.05; // Don't go below clouds too far
+            controls.minPolarAngle = Math.PI / 6;
+            controls.target.set(0, 1.2, 0);
+
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            // Lighting Setup
+            setupLights();
+
+            // Build 3D Elements
+            buildCloudsFloor();
+            buildEnvelopeAndCard();
+            buildBalloons();
+            buildTeddyBear();
+            buildBabyBlocks();
+            buildFloatingStarsAndMoons();
+            buildSparkleDustParticles();
+
+            // Window Resize
+            window.addEventListener('resize', onWindowResize, false);
+            window.addEventListener('pointerdown', onPointerDown, false);
+
+            // Remove Loader
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 800);
+            }, 600);
+        }
+
+        function setupLights() {
+            // Hemisphere ambient light
+            hemiLight = new THREE.HemisphereLight(0xfff5f8, 0xdfe2f5, 0.9);
+            scene.add(hemiLight);
+
+            // Main Sunlight / Key Light
+            dirLight = new THREE.DirectionalLight(0xfffaed, 1.3);
+            dirLight.position.set(8, 16, 10);
+            dirLight.castShadow = true;
+            dirLight.shadow.mapSize.width = 2048;
+            dirLight.shadow.mapSize.height = 2048;
+            dirLight.shadow.camera.near = 0.5;
+            dirLight.shadow.camera.far = 40;
+            dirLight.shadow.camera.left = -10;
+            dirLight.shadow.camera.right = 10;
+            dirLight.shadow.camera.top = 10;
+            dirLight.shadow.camera.bottom = -10;
+            dirLight.shadow.bias = -0.0005;
+            scene.add(dirLight);
+
+            // Soft Rim / Fill Light
+            const fillLight = new THREE.DirectionalLight(0xf2c4ce, 0.7);
+            fillLight.position.set(-10, 6, -8);
+            scene.add(fillLight);
+
+            // Magical Glowing Light inside Envelope
+            pointLightInside = new THREE.PointLight(0xffe8a3, 0, 8);
+            pointLightInside.position.set(0, 1.5, 0.2);
+            scene.add(pointLightInside);
+        }
+
+        /* -------------------------------------------------------------
+           4. 3D Model Generators (Procedural Meshes)
+           ------------------------------------------------------------- */
+
+        // --- Fluffy Cloud Floor ---
+        function buildCloudsFloor() {
+            cloudsGroup = new THREE.Group();
+            const cloudMat = new THREE.MeshStandardMaterial({
+                color: 0xffffff,
+                roughness: 0.9,
+                metalness: 0.05,
+                flatShading: false,
+            });
+
+            // Create clusters of soft cloud puffs
+            const sphereGeo = new THREE.SphereGeometry(1, 16, 16);
+            for (let i = 0; i < 45; i++) {
+                const puff = new THREE.Mesh(sphereGeo, cloudMat);
+                const angle = Math.random() * Math.PI * 2;
+                const radius = 2.5 + Math.random() * 8.5;
+                const scale = 1.0 + Math.random() * 2.2;
+                puff.position.set(
+                    Math.cos(angle) * radius,
+                    -1.2 + (Math.random() * 0.6 - 0.3),
+                    Math.sin(angle) * radius
+                );
+                puff.scale.set(scale * 1.4, scale * 0.8, scale * 1.4);
+                puff.receiveShadow = true;
+                cloudsGroup.add(puff);
+            }
+            scene.add(cloudsGroup);
+        }
+
+        // --- 3D Interactive Envelope & Extruded Invitation Card ---
+        function buildEnvelopeAndCard() {
+            envelopeGroup = new THREE.Group();
+            envelopeGroup.position.set(0, 1.1, 0);
+
+            // Materials
+            const envelopeMat = new THREE.MeshStandardMaterial({
+                color: 0xfbf2f6,
+                roughness: 0.4,
+                metalness: 0.05,
+                bumpScale: 0.02
+            });
+
+            const insideMat = new THREE.MeshStandardMaterial({
+                color: 0xfae1ec,
+                roughness: 0.6,
+                side: THREE.DoubleSide
+            });
+
+            const goldMat = new THREE.MeshStandardMaterial({
+                color: 0xdfb15b,
+                metalness: 0.85,
+                roughness: 0.25,
+                bumpScale: 0.05
+            });
+
+            // Envelope Back & Pocket Body
+            const bodyWidth = 4.8;
+            const bodyHeight = 3.3;
+            const bodyDepth = 0.25;
+
+            // Envelope Box Base (Bottom & Back)
+            const boxGeo = new THREE.BoxGeometry(bodyWidth, bodyHeight, bodyDepth);
+            const envelopeBox = new THREE.Mesh(boxGeo, envelopeMat);
+            envelopeBox.castShadow = true;
+            envelopeBox.receiveShadow = true;
+            envelopeGroup.add(envelopeBox);
+
+            // Front Left & Right Folded Wing Accents (Triangles)
+            const frontWingShape = new THREE.Shape();
+            frontWingShape.moveTo(-bodyWidth / 2, -bodyHeight / 2);
+            frontWingShape.lineTo(0, 0);
+            frontWingShape.lineTo(-bodyWidth / 2, bodyHeight / 2);
+            frontWingShape.closePath();
+
+            const frontWingGeo = new THREE.ShapeGeometry(frontWingShape);
+            const leftWing = new THREE.Mesh(frontWingGeo, envelopeMat);
+            leftWing.position.z = bodyDepth / 2 + 0.01;
+            envelopeGroup.add(leftWing);
+
+            const rightWing = leftWing.clone();
+            rightWing.rotation.y = Math.PI;
+            rightWing.position.z = bodyDepth / 2 + 0.01;
+            envelopeGroup.add(rightWing);
+
+            // Bottom Flap Triangle
+            const bottomFlapShape = new THREE.Shape();
+            bottomFlapShape.moveTo(-bodyWidth / 2, -bodyHeight / 2);
+            bottomFlapShape.lineTo(bodyWidth / 2, -bodyHeight / 2);
+            bottomFlapShape.lineTo(0, 0.2);
+            bottomFlapShape.closePath();
+            const bottomFlap = new THREE.Mesh(new THREE.ShapeGeometry(bottomFlapShape), envelopeMat);
+            bottomFlap.position.z = bodyDepth / 2 + 0.015;
+            envelopeGroup.add(bottomFlap);
+
+            // Top Opening Flap (Hinged at top of envelope body)
+            const flapShape = new THREE.Shape();
+            flapShape.moveTo(-bodyWidth / 2, 0);
+            flapShape.lineTo(bodyWidth / 2, 0);
+            flapShape.lineTo(0, -bodyHeight * 0.7);
+            flapShape.closePath();
+
+            const flapGeo = new THREE.ShapeGeometry(flapShape);
+            flapMesh = new THREE.Mesh(flapGeo, insideMat);
+            flapMesh.position.set(0, bodyHeight / 2, bodyDepth / 2 + 0.02);
+            flapMesh.castShadow = true;
+            // Flap pivot container
+            const flapPivot = new THREE.Group();
+            flapPivot.position.set(0, bodyHeight / 2, bodyDepth / 2);
+            flapMesh.position.set(0, 0, 0.02);
+            flapPivot.add(flapMesh);
+            envelopeGroup.add(flapPivot);
+            envelopeGroup.flapPivot = flapPivot;
+
+            // Wax Seal Stamp (Heart / Star)
+            const sealGeo = new THREE.CylinderGeometry(0.38, 0.38, 0.08, 32);
+            sealMesh = new THREE.Mesh(sealGeo, goldMat);
+            sealMesh.rotation.x = Math.PI / 2;
+            sealMesh.position.set(0, -bodyHeight * 0.45, 0.05);
+            flapMesh.add(sealMesh);
+
+            // Little embossed heart on seal
+            const heartShape = new THREE.Shape();
+            heartShape.moveTo(0, 0.1);
+            heartShape.bezierCurveTo(0, 0.18, -0.15, 0.22, -0.15, 0.08);
+            heartShape.bezierCurveTo(-0.15, -0.05, 0, -0.15, 0, -0.2);
+            heartShape.bezierCurveTo(0, -0.15, 0.15, -0.05, 0.15, 0.08);
+            heartShape.bezierCurveTo(0.15, 0.22, 0, 0.18, 0, 0.1);
+            const heartExtrude = new THREE.ExtrudeGeometry(heartShape, { depth: 0.04, bevelEnabled: true, bevelSegments: 3, steps: 1, bevelSize: 0.02, bevelThickness: 0.02 });
+            const sealHeart = new THREE.Mesh(heartExtrude, new THREE.MeshStandardMaterial({ color: 0xffe29a, metalness: 0.9, roughness: 0.2 }));
+            sealHeart.position.set(0, 0, 0.04);
+            sealMesh.add(sealHeart);
+
+            // --- The Elegant 3D Invitation Card (Inside) ---
+            cardTexture = createCardCanvasTexture('pink');
+            cardMaterial = new THREE.MeshStandardMaterial({
+                map: cardTexture,
+                roughness: 0.35,
+                metalness: 0.05,
+                bumpScale: 0.01
+            });
+
+            const cardBackMat = new THREE.MeshStandardMaterial({
+                color: 0xffffff,
+                roughness: 0.4
+            });
+
+            const cardGeo = new THREE.BoxGeometry(4.4, 3.1, 0.04);
+            const cardMats = [
+                envelopeMat, envelopeMat, envelopeMat, envelopeMat,
+                cardMaterial, // Front face
+                cardBackMat   // Back face
+            ];
+
+            cardMesh = new THREE.Mesh(cardGeo, cardMats);
+            cardMesh.position.set(0, 0, 0);
+            cardMesh.castShadow = true;
+            cardMesh.name = "invitationCard";
+            envelopeGroup.add(cardMesh);
+
+            // Subtle Floating bob animation for the whole envelope
+            envelopeGroup.rotation.y = -0.15;
+            envelopeGroup.rotation.x = 0.08;
+            scene.add(envelopeGroup);
+        }
+
+        // --- Pastel Balloons with physics-like bobbing ---
+        function buildBalloons() {
+            const balloonColors = [0xf7a8b8, 0x9bc1bc, 0xffd166, 0xa3cef1, 0xf5cac3];
+            const balloonGeo = new THREE.SphereGeometry(0.7, 32, 32);
+            balloonGeo.scale(1, 1.25, 1); // Elongate sphere
+
+            const stringMat = new THREE.LineBasicMaterial({ color: 0xdfb15b, transparent: true, opacity: 0.6 });
+
+            for (let i = 0; i < 7; i++) {
+                const bGroup = new THREE.Group();
+                const color = balloonColors[i % balloonColors.length];
+                const bMat = new THREE.MeshPhysicalMaterial({
+                    color: color,
+                    roughness: 0.15,
+                    metalness: 0.1,
+                    clearcoat: 0.8,
+                    clearcoatRoughness: 0.2,
+                    transmission: 0.2, // Subtle translucent rubber feel
+                    opacity: 0.95,
+                    transparent: true
+                });
+
+                const balloonMesh = new THREE.Mesh(balloonGeo, bMat);
+                balloonMesh.castShadow = true;
+                balloonMesh.name = "balloon_" + i;
+                bGroup.add(balloonMesh);
+
+                // Balloon Knot
+                const knotGeo = new THREE.ConeGeometry(0.1, 0.14, 8);
+                const knot = new THREE.Mesh(knotGeo, bMat);
+                knot.position.y = -0.85;
+                bGroup.add(knot);
+
+                // Wavy Ribbon String
+                const curve = new THREE.CatmullRomCurve3([
+                    new THREE.Vector3(0, -0.9, 0),
+                    new THREE.Vector3(Math.sin(i) * 0.15, -1.8, Math.cos(i) * 0.1),
+                    new THREE.Vector3(-Math.cos(i) * 0.15, -2.8, 0),
+                    new THREE.Vector3(0, -3.8, 0)
+                ]);
+                const points = curve.getPoints(25);
+                const stringGeo = new THREE.BufferGeometry().setFromPoints(points);
+                const stringLine = new THREE.Line(stringGeo, stringMat);
+                bGroup.add(stringLine);
+
+                // Scatter around background / sides
+                const side = i % 2 === 0 ? 1 : -1;
+                const x = side * (3.8 + (i * 0.7));
+                const y = 3.2 + (i % 3) * 0.8;
+                const z = -2.5 - (i * 0.6);
+
+                bGroup.position.set(x, y, z);
+                bGroup.initialY = y;
+                bGroup.seed = i * 1.5;
+                scene.add(bGroup);
+                balloonsGroup.push(bGroup);
+            }
+        }
+
+        // --- Adorable 3D Procedural Teddy Bear ---
+        function buildTeddyBear() {
+            teddyGroup = new THREE.Group();
+
+            const furMat = new THREE.MeshStandardMaterial({
+                color: 0xd4a373,
+                roughness: 0.9,
+                metalness: 0.05
+            });
+
+            const muzzleMat = new THREE.MeshStandardMaterial({
+                color: 0xfaedcd,
+                roughness: 0.8
+            });
+
+            const darkEyeMat = new THREE.MeshStandardMaterial({
+                color: 0x221a15,
+                roughness: 0.2
+            });
+
+            const pinkBowMat = new THREE.MeshStandardMaterial({
+                color: 0xf4a261,
+                roughness: 0.5
+            });
+
+            // Body
+            const body = new THREE.Mesh(new THREE.SphereGeometry(0.65, 24, 24), furMat);
+            body.scale.set(1, 1.15, 0.9);
+            body.position.y = 0.55;
+            body.castShadow = true;
+            teddyGroup.add(body);
+
+            // Head
+            const head = new THREE.Mesh(new THREE.SphereGeometry(0.5, 24, 24), furMat);
+            head.position.set(0, 1.45, 0.05);
+            head.castShadow = true;
+            teddyGroup.add(head);
+
+            // Snout Muzzle
+            const snout = new THREE.Mesh(new THREE.SphereGeometry(0.22, 16, 16), muzzleMat);
+            snout.position.set(0, 1.35, 0.4);
+            snout.scale.set(1.1, 0.8, 0.9);
+            teddyGroup.add(snout);
+
+            // Nose
+            const nose = new THREE.Mesh(new THREE.SphereGeometry(0.07, 12, 12), darkEyeMat);
+            nose.position.set(0, 1.44, 0.58);
+            nose.scale.set(1.2, 0.8, 0.8);
+            teddyGroup.add(nose);
+
+            // Eyes
+            const eyeGeo = new THREE.SphereGeometry(0.05, 12, 12);
+            const leftEye = new THREE.Mesh(eyeGeo, darkEyeMat);
+            leftEye.position.set(-0.16, 1.52, 0.45);
+            const rightEye = leftEye.clone();
+            rightEye.position.x = 0.16;
+            teddyGroup.add(leftEye, rightEye);
+
+            // Ears
+            const earGeo = new THREE.SphereGeometry(0.18, 16, 16);
+            const leftEar = new THREE.Mesh(earGeo, furMat);
+            leftEar.position.set(-0.4, 1.85, 0);
+            const rightEar = leftEar.clone();
+            rightEar.position.x = 0.4;
+            teddyGroup.add(leftEar, rightEar);
+
+            // Inner Ears
+            const innerEarGeo = new THREE.SphereGeometry(0.1, 12, 12);
+            const innerLeft = new THREE.Mesh(innerEarGeo, muzzleMat);
+            innerLeft.position.set(-0.39, 1.85, 0.08);
+            const innerRight = innerLeft.clone();
+            innerRight.position.x = 0.39;
+            teddyGroup.add(innerLeft, innerRight);
+
+            // Arms
+            const armGeo = new THREE.SphereGeometry(0.24, 16, 16);
+            armGeo.scale(0.8, 1.8, 0.8);
+            const leftArm = new THREE.Mesh(armGeo, furMat);
+            leftArm.position.set(-0.62, 0.75, 0.15);
+            leftArm.rotation.z = 0.4;
+            leftArm.rotation.x = -0.3;
+            const rightArm = new THREE.Mesh(armGeo, furMat);
+            rightArm.position.set(0.62, 0.75, 0.15);
+            rightArm.rotation.z = -0.4;
+            rightArm.rotation.x = -0.3;
+            teddyGroup.add(leftArm, rightArm);
+
+            // Feet / Legs
+            const legGeo = new THREE.SphereGeometry(0.28, 16, 16);
+            legGeo.scale(1, 1.2, 1.4);
+            const leftLeg = new THREE.Mesh(legGeo, furMat);
+            leftLeg.position.set(-0.4, 0.15, 0.35);
+            const rightLeg = leftLeg.clone();
+            rightLeg.position.x = 0.4;
+            teddyGroup.add(leftLeg, rightLeg);
+
+            // Little Bow Tie
+            const bowGeo = new THREE.ConeGeometry(0.12, 0.22, 6);
+            const bowL = new THREE.Mesh(bowGeo, pinkBowMat);
+            bowL.rotation.z = Math.PI / 2;
+            bowL.position.set(-0.1, 1.05, 0.52);
+            const bowR = bowL.clone();
+            bowR.rotation.z = -Math.PI / 2;
+            bowR.position.x = 0.1;
+            const bowCenter = new THREE.Mesh(new THREE.SphereGeometry(0.07, 10, 10), pinkBowMat);
+            bowCenter.position.set(0, 1.05, 0.54);
+            teddyGroup.add(bowL, bowR, bowCenter);
+
+            // Place Teddy Bear to the left corner on cloud
+            teddyGroup.scale.set(1.3, 1.3, 1.3);
+            teddyGroup.position.set(-3.8, -0.2, 2.2);
+            teddyGroup.rotation.y = 0.5;
+            scene.add(teddyGroup);
+        }
+
+        // --- Baby Wooden Blocks ("B", "A", "B", "Y") ---
+        function buildBabyBlocks() {
+            blocksGroup = new THREE.Group();
+
+            const letters = ['B', 'A', 'B', 'Y'];
+            const blockColors = [0xffcad4, 0xb5e2fa, 0xedede9, 0xfce4ec];
+
+            letters.forEach((letter, i) => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 256;
+                canvas.height = 256;
+                const ctx = canvas.getContext('2d');
+
+                // Block background
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, 256, 256);
+
+                // Border
+                ctx.lineWidth = 18;
+                ctx.strokeStyle = '#dfb15b';
+                ctx.strokeRect(10, 10, 236, 236);
+
+                // Letter
+                ctx.fillStyle = '#6e4055';
+                ctx.font = 'bold 150px "Quicksand", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(letter, 128, 134);
+
+                const texture = new THREE.CanvasTexture(canvas);
+                const mat = new THREE.MeshStandardMaterial({
+                    map: texture,
+                    roughness: 0.4,
+                    metalness: 0.1
+                });
+
+                const blockMesh = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.75, 0.75), mat);
+                blockMesh.castShadow = true;
+                blockMesh.receiveShadow = true;
+
+                // Position stack on right side
+                if (i === 0) blockMesh.position.set(3.2, 0.18, 2.0);
+                if (i === 1) blockMesh.position.set(4.1, 0.18, 1.8);
+                if (i === 2) {
+                    blockMesh.position.set(3.65, 0.93, 1.9);
+                    blockMesh.rotation.y = 0.2;
+                }
+                if (i === 3) {
+                    blockMesh.position.set(4.5, 0.18, 2.6);
+                    blockMesh.rotation.y = -0.3;
+                }
+
+                blocksGroup.add(blockMesh);
+            });
+
+            scene.add(blocksGroup);
+        }
+
+        // --- 3D Golden Floating Stars & Gentle Moon ---
+        function buildFloatingStarsAndMoons() {
+            floatingStarsGroup = new THREE.Group();
+
+            const goldStarMat = new THREE.MeshStandardMaterial({
+                color: 0xffd166,
+                metalness: 0.85,
+                roughness: 0.25,
+                emissive: 0x443005
+            });
+
+            // Extruded 5-point Star Geometry
+            const starShape = new THREE.Shape();
+            const points = 5;
+            for (let i = 0; i < points * 2; i++) {
+                const r = i % 2 === 0 ? 0.3 : 0.14;
+                const a = (i / points) * Math.PI;
+                const x = Math.sin(a) * r;
+                const y = Math.cos(a) * r;
+                if (i === 0) starShape.moveTo(x, y);
+                else starShape.lineTo(x, y);
+            }
+            starShape.closePath();
+            const starGeo = new THREE.ExtrudeGeometry(starShape, { depth: 0.08, bevelEnabled: true, bevelSegments: 2, steps: 1, bevelSize: 0.02, bevelThickness: 0.02 });
+
+            for (let i = 0; i < 28; i++) {
+                const star = new THREE.Mesh(starGeo, goldStarMat);
+                star.position.set(
+                    (Math.random() - 0.5) * 18,
+                    1.5 + Math.random() * 8,
+                    (Math.random() - 0.5) * 12 - 2
+                );
+                const scale = 0.5 + Math.random() * 0.9;
+                star.scale.set(scale, scale, scale);
+                star.rotSpeed = (Math.random() - 0.5) * 0.02;
+                star.initialY = star.position.y;
+                star.floatSpeed = 0.8 + Math.random() * 1.5;
+                floatingStarsGroup.add(star);
+            }
+
+            // Crescent Moon
+            const moonShape = new THREE.Shape();
+            moonShape.absarc(0, 0, 1.2, 0, Math.PI * 2, false);
+            const holePath = new THREE.Path();
+            holePath.absarc(0.5, 0.4, 1.1, 0, Math.PI * 2, true);
+            moonShape.holes.push(holePath);
+
+            const moonGeo = new THREE.ExtrudeGeometry(moonShape, { depth: 0.25, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.05, bevelSegments: 3 });
+            const moonMesh = new THREE.Mesh(moonGeo, goldStarMat);
+            moonMesh.position.set(-6, 6.5, -6);
+            moonMesh.rotation.z = -0.3;
+            moonMesh.scale.set(1.1, 1.1, 1.1);
+            floatingStarsGroup.add(moonMesh);
+
+            scene.add(floatingStarsGroup);
+        }
+
+        // --- Sparkling Magical Ambient Dust ---
+        let sparkleParticles;
+        function buildSparkleDustParticles() {
+            const count = 180;
+            const geo = new THREE.BufferGeometry();
+            const positions = new Float32Array(count * 3);
+            const scales = new Float32Array(count);
+
+            for (let i = 0; i < count; i++) {
+                positions[i * 3] = (Math.random() - 0.5) * 22;
+                positions[i * 3 + 1] = Math.random() * 10;
+                positions[i * 3 + 2] = (Math.random() - 0.5) * 16;
+                scales[i] = Math.random() * 0.08 + 0.02;
+            }
+
+            geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            // Custom glowing round particle texture
+            const canvas = document.createElement('canvas');
+            canvas.width = 64; canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 30);
+            grad.addColorStop(0, 'rgba(255,255,255,1)');
+            grad.addColorStop(0.3, 'rgba(255,220,180,0.8)');
+            grad.addColorStop(1, 'rgba(255,220,180,0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 64, 64);
+
+            const particleTexture = new THREE.CanvasTexture(canvas);
+
+            const mat = new THREE.PointsMaterial({
+                size: 0.35,
+                map: particleTexture,
+                transparent: true,
+                opacity: 0.85,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            });
+
+            sparkleParticles = new THREE.Points(geo, mat);
+            scene.add(sparkleParticles);
+        }
+
+        /* -------------------------------------------------------------
+           5. Interactive Animations & Open / Close Card GSAP Timeline
+           ------------------------------------------------------------- */
+        function toggleInvitation() {
+            if (isCardOpen) {
+                closeCardAnimation();
+            } else {
+                openCardAnimation();
+            }
+        }
+
+        function openCardAnimation() {
+            if (isCardOpen) return;
+            isCardOpen = true;
+
+            // Trigger music if not started
+            if (!isMusicPlaying) {
+                startLullaby();
+            }
+
+            // Confetti Burst Celebration
+            celebrateConfetti();
+
+            // Update UI Button
+            document.getElementById('open-btn-text').textContent = 'Fold Invitation';
+            document.getElementById('open-btn-icon').textContent = '✨';
+
+            const tl = gsap.timeline();
+
+            // 1. Unseal Wax & Flap Opens (Rotates backwards on pivot)
+            tl.to(envelopeGroup.flapPivot.rotation, {
+                x: -Math.PI * 0.95,
+                duration: 1.1,
+                ease: "power2.inOut"
+            }, 0);
+
+            // 2. Glowing Golden Light ignites from envelope core
+            tl.to(pointLightInside, {
+                intensity: 3.5,
+                duration: 0.9,
+                ease: "power1.out"
+            }, 0.2);
+
+            // 3. Card Glides Upwards out of envelope pocket and floats in center spotlight
+            tl.to(cardMesh.position, {
+                y: 2.6,
+                z: 0.85,
+                duration: 1.4,
+                ease: "back.out(1.4)"
+            }, 0.5);
+
+            // Tilt card slightly towards camera for maximum readability
+            tl.to(cardMesh.rotation, {
+                x: -0.08,
+                y: 0.05,
+                duration: 1.2,
+                ease: "power2.out"
+            }, 0.6);
+
+            // Smoothly ease camera to ideal viewing distance
+            gsap.to(controls.target, { x: 0, y: 2.2, z: 0.5, duration: 1.4, ease: "power2.out" });
+            gsap.to(camera.position, { x: 0, y: 3.0, z: 8.2, duration: 1.5, ease: "power2.out" });
+        }
+
+        function closeCardAnimation() {
+            if (!isCardOpen) return;
+            isCardOpen = false;
+
+            document.getElementById('open-btn-text').textContent = 'Open Invitation';
+            document.getElementById('open-btn-icon').textContent = '💌';
+
+            const tl = gsap.timeline();
+
+            // 1. Card returns inside
+            tl.to(cardMesh.position, {
+                y: 0,
+                z: 0,
+                duration: 1.0,
+                ease: "power2.inOut"
+            }, 0);
+
+            tl.to(cardMesh.rotation, {
+                x: 0,
+                y: 0,
+                duration: 0.8
+            }, 0);
+
+            // 2. Light Dims
+            tl.to(pointLightInside, {
+                intensity: 0,
+                duration: 0.6
+            }, 0.3);
+
+            // 3. Flap Folds Back
+            tl.to(envelopeGroup.flapPivot.rotation, {
+                x: 0,
+                duration: 0.9,
+                ease: "power2.inOut"
+            }, 0.6);
+
+            // Camera returns to comfortable overview
+            gsap.to(controls.target, { x: 0, y: 1.2, z: 0, duration: 1.2 });
+            gsap.to(camera.position, { x: 0, y: 3.8, z: 13.5, duration: 1.4 });
+        }
+
+        function celebrateConfetti() {
+            const count = 120;
+            const defaults = {
+                origin: { y: 0.6 },
+                colors: ['#f6c8d5', '#ffd166', '#a0c4ff', '#dfb15b', '#ffffff', '#e599b2']
+            };
+
+            confetti({
+                ...defaults,
+                particleCount: 70,
+                spread: 80,
+                startVelocity: 35
+            });
+
+            setTimeout(() => {
+                confetti({
+                    ...defaults,
+                    particleCount: 50,
+                    angle: 60,
+                    spread: 65,
+                    origin: { x: 0.2, y: 0.65 }
+                });
+                confetti({
+                    ...defaults,
+                    particleCount: 50,
+                    angle: 120,
+                    spread: 65,
+                    origin: { x: 0.8, y: 0.65 }
+                });
+            }, 250);
+        }
+
+        /* -------------------------------------------------------------
+           6. Raycasting for Balloon Popping & Envelope Click Interaction
+           ------------------------------------------------------------- */
+        function onPointerDown(event) {
+            // Ignore if clicking on HTML UI layers
+            if (event.target.closest('.interactive') || event.target.closest('.modal-card')) return;
+
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(scene.children, true);
+
+            if (intersects.length > 0) {
+                let hitObj = intersects[0].object;
+
+                // If hit card or envelope body
+                if (hitObj === cardMesh || hitObj.parent === envelopeGroup || hitObj.name === "invitationCard") {
+                    toggleInvitation();
+                    return;
+                }
+
+                // If hit balloon: playful wiggle & celebratory chime
+                balloonsGroup.forEach(bGroup => {
+                    if (bGroup.children.includes(hitObj)) {
+                        playMusicBoxNote(880 + Math.random() * 400);
+                        gsap.to(bGroup.scale, {
+                            x: 1.35, y: 1.35, z: 1.35,
+                            duration: 0.2,
+                            yoyo: true,
+                            repeat: 1,
+                            ease: "elastic.out(1.2, 0.4)"
+                        });
+                        gsap.to(bGroup.rotation, {
+                            z: 0.35,
+                            duration: 0.3,
+                            yoyo: true,
+                            repeat: 3
+                        });
+                    }
+                });
+
+                // If hit Teddy Bear
+                if (hitObj.parent === teddyGroup || hitObj === teddyGroup) {
+                    playMusicBoxNote(659.25);
+                    gsap.to(teddyGroup.scale, {
+                        x: 1.45, y: 1.45, z: 1.45,
+                        duration: 0.3,
+                        yoyo: true,
+                        repeat: 1,
+                        ease: "back.out(2)"
+                    });
+                }
+            }
+        }
+
+        /* -------------------------------------------------------------
+           7. Theme Switching Logic
+           ------------------------------------------------------------- */
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const theme = btn.getAttribute('data-theme');
+                applyTheme(theme);
+            });
+        });
+
+        function applyTheme(theme) {
+            // 1. Rebuild invitation card Canvas texture
+            cardMaterial.map = createCardCanvasTexture(theme);
+            cardMaterial.needsUpdate = true;
+
+            // 2. Adjust lights & ambient atmosphere
+            if (theme === 'pink') {
+                scene.fog.color.setHex(0xf7e8f0);
+                hemiLight.color.setHex(0xfff5f8);
+                dirLight.color.setHex(0xfffaed);
+            } else if (theme === 'blue') {
+                scene.fog.color.setHex(0xe8f0f8);
+                hemiLight.color.setHex(0xf0f7ff);
+                dirLight.color.setHex(0xf2f8ff);
+            } else if (theme === 'neutral') {
+                scene.fog.color.setHex(0xebf4ee);
+                hemiLight.color.setHex(0xf2fcf5);
+                dirLight.color.setHex(0xfffaea);
+            } else if (theme === 'gold') {
+                scene.fog.color.setHex(0xf7f2e6);
+                hemiLight.color.setHex(0xfffaee);
+                dirLight.color.setHex(0xfff5d6);
+            }
+
+            // Confetti sparkle
+            confetti({
+                particleCount: 30,
+                spread: 60,
+                origin: { y: 0.85 }
+            });
+        }
+
+        /* -------------------------------------------------------------
+           8. RSVP Modal & Actions UI Handlers
+           ------------------------------------------------------------- */
+        const rsvpModal = document.getElementById('rsvp-modal');
+        const rsvpBtn = document.getElementById('rsvp-btn');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const openCardBtn = document.getElementById('open-card-btn');
+
+        openCardBtn.addEventListener('click', toggleInvitation);
+
+        rsvpBtn.addEventListener('click', () => {
+            rsvpModal.classList.add('open');
+            playMusicBoxNote(587.33);
+        });
+
+        modalCloseBtn.addEventListener('click', closeRSVP);
+
+        function closeRSVP() {
+            rsvpModal.classList.remove('open');
+        }
+
+        // Close on background click
+        rsvpModal.addEventListener('click', (e) => {
+            if (e.target === rsvpModal) closeRSVP();
+        });
+
+        function selectRadio(el, value) {
+            document.querySelectorAll('.radio-btn').forEach(btn => btn.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            document.getElementById('rsvp-form-container').style.display = 'none';
+            document.getElementById('rsvp-success').style.display = 'block';
+            celebrateConfetti();
+            playMusicBoxNote(783.99);
+            setTimeout(() => playMusicBoxNote(1046.50, 0.15), 150);
+        }
+
+        // Gift Registry button action
+        document.getElementById('gift-btn').addEventListener('click', () => {
+            celebrateConfetti();
+            alert("🎁 Baby Olivia's Registry is hosted on Babylist & Amazon!\nThank you for showering our little one with warm love.");
+        });
+
+        /* -------------------------------------------------------------
+           9. Animation Render Loop
+           ------------------------------------------------------------- */
+        let clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const elapsedTime = clock.getElapsedTime();
+
+            // Smooth OrbitControls update
+            controls.update();
+
+            // Gentle Envelope Bobbing (when closed)
+            if (!isCardOpen && envelopeGroup) {
+                envelopeGroup.position.y = 1.1 + Math.sin(elapsedTime * 1.8) * 0.08;
+                envelopeGroup.rotation.z = Math.sin(elapsedTime * 1.2) * 0.02;
+            }
+
+            // Sway Floating Balloons
+            balloonsGroup.forEach((bGroup) => {
+                bGroup.position.y = bGroup.initialY + Math.sin(elapsedTime * 1.6 + bGroup.seed) * 0.18;
+                bGroup.rotation.z = Math.sin(elapsedTime * 1.2 + bGroup.seed) * 0.06;
+                bGroup.rotation.x = Math.cos(elapsedTime * 1.4 + bGroup.seed) * 0.04;
+            });
+
+            // Twinkle and spin floating stars
+            if (floatingStarsGroup) {
+                floatingStarsGroup.children.forEach((star, idx) => {
+                    star.rotation.y += star.rotSpeed || 0.008;
+                    star.rotation.z += 0.004;
+                    if (star.initialY) {
+                        star.position.y = star.initialY + Math.sin(elapsedTime * (star.floatSpeed || 1) + idx) * 0.15;
+                    }
+                });
+            }
+
+            // Drifting sparkle particles
+            if (sparkleParticles) {
+                const pos = sparkleParticles.geometry.attributes.position.array;
+                for (let i = 1; i < pos.length; i += 3) {
+                    pos[i] += 0.006; // Drift slowly upward
+                    if (pos[i] > 11) pos[i] = 0;
+                }
+                sparkleParticles.geometry.attributes.position.needsUpdate = true;
+                sparkleParticles.rotation.y = elapsedTime * 0.02;
+            }
+
+            // Cute Teddy Bear subtle breathing motion
+            if (teddyGroup) {
+                teddyGroup.position.y = -0.2 + Math.sin(elapsedTime * 2.2) * 0.025;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // Initialize Everything
+        window.addEventListener('DOMContentLoaded', () => {
+            initScene();
+            animate();
+        });
+    </script>
+</body>
+
+</html>

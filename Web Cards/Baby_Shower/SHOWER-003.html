@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="neutral">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twinkle Twinkle Little Star • Mia's Baby Shower</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&family=Great+Vibes&family=Fredoka:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: { baloo: ['"Baloo 2"', 'cursive'], quick: ['Quicksand', 'sans-serif'], script: ['"Great Vibes"', 'cursive'], fredoka: ['Fredoka', 'sans-serif'] } } }
+        }
+    </script>
+    <style>
+        :root {
+            --bg: #FFF9F0;
+            --c1: #FFD6E8;
+            --c2: #C5ECFF;
+            --c3: #FFF3B0;
+            --c4: #D6FAD8;
+            --accent: #FF8FB1;
+            --accent2: #7DD3FC;
+            --deep: #4A3F55;
+            --gold: #E9B44C;
+        }
+
+        [data-theme="girl"] {
+            --bg: #FFF5F9;
+            --c1: #FFC2D6;
+            --c2: #FFD6E8;
+            --c3: #FFE4EE;
+            --c4: #FFEDF4;
+            --accent: #FF5E8A;
+            --accent2: #FF9EC6;
+            --gold: #E9B44C;
+        }
+
+        [data-theme="boy"] {
+            --bg: #F2FAFF;
+            --c1: #B8E6FF;
+            --c2: #9AD7FF;
+            --c3: #D6F0FF;
+            --c4: #C5ECFF;
+            --accent: #2AA8FF;
+            --accent2: #7DD3FC;
+            --gold: #3AA0E8;
+        }
+
+        [data-theme="neutral"] {
+            --bg: #FFF9F0;
+            --c1: #FFD6A5;
+            --c2: #CAFFBF;
+            --c3: #9BF6FF;
+            --c4: #FFC6FF;
+            --accent: #FF8FB1;
+            --accent2: #3AC6A5;
+            --gold: #E9B44C;
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--deep);
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            transition: background .8s;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: white;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #fff;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--accent), var(--accent2));
+            border-radius: 20px;
+            border: 3px solid #fff;
+        }
+
+        .font-script {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, .72);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(255, 255, 255, .9);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .08), inset 0 1px 0 white;
+        }
+
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: .55;
+            pointer-events: none;
+            z-index: 0;
+            animation: drift 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(40px, -40px) scale(1.15);
+            }
+        }
+
+        @keyframes floaty {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-2deg);
+            }
+
+            50% {
+                transform: translateY(-18px) rotate(2deg);
+            }
+        }
+
+        @keyframes floaty2 {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-28px);
+            }
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: .2;
+                transform: scale(.8) rotate(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2) rotate(20deg);
+            }
+        }
+
+        @keyframes wiggle {
+
+            0%,
+            100% {
+                transform: rotate(-6deg);
+            }
+
+            50% {
+                transform: rotate(6deg);
+            }
+        }
+
+        @keyframes bounceSoft {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes spinSlow {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.08);
+            }
+
+            50% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .animate-floaty {
+            animation: floaty 5s ease-in-out infinite;
+        }
+
+        .animate-floaty2 {
+            animation: floaty2 6s ease-in-out infinite;
+        }
+
+        .twinkle-star {
+            animation: twinkle 2.5s ease-in-out infinite;
+        }
+
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 22s linear infinite;
+        }
+
+        .shimmer-text {
+            background: linear-gradient(110deg, var(--accent) 20%, #FFD86B 40%, var(--accent2) 60%, var(--accent) 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shimmer 4s linear infinite;
+        }
+
+        /* envelope */
+        .envelope-wrap {
+            perspective: 1200px;
+        }
+
+        .envelope {
+            width: min(380px, 90vw);
+            height: 250px;
+            position: relative;
+            margin: 0 auto;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform .5s;
+        }
+
+        .envelope:hover {
+            transform: translateY(-6px) rotateX(4deg);
+        }
+
+        .env-back {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #FFD6E8, #C5ECFF);
+            border-radius: 22px;
+            box-shadow: 0 30px 60px rgba(255, 143, 177, .35);
+        }
+
+        .env-letter {
+            position: absolute;
+            left: 14px;
+            right: 14px;
+            top: 14px;
+            bottom: 14px;
+            background: #fff;
+            border-radius: 16px;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: all .9s cubic-bezier(.34, 1.56, .64, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .1);
+        }
+
+        .env-front {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .4), transparent);
+            clip-path: polygon(0 35%, 50% 62%, 100% 35%, 100% 100%, 0 100%);
+            background-color: #fff;
+            background-image: linear-gradient(135deg, var(--c1), var(--c2));
+            border-radius: 22px;
+            box-shadow: inset 0 -20px 40px rgba(0, 0, 0, .06);
+            pointer-events: none;
+        }
+
+        .env-flap {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 58%;
+            z-index: 4;
+            background: linear-gradient(180deg, var(--accent), var(--accent2));
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            border-radius: 22px 22px 0 0;
+            transform-origin: top center;
+            transition: all .7s cubic-bezier(.4, 0, .2, 1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .15);
+        }
+
+        .env-seal {
+            position: absolute;
+            left: 50%;
+            top: 48%;
+            transform: translate(-50%, -50%);
+            width: 64px;
+            height: 64px;
+            background: white;
+            border-radius: 50%;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .2);
+            transition: all .5s;
+            border: 3px solid var(--gold);
+        }
+
+        .envelope.open .env-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+            opacity: .9;
+        }
+
+        .envelope.open .env-seal {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0) rotate(180deg);
+        }
+
+        .envelope.open .env-letter {
+            transform: translateY(-78%) scale(1.05) rotate(-2deg);
+            z-index: 5;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, .2);
+        }
+
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform .2s ease-out;
+            will-change: transform;
+        }
+
+        .tilt-inner {
+            transform: translateZ(40px);
+        }
+
+        .count-box {
+            transform-style: preserve-3d;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .08);
+            border: 2px solid #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .count-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -80%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(105deg, transparent, rgba(255, 255, 255, .8), transparent);
+            transform: skewX(-20deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -80%;
+            }
+
+            60%,
+            100% {
+                left: 130%;
+            }
+        }
+
+        .btn-magical {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: white;
+            font-weight: 800;
+            border-radius: 999px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .15), inset 0 2px 0 rgba(255, 255, 255, .4);
+            transition: .3s;
+        }
+
+        .btn-magical:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, .2);
+        }
+
+        .btn-magical::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, .6), transparent);
+            transform: skewX(-20deg);
+            animation: shine 2.5s infinite;
+        }
+
+        .timeline-dot::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(var(--accent), var(--accent2), var(--gold));
+            transform: translateX(-50%);
+            border-radius: 99px;
+            opacity: .3;
+        }
+
+        .gift-card {
+            transition: .4s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        .gift-card:hover {
+            transform: translateY(-8px) rotate(-1deg);
+        }
+
+        .gift-card.claimed {
+            filter: grayscale(.2);
+        }
+
+        .gift-card.claimed .gift-overlay {
+            opacity: 1;
+        }
+
+        .vote-bar {
+            transition: width 1s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        #cursor {
+            position: fixed;
+            width: 18px;
+            height: 18px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: multiply;
+            opacity: .6;
+            transform: translate(-50%, -50%);
+            transition: width .2s, height .2s;
+        }
+
+        .sparkle-trail {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            font-size: 14px;
+            animation: sparkFade 1s forwards;
+        }
+
+        @keyframes sparkFade {
+            0% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(0) translateY(-30px) rotate(90deg);
+            }
+        }
+
+        .balloon2d {
+            position: absolute;
+            cursor: pointer;
+            transition: transform .2s;
+            user-select: none;
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, .15));
+        }
+
+        .balloon2d:hover {
+            transform: scale(1.12);
+        }
+
+        .balloon2d:active {
+            transform: scale(.9);
+        }
+
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: linear-gradient(135deg, #FFF9F0, #FFE4EE, #D6F0FF);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity .8s, visibility .8s;
+        }
+
+        #preloader.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-balloon {
+            font-size: 70px;
+            animation: bounceSoft 1s infinite, wiggle 2s infinite;
+        }
+
+        .loader-bar {
+            width: 220px;
+            height: 10px;
+            background: #fff;
+            border-radius: 99px;
+            overflow: hidden;
+            margin-top: 20px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, .1);
+        }
+
+        .loader-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent2));
+            border-radius: 99px;
+            transition: width .3s;
+        }
+
+        .modal-bg {
+            background: rgba(74, 63, 85, .5);
+            backdrop-filter: blur(8px);
+        }
+
+        .music-bar {
+            width: 4px;
+            background: white;
+            border-radius: 99px;
+            animation: musicEq 1s ease-in-out infinite;
+        }
+
+        @keyframes musicEq {
+
+            0%,
+            100% {
+                height: 8px;
+            }
+
+            50% {
+                height: 20px;
+            }
+        }
+
+        .polaroid {
+            background: white;
+            padding: 10px 10px 38px 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .12);
+            border-radius: 8px;
+            transition: .4s;
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) !important;
+            scale: 1.05;
+            z-index: 10;
+        }
+
+        .cloud-shape {
+            background: white;
+            border-radius: 999px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .06);
+        }
+
+        input,
+        textarea,
+        select {
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 0 4px rgba(255, 143, 177, .15);
+        }
+
+        .toast {
+            animation: toastIn .5s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        @keyframes toastIn {
+            from {
+                transform: translateY(20px) scale(.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .baby-block {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Baloo 2';
+            font-weight: 800;
+            font-size: 28px;
+            color: white;
+            border-radius: 14px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .15), inset 0 2px 0 rgba(255, 255, 255, .4);
+            animation: floaty 4s ease-in-out infinite;
+        }
+
+        @media(max-width:768px) {
+            #cursor {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="cursor"></div>
+    <div id="trail-container"></div>
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="flex gap-2 mb-4">
+            <div class="baby-block" style="background:#FF8FB1; animation-delay:0s">B</div>
+            <div class="baby-block" style="background:#7DD3FC; animation-delay:.2s">A</div>
+            <div class="baby-block" style="background:#E9B44C; animation-delay:.4s">B</div>
+            <div class="baby-block" style="background:#3AC6A5; animation-delay:.6s">Y</div>
+        </div>
+        <div class="loader-balloon">🎈</div>
+        <h2 class="font-baloo font-bold text-2xl mt-2 text-[#4A3F55]">Inflating balloons...</h2>
+        <div class="loader-bar">
+            <div class="loader-fill" id="loaderFill"></div>
+        </div>
+        <p class="text-sm mt-3 opacity-60 font-semibold tracking-widest" id="loaderPct">0%</p>
+    </div>
+
+    <!-- BG BLOBS -->
+    <div class="blob w-[500px] h-[500px] left-[-100px] top-[-100px]" style="background:var(--c1)"></div>
+    <div class="blob w-[600px] h-[600px] right-[-150px] top-[30%]" style="background:var(--c2); animation-delay:2s">
+    </div>
+    <div class="blob w-[400px] h-[400px] left-[10%] bottom-[-100px]" style="background:var(--c3); animation-delay:4s">
+    </div>
+
+    <!-- NAV -->
+    <nav
+        class="fixed top-4 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-4 md:px-8 py-3 flex items-center gap-4 md:gap-8 w-[94%] md:w-auto max-w-5xl justify-between shadow-xl">
+        <a href="#home" class="flex items-center gap-2 font-baloo font-800 font-extrabold text-lg">
+            <span class="w-9 h-9 rounded-full flex items-center justify-center text-white text-xl"
+                style="background:linear-gradient(135deg,var(--accent),var(--accent2))">★</span>
+            <span class="hidden sm:block shimmer-text">Little Star</span>
+        </a>
+        <div class="hidden md:flex items-center gap-6 font-bold text-sm tracking-wide">
+            <a href="#invitation" class="hover:text-pink-500 transition">Invitation</a>
+            <a href="#details" class="hover:text-pink-500 transition">Details</a>
+            <a href="#rsvp" class="hover:text-pink-500 transition">RSVP</a>
+            <a href="#games" class="hover:text-pink-500 transition">Games</a>
+            <a href="#gifts" class="hover:text-pink-500 transition">Registry</a>
+        </div>
+        <a href="#rsvp" class="btn-magical px-5 py-2 text-sm">RSVP Now</a>
+    </nav>
+
+    <!-- HERO / 3D -->
+    <header id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-16">
+        <canvas id="bg3d" class="absolute inset-0 w-full h-full" style="z-index:1"></canvas>
+        <div class="absolute inset-0 pointer-events-none"
+            style="z-index:2; background:radial-gradient(ellipse at center,transparent 40%,var(--bg) 95%); opacity:.9">
+        </div>
+        <!-- 2D clickable balloons layer -->
+        <div id="balloonLayer" class="absolute inset-0 pointer-events-none" style="z-index:3"></div>
+
+        <div class="relative text-center px-6 max-w-4xl mx-auto" style="z-index:5">
+            <div
+                class="hero-anim inline-flex items-center gap-2 glass rounded-full px-5 py-2 text-xs md:text-sm font-bold tracking-widest uppercase mb-6">
+                <span class="twinkle-star">✦</span> You're Invited <span class="twinkle-star"
+                    style="animation-delay:.8s">✦</span>
+            </div>
+            <p class="hero-anim font-script text-4xl md:text-6xl" style="color:var(--accent)">Twinkle Twinkle Little
+                Star</p>
+            <h1 class="hero-anim font-baloo font-extrabold leading-[.95] text-5xl md:text-8xl mt-2 drop-shadow-sm">MIA'S
+                <br><span class="shimmer-text">BABY SHOWER</span></h1>
+            <p class="hero-anim mt-5 text-base md:text-xl font-semibold opacity-70 max-w-xl mx-auto">Join us for a
+                dreamy afternoon of love, laughter & tiny little shoes — in magical 3D!</p>
+
+            <div class="hero-anim flex flex-wrap justify-center gap-3 mt-8">
+                <button onclick="openInvitation(true)"
+                    class="btn-magical px-8 py-4 text-base flex items-center gap-2"><i
+                        class="fa-solid fa-envelope-open-text"></i> Open Invitation</button>
+                <a href="#details"
+                    class="glass px-8 py-4 rounded-full font-extrabold hover:scale-105 transition flex items-center gap-2"><i
+                        class="fa-solid fa-location-dot" style="color:var(--accent)"></i> View Details</a>
+            </div>
+
+            <div
+                class="hero-anim glass rounded-2xl mt-8 p-4 flex items-center justify-center gap-4 md:gap-8 max-w-2xl mx-auto flex-wrap">
+                <div class="flex items-center gap-2 font-bold text-sm"><span
+                        class="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">📅</span> Sun, Oct
+                    18 • 2PM</div>
+                <div class="w-px h-8 bg-gray-300 hidden md:block"></div>
+                <div class="flex items-center gap-2 font-bold text-sm"><span
+                        class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">📍</span> Willow
+                    Garden Hall</div>
+                <div class="w-px h-8 bg-gray-300 hidden md:block"></div>
+                <div class="flex items-center gap-2 font-bold text-sm"><span
+                        class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">🎈</span> <span
+                        id="popCountLabel">0 / 10 pops</span></div>
+            </div>
+            <p class="mt-4 text-xs font-bold tracking-widest uppercase opacity-50 animate-pulse">✦ Tip: Click the 3D
+                balloons to pop them! ✦</p>
+        </div>
+
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-60"
+            style="z-index:5">
+            <span class="text-[11px] font-bold tracking-widest uppercase">Scroll for magic</span>
+            <div class="w-6 h-10 border-2 border-current rounded-full flex justify-center pt-2">
+                <div class="w-1 h-2 bg-current rounded-full animate-bounce"></div>
+            </div>
+        </div>
+
+        <!-- floating badges -->
+        <div class="hidden lg:block absolute left-8 top-1/3 glass rounded-2xl p-4 rotate-[-8deg] animate-floaty"
+            style="z-index:5">
+            <div class="text-3xl">🧸</div>
+            <div class="font-baloo font-bold text-sm">Team Bear?</div>
+        </div>
+        <div class="hidden lg:block absolute right-8 top-1/4 glass rounded-2xl p-4 rotate-[8deg] animate-floaty2"
+            style="z-index:5">
+            <div class="text-3xl">🌙</div>
+            <div class="font-baloo font-bold text-sm">Over the Moon!</div>
+        </div>
+    </header>
+
+    <!-- MARQUEE -->
+    <div class="relative py-4 overflow-hidden text-white font-baloo font-bold text-lg tracking-wide"
+        style="background:linear-gradient(90deg,var(--accent),var(--accent2),var(--gold),var(--accent)); z-index:10">
+        <div class="marquee-track gap-8">
+            <span class="flex gap-8 pr-8">★ OH BABY ★ TWINKLE TWINKLE LITTLE STAR ★ OCT 18TH 2PM ★ WILLOW GARDEN ★ GAMES
+                • CAKE • LOVE ★ OH BABY ★ TWINKLE TWINKLE LITTLE STAR ★ OCT 18TH 2PM ★ WILLOW GARDEN ★</span>
+            <span class="flex gap-8 pr-8">★ OH BABY ★ TWINKLE TWINKLE LITTLE STAR ★ OCT 18TH 2PM ★ WILLOW GARDEN ★ GAMES
+                • CAKE • LOVE ★ OH BABY ★ TWINKLE TWINKLE LITTLE STAR ★ OCT 18TH 2PM ★ WILLOW GARDEN ★</span>
+        </div>
+    </div>
+
+    <!-- ENVELOPE SECTION -->
+    <section id="invitation" class="relative py-24 px-6">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+            <div class="reveal">
+                <p class="font-script text-4xl" style="color:var(--accent)">You've got mail...</p>
+                <h2 class="font-baloo font-extrabold text-4xl md:text-5xl mt-2">A Magical Invite<br>Awaits You!</h2>
+                <p class="mt-4 opacity-70 font-medium leading-relaxed">Our little star is about to arrive, and mama
+                    <b>Sofia Bennett</b> can't wait to celebrate with you! Tap the enchanted envelope to reveal your
+                    personal invitation card in full 3D.</p>
+                <div class="flex gap-3 mt-6 flex-wrap">
+                    <div class="glass rounded-2xl px-4 py-3 flex items-center gap-3"><i
+                            class="fa-solid fa-wand-magic-sparkles text-xl" style="color:var(--gold)"></i>
+                        <div>
+                            <div class="font-bold text-sm">Interactive</div>
+                            <div class="text-xs opacity-60">Tap • Tilt • Explore</div>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl px-4 py-3 flex items-center gap-3"><i class="fa-solid fa-cube text-xl"
+                            style="color:var(--accent2)"></i>
+                        <div>
+                            <div class="font-bold text-sm">Real 3D</div>
+                            <div class="text-xs opacity-60">Drag & Play Scene</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 flex items-center gap-4">
+                    <button onclick="openInvitation(true)" class="btn-magical px-7 py-3">✨ Reveal Card</button>
+                    <button onclick="burstConfetti()"
+                        class="glass px-6 py-3 rounded-full font-bold hover:scale-105 transition">🎉 Test
+                        Confetti</button>
+                </div>
+            </div>
+            <div class="reveal text-center">
+                <div class="envelope-wrap py-16">
+                    <div class="envelope" id="envelope" onclick="openInvitation()">
+                        <div class="env-back"></div>
+                        <div class="env-letter">
+                            <div class="font-script text-3xl" style="color:var(--accent)">You're Invited!</div>
+                            <div class="font-baloo font-extrabold">MIA'S BABY SHOWER</div>
+                            <div class="text-xs font-bold mt-1 opacity-60 tracking-widest">OCT 18 • 2PM • WILLOW GARDEN
+                            </div>
+                            <div class="mt-2 text-2xl">🌙⭐🧸</div>
+                        </div>
+                        <div class="env-front"></div>
+                        <div class="env-flap"></div>
+                        <div class="env-seal">💌</div>
+                    </div>
+                    <p class="mt-8 font-bold text-sm tracking-widest uppercase opacity-50 animate-pulse" id="envHint">👆
+                        Click envelope to open</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COUNTDOWN -->
+    <section class="px-6 pb-10">
+        <div class="max-w-5xl mx-auto glass rounded-[32px] p-8 md:p-12 text-center reveal relative overflow-hidden">
+            <div class="absolute -top-10 -left-10 text-[120px] opacity-10 rotate-[-15deg]">🌙</div>
+            <div class="absolute -bottom-10 -right-10 text-[120px] opacity-10 rotate-[15deg]">⭐</div>
+            <p class="font-script text-4xl" style="color:var(--accent)">Counting down to cuddles</p>
+            <h3 class="font-baloo font-extrabold text-3xl md:text-4xl">Baby Mia Arrives Soon!</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 max-w-2xl mx-auto">
+                <div class="count-box p-5">
+                    <div class="font-baloo font-extrabold text-4xl md:text-5xl" id="cdD">00</div>
+                    <div class="text-xs font-bold tracking-widest uppercase opacity-60 mt-1">Days</div>
+                </div>
+                <div class="count-box p-5">
+                    <div class="font-baloo font-extrabold text-4xl md:text-5xl" id="cdH">00</div>
+                    <div class="text-xs font-bold tracking-widest uppercase opacity-60 mt-1">Hours</div>
+                </div>
+                <div class="count-box p-5">
+                    <div class="font-baloo font-extrabold text-4xl md:text-5xl" id="cdM">00</div>
+                    <div class="text-xs font-bold tracking-widest uppercase opacity-60 mt-1">Mins</div>
+                </div>
+                <div class="count-box p-5">
+                    <div class="font-baloo font-extrabold text-4xl md:text-5xl" id="cdS" style="color:var(--accent)">00
+                    </div>
+                    <div class="text-xs font-bold tracking-widest uppercase opacity-60 mt-1">Secs</div>
+                </div>
+            </div>
+            <div class="mt-6 max-w-xl mx-auto">
+                <div class="flex justify-between text-xs font-bold mb-2"><span>PREGNANCY JOURNEY</span><span>34 / 40
+                        weeks</span></div>
+                <div class="h-4 bg-white rounded-full overflow-hidden shadow-inner">
+                    <div id="pregBar" class="h-full rounded-full"
+                        style="width:0%; background:linear-gradient(90deg,var(--accent),var(--gold))"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DETAILS -->
+    <section id="details" class="py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center reveal">
+                <p class="font-script text-4xl" style="color:var(--accent)">When & Where</p>
+                <h2 class="font-baloo font-extrabold text-4xl md:text-5xl">Party Details</h2>
+                <p class="opacity-60 font-semibold mt-2">Everything you need to know for the big day</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6 mt-10">
+                <div class="reveal glass rounded-[28px] p-8 text-center tilt-card group">
+                    <div class="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center text-3xl rotate-[-6deg] group-hover:rotate-[6deg] transition"
+                        style="background:linear-gradient(135deg,#FFD6E8,#FF9EC6)">📅</div>
+                    <h3 class="font-baloo font-extrabold text-xl mt-4">Date & Time</h3>
+                    <p class="font-bold mt-2">Sunday, October 18th, 2026</p>
+                    <p class="opacity-60 text-sm font-semibold">2:00 PM – 5:00 PM</p>
+                    <button onclick="addToCalendar()"
+                        class="mt-4 text-sm font-bold px-5 py-2 rounded-full bg-white shadow hover:scale-105 transition">+
+                        Add to Calendar</button>
+                </div>
+                <div class="reveal glass rounded-[28px] p-8 text-center tilt-card group">
+                    <div class="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center text-3xl rotate-[6deg] group-hover:rotate-[-6deg] transition"
+                        style="background:linear-gradient(135deg,#C5ECFF,#7DD3FC)">📍</div>
+                    <h3 class="font-baloo font-extrabold text-xl mt-4">Venue</h3>
+                    <p class="font-bold mt-2">The Willow Garden Hall</p>
+                    <p class="opacity-60 text-sm font-semibold">123 Starlight Lane, Beverly Hills</p>
+                    <button
+                        onclick="document.getElementById('mapBox').scrollIntoView({behavior:'smooth',block:'center'})"
+                        class="mt-4 text-sm font-bold px-5 py-2 rounded-full bg-white shadow hover:scale-105 transition">Get
+                        Directions</button>
+                </div>
+                <div class="reveal glass rounded-[28px] p-8 text-center tilt-card group">
+                    <div class="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center text-3xl rotate-[-6deg] group-hover:rotate-[6deg] transition"
+                        style="background:linear-gradient(135deg,#FFF3B0,#E9B44C)">👗</div>
+                    <h3 class="font-baloo font-extrabold text-xl mt-4">Dress Code</h3>
+                    <p class="font-bold mt-2">Pastel Chic & Comfy</p>
+                    <p class="opacity-60 text-sm font-semibold">Think dreamy, soft & starry ✨</p>
+                    <div class="flex justify-center gap-2 mt-4"><span
+                            class="w-7 h-7 rounded-full border-2 border-white shadow"
+                            style="background:#FFC2D6"></span><span
+                            class="w-7 h-7 rounded-full border-2 border-white shadow"
+                            style="background:#B8E6FF"></span><span
+                            class="w-7 h-7 rounded-full border-2 border-white shadow"
+                            style="background:#FFF3B0"></span><span
+                            class="w-7 h-7 rounded-full border-2 border-white shadow" style="background:#D6FAD8"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-6 mt-8">
+                <div id="mapBox" class="reveal glass rounded-[28px] p-3 overflow-hidden">
+                    <div class="rounded-[22px] overflow-hidden h-[320px] relative">
+                        <iframe
+                            src="https://maps.google.com/maps?q=Beverly%20Hills%20California&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                            class="w-full h-full border-0" loading="lazy"></iframe>
+                        <div
+                            class="absolute bottom-3 left-3 right-3 glass rounded-2xl p-3 flex items-center justify-between">
+                            <div class="text-left">
+                                <div class="font-bold text-sm">Willow Garden Hall</div>
+                                <div class="text-xs opacity-60">Free parking • Stroller friendly</div>
+                            </div>
+                            <a href="https://maps.google.com/?q=Beverly+Hills" target="_blank"
+                                class="btn-magical px-4 py-2 text-xs">Navigate</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal glass rounded-[28px] p-8">
+                    <h3 class="font-baloo font-extrabold text-2xl mb-6 flex items-center gap-2">🕒 Party Timeline</h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-4 items-center bg-white/70 rounded-2xl p-3 hover:scale-[1.02] transition">
+                            <div class="font-baloo font-extrabold text-sm px-3 py-2 rounded-xl text-white shrink-0"
+                                style="background:var(--accent)">2:00</div>
+                            <div>
+                                <div class="font-bold text-sm">Welcome & Mocktails ✨</div>
+                                <div class="text-xs opacity-60">Starry photo wall + guest book</div>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-center bg-white/70 rounded-2xl p-3 hover:scale-[1.02] transition">
+                            <div class="font-baloo font-extrabold text-sm px-3 py-2 rounded-xl text-white shrink-0"
+                                style="background:var(--accent2)">2:45</div>
+                            <div>
+                                <div class="font-bold text-sm">Baby Games Extravaganza 🎮</div>
+                                <div class="text-xs opacity-60">Bingo, onesie decorating, quiz</div>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-center bg-white/70 rounded-2xl p-3 hover:scale-[1.02] transition">
+                            <div class="font-baloo font-extrabold text-sm px-3 py-2 rounded-xl text-white shrink-0"
+                                style="background:var(--gold)">3:30</div>
+                            <div>
+                                <div class="font-bold text-sm">Cake Cutting & Wishes 🎂</div>
+                                <div class="text-xs opacity-60">Moon & stars cake + advice cards</div>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-center bg-white/70 rounded-2xl p-3 hover:scale-[1.02] transition">
+                            <div class="font-baloo font-extrabold text-sm px-3 py-2 rounded-xl text-white shrink-0"
+                                style="background:#B388FF">4:15</div>
+                            <div>
+                                <div class="font-bold text-sm">Gift Opening + Goodie Bags 🎁</div>
+                                <div class="text-xs opacity-60">Thank yous & starry favors</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery -->
+            <div class="mt-12 reveal">
+                <h3 class="font-baloo font-extrabold text-2xl text-center mb-6">Sneak Peek: Dreamy Theme 🌙</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="polaroid rotate-[-4deg]"><img
+                            src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=600&q=80&auto=format&fit=crop"
+                            onerror="this.src='https://picsum.photos/seed/babyball/600/600'"
+                            class="rounded-md h-48 w-full object-cover" alt="balloons">
+                        <p class="text-center font-script text-xl mt-2">pastel dreams</p>
+                    </div>
+                    <div class="polaroid rotate-[3deg]"><img
+                            src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600&q=80&auto=format&fit=crop"
+                            onerror="this.src='https://picsum.photos/seed/babyconf/600/600'"
+                            class="rounded-md h-48 w-full object-cover" alt="confetti">
+                        <p class="text-center font-script text-xl mt-2">confetti love</p>
+                    </div>
+                    <div class="polaroid rotate-[-2deg]"><img
+                            src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=600&q=80&auto=format&fit=crop"
+                            onerror="this.src='https://picsum.photos/seed/babycloth/600/600'"
+                            class="rounded-md h-48 w-full object-cover" alt="clothes">
+                        <p class="text-center font-script text-xl mt-2">tiny outfits</p>
+                    </div>
+                    <div class="polaroid rotate-[4deg]"><img
+                            src="https://images.unsplash.com/photo-1555009393-f20bdb245c4d?w=600&q=80&auto=format&fit=crop"
+                            onerror="this.src='https://picsum.photos/seed/babyfeet/600/600'"
+                            class="rounded-md h-48 w-full object-cover" alt="baby">
+                        <p class="text-center font-script text-xl mt-2">little toes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP -->
+    <section id="rsvp" class="py-20 px-6 relative">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-5 gap-6">
+            <div class="lg:col-span-2 reveal glass rounded-[32px] p-8 md:p-10">
+                <p class="font-script text-4xl" style="color:var(--accent)">Will you join us?</p>
+                <h2 class="font-baloo font-extrabold text-4xl">RSVP</h2>
+                <p class="text-sm opacity-60 font-semibold mt-1">Kindly respond by Oct 10th 💌</p>
+                <div class="flex gap-3 mt-5">
+                    <div class="flex-1 bg-white rounded-2xl p-3 text-center shadow">
+                        <div class="font-baloo font-extrabold text-2xl" id="statGoing" style="color:var(--accent)">18
+                        </div>
+                        <div class="text-[11px] font-bold tracking-widest uppercase opacity-60">Going</div>
+                    </div>
+                    <div class="flex-1 bg-white rounded-2xl p-3 text-center shadow">
+                        <div class="font-baloo font-extrabold text-2xl" id="statSeats">32</div>
+                        <div class="text-[11px] font-bold tracking-widest uppercase opacity-60">Seats left</div>
+                    </div>
+                    <div class="flex-1 bg-white rounded-2xl p-3 text-center shadow">
+                        <div class="font-baloo font-extrabold text-2xl">50</div>
+                        <div class="text-[11px] font-bold tracking-widest uppercase opacity-60">Total</div>
+                    </div>
+                </div>
+                <form id="rsvpForm" class="mt-6 space-y-4">
+                    <div><label class="text-xs font-bold tracking-widest uppercase opacity-60">Your Name *</label><input
+                            required id="fName" type="text" placeholder="e.g. Emma Wilson"
+                            class="mt-1 w-full bg-white border-2 border-transparent rounded-2xl px-4 py-3 font-semibold">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div><label class="text-xs font-bold tracking-widest uppercase opacity-60">Attending?
+                                *</label><select id="fAttend"
+                                class="mt-1 w-full bg-white border-2 border-transparent rounded-2xl px-4 py-3 font-semibold">
+                                <option value="yes">Joyfully Accepts ✨</option>
+                                <option value="no">Regretfully Declines 💔</option>
+                            </select></div>
+                        <div><label class="text-xs font-bold tracking-widest uppercase opacity-60">Guests</label><select
+                                id="fGuests"
+                                class="mt-1 w-full bg-white border-2 border-transparent rounded-2xl px-4 py-3 font-semibold">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select></div>
+                    </div>
+                    <div><label class="text-xs font-bold tracking-widest uppercase opacity-60">Message for Baby
+                            Mia</label><textarea id="fMsg" rows="3" placeholder="We can't wait to meet you..."
+                            class="mt-1 w-full bg-white border-2 border-transparent rounded-2xl px-4 py-3 font-semibold resize-none"></textarea>
+                    </div>
+                    <div><label class="text-xs font-bold tracking-widest uppercase opacity-60">Meal Preference</label>
+                        <div class="grid grid-cols-3 gap-2 mt-2" id="mealPick">
+                            <button type="button" data-meal="Veggie"
+                                class="meal-btn bg-white rounded-xl py-2 text-sm font-bold border-2 border-transparent shadow">🥗
+                                Veggie</button>
+                            <button type="button" data-meal="Chicken"
+                                class="meal-btn bg-white rounded-xl py-2 text-sm font-bold border-2 shadow"
+                                style="border-color:var(--accent)">🍗 Chicken</button>
+                            <button type="button" data-meal="Vegan"
+                                class="meal-btn bg-white rounded-xl py-2 text-sm font-bold border-2 border-transparent shadow">🌱
+                                Vegan</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-magical w-full py-4 text-lg">Send RSVP 💌</button>
+                </form>
+            </div>
+            <div class="lg:col-span-3 reveal glass rounded-[32px] p-8 md:p-10">
+                <div class="flex items-center justify-between flex-wrap gap-3">
+                    <h3 class="font-baloo font-extrabold text-2xl">Guest Wall of Love 💕 <span id="guestCount"
+                            class="text-sm opacity-60 font-quick">(6)</span></h3>
+                    <div class="flex gap-2"><input id="guestSearch" placeholder="Search guests..."
+                            class="bg-white rounded-full px-4 py-2 text-sm font-semibold shadow w-40"><button
+                            onclick="shuffleGuests()"
+                            class="w-10 h-10 rounded-full bg-white shadow font-bold hover:rotate-180 transition duration-500">🔀</button>
+                    </div>
+                </div>
+                <div id="guestWall" class="grid sm:grid-cols-2 gap-3 mt-6 max-h-[520px] overflow-y-auto pr-1"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GAMES -->
+    <section id="games" class="py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center reveal">
+                <p class="font-script text-4xl" style="color:var(--accent)">Let's play!</p>
+                <h2 class="font-baloo font-extrabold text-4xl md:text-5xl">Shower Games & Polls</h2>
+                <p class="opacity-60 font-semibold">Vote now — winners announced at the party!</p>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-6 mt-10">
+                <div class="reveal glass rounded-[32px] p-8">
+                    <h3 class="font-baloo font-extrabold text-2xl text-center">💙 or 🩷 Guess the Vibe?</h3>
+                    <p class="text-center text-sm opacity-60 font-semibold">What will Baby Mia's nursery theme be?</p>
+                    <div class="grid grid-cols-2 gap-4 mt-6">
+                        <button onclick="voteGender('boy')"
+                            class="rounded-3xl p-6 text-center bg-gradient-to-br from-sky-200 to-sky-400 hover:scale-105 transition shadow-lg">
+                            <div class="text-5xl">🧸</div>
+                            <div class="font-baloo font-extrabold text-white text-lg mt-2">Blue Bear</div>
+                            <div class="text-white/90 text-xs font-bold" id="boyVotesLabel">42 votes</div>
+                        </button>
+                        <button onclick="voteGender('girl')"
+                            class="rounded-3xl p-6 text-center bg-gradient-to-br from-pink-200 to-pink-500 hover:scale-105 transition shadow-lg">
+                            <div class="text-5xl">🌸</div>
+                            <div class="font-baloo font-extrabold text-white text-lg mt-2">Pink Bloom</div>
+                            <div class="text-white/90 text-xs font-bold" id="girlVotesLabel">58 votes</div>
+                        </button>
+                    </div>
+                    <div class="mt-5 h-5 bg-white rounded-full overflow-hidden flex shadow-inner">
+                        <div id="boyBar" class="vote-bar h-full bg-sky-400" style="width:42%"></div>
+                        <div id="girlBar" class="vote-bar h-full bg-pink-400" style="width:58%"></div>
+                    </div>
+                    <p class="text-center text-xs font-bold mt-2 opacity-60" id="genderMsg">Pink is leading! Cast your
+                        vote ✨</p>
+                </div>
+                <div class="reveal glass rounded-[32px] p-8">
+                    <h3 class="font-baloo font-extrabold text-2xl text-center">✨ Vote: Middle Name?</h3>
+                    <p class="text-center text-sm opacity-60 font-semibold">Help mama choose Mia's middle name</p>
+                    <div class="space-y-3 mt-6" id="namePoll"></div>
+                </div>
+            </div>
+            <div class="reveal glass rounded-[32px] p-8 mt-6 text-center relative overflow-hidden">
+                <h3 class="font-baloo font-extrabold text-2xl">🎈 Balloon Pop Challenge</h3>
+                <p class="opacity-60 font-semibold text-sm mt-1">Pop 10 balloons in the 3D sky to unlock a <b>secret
+                        message</b> from mama!</p>
+                <div class="max-w-md mx-auto mt-4 h-6 bg-white rounded-full overflow-hidden shadow-inner relative">
+                    <div id="popProgress" class="h-full rounded-full transition-all duration-500"
+                        style="width:0%; background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2))">
+                    </div>
+                </div>
+                <p class="font-baloo font-bold mt-2" id="popProgressLabel">0 / 10 popped</p>
+                <button
+                    onclick="window.scrollTo({top:0,behavior:'smooth'}); toast('Look up! Click the floating balloons 🎈')"
+                    class="btn-magical px-7 py-3 mt-4 text-sm">Go Pop Balloons ↑</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- GIFTS -->
+    <section id="gifts" class="py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center reveal">
+                <p class="font-script text-4xl" style="color:var(--accent)">Spoil little Mia</p>
+                <h2 class="font-baloo font-extrabold text-4xl md:text-5xl">Gift Registry</h2>
+                <p class="opacity-60 font-semibold mt-2">Tap <b>Reserve</b> to claim a gift — no duplicates, all love!
+                </p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10" id="giftGrid"></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="px-6 pb-28 pt-10">
+        <div class="max-w-5xl mx-auto rounded-[32px] p-10 text-center text-white relative overflow-hidden"
+            style="background:linear-gradient(135deg,#4A3F55,#7A5C9E,#FF8FB1)">
+            <div class="absolute inset-0 opacity-20"
+                style="background-image:radial-gradient(white 2px,transparent 2px); background-size:30px 30px;"></div>
+            <div class="relative">
+                <div class="font-script text-5xl">Thank you!</div>
+                <h2 class="font-baloo font-extrabold text-3xl mt-1">Can't wait to celebrate with you ✨</h2>
+                <p class="opacity-80 font-semibold mt-2">Hosted with love by Emma & The Bennett Family • Questions?
+                    (555) 123-4567</p>
+                <div class="flex justify-center gap-3 mt-6 flex-wrap">
+                    <button onclick="burstConfetti()"
+                        class="bg-white text-[#4A3F55] px-6 py-3 rounded-full font-extrabold hover:scale-105 transition">🎉
+                        Celebrate</button>
+                    <button onclick="shareInvite()"
+                        class="bg-white/20 backdrop-blur border border-white/40 px-6 py-3 rounded-full font-extrabold hover:scale-105 transition">🔗
+                        Share Invite</button>
+                </div>
+                <p class="mt-8 text-xs opacity-60 font-bold tracking-widest uppercase">Made with 💕 for Baby Mia • Oct
+                    2026</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING TOOLBAR -->
+    <div
+        class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-3 py-2 flex items-center gap-2 shadow-2xl">
+        <div class="flex bg-white rounded-full p-1 gap-1 shadow-inner">
+            <button onclick="setTheme('girl')" title="Girl theme"
+                class="w-8 h-8 rounded-full font-bold text-sm hover:scale-110 transition"
+                style="background:#FF9EC6">♀</button>
+            <button onclick="setTheme('boy')" title="Boy theme"
+                class="w-8 h-8 rounded-full font-bold text-sm text-white hover:scale-110 transition"
+                style="background:#2AA8FF">♂</button>
+            <button onclick="setTheme('neutral')" title="Neutral theme"
+                class="w-8 h-8 rounded-full font-bold text-sm hover:scale-110 transition"
+                style="background:linear-gradient(135deg,#FFD6A5,#CAFFBF,#9BF6FF)">★</button>
+        </div>
+        <button id="musicBtn" onclick="toggleMusic()"
+            class="w-11 h-11 rounded-full text-white flex items-center justify-center gap-[3px] hover:scale-105 transition"
+            style="background:linear-gradient(135deg,var(--accent),var(--accent2))">
+            <span id="musicIcon"><i class="fa-solid fa-music"></i></span>
+        </button>
+        <button onclick="window.scrollTo({top:0,behavior:'smooth'})"
+            class="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center hover:scale-105 transition">↑</button>
+    </div>
+
+    <!-- INVITATION MODAL -->
+    <div id="inviteModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 modal-bg">
+        <div class="max-w-lg w-full relative">
+            <button onclick="closeInvitation()"
+                class="absolute -top-4 -right-2 w-11 h-11 bg-white rounded-full shadow-xl font-bold hover:rotate-90 transition z-10">✕</button>
+            <div class="tilt-card bg-white rounded-[32px] overflow-hidden shadow-2xl" id="inviteCard">
+                <div class="h-48 relative flex items-center justify-center overflow-hidden"
+                    style="background:linear-gradient(135deg,var(--c1),var(--c2),var(--c3))">
+                    <div class="absolute inset-0 opacity-30"
+                        style="background-image:radial-gradient(white 3px,transparent 3px); background-size:28px 28px;">
+                    </div>
+                    <div class="text-center tilt-inner">
+                        <div class="text-5xl animate-floaty">🌙</div>
+                        <div class="font-script text-4xl text-white drop-shadow-lg mt-1">Twinkle Twinkle</div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0"><svg viewBox="0 0 1440 80" class="w-full block">
+                            <path fill="white" d="M0,40 C360,90 1080,0 1440,50 L1440,80 L0,80 Z" />
+                        </svg></div>
+                </div>
+                <div class="p-8 text-center -mt-2">
+                    <p class="text-xs font-bold tracking-[.3em] uppercase opacity-50">You are cordially invited to</p>
+                    <h2 class="font-baloo font-extrabold text-3xl mt-2">Sofia's Baby Shower</h2>
+                    <p class="font-script text-3xl mt-1" style="color:var(--accent)">honoring Baby Mia</p>
+                    <div class="flex items-center justify-center gap-3 my-5">
+                        <div class="h-px flex-1 bg-gradient-to-r from-transparent to-pink-300"></div><span
+                            class="text-xl">⭐</span>
+                        <div class="h-px flex-1 bg-gradient-to-l from-transparent to-pink-300"></div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        <div>
+                            <div class="text-[11px] font-bold tracking-widest uppercase opacity-50">Date</div>
+                            <div class="font-baloo font-bold">Oct 18</div>
+                            <div class="text-xs font-semibold opacity-60">Sunday</div>
+                        </div>
+                        <div class="border-x">
+                            <div class="text-[11px] font-bold tracking-widest uppercase opacity-50">Time</div>
+                            <div class="font-baloo font-bold">2 PM</div>
+                            <div class="text-xs font-semibold opacity-60">- 5 PM -</div>
+                        </div>
+                        <div>
+                            <div class="text-[11px] font-bold tracking-widest uppercase opacity-50">Venue</div>
+                            <div class="font-baloo font-bold">Willow Hall</div>
+                            <div class="text-xs font-semibold opacity-60">Beverly Hills</div>
+                        </div>
+                    </div>
+                    <p class="text-sm font-semibold opacity-60 mt-5">Hosted by Emma Wilson & Family<br>RSVP by Oct 10 •
+                        (555) 123-4567</p>
+                    <div class="flex gap-3 mt-6"><a href="#rsvp" onclick="closeInvitation()"
+                            class="btn-magical flex-1 py-3 text-sm">RSVP Yes! 💕</a><button onclick="shareInvite()"
+                            class="flex-1 py-3 text-sm font-extrabold rounded-full bg-gray-100 hover:bg-gray-200 transition">Share</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECRET MODAL -->
+    <div id="secretModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 modal-bg">
+        <div class="glass rounded-[32px] p-10 max-w-md w-full text-center relative">
+            <button
+                onclick="document.getElementById('secretModal').classList.add('hidden');document.getElementById('secretModal').classList.remove('flex')"
+                class="absolute top-4 right-4 w-9 h-9 bg-white rounded-full shadow font-bold">✕</button>
+            <div class="text-6xl animate-bounce">💌</div>
+            <div class="font-script text-5xl mt-2" style="color:var(--accent)">Secret Unlocked!</div>
+            <p class="font-baloo font-bold mt-3">You popped 10 balloons! Mama Sofia has a message:</p>
+            <div class="bg-white rounded-2xl p-5 mt-4 shadow-inner italic font-semibold">"Thank you for showering our
+                little star with so much love already. We can't wait to hold your hand and introduce you to Mia — she's
+                already kicking with excitement! Love, Sofia & James 💕"</div>
+            <button
+                onclick="burstConfetti();document.getElementById('secretModal').classList.add('hidden');document.getElementById('secretModal').classList.remove('flex')"
+                class="btn-magical px-8 py-3 mt-5">Yay! 🎉</button>
+        </div>
+    </div>
+
+    <div id="toastBox" class="fixed top-24 right-4 z-[200] space-y-2 max-w-xs"></div>
+
+    <script>
+        /* ============ PRELOADER ============ */
+        let loadPct = 0;
+        const loadInt = setInterval(() => { loadPct += Math.random() * 18; if (loadPct >= 100) { loadPct = 100; clearInterval(loadInt); setTimeout(() => { document.getElementById('preloader').classList.add('hide'); heroIntro(); }, 500); } document.getElementById('loaderFill').style.width = loadPct + '%'; document.getElementById('loaderPct').textContent = Math.floor(loadPct) + '%'; }, 180);
+
+        gsap.registerPlugin(ScrollTrigger);
+        function heroIntro() { gsap.from('.hero-anim', { y: 50, opacity: 0, duration: 1, stagger: .12, ease: 'back.out(1.4)' }); }
+        gsap.utils.toArray('.reveal').forEach(el => { gsap.from(el, { y: 60, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } }); });
+
+        /* ============ CURSOR & SPARKLES ============ */
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+            if (Math.random() > .82) { const s = document.createElement('div'); s.className = 'sparkle-trail'; s.textContent = ['✦', '✧', '★', '💕', '✨'][Math.floor(Math.random() * 5)]; s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px'; s.style.color = ['#FF8FB1', '#7DD3FC', '#E9B44C'][Math.floor(Math.random() * 3)]; document.body.appendChild(s); setTimeout(() => s.remove(), 1000); }
+        });
+        document.querySelectorAll('button,a,.envelope').forEach(b => { b.addEventListener('mouseenter', () => { cursor.style.width = '34px'; cursor.style.height = '34px'; }); b.addEventListener('mouseleave', () => { cursor.style.width = '18px'; cursor.style.height = '18px'; }); });
+
+        /* ============ TOAST & CONFETTI ============ */
+        function toast(msg) { const t = document.createElement('div'); t.className = 'toast glass rounded-2xl px-4 py-3 font-bold text-sm shadow-xl flex items-center gap-2'; t.innerHTML = '<span>✨</span><span>' + msg + '</span>'; document.getElementById('toastBox').appendChild(t); setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(30px)'; t.style.transition = '.4s'; setTimeout(() => t.remove(), 400); }, 3200); }
+        function burstConfetti() { const colors = document.documentElement.dataset.theme === 'boy' ? ['#2AA8FF', '#7DD3FC', '#ffffff', '#B8E6FF'] : document.documentElement.dataset.theme === 'girl' ? ['#FF5E8A', '#FF9EC6', '#FFD6E8', '#ffffff'] : ['#FF8FB1', '#7DD3FC', '#E9B44C', '#ffffff']; confetti({ particleCount: 140, spread: 85, origin: { y: .6 }, colors }); setTimeout(() => confetti({ particleCount: 60, angle: 60, spread: 60, origin: { x: 0 }, colors }), 250); setTimeout(() => confetti({ particleCount: 60, angle: 120, spread: 60, origin: { x: 1 }, colors }), 400); }
+        function popSound() { try { const ctx = popSound.ctx || (popSound.ctx = new (window.AudioContext || window.webkitAudioContext)()); const o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(600, ctx.currentTime); o.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + .08); o.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + .15); g.gain.setValueAtTime(.25, ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .2); o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime + .22); } catch (e) { } }
+
+        /* ============ THREE.JS 3D SCENE ============ */
+        let scene, camera, renderer, balloons = [], clouds = [], stars, moon, bearGroup, mouseX = 0, mouseY = 0, pops = 0, secretShown = false;
+        const palette = { neutral: [0xFF8FB1, 0x7DD3FC, 0xE9B44C, 0x7BE0A0, 0xC9A6FF], girl: [0xFF5E8A, 0xFF9EC6, 0xFFC2D6, 0xFF7AA8, 0xFFD6E8], boy: [0x2AA8FF, 0x7DD3FC, 0x9AD7FF, 0x3AA0E8, 0xB8E6FF] };
+        function init3D() {
+            const canvas = document.getElementById('bg3d');
+            scene = new THREE.Scene();
+            scene.fog = new THREE.Fog(0xFFF9F0, 12, 28);
+            camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, .1, 100);
+            camera.position.set(0, 0, 10);
+            renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            renderer.setSize(canvas.parentElement.clientWidth, canvas.parentElement.clientHeight);
+            renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+            scene.add(new THREE.AmbientLight(0xffffff, .85));
+            const dir = new THREE.DirectionalLight(0xffffff, .7); dir.position.set(5, 10, 7); scene.add(dir);
+            const p1 = new THREE.PointLight(0xFF8FB1, 1, 30); p1.position.set(-6, 3, 4); scene.add(p1);
+            const p2 = new THREE.PointLight(0x7DD3FC, 1, 30); p2.position.set(6, -2, 4); scene.add(p2);
+            // Moon
+            const moonGeo = new THREE.SphereGeometry(1.1, 32, 32);
+            moon = new THREE.Mesh(moonGeo, new THREE.MeshStandardMaterial({ color: 0xFFF3B0, emissive: 0xFFE58A, emissiveIntensity: .5, roughness: .6 }));
+            moon.position.set(5.5, 3.5, -4); scene.add(moon);
+            const glow = new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32), new THREE.MeshBasicMaterial({ color: 0xFFF3B0, transparent: true, opacity: .22 })); glow.position.copy(moon.position); scene.add(glow);
+            // Stars (points)
+            const starGeo = new THREE.BufferGeometry(); const pos = []; for (let i = 0; i < 180; i++) { pos.push((Math.random() - .5) * 26, (Math.random() - .5) * 16, (Math.random() - .5) * 14 - 2); }
+            starGeo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+            stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xE9B44C, size: .14, transparent: true, opacity: .9 })); scene.add(stars);
+            // Balloons
+            spawnBalloons(13);
+            // Clouds
+            for (let i = 0; i < 5; i++) { const c = makeCloud(); c.position.set((Math.random() - .5) * 18, (Math.random() - .5) * 8 - 1, -5 - Math.random() * 4); c.userData.speed = .002 + Math.random() * .004; clouds.push(c); scene.add(c); }
+            // Teddy bear floating
+            bearGroup = makeBear(); bearGroup.position.set(-5.2, -1.5, -2); bearGroup.scale.setScalar(.9); scene.add(bearGroup);
+            // Events
+            window.addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(canvas.parentElement.clientWidth, canvas.parentElement.clientHeight); });
+            document.addEventListener('mousemove', e => { mouseX = (e.clientX / innerWidth - .5) * 2; mouseY = (e.clientY / innerHeight - .5) * 2; });
+            const ray = new THREE.Raycaster(), ptr = new THREE.Vector2();
+            canvas.addEventListener('click', e => { const r = canvas.getBoundingClientRect(); ptr.x = ((e.clientX - r.left) / r.width) * 2 - 1; ptr.y = -((e.clientY - r.top) / r.height) * 2 + 1; ray.setFromCamera(ptr, camera); const hits = ray.intersectObjects(balloons.map(b => b.mesh)); if (hits.length) { popBalloon(hits[0].object.userData.ref); } });
+            // drag rotate
+            let dragging = false, px = 0; canvas.addEventListener('pointerdown', e => { dragging = true; px = e.clientX; }); window.addEventListener('pointerup', () => dragging = false); window.addEventListener('pointermove', e => { if (dragging) { scene.rotation.y += (e.clientX - px) * .003; px = e.clientX; } });
+            animate();
+        }
+        function balloonColor() { const arr = palette[document.documentElement.dataset.theme] || palette.neutral; return arr[Math.floor(Math.random() * arr.length)]; }
+        function makeBalloon() {
+            const g = new THREE.Group();
+            const col = balloonColor();
+            const mesh = new THREE.Mesh(new THREE.SphereGeometry(.75, 28, 28), new THREE.MeshStandardMaterial({ color: col, roughness: .25, metalness: .15, emissive: col, emissiveIntensity: .12 }));
+            mesh.scale.y = 1.22; g.add(mesh);
+            const knot = new THREE.Mesh(new THREE.ConeGeometry(.12, .18, 12), new THREE.MeshStandardMaterial({ color: col, roughness: .4 })); knot.position.y = -1.0; knot.rotation.x = Math.PI; g.add(knot);
+            const shine = new THREE.Mesh(new THREE.SphereGeometry(.16, 12, 12), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .55 })); shine.position.set(-.28, .35, .55); shine.scale.set(.7, 1.1, .4); g.add(shine);
+            const strGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, -1.1, 0), new THREE.Vector3(.15, -1.6, 0), new THREE.Vector3(-.12, -2.1, 0), new THREE.Vector3(.1, -2.6, 0)]);
+            g.add(new THREE.Line(strGeo, new THREE.LineBasicMaterial({ color: 0x9a8aa0 })));
+            g.position.set((Math.random() - .5) * 16, (Math.random() - .5) * 9, (Math.random() - .5) * 8 - 1);
+            mesh.userData.ref = g; g.userData = { phase: Math.random() * Math.PI * 2, speed: .4 + Math.random() * .6, mesh };
+            return g;
+        }
+        function spawnBalloons(n) { for (let i = 0; i < n; i++) { const b = makeBalloon(); balloons.push({ mesh: b.children[0], group: b }); scene.add(b); } }
+        function makeCloud() { const g = new THREE.Group(); const m = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, transparent: true, opacity: .92 });[[0, 0, 0, 1], [1, 0, 0, .8], [-1, 0, 0, .8], [.4, .5, 0, .7], [-.4, .5, 0, .7]].forEach(p => { const s = new THREE.Mesh(new THREE.SphereGeometry(p[3], 20, 20), m); s.position.set(p[0], p[1], p[2]); g.add(s); }); const s = Math.random() * .7 + .6; g.scale.setScalar(s); return g; }
+        function makeBear() {
+            const g = new THREE.Group(); const fur = new THREE.MeshStandardMaterial({ color: 0xD9A066, roughness: .7 }); const dark = new THREE.MeshStandardMaterial({ color: 0x8A5A2B, roughness: .7 });
+            const body = new THREE.Mesh(new THREE.SphereGeometry(.9, 24, 24), fur); body.scale.set(1, 1.15, .8); g.add(body);
+            const head = new THREE.Mesh(new THREE.SphereGeometry(.65, 24, 24), fur); head.position.y = 1.25; g.add(head);
+            [-.5, .5].forEach(x => { const ear = new THREE.Mesh(new THREE.SphereGeometry(.24, 16, 16), fur); ear.position.set(x * .9, 1.75, 0); g.add(ear); const inner = new THREE.Mesh(new THREE.SphereGeometry(.12, 12, 12), new THREE.MeshStandardMaterial({ color: 0xFFE4C4 })); inner.position.set(x * .9, 1.75, .18); g.add(inner); });
+            const snout = new THREE.Mesh(new THREE.SphereGeometry(.24, 16, 16), new THREE.MeshStandardMaterial({ color: 0xFFF1D6 })); snout.position.set(0, 1.12, .5); g.add(snout);
+            const nose = new THREE.Mesh(new THREE.SphereGeometry(.08, 12, 12), dark); nose.position.set(0, 1.18, .7); g.add(nose);
+            [-.22, .22].forEach(x => { const eye = new THREE.Mesh(new THREE.SphereGeometry(.09, 12, 12), new THREE.MeshStandardMaterial({ color: 0x2b2b2b, roughness: .2 })); eye.position.set(x, 1.38, .52); g.add(eye); });
+            const hat = new THREE.Mesh(new THREE.ConeGeometry(.3, .7, 20), new THREE.MeshStandardMaterial({ color: 0xFF8FB1 })); hat.position.set(0, 2.05, 0); hat.rotation.z = .15; g.add(hat);
+            const pom = new THREE.Mesh(new THREE.SphereGeometry(.11, 12, 12), new THREE.MeshStandardMaterial({ color: 0xffffff })); pom.position.set(-.1, 2.42, 0); g.add(pom);
+            [-.85, .85].forEach(x => { const arm = new THREE.Mesh(new THREE.SphereGeometry(.28, 14, 14), fur); arm.position.set(x, .2, 0); g.add(arm); });
+            const star = new THREE.Mesh(new THREE.OctahedronGeometry(.28), new THREE.MeshStandardMaterial({ color: 0xFFD93B, emissive: 0xFFD93B, emissiveIntensity: .6 })); star.position.set(1.25, .6, 0); star.name = 'star'; g.add(star);
+            return g;
+        }
+        const popMsgs = ["Pop! Baby Mia giggled! 💕", "Sparkle pop! ✨", "So close to the secret! 🌙", "Pop-tastic! 🎈", "The stars cheered! ⭐"];
+        function popBalloon(group) {
+            popSound();
+            const idx = balloons.findIndex(b => b.group === group); if (idx < 0) return;
+            const p = group.position.clone();
+            // scale out
+            gsap.to(group.scale, {
+                x: 1.6, y: 1.6, z: 1.6, duration: .12, onComplete: () => {
+                    scene.remove(group); balloons.splice(idx, 1);
+                    // burst particles (simple confetti at screen pos)
+                    confetti({ particleCount: 25, spread: 50, startVelocity: 25, origin: { x: (p.x / 16 + .5), y: .4 }, colors: ['#FF8FB1', '#7DD3FC', '#E9B44C'], scalar: .8, disableForReducedMotion: true });
+                    const nb = makeBalloon(); nb.position.set((Math.random() - .5) * 16, -6, -2); nb.scale.setScalar(.01); scene.add(nb); balloons.push({ mesh: nb.children[0], group: nb }); gsap.to(nb.scale, { x: 1, y: 1, z: 1, duration: .8, ease: 'back.out' });
+                }
+            });
+            pops++; updatePops();
+            toast(popMsgs[Math.floor(Math.random() * popMsgs.length)]);
+            if (pops >= 10 && !secretShown) { secretShown = true; setTimeout(() => { document.getElementById('secretModal').classList.remove('hidden'); document.getElementById('secretModal').classList.add('flex'); burstConfetti(); }, 600); }
+        }
+        function updatePops() { document.getElementById('popCountLabel').textContent = pops + ' / 10 pops'; document.getElementById('popProgress').style.width = Math.min(100, pops * 10) + '%'; document.getElementById('popProgressLabel').textContent = Math.min(pops, 10) + ' / 10 popped' + (pops >= 10 ? ' — Unlocked! 💌' : ''); }
+        let t0 = 0;
+        function animate() {
+            requestAnimationFrame(animate); t0 += .016;
+            balloons.forEach(b => { const g = b.group, u = g.userData; g.position.y += Math.sin(t0 * u.speed + u.phase) * .008 + .004; g.rotation.y = Math.sin(t0 * .6 + u.phase) * .25; g.rotation.z = Math.sin(t0 * .5 + u.phase) * .12; if (g.position.y > 7.5) g.position.y = -6; });
+            clouds.forEach(c => { c.position.x += c.userData.speed; if (c.position.x > 12) c.position.x = -12; });
+            if (stars) stars.rotation.y = t0 * .02;
+            if (moon) { moon.rotation.y += .005; moon.position.y = 3.5 + Math.sin(t0 * .7) * .2; }
+            if (bearGroup) { bearGroup.position.y = -1.5 + Math.sin(t0 * 1.1) * .3; bearGroup.rotation.y = Math.sin(t0 * .5) * .35; const st = bearGroup.getObjectByName('star'); if (st) st.rotation.y += .03; }
+            camera.position.x += ((mouseX * 1.4) - camera.position.x) * .04;
+            camera.position.y += ((-mouseY * .9) - camera.position.y) * .04;
+            camera.lookAt(0, 0, 0);
+            renderer.render(scene, camera);
+        }
+        window.addEventListener('load', () => { setTimeout(init3D, 400); });
+
+        /* ============ 2D Decor balloons ============ */
+        (function () { const layer = document.getElementById('balloonLayer'); const em = ['🎈', '⭐', '🌙', '💕', '🧸']; for (let i = 0; i < 7; i++) { const d = document.createElement('div'); d.className = 'balloon2d pointer-events-auto'; d.textContent = em[i % em.length]; d.style.fontSize = (22 + Math.random() * 26) + 'px'; d.style.left = (3 + Math.random() * 90) + '%'; d.style.top = (10 + Math.random() * 75) + '%'; d.style.animation = `floaty ${3 + Math.random() * 3}s ease-in-out infinite`; d.style.animationDelay = (Math.random() * 2) + 's'; d.onclick = () => { popSound(); confetti({ particleCount: 20, spread: 60, origin: { x: parseFloat(d.style.left) / 100, y: parseFloat(d.style.top) / 100 }, scalar: .7 }); d.style.transform = 'scale(1.6)'; d.style.opacity = '0'; setTimeout(() => { d.style.left = (3 + Math.random() * 90) + '%'; d.style.top = (10 + Math.random() * 75) + '%'; d.style.opacity = '1'; d.style.transform = 'scale(1)'; }, 900); pops++; updatePops(); if (pops >= 10 && !secretShown) { secretShown = true; document.getElementById('secretModal').classList.remove('hidden'); document.getElementById('secretModal').classList.add('flex'); } }; layer.appendChild(d); } })();
+
+        /* ============ THEME ============ */
+        function setTheme(t) { document.documentElement.dataset.theme = t; toast(t === 'girl' ? 'Pretty in pink! 🩷' : t === 'boy' ? 'Baby blue skies! 💙' : 'Sweet & neutral! 🌈'); if (scene) { scene.fog.color.set(t === 'girl' ? 0xFFF5F9 : t === 'boy' ? 0xF2FAFF : 0xFFF9F0); balloons.forEach(b => { const c = new THREE.Color(balloonColor()); b.mesh.material.color = c; b.mesh.material.emissive = c; }); } }
+
+        /* ============ ENVELOPE & MODAL ============ */
+        let envOpened = false;
+        function openInvitation(force) { const env = document.getElementById('envelope'); if (!envOpened) { env.classList.add('open'); document.getElementById('envHint').textContent = '✨ Opening your invitation...'; burstConfetti(); popSound(); envOpened = true; setTimeout(showInviteModal, 1100); } else showInviteModal(); }
+        function showInviteModal() { const m = document.getElementById('inviteModal'); m.classList.remove('hidden'); m.classList.add('flex'); gsap.from('#inviteCard', { scale: .7, rotationY: 25, opacity: 0, duration: .8, ease: 'back.out(1.5)' }); }
+        function closeInvitation() { const m = document.getElementById('inviteModal'); m.classList.add('hidden'); m.classList.remove('flex'); }
+        // tilt
+        document.querySelectorAll('.tilt-card').forEach(card => { card.addEventListener('mousemove', e => { const r = card.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; card.style.transform = `perspective(900px) rotateY(${x * 14}deg) rotateX(${-y * 14}deg) translateY(-4px)`; }); card.addEventListener('mouseleave', () => card.style.transform = 'perspective(900px) rotateY(0) rotateX(0)'); });
+
+        /* ============ COUNTDOWN ============ */
+        const target = new Date('2026-10-18T14:00:00');
+        function tick() { const now = new Date(); let d = target - now; if (d < 0) d = 0; const dd = Math.floor(d / 864e5), hh = Math.floor(d / 36e5) % 24, mm = Math.floor(d / 6e4) % 60, ss = Math.floor(d / 1e3) % 60; document.getElementById('cdD').textContent = String(dd).padStart(2, '0'); document.getElementById('cdH').textContent = String(hh).padStart(2, '0'); document.getElementById('cdM').textContent = String(mm).padStart(2, '0'); document.getElementById('cdS').textContent = String(ss).padStart(2, '0'); }
+        setInterval(tick, 1000); tick();
+        setTimeout(() => document.getElementById('pregBar').style.width = '85%', 800);
+        document.getElementById('pregBar').style.transition = 'width 2s cubic-bezier(.34,1.3,.64,1)';
+        function addToCalendar() { const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VEVENT', 'DTSTART:20261018T140000', 'DTEND:20261018T170000', 'SUMMARY:Mia\'s Baby Shower', 'LOCATION:Willow Garden Hall, 123 Starlight Lane', 'DESCRIPTION:Twinkle twinkle little star - join us!', 'END:VEVENT', 'END:VCALENDAR'].join('\n'); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'baby-shower.ics'; a.click(); toast('Added to calendar! 📅'); }
+        function shareInvite() { const url = location.href; if (navigator.share) { navigator.share({ title: "Mia's Baby Shower", text: "You're invited! 🎈", url }).catch(() => { }); } else { navigator.clipboard?.writeText(url); toast('Invite link copied! 🔗'); burstConfetti(); } }
+
+        /* ============ RSVP & GUEST WALL ============ */
+        let guests = [
+            { n: 'Emma Wilson', a: 'yes', g: 2, m: 'So excited! Bringing the camera 📸', meal: 'Chicken' },
+            { n: 'Sophia Carter', a: 'yes', g: 1, m: 'Mia is already so loved! 💕', meal: 'Veggie' },
+            { n: 'Olivia Bennett', a: 'yes', g: 3, m: 'The Bennett crew can\'t wait!', meal: 'Chicken' },
+            { n: 'Ava Martinez', a: 'yes', g: 1, m: 'Onesie decorating champ here 🏆', meal: 'Vegan' },
+            { n: 'Liam Johnson', a: 'no', g: 1, m: 'Will miss it! Sending love from NYC 💌', meal: 'Chicken' },
+            { n: 'Mia Thompson', a: 'yes', g: 2, m: 'Twinkle twinkle! See you there ⭐', meal: 'Veggie' },
+        ];
+        let selectedMeal = 'Chicken';
+        try { const saved = JSON.parse(localStorage.getItem('miaGuests') || 'null'); if (saved && saved.length) guests = saved; } catch (e) { }
+        document.querySelectorAll('.meal-btn').forEach(b => b.onclick = () => { selectedMeal = b.dataset.meal; document.querySelectorAll('.meal-btn').forEach(x => x.style.borderColor = 'transparent'); b.style.borderColor = 'var(--accent)'; });
+        function avatarColor(n) { const c = ['#FF8FB1', '#7DD3FC', '#E9B44C', '#3AC6A5', '#C9A6FF', '#FF9E7D']; let h = 0; for (let ch of n) h += ch.charCodeAt(0); return c[h % c.length]; }
+        function renderGuests(filter = '') {
+            const wall = document.getElementById('guestWall'); wall.innerHTML = ''; const list = guests.filter(g => g.n.toLowerCase().includes(filter.toLowerCase())); document.getElementById('guestCount').textContent = `(${list.length})`;
+            list.forEach((g, i) => { const d = document.createElement('div'); d.className = 'bg-white/80 rounded-2xl p-4 shadow hover:shadow-lg hover:-translate-y-1 transition'; d.innerHTML = `<div class="flex items-center gap-3"><div class="w-11 h-11 rounded-full flex items-center justify-center text-white font-baloo font-extrabold text-lg shrink-0" style="background:${avatarColor(g.n)}">${g.n[0]}</div><div class="min-w-0"><div class="font-bold text-sm truncate">${g.n}</div><div class="text-[11px] font-bold ${g.a === 'yes' ? 'text-green-600' : 'text-rose-400'}">${g.a === 'yes' ? '✨ Attending • +' + g.g + ' • ' + g.meal : '💔 Can\'t make it'}</div></div></div><p class="text-sm font-medium opacity-70 mt-2 italic">"${g.m || 'Can\'t wait!'}"</p>`; wall.appendChild(d); });
+            const going = guests.filter(g => g.a === 'yes').reduce((s, g) => s + parseInt(g.g || 1), 0); document.getElementById('statGoing').textContent = going; document.getElementById('statSeats').textContent = Math.max(0, 50 - going);
+        }
+        document.getElementById('guestSearch').addEventListener('input', e => renderGuests(e.target.value));
+        function shuffleGuests() { guests.sort(() => Math.random() - .5); renderGuests(); toast('Guest wall shuffled! 🔀'); }
+        document.getElementById('rsvpForm').addEventListener('submit', e => { e.preventDefault(); const n = document.getElementById('fName').value.trim(); if (!n) { toast('Please enter your name 💕'); return; } const entry = { n, a: document.getElementById('fAttend').value, g: document.getElementById('fGuests').value, m: document.getElementById('fMsg').value, meal: selectedMeal }; guests.unshift(entry); localStorage.setItem('miaGuests', JSON.stringify(guests)); renderGuests(); document.getElementById('rsvpForm').reset(); if (entry.a === 'yes') { burstConfetti(); toast(`Yay ${n.split(' ')[0]}! You're on the list! 🎉`); } else toast('You\'ll be missed! 💔'); });
+        renderGuests();
+
+        /* ============ POLLS ============ */
+        let gv = { boy: 42, girl: 58 }; try { const s = JSON.parse(localStorage.getItem('miaGender') || 'null'); if (s) gv = s; } catch (e) { }
+        function renderGender() { const t = gv.boy + gv.girl, bp = Math.round(gv.boy / t * 100); document.getElementById('boyBar').style.width = (100 - bp) + '%'; document.getElementById('girlBar').style.width = bp + '%'; document.getElementById('boyVotesLabel').textContent = gv.boy + ' votes'; document.getElementById('girlVotesLabel').textContent = gv.girl + ' votes'; document.getElementById('genderMsg').textContent = gv.girl > gv.boy ? 'Pink is leading! Cast your vote ✨' : gv.boy > gv.girl ? 'Blue is leading! Cast your vote ✨' : 'It\'s a tie! Every vote counts! 💫'; }
+        function voteGender(v) { gv[v]++; localStorage.setItem('miaGender', JSON.stringify(gv)); renderGender(); popSound(); confetti({ particleCount: 40, spread: 60, origin: { y: .7 }, colors: v === 'girl' ? ['#FF5E8A', '#FF9EC6'] : ['#2AA8FF', '#7DD3FC'] }); toast(v === 'girl' ? 'Voted Pink Bloom! 🌸' : 'Voted Blue Bear! 🧸'); }
+        renderGender();
+        let names = [{ n: 'Mia Rose', v: 34, c: '#FF8FB1' }, { n: 'Mia Star', v: 28, c: '#E9B44C' }, { n: 'Mia Luna', v: 45, c: '#7DD3FC' }, { n: 'Mia Willow', v: 19, c: '#3AC6A5' }];
+        try { const s = JSON.parse(localStorage.getItem('miaNames') || 'null'); if (s) names = s; } catch (e) { }
+        function renderNames() { const box = document.getElementById('namePoll'); box.innerHTML = ''; const max = Math.max(...names.map(x => x.v)); names.forEach((x, i) => { const d = document.createElement('button'); d.onclick = () => { names[i].v++; localStorage.setItem('miaNames', JSON.stringify(names)); renderNames(); popSound(); toast(`Voted for ${x.n}! 💕`); }; d.className = 'w-full text-left bg-white/80 rounded-2xl p-3 hover:scale-[1.02] transition shadow'; d.innerHTML = `<div class="flex justify-between items-center"><span class="font-baloo font-bold">${x.n}</span><span class="text-xs font-bold opacity-60">${x.v} votes</span></div><div class="h-3 bg-gray-100 rounded-full mt-2 overflow-hidden"><div class="vote-bar h-full rounded-full" style="width:${Math.round(x.v / max * 100)}%; background:${x.c}"></div></div>`; box.appendChild(d); }); }
+        renderNames();
+
+        /* ============ GIFTS ============ */
+        const gifts = [
+            { t: 'Dreamy Stroller', p: '$299', img: 'https://images.unsplash.com/photo-1591348278863-9f4d23249a33?w=600&q=80&auto=format&fit=crop', tag: 'Most wished', icon: '🍼' },
+            { t: 'Moon Crib Mobile', p: '$59', img: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?w=600&q=80&auto=format&fit=crop', tag: 'Popular', icon: '🌙' },
+            { t: 'Cuddly Teddy Set', p: '$45', img: 'https://images.unsplash.com/photo-1559454403-b8fb88521f11?w=600&q=80&auto=format&fit=crop', tag: 'Adorable', icon: '🧸' },
+            { t: 'Starry Blanket', p: '$38', img: 'https://images.unsplash.com/photo-1522771930-78848d9293e8?w=600&q=80&auto=format&fit=crop', tag: 'Cozy', icon: '⭐' },
+            { t: 'Baby Care Kit', p: '$75', img: 'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=600&q=80&auto=format&fit=crop', tag: 'Essential', icon: '💛' },
+            { t: 'Story Book Bundle', p: '$52', img: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&q=80&auto=format&fit=crop', tag: 'Sweet', icon: '📚' },
+        ];
+        let claimed = {}; try { claimed = JSON.parse(localStorage.getItem('miaGifts') || '{}'); } catch (e) { }
+        function renderGifts() { const g = document.getElementById('giftGrid'); g.innerHTML = ''; gifts.forEach((x, i) => { const isC = !!claimed[i]; const d = document.createElement('div'); d.className = 'gift-card glass rounded-[28px] overflow-hidden' + (isC ? ' claimed' : ''); d.innerHTML = `<div class="relative h-52 overflow-hidden"><img src="${x.img}" onerror="this.src='https://picsum.photos/seed/gift${i}/600/500'" class="w-full h-full object-cover" alt="${x.t}"><span class="absolute top-3 left-3 bg-white/90 backdrop-blur text-[11px] font-extrabold px-3 py-1 rounded-full shadow">${x.icon} ${x.tag}</span><span class="absolute top-3 right-3 text-white text-sm font-extrabold px-3 py-1 rounded-full shadow" style="background:linear-gradient(135deg,var(--accent),var(--accent2))">${x.p}</span><div class="gift-overlay absolute inset-0 bg-black/45 opacity-0 transition flex items-center justify-center"><span class="bg-white rounded-full px-5 py-2 font-extrabold text-sm">💝 Reserved!</span></div></div><div class="p-5"><h4 class="font-baloo font-extrabold text-lg">${x.t}</h4><p class="text-xs font-semibold opacity-60">${isC ? 'Reserved by ' + claimed[i] : 'Available • Tap to reserve for Mia'}</p><button onclick="toggleGift(${i})" class="mt-3 w-full py-3 rounded-2xl font-extrabold text-sm transition ${isC ? 'bg-gray-100 hover:bg-gray-200' : 'btn-magical'}">${isC ? 'Release Gift' : 'Reserve Gift 🎁'}</button></div>`; g.appendChild(d); }); }
+        function toggleGift(i) { if (claimed[i]) { delete claimed[i]; toast('Gift released 💫'); } else { const name = prompt('Your name (to reserve this gift):', 'Guest'); if (!name) return; claimed[i] = name; burstConfetti(); toast(`Thank you ${name}! Gift reserved 🎁`); } localStorage.setItem('miaGifts', JSON.stringify(claimed)); renderGifts(); }
+        renderGifts();
+
+        /* ============ MUSIC BOX (Twinkle Twinkle) ============ */
+        let audioCtx = null, playing = false, musicTimer = null;
+        const NOTES = { C: 261.63, D: 293.66, E: 329.63, F: 349.23, G: 392.0, A: 440.0 };
+        const SONG = ['C', 'C', 'G', 'G', 'A', 'A', 'G', 'F', 'F', 'E', 'E', 'D', 'D', 'C'];
+        function playNote(f, time, dur = .5) { const o = audioCtx.createOscillator(), g = audioCtx.createGain(); o.type = 'triangle'; o.frequency.value = f; g.gain.setValueAtTime(.0001, time); g.gain.exponentialRampToValueAtTime(.35, time + .05); g.gain.exponentialRampToValueAtTime(.0001, time + dur); o.connect(g); g.connect(audioCtx.destination); o.start(time); o.stop(time + dur + .05); }
+        function playSong() { if (!playing) return; let t = audioCtx.currentTime + .1; SONG.forEach((n, i) => playNote(NOTES[n], t + i * .55, .55)); musicTimer = setTimeout(playSong, SONG.length * 550 + 800); }
+        function toggleMusic() {
+            const btn = document.getElementById('musicBtn'), icon = document.getElementById('musicIcon');
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            playing = !playing;
+            if (playing) { audioCtx.resume(); playSong(); btn.innerHTML = '<span class="music-bar" style="animation-delay:0s"></span><span class="music-bar" style="animation-delay:.2s"></span><span class="music-bar" style="animation-delay:.4s"></span>'; toast('Playing Twinkle Twinkle 🎶'); }
+            else { clearTimeout(musicTimer); btn.innerHTML = '<span id="musicIcon"><i class="fa-solid fa-music"></i></span>'; toast('Music paused 🌙'); }
+        }
+
+        /* welcome toast */
+        setTimeout(() => toast('Welcome, star guest! Open the envelope 💌'), 2500);
+    </script>
+</body>
+
+</html>

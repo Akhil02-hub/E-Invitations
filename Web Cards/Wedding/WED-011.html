@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aarav ❋ Diya | A Royal Hindu Wedding in 3D</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        maroon: '#4A0E0E',
+                        maroon2: '#7A1C1C',
+                        gold: '#D4AF37',
+                        goldlight: '#F5D67B',
+                        cream: '#FFF8E7',
+                        deep: '#120402',
+                        deep2: '#1E0B06',
+                        emerald: '#0B3D2E'
+                    },
+                    fontFamily: {
+                        script: ['"Great Vibes"', 'cursive'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['Poppins', 'sans-serif'],
+                        hindi: ['"Yatra One"', 'system-ui']
+                    }
+                }
+            }
+        }
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@200;300;400;500;600&family=Yatra+One&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #120402;
+            color: #FFF8E7;
+            font-family: Poppins, sans-serif;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: #D4AF37;
+            color: #120402;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #120402;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(#D4AF37, #7A1C1C);
+            border-radius: 20px;
+        }
+
+        .gold-text {
+            background: linear-gradient(135deg, #FFF3B0 0%, #F5D67B 20%, #D4AF37 45%, #FFF8E7 50%, #D4AF37 55%, #9C7A1A 80%, #F5D67B 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .gold-border {
+            position: relative;
+        }
+
+        .gold-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: linear-gradient(135deg, #F5D67B, #7A1C1C, #D4AF37, #FFF3B0);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .glass {
+            background: rgba(30, 11, 6, 0.72);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .mandala-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23D4AF37' stroke-opacity='0.12'%3E%3Ccircle cx='60' cy='60' r='28'/%3E%3Ccircle cx='60' cy='60' r='18'/%3E%3Ccircle cx='60' cy='60' r='48' stroke-dasharray='4 6'/%3E%3Cpath d='M60 12 L66 54 L108 60 L66 66 L60 108 L54 66 L12 60 L54 54 Z'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        #webgl {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 2;
+        }
+
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: radial-gradient(ellipse at center, #2A0F08 0%, #120402 70%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity .8s, visibility .8s;
+        }
+
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .om-loader {
+            font-family: "Yatra One";
+            font-size: 5rem;
+            color: #D4AF37;
+            text-shadow: 0 0 40px rgba(212, 175, 55, .8);
+            animation: omPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes omPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: .9;
+            }
+
+            50% {
+                transform: scale(1.12);
+                opacity: 1;
+            }
+        }
+
+        .loader-ring {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, .2);
+            border-top: 2px solid #D4AF37;
+            animation: spin 1.2s linear infinite;
+            position: absolute;
+        }
+
+        .loader-ring2 {
+            width: 190px;
+            height: 190px;
+            border-radius: 50%;
+            border: 1px dashed rgba(212, 175, 55, .3);
+            animation: spinRev 8s linear infinite;
+            position: absolute;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spinRev {
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+
+        #cursor {
+            position: fixed;
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid #D4AF37;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99;
+            transform: translate(-50%, -50%);
+            transition: width .3s, height .3s, background .3s;
+            mix-blend-mode: screen;
+            display: none;
+        }
+
+        #cursorDot {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            background: #F5D67B;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+
+        @media(pointer:fine) {
+
+            #cursor,
+            #cursorDot {
+                display: block;
+            }
+        }
+
+        #cursor.hovering {
+            width: 58px;
+            height: 58px;
+            background: rgba(212, 175, 55, .12);
+        }
+
+        .hero-mandala {
+            animation: spin 60s linear infinite;
+        }
+
+        .float-slow {
+            animation: floaty 6s ease-in-out infinite;
+        }
+
+        @keyframes floaty {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-18px);
+            }
+        }
+
+        .diya-flicker {
+            animation: flick 1.8s ease-in-out infinite alternate;
+            transform-origin: bottom center;
+        }
+
+        @keyframes flick {
+            0% {
+                transform: scale(1) rotate(-2deg);
+                opacity: .9;
+            }
+
+            100% {
+                transform: scale(1.12) rotate(2deg);
+                opacity: 1;
+            }
+        }
+
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 28s linear infinite;
+        }
+
+        @keyframes marquee {
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        .tilt {
+            transform-style: preserve-3d;
+            transition: transform .2s ease, box-shadow .4s;
+            will-change: transform;
+        }
+
+        .tilt:hover {
+            box-shadow: 0 30px 80px -20px rgba(212, 175, 55, .35);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #F5D67B, #D4AF37 40%, #9C7A1A);
+            color: #1E0B06;
+            font-weight: 600;
+            letter-spacing: .08em;
+            position: relative;
+            overflow: hidden;
+            transition: .4s;
+        }
+
+        .btn-gold::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -80%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .6), transparent);
+            transform: skewX(-20deg);
+            transition: .6s;
+        }
+
+        .btn-gold:hover::after {
+            left: 130%;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px -10px rgba(212, 175, 55, .6);
+        }
+
+        .btn-outline {
+            border: 1px solid rgba(212, 175, 55, .5);
+            color: #F5D67B;
+            transition: .4s;
+        }
+
+        .btn-outline:hover {
+            background: rgba(212, 175, 55, .12);
+            border-color: #D4AF37;
+            transform: translateY(-2px);
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, #D4AF37 10%, #D4AF37 90%, transparent);
+            transform: translateX(-50%);
+        }
+
+        @media(max-width:768px) {
+            .timeline-line {
+                left: 20px;
+            }
+        }
+
+        .event-card {
+            background: linear-gradient(165deg, rgba(255, 248, 231, .06), rgba(30, 11, 6, .9));
+            border: 1px solid rgba(212, 175, 55, .22);
+        }
+
+        .event-card:hover {
+            border-color: rgba(212, 175, 55, .6);
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 1rem;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            transition: transform .8s cubic-bezier(.2, .8, .2, 1), filter .5s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+            filter: saturate(1.2);
+        }
+
+        .gallery-item::after {
+            content: 'VIEW';
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(18, 4, 2, .55);
+            opacity: 0;
+            transition: .4s;
+            letter-spacing: .4em;
+            font-size: .75rem;
+            color: #F5D67B;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        .phera-dot {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(212, 175, 55, .4);
+            font-family: "Cormorant Garamond";
+            font-weight: 700;
+            cursor: pointer;
+            transition: .4s;
+            background: rgba(18, 4, 2, .6);
+            color: #F5D67B;
+        }
+
+        .phera-dot.active {
+            background: linear-gradient(135deg, #F5D67B, #D4AF37);
+            color: #1E0B06;
+            box-shadow: 0 0 25px rgba(212, 175, 55, .6);
+            transform: scale(1.1);
+        }
+
+        .phera-dot.done {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, .2);
+        }
+
+        input,
+        select,
+        textarea {
+            background: rgba(255, 248, 231, .06) !important;
+            border: 1px solid rgba(212, 175, 55, .25) !important;
+            color: #FFF8E7 !important;
+            border-radius: .75rem !important;
+            padding: .9rem 1.1rem !important;
+            width: 100%;
+            outline: none;
+            transition: .3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #D4AF37 !important;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, .15);
+            background: rgba(255, 248, 231, .09) !important;
+        }
+
+        select option {
+            background: #1E0B06;
+        }
+
+        ::placeholder {
+            color: rgba(255, 248, 231, .35) !important;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .section-title {
+            font-family: "Cormorant Garamond";
+        }
+
+        .divider-orn {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .divider-orn::before,
+        .divider-orn::after {
+            content: '';
+            height: 1px;
+            width: 80px;
+            background: linear-gradient(90deg, transparent, #D4AF37);
+        }
+
+        .divider-orn::after {
+            background: linear-gradient(90deg, #D4AF37, transparent);
+        }
+
+        #lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 90;
+            background: rgba(10, 2, 1, .92);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        #lightbox.open {
+            display: flex;
+        }
+
+        #eventModal {
+            position: fixed;
+            inset: 0;
+            z-index: 90;
+            background: rgba(10, 2, 1, .85);
+            backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        #eventModal.open {
+            display: flex;
+        }
+
+        .wish-card {
+            background: linear-gradient(150deg, rgba(212, 175, 55, .1), rgba(30, 11, 6, .8));
+            border: 1px solid rgba(212, 175, 55, .2);
+        }
+
+        .control-pill {
+            border: 1px solid rgba(212, 175, 55, .3);
+            background: rgba(18, 4, 2, .6);
+            backdrop-filter: blur(10px);
+        }
+
+        .control-pill.active {
+            background: linear-gradient(135deg, #D4AF37, #9C7A1A);
+            color: #120402;
+            border-color: #F5D67B;
+        }
+
+        .toran {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .toran span {
+            width: 16px;
+            height: 24px;
+            border-radius: 0 0 12px 12px;
+        }
+
+        @keyframes diyaGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(255, 150, 0, .6);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(255, 180, 0, .9);
+            }
+        }
+
+        .diya-btn {
+            animation: diyaGlow 2s infinite;
+        }
+
+        #scrollProgress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #7A1C1C, #D4AF37, #F5D67B);
+            z-index: 80;
+            width: 0%;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #D4AF37;
+            transition: .35s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .shagun-ticket {
+            background: linear-gradient(135deg, #FFF8E7 0%, #F9E8B8 100%);
+            color: #3A0B0B;
+            border-radius: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shagun-ticket::before,
+        .shagun-ticket::after {
+            content: '';
+            position: absolute;
+            width: 36px;
+            height: 36px;
+            background: #120402;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .shagun-ticket::before {
+            left: -18px;
+        }
+
+        .shagun-ticket::after {
+            right: -18px;
+        }
+
+        @media(max-width:640px) {
+            .om-loader {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="mandala-bg">
+
+    <div id="scrollProgress"></div>
+    <div id="cursor"></div>
+    <div id="cursorDot"></div>
+    <canvas id="webgl"></canvas>
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="loader-ring"></div>
+        <div class="loader-ring2"></div>
+        <div class="om-loader">ॐ</div>
+        <p class="mt-8 font-hindi text-goldlight/80 tracking-widest text-sm">॥ शुभ विवाह ॥</p>
+        <h2 class="font-script text-3xl mt-2 gold-text">Aarav weds Diya</h2>
+        <div class="w-64 h-[3px] bg-white/10 rounded-full mt-6 overflow-hidden">
+            <div id="loadBar"
+                class="h-full w-0 bg-gradient-to-r from-maroon2 via-gold to-goldlight transition-all duration-300">
+            </div>
+        </div>
+        <p id="loadPct" class="mt-3 text-xs tracking-[.3em] text-gold/70">0%</p>
+        <p class="mt-2 text-[11px] text-cream/40 tracking-widest">LIGHTING THE DIYAS & DECORATING THE MANDAP...</p>
+    </div>
+
+    <div class="content-layer">
+
+        <!-- TOP TORAN -->
+        <div class="relative z-40 pt-2 pb-1 bg-gradient-to-b from-black/60 to-transparent">
+            <div class="toran px-4 flex-wrap" id="toran"></div>
+            <p class="text-center text-[10px] tracking-[.5em] text-gold/70 mt-2 font-hindi">॥ श्री गणेशाय नमः ॥</p>
+        </div>
+
+        <!-- NAV -->
+        <nav class="sticky top-0 z-50 glass border-b border-gold/20">
+            <div class="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between py-3">
+                <a href="#home" class="flex items-center gap-3 group">
+                    <div
+                        class="w-11 h-11 rounded-full gold-border flex items-center justify-center bg-deep2 text-xl font-hindi text-gold group-hover:rotate-12 transition">
+                        ॐ</div>
+                    <div>
+                        <p class="font-script text-2xl leading-none gold-text">Aarav & Diya</p>
+                        <p class="text-[9px] tracking-[.4em] text-cream/50">12 . 02 . 2027 • JAIPUR</p>
+                    </div>
+                </a>
+                <div class="hidden lg:flex items-center gap-7 text-[13px] tracking-[.15em] text-cream/80">
+                    <a href="#home" class="nav-link hover:text-goldlight">HOME</a>
+                    <a href="#story" class="nav-link hover:text-goldlight">STORY</a>
+                    <a href="#events" class="nav-link hover:text-goldlight">EVENTS</a>
+                    <a href="#mandap3d" class="nav-link hover:text-goldlight">3D MANDAP</a>
+                    <a href="#gallery" class="nav-link hover:text-goldlight">GALLERY</a>
+                    <a href="#rsvp" class="nav-link hover:text-goldlight">RSVP</a>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="musicBtn" title="Temple ambience"
+                        class="w-10 h-10 rounded-full border border-gold/40 text-gold hover:bg-gold/10 flex items-center justify-center transition"><i
+                            class="fa-solid fa-music text-sm"></i></button>
+                    <button id="dayNightBtn" title="Day / Night"
+                        class="w-10 h-10 rounded-full border border-gold/40 text-gold hover:bg-gold/10 flex items-center justify-center transition"><i
+                            class="fa-solid fa-moon text-sm"></i></button>
+                    <a href="#rsvp" class="hidden md:inline-flex btn-gold px-6 py-2.5 rounded-full text-xs">RSVP NOW</a>
+                    <button id="menuBtn"
+                        class="lg:hidden w-10 h-10 rounded-full border border-gold/40 text-gold flex items-center justify-center"><i
+                            class="fa-solid fa-bars"></i></button>
+                </div>
+            </div>
+            <div id="mobileMenu"
+                class="hidden lg:hidden border-t border-gold/20 px-6 py-4 space-y-3 text-sm tracking-[.2em] bg-deep2/95">
+                <a href="#home" class="block py-1">HOME</a><a href="#story" class="block py-1">STORY</a><a
+                    href="#events" class="block py-1">EVENTS</a><a href="#mandap3d" class="block py-1">3D MANDAP</a><a
+                    href="#gallery" class="block py-1">GALLERY</a><a href="#rsvp" class="block py-1 text-gold">RSVP
+                    NOW</a>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <section id="home"
+            class="relative min-h-[105vh] flex items-center justify-center text-center px-4 overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-20">
+                <svg class="hero-mandala w-[720px] h-[720px] max-w-none" viewBox="0 0 400 400" fill="none"
+                    stroke="#D4AF37" stroke-width="1">
+                    <circle cx="200" cy="200" r="190" stroke-dasharray="6 8" />
+                    <circle cx="200" cy="200" r="150" />
+                    <circle cx="200" cy="200" r="110" stroke-dasharray="3 6" />
+                    <circle cx="200" cy="200" r="70" />
+                    <g id="mandalaPetals"></g>
+                </svg>
+            </div>
+
+            <div class="relative max-w-5xl mx-auto pt-10 pb-24">
+                <div class="inline-flex items-center gap-3 glass gold-border rounded-full px-6 py-2 mb-6">
+                    <span class="w-2 h-2 rounded-full bg-gold animate-ping"></span>
+                    <span class="text-[11px] tracking-[.35em] text-goldlight">LIVE IN 3D • A HINDU ROYAL WEDDING</span>
+                </div>
+                <p class="font-hindi text-gold/80 tracking-[.3em] text-sm md:text-base">॥ वक्रतुण्ड महाकाय ॥</p>
+                <p class="mt-3 text-xs md:text-sm tracking-[.5em] text-cream/60">WITH THE BLESSINGS OF OUR FAMILIES</p>
+                <h1 class="font-script text-[17vw] md:text-[7.5rem] leading-[.95] mt-4 gold-text drop-shadow-2xl">Aarav
+                    & Diya</h1>
+                <div class="divider-orn my-6"><span class="font-hindi text-gold text-2xl">❋</span></div>
+                <p class="font-serif italic text-xl md:text-2xl text-cream/85 max-w-2xl mx-auto">Two souls, seven vows,
+                    one sacred fire.<br>Join us beneath the marigold mandap of Jaipur.</p>
+
+                <!-- Countdown -->
+                <div class="mt-8 grid grid-cols-4 gap-2 md:gap-4 max-w-xl mx-auto">
+                    <div class="glass gold-border rounded-2xl py-4">
+                        <p id="cdD" class="font-serif text-3xl md:text-4xl font-bold text-goldlight">00</p>
+                        <p class="text-[10px] tracking-[.3em] text-cream/50 mt-1">DAYS</p>
+                    </div>
+                    <div class="glass gold-border rounded-2xl py-4">
+                        <p id="cdH" class="font-serif text-3xl md:text-4xl font-bold text-goldlight">00</p>
+                        <p class="text-[10px] tracking-[.3em] text-cream/50 mt-1">HOURS</p>
+                    </div>
+                    <div class="glass gold-border rounded-2xl py-4">
+                        <p id="cdM" class="font-serif text-3xl md:text-4xl font-bold text-goldlight">00</p>
+                        <p class="text-[10px] tracking-[.3em] text-cream/50 mt-1">MINS</p>
+                    </div>
+                    <div class="glass gold-border rounded-2xl py-4">
+                        <p id="cdS" class="font-serif text-3xl md:text-4xl font-bold text-goldlight">00</p>
+                        <p class="text-[10px] tracking-[.3em] text-cream/50 mt-1">SECS</p>
+                    </div>
+                </div>
+                <p class="mt-4 text-sm tracking-[.25em] text-goldlight/90">FRIDAY • 12 FEBRUARY 2027 • 7 PM • CITY
+                    PALACE, JAIPUR</p>
+
+                <div class="mt-8 flex flex-wrap justify-center gap-4">
+                    <a href="#mandap3d" class="btn-gold px-8 py-3.5 rounded-full text-sm"><i
+                            class="fa-solid fa-cube mr-2"></i>EXPLORE 3D MANDAP</a>
+                    <a href="#story" class="btn-outline px-8 py-3.5 rounded-full text-sm">OUR STORY <i
+                            class="fa-solid fa-arrow-down ml-2"></i></a>
+                </div>
+
+                <div class="mt-8 flex items-center justify-center gap-6 text-xs tracking-widest text-cream/50">
+                    <span><i class="fa-solid fa-fire text-orange-400 mr-1"></i> <span id="diyaCountHero">0</span> DIYAS
+                        LIT</span>
+                    <span class="w-px h-4 bg-gold/30"></span>
+                    <span><i class="fa-solid fa-mouse text-gold mr-1"></i> DRAG TO ROTATE 3D • SCROLL TO FLY</span>
+                </div>
+            </div>
+
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gold/70">
+                <span class="text-[10px] tracking-[.4em]">SCROLL</span>
+                <div class="w-[26px] h-[44px] rounded-full border border-gold/50 flex justify-center pt-2">
+                    <div class="w-1 h-2 bg-gold rounded-full animate-bounce"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MARQUEE -->
+        <div
+            class="relative z-10 bg-gradient-to-r from-maroon via-maroon2 to-maroon border-y border-gold/40 py-3 overflow-hidden">
+            <div class="marquee-track gap-10 text-sm tracking-[.3em] text-goldlight whitespace-nowrap font-serif">
+                <span>❋ HALDI ❋ MEHNDI ❋ SANGEET ❋ BARAAT ❋ PHERAS ❋ RECEPTION ❋ HALDI ❋ MEHNDI ❋ SANGEET ❋ BARAAT ❋
+                    PHERAS ❋ RECEPTION ❋&nbsp;</span>
+                <span>❋ HALDI ❋ MEHNDI ❋ SANGEET ❋ BARAAT ❋ PHERAS ❋ RECEPTION ❋ HALDI ❋ MEHNDI ❋ SANGEET ❋ BARAAT ❋
+                    PHERAS ❋ RECEPTION ❋&nbsp;</span>
+            </div>
+        </div>
+
+        <!-- INVITATION -->
+        <section class="relative py-20 px-4">
+            <div class="max-w-4xl mx-auto glass gold-border rounded-[2rem] p-8 md:p-14 text-center reveal">
+                <p class="font-hindi text-gold text-lg">॥ शुभमस्तु ॥</p>
+                <h2 class="font-script text-5xl md:text-6xl gold-text mt-2">Sacred Invitation</h2>
+                <div class="divider-orn my-6"><span class="text-gold">✦</span></div>
+                <p class="font-serif text-lg md:text-xl leading-relaxed text-cream/85 italic">Mr. Rajesh & Mrs. Meena
+                    Sharma <span class="text-gold mx-2">together with</span> Mr. Vikram & Mrs. Lakshmi Iyer<br>request
+                    the honour of your presence at the wedding of their beloved children</p>
+                <div class="grid md:grid-cols-2 gap-6 mt-10">
+                    <div class="rounded-2xl p-6 border border-gold/25 bg-gradient-to-b from-gold/10 to-transparent">
+                        <div
+                            class="w-28 h-28 mx-auto rounded-full overflow-hidden border-2 border-gold shadow-[0_0_30px_rgba(212,175,55,.4)]">
+                            <img src="https://images.unsplash.com/photo-1617551307570-94414fa9827b?q=80&w=400&auto=format&fit=crop"
+                                onerror="this.src='https://picsum.photos/seed/groom22/400/400'"
+                                class="w-full h-full object-cover" alt="Groom">
+                        </div>
+                        <h3 class="font-script text-4xl text-goldlight mt-3">Aarav Sharma</h3>
+                        <p class="text-xs tracking-[.3em] text-cream/50 mt-1">S/O RAJESH & MEENA • JAIPUR</p>
+                    </div>
+                    <div class="rounded-2xl p-6 border border-gold/25 bg-gradient-to-b from-gold/10 to-transparent">
+                        <div
+                            class="w-28 h-28 mx-auto rounded-full overflow-hidden border-2 border-gold shadow-[0_0_30px_rgba(212,175,55,.4)]">
+                            <img src="https://images.unsplash.com/photo-1610173827043-9ad5998c0f7d?q=80&w=400&auto=format&fit=crop"
+                                onerror="this.src='https://picsum.photos/seed/bride22/400/400'"
+                                class="w-full h-full object-cover" alt="Bride">
+                        </div>
+                        <h3 class="font-script text-4xl text-goldlight mt-3">Diya Iyer</h3>
+                        <p class="text-xs tracking-[.3em] text-cream/50 mt-1">D/O VIKRAM & LAKSHMI • CHENNAI</p>
+                    </div>
+                </div>
+                <p class="mt-8 font-hindi text-goldlight/80">मान्यवर, पधारो सा — Padharo Sa!</p>
+            </div>
+        </section>
+
+        <!-- STORY -->
+        <section id="story" class="relative py-20 px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center reveal">
+                    <p class="text-xs tracking-[.5em] text-gold">OUR JOURNEY</p>
+                    <h2 class="section-title text-5xl md:text-6xl font-semibold gold-text mt-2">A Love Written by
+                        Destiny</h2>
+                    <div class="divider-orn my-5"><span class="text-gold">❋</span></div>
+                </div>
+                <div class="relative mt-12">
+                    <div class="timeline-line"></div>
+                    <div class="space-y-10">
+                        <div class="reveal grid md:grid-cols-2 gap-6 items-center">
+                            <div class="md:text-right md:pr-12 pl-12 md:pl-0"><span
+                                    class="text-gold text-xs tracking-[.3em]">2019 • DIWALI MELA, DELHI</span>
+                                <h3 class="font-serif text-3xl text-goldlight mt-1">First Nazar</h3>
+                                <p class="text-cream/70 mt-2 font-light">Amidst a thousand diyas, Aarav helped Diya
+                                    relight her diya that the wind blew out. The priest smiled — “Shubh sanket hai.” It
+                                    was indeed auspicious.</p>
+                            </div>
+                            <div class="pl-12 md:pl-12">
+                                <div class="tilt rounded-2xl overflow-hidden gold-border"><img
+                                        src="https://images.unsplash.com/photo-1604423043492-41303788de4d?q=80&w=800&auto=format&fit=crop"
+                                        onerror="this.src='https://picsum.photos/seed/diya1/800/600'"
+                                        class="w-full h-64 object-cover" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="reveal grid md:grid-cols-2 gap-6 items-center">
+                            <div class="pl-12 md:pl-0 md:pr-12 order-2 md:order-1 md:text-right"><span
+                                    class="text-gold text-xs tracking-[.3em]">2022 • VARANASI GHATS</span>
+                                <h3 class="font-serif text-3xl text-goldlight mt-1">Ganga Aarti Promise</h3>
+                                <p class="text-cream/70 mt-2 font-light">As bells rang and flames danced on the Ganga,
+                                    Aarav promised to stand by Diya through seven janmas. She tied a red kalava on his
+                                    wrist.</p>
+                            </div>
+                            <div class="pl-12 md:pl-12 order-1 md:order-2">
+                                <div class="tilt rounded-2xl overflow-hidden gold-border"><img
+                                        src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=800&auto=format&fit=crop"
+                                        onerror="this.src='https://picsum.photos/seed/varanasi1/800/600'"
+                                        class="w-full h-64 object-cover" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="reveal grid md:grid-cols-2 gap-6 items-center">
+                            <div class="md:text-right md:pr-12 pl-12 md:pl-0"><span
+                                    class="text-gold text-xs tracking-[.3em]">2025 • ROKA, JAIPUR</span>
+                                <h3 class="font-serif text-3xl text-goldlight mt-1">Two Families, One Heart</h3>
+                                <p class="text-cream/70 mt-2 font-light">Marwari meets Tamil — dhol met nadaswaram.
+                                    Sweets were exchanged, elders blessed, and the wedding date was fixed by the pandit
+                                    ji.</p>
+                            </div>
+                            <div class="pl-12 md:pl-12">
+                                <div class="tilt rounded-2xl overflow-hidden gold-border"><img
+                                        src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1200&auto=format&fit=crop"
+                                        onerror="this.src='https://picsum.photos/seed/roka1/800/600'"
+                                        class="w-full h-64 object-cover" alt=""></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EVENTS -->
+        <section id="events" class="relative py-20 px-4">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center reveal">
+                    <p class="text-xs tracking-[.5em] text-gold">SHUBH KARYAKRAM</p>
+                    <h2 class="section-title text-5xl md:text-6xl font-semibold gold-text mt-2">Wedding Festivities</h2>
+                    <p class="text-cream/60 mt-3 font-light">Five days of colour, music & rituals • Click any card for
+                        details</p>
+                    <div class="divider-orn my-5"><span class="text-gold">✦</span></div>
+                </div>
+                <div id="eventsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"></div>
+            </div>
+        </section>
+
+        <!-- 3D MANDAP INTERACTIVE -->
+        <section id="mandap3d" class="relative py-20 px-4">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-5 gap-8 items-stretch">
+                <div class="lg:col-span-3 glass gold-border rounded-[1.8rem] p-6 md:p-8 reveal">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <p class="text-xs tracking-[.4em] text-gold">INTERACTIVE 3D EXPERIENCE</p>
+                            <h2 class="section-title text-4xl md:text-5xl font-semibold text-cream mt-1">The <span
+                                    class="gold-text">Marigold Mandap</span></h2>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs"><span
+                                class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span><span
+                                class="tracking-widest text-cream/60">LIVE RENDER</span></div>
+                    </div>
+                    <p class="text-cream/65 font-light mt-3 text-sm leading-relaxed">This sacred mandap behind you is
+                        rendered live in 3D — gold pillars, silk canopy, havan kund fire, floating diyas and falling
+                        marigold petals. <span class="text-goldlight">Drag anywhere to orbit • Scroll to zoom • Click a
+                            diya to light it.</span></p>
+                    <div class="flex flex-wrap gap-2 mt-5">
+                        <button data-view="front"
+                            class="viewBtn control-pill active px-5 py-2 rounded-full text-xs tracking-widest transition">MANDAP
+                            FRONT</button>
+                        <button data-view="top"
+                            class="viewBtn control-pill px-5 py-2 rounded-full text-xs tracking-widest transition">AERIAL
+                            / RANGOLI</button>
+                        <button data-view="fire"
+                            class="viewBtn control-pill px-5 py-2 rounded-full text-xs tracking-widest transition">HAVAN
+                            CLOSE-UP</button>
+                        <button data-view="wide"
+                            class="viewBtn control-pill px-5 py-2 rounded-full text-xs tracking-widest transition">GRAND
+                            WIDE</button>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+                        <button id="togglePetals" class="control-pill active rounded-xl py-3 text-xs tracking-widest"><i
+                                class="fa-solid fa-fan mr-1 text-orange-300"></i> PETALS ON</button>
+                        <button id="toggleRotate" class="control-pill active rounded-xl py-3 text-xs tracking-widest"><i
+                                class="fa-solid fa-rotate mr-1 text-gold"></i> AUTO ORBIT</button>
+                        <button id="toggleFire" class="control-pill active rounded-xl py-3 text-xs tracking-widest"><i
+                                class="fa-solid fa-fire mr-1 text-orange-500"></i> HAVAN FIRE</button>
+                        <button id="lightAllBtn" class="rounded-xl py-3 text-xs tracking-widest btn-gold"><i
+                                class="fa-solid fa-lightbulb mr-1"></i> LIGHT ALL</button>
+                    </div>
+                    <div
+                        class="mt-5 rounded-2xl border border-gold/25 bg-black/40 p-4 flex items-center justify-between flex-wrap gap-3">
+                        <div class="flex items-center gap-3">
+                            <div class="diya-flicker text-3xl">🪔</div>
+                            <div>
+                                <p class="text-sm text-goldlight font-medium"><span id="diyaCount">0</span> / 28 Diyas
+                                    Lit</p>
+                                <p class="text-[11px] text-cream/50 tracking-widest">EVERY DIYA IS A BLESSING FOR THE
+                                    COUPLE</p>
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-[140px] h-2 bg-white/10 rounded-full overflow-hidden">
+                            <div id="diyaBar"
+                                class="h-full w-0 bg-gradient-to-r from-orange-500 via-gold to-yellow-200 transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center gap-4 text-xs text-cream/50 tracking-widest">
+                        <label>PETAL FLOW</label><input id="petalRange" type="range" min="0" max="400" value="260"
+                            class="!p-0 !border-0 !bg-transparent" style="accent-color:#D4AF37"><span id="petalVal"
+                            class="text-gold">260</span>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 glass gold-border rounded-[1.8rem] p-6 md:p-8 reveal">
+                    <p class="text-xs tracking-[.4em] text-gold">SAPTAPADI • SEVEN VOWS</p>
+                    <h3 class="section-title text-3xl font-semibold text-cream mt-1">Walk the <span
+                            class="gold-text">Seven Pheras</span></h3>
+                    <div class="flex gap-2 mt-5 flex-wrap" id="pheraDots"></div>
+                    <div
+                        class="mt-5 rounded-2xl border border-gold/25 bg-gradient-to-b from-gold/10 to-transparent p-6 min-h-[210px]">
+                        <p id="pheraSanskrit" class="font-hindi text-gold text-lg"></p>
+                        <h4 id="pheraTitle" class="font-serif text-2xl text-goldlight mt-1"></h4>
+                        <p id="pheraDesc" class="text-sm text-cream/70 font-light mt-2 leading-relaxed"></p>
+                        <div class="h-1.5 bg-white/10 rounded-full mt-4 overflow-hidden">
+                            <div id="pheraBar"
+                                class="h-full bg-gradient-to-r from-maroon2 to-gold transition-all duration-500"
+                                style="width:14%"></div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 mt-4">
+                        <button id="pheraPrev" class="btn-outline flex-1 py-3 rounded-xl text-xs tracking-widest">← PREV
+                            PHERA</button>
+                        <button id="pheraNext" class="btn-gold flex-1 py-3 rounded-xl text-xs tracking-widest">NEXT
+                            PHERA →</button>
+                    </div>
+                    <p class="text-[11px] text-cream/40 mt-3 text-center tracking-widest">COMPLETE ALL 7 TO UNLOCK A
+                        BLESSING SHOWER</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALLERY -->
+        <section id="gallery" class="relative py-20 px-4">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center reveal">
+                    <p class="text-xs tracking-[.5em] text-gold">MEMORIES IN GOLD</p>
+                    <h2 class="section-title text-5xl md:text-6xl font-semibold gold-text mt-2">Gallery & Dreams</h2>
+                    <div class="divider-orn my-5"><span class="text-gold">❋</span></div>
+                    <div class="flex justify-center gap-2 flex-wrap mt-2" id="galleryFilters">
+                        <button data-f="all"
+                            class="gf control-pill active px-5 py-2 rounded-full text-xs tracking-widest">ALL</button>
+                        <button data-f="decor"
+                            class="gf control-pill px-5 py-2 rounded-full text-xs tracking-widest">MANDAP &
+                            DECOR</button>
+                        <button data-f="couple"
+                            class="gf control-pill px-5 py-2 rounded-full text-xs tracking-widest">COUPLE</button>
+                        <button data-f="ritual"
+                            class="gf control-pill px-5 py-2 rounded-full text-xs tracking-widest">RITUALS</button>
+                    </div>
+                </div>
+                <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 mt-8"></div>
+            </div>
+        </section>
+
+        <!-- FAMILY -->
+        <section class="relative py-20 px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center reveal">
+                    <p class="text-xs tracking-[.5em] text-gold">PARIVAAR</p>
+                    <h2 class="section-title text-5xl md:text-6xl font-semibold gold-text mt-2">Two Families Unite</h2>
+                    <div class="divider-orn my-5"><span class="text-gold">✦</span></div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6 mt-8">
+                    <div class="glass gold-border rounded-3xl p-8 reveal">
+                        <h3 class="font-script text-4xl text-goldlight text-center">Sharma Family</h3>
+                        <p class="text-center text-[11px] tracking-[.4em] text-cream/50 mt-1">GROOM'S SIDE • JAIPUR</p>
+                        <div class="mt-6 space-y-4" id="famGroom"></div>
+                    </div>
+                    <div class="glass gold-border rounded-3xl p-8 reveal">
+                        <h3 class="font-script text-4xl text-goldlight text-center">Iyer Family</h3>
+                        <p class="text-center text-[11px] tracking-[.4em] text-cream/50 mt-1">BRIDE'S SIDE • CHENNAI</p>
+                        <div class="mt-6 space-y-4" id="famBride"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP + VENUE -->
+        <section id="rsvp" class="relative py-20 px-4">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-8">
+                <div class="glass gold-border rounded-[1.8rem] p-8 md:p-10 reveal">
+                    <p class="text-xs tracking-[.4em] text-gold">KRIPYA PADDHARIYE</p>
+                    <h2 class="section-title text-4xl md:text-5xl font-semibold mt-1">Bless Us With <span
+                            class="gold-text">Your Presence</span></h2>
+                    <form id="rsvpForm" class="mt-6 space-y-4">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div><label class="text-[11px] tracking-[.25em] text-gold/80">FULL NAME *</label><input
+                                    required id="rName" placeholder="e.g. Priya Verma" class="mt-1"></div>
+                            <div><label class="text-[11px] tracking-[.25em] text-gold/80">PHONE / WHATSAPP
+                                    *</label><input required id="rPhone" placeholder="+91 98765 43210" class="mt-1">
+                            </div>
+                        </div>
+                        <div><label class="text-[11px] tracking-[.25em] text-gold/80">EMAIL</label><input id="rEmail"
+                                type="email" placeholder="you@example.com" class="mt-1"></div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div><label class="text-[11px] tracking-[.25em] text-gold/80">ATTENDING *</label><select
+                                    id="rAttend" class="mt-1">
+                                    <option>Joyfully Accepts — All Events</option>
+                                    <option>Wedding + Reception Only</option>
+                                    <option>Sangeet Only</option>
+                                    <option>Regretfully Declines (Blessings from afar)</option>
+                                </select></div>
+                            <div><label class="text-[11px] tracking-[.25em] text-gold/80">GUESTS</label><select
+                                    id="rGuests" class="mt-1">
+                                    <option>1</option>
+                                    <option selected>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5+ (Family)</option>
+                                </select></div>
+                        </div>
+                        <div><label class="text-[11px] tracking-[.25em] text-gold/80">SIDE</label>
+                            <div class="flex gap-2 mt-2"><button type="button" data-side="Groom"
+                                    class="sideBtn control-pill active flex-1 py-2.5 rounded-xl text-xs tracking-widest">GROOM'S
+                                    GUEST</button><button type="button" data-side="Bride"
+                                    class="sideBtn control-pill flex-1 py-2.5 rounded-xl text-xs tracking-widest">BRIDE'S
+                                    GUEST</button><button type="button" data-side="Both"
+                                    class="sideBtn control-pill flex-1 py-2.5 rounded-xl text-xs tracking-widest">FAMILY
+                                    FRIEND</button></div>
+                        </div>
+                        <div><label class="text-[11px] tracking-[.25em] text-gold/80">MESSAGE / DIETARY
+                                NEEDS</label><textarea id="rMsg" rows="2"
+                                placeholder="Any blessing, song request or veg/jain preference..."
+                                class="mt-1"></textarea></div>
+                        <button class="btn-gold w-full py-4 rounded-xl text-sm tracking-[.2em]">SEND RSVP & GET SHAGUN
+                            PASS <i class="fa-solid fa-ticket ml-2"></i></button>
+                    </form>
+                    <div id="rsvpDone" class="hidden mt-6">
+                        <div class="shagun-ticket p-6 md:p-8 border-4 border-double border-[#9C7A1A]">
+                            <p class="text-center font-hindi text-lg">॥ शुभ विवाह ॥</p>
+                            <h3 class="text-center font-serif text-2xl font-bold mt-1">SHAGUN ENTRY PASS</h3>
+                            <p class="text-center text-xs tracking-[.3em] mt-1 opacity-60">AARAV ❋ DIYA • 12 FEB 2027 •
+                                CITY PALACE JAIPUR</p>
+                            <div class="border-t border-dashed border-[#9C7A1A]/50 my-4"></div>
+                            <div class="flex justify-between items-center gap-4 flex-wrap">
+                                <div>
+                                    <p class="text-[10px] tracking-[.3em] opacity-60">GUEST</p>
+                                    <p id="tName" class="font-serif text-xl font-bold"></p>
+                                    <p id="tMeta" class="text-xs opacity-70"></p>
+                                </div>
+                                <canvas id="qrCanvas" width="110" height="110"
+                                    class="rounded-lg border border-[#9C7A1A]/40"></canvas>
+                            </div>
+                            <p class="text-center text-[11px] mt-4 tracking-widest opacity-70">SHOW AT GATE • BARAAT 5
+                                PM • DINNER 9 PM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="glass gold-border rounded-[1.8rem] p-8 reveal">
+                        <p class="text-xs tracking-[.4em] text-gold">VENUE</p>
+                        <h3 class="section-title text-3xl font-semibold mt-1">City Palace, Jaipur</h3>
+                        <p class="text-cream/60 font-light text-sm mt-2">Chandra Mahal Lawns, Gangori Bazaar, J.D.A.
+                            Market, Pink City, Jaipur 302002</p>
+                        <div class="rounded-2xl overflow-hidden mt-4 border border-gold/25"><iframe title="map"
+                                src="https://www.google.com/maps?q=City+Palace+Jaipur&output=embed"
+                                class="w-full h-56 grayscale invert-[.9] contrast-[.9]" loading="lazy"></iframe></div>
+                        <div class="flex gap-3 mt-4 flex-wrap">
+                            <a href="https://www.google.com/maps?q=City+Palace+Jaipur" target="_blank"
+                                class="btn-outline px-6 py-2.5 rounded-full text-xs tracking-widest"><i
+                                    class="fa-solid fa-location-dot mr-2"></i>GET DIRECTIONS</a>
+                            <button id="addCal" class="btn-gold px-6 py-2.5 rounded-full text-xs tracking-widest"><i
+                                    class="fa-solid fa-calendar-plus mr-2"></i>ADD TO CALENDAR</button>
+                        </div>
+                        <div class="mt-5 grid grid-cols-3 gap-3 text-center text-xs">
+                            <div class="rounded-xl border border-gold/20 p-3"><i
+                                    class="fa-solid fa-shirt text-gold"></i>
+                                <p class="mt-1 tracking-widest text-cream/70">DRESS: ETHNIC<br>ROYAL</p>
+                            </div>
+                            <div class="rounded-xl border border-gold/20 p-3"><i
+                                    class="fa-solid fa-utensils text-gold"></i>
+                                <p class="mt-1 tracking-widest text-cream/70">PURE VEG<br>SATVIK FEAST</p>
+                            </div>
+                            <div class="rounded-xl border border-gold/20 p-3"><i
+                                    class="fa-solid fa-camera text-gold"></i>
+                                <p class="mt-1 tracking-widest text-cream/70">#AARAVWEDSDIYA<br>SHARE LOVE</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass gold-border rounded-[1.8rem] p-8 reveal">
+                        <h3 class="font-serif text-2xl text-goldlight">Muhurat & Ritual Timings</h3>
+                        <div class="mt-4 space-y-3 text-sm">
+                            <div class="flex justify-between border-b border-gold/15 pb-2"><span
+                                    class="text-cream/70">Baraat Swagat</span><span class="text-goldlight">5:00
+                                    PM</span></div>
+                            <div class="flex justify-between border-b border-gold/15 pb-2"><span
+                                    class="text-cream/70">Jaimala</span><span class="text-goldlight">6:30 PM</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gold/15 pb-2"><span
+                                    class="text-cream/70">Shubh Muhurat — Pheras</span><span
+                                    class="text-goldlight font-semibold">7:42 PM</span></div>
+                            <div class="flex justify-between"><span class="text-cream/70">Vidaai</span><span
+                                    class="text-goldlight">11:30 PM</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WISHES -->
+        <section class="relative py-20 px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center reveal">
+                    <p class="text-xs tracking-[.5em] text-gold">ASHIRVAAD</p>
+                    <h2 class="section-title text-5xl md:text-6xl font-semibold gold-text mt-2">Wall of Blessings</h2>
+                    <div class="divider-orn my-5"><span class="text-gold">❋</span></div>
+                </div>
+                <div class="glass gold-border rounded-3xl p-6 md:p-8 reveal">
+                    <form id="wishForm" class="grid md:grid-cols-[1fr_1fr_2fr_auto] gap-3">
+                        <input id="wName" required placeholder="Your name" maxlength="24">
+                        <select id="wEmoji">
+                            <option value="❋">❋ Blessing</option>
+                            <option value="🪔">Diya</option>
+                            <option value="🌺">Flower</option>
+                            <option value="🦚">Peacock</option>
+                            <option value="💛">Love</option>
+                        </select>
+                        <input id="wText" required placeholder="Write your shubhkaamna..." maxlength="140">
+                        <button class="btn-gold px-8 rounded-xl text-xs tracking-widest">BLESS <i
+                                class="fa-solid fa-heart ml-1"></i></button>
+                    </form>
+                    <div id="wishWall" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="relative border-t border-gold/25 bg-black/50 backdrop-blur-xl">
+            <div class="max-w-6xl mx-auto px-4 py-14 text-center">
+                <div class="font-hindi text-4xl text-gold">ॐ</div>
+                <h2 class="font-script text-5xl gold-text mt-2">Aarav & Diya</h2>
+                <p class="text-xs tracking-[.4em] text-cream/50 mt-2">12 FEBRUARY 2027 • JAIPUR • RAJASTHAN</p>
+                <div class="flex justify-center gap-3 mt-6">
+                    <a href="#"
+                        class="w-11 h-11 rounded-full border border-gold/40 text-gold flex items-center justify-center hover:bg-gold hover:text-deep transition"><i
+                            class="fa-brands fa-instagram"></i></a>
+                    <a href="#"
+                        class="w-11 h-11 rounded-full border border-gold/40 text-gold flex items-center justify-center hover:bg-gold hover:text-deep transition"><i
+                            class="fa-brands fa-youtube"></i></a>
+                    <a href="#"
+                        class="w-11 h-11 rounded-full border border-gold/40 text-gold flex items-center justify-center hover:bg-gold hover:text-deep transition"><i
+                            class="fa-brands fa-whatsapp"></i></a>
+                </div>
+                <p class="mt-8 text-[11px] tracking-[.25em] text-cream/35">CRAFTED WITH LOVE • SHUBH VIVAH • MAY YOUR
+                    BLESSINGS LIGHT OUR PATH</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- FLOATING -->
+    <div class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 items-end">
+        <button id="diyaFloat"
+            class="diya-btn w-14 h-14 rounded-full bg-gradient-to-br from-orange-500 to-red-800 text-2xl flex items-center justify-center border border-gold/60"
+            title="Light a diya">🪔</button>
+        <button id="topBtn"
+            class="w-11 h-11 rounded-full glass border border-gold/40 text-gold items-center justify-center hidden md:flex hover:bg-gold/10"><i
+                class="fa-solid fa-arrow-up text-sm"></i></button>
+    </div>
+    <button id="blessShower" class="hidden"></button>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox"><button id="lbClose"
+            class="absolute top-5 right-5 w-12 h-12 rounded-full border border-gold text-gold text-xl hover:bg-gold hover:text-black transition">×</button><button
+            id="lbPrev"
+            class="absolute left-3 md:left-8 w-12 h-12 rounded-full glass border border-gold/50 text-gold">‹</button><img
+            id="lbImg" class="max-h-[82vh] max-w-[92vw] rounded-2xl border border-gold/40 shadow-2xl object-contain"
+            src="" alt=""><button id="lbNext"
+            class="absolute right-3 md:right-8 w-12 h-12 rounded-full glass border border-gold/50 text-gold">›</button>
+        <p id="lbCap"
+            class="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs tracking-[.3em] text-goldlight glass px-6 py-2 rounded-full border border-gold/30">
+        </p>
+    </div>
+
+    <!-- EVENT MODAL -->
+    <div id="eventModal">
+        <div class="glass gold-border rounded-3xl max-w-lg w-full overflow-hidden">
+            <div class="relative h-56"><img id="emImg" class="w-full h-full object-cover" src="" alt=""><button
+                    id="emClose"
+                    class="absolute top-3 right-3 w-10 h-10 rounded-full bg-black/60 border border-gold text-gold">×</button>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#1E0B06] to-transparent"></div>
+                <div class="absolute bottom-4 left-6">
+                    <p id="emDate" class="text-[11px] tracking-[.3em] text-gold"></p>
+                    <h3 id="emTitle" class="font-serif text-3xl text-cream"></h3>
+                </div>
+            </div>
+            <div class="p-6 md:p-8">
+                <p id="emDesc" class="text-cream/70 font-light text-sm leading-relaxed"></p>
+                <div class="grid grid-cols-2 gap-3 mt-5 text-xs">
+                    <div class="rounded-xl border border-gold/20 p-3">
+                        <p class="text-gold tracking-widest">TIME</p>
+                        <p id="emTime" class="text-cream mt-1"></p>
+                    </div>
+                    <div class="rounded-xl border border-gold/20 p-3">
+                        <p class="text-gold tracking-widest">VENUE</p>
+                        <p id="emVenue" class="text-cream mt-1"></p>
+                    </div>
+                    <div class="rounded-xl border border-gold/20 p-3">
+                        <p class="text-gold tracking-widest">DRESS CODE</p>
+                        <p id="emDress" class="text-cream mt-1"></p>
+                    </div>
+                    <div class="rounded-xl border border-gold/20 p-3">
+                        <p class="text-gold tracking-widest">HIGHLIGHT</p>
+                        <p id="emHigh" class="text-cream mt-1"></p>
+                    </div>
+                </div><a href="#rsvp" id="emRsvp"
+                    class="btn-gold w-full mt-5 py-3 rounded-xl text-xs tracking-widest block text-center">RSVP FOR THIS
+                    EVENT</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ============ DATA ============ */
+        const EVENTS = [
+            { id: 0, title: "Haldi", date: "08 FEB • MONDAY", time: "10 AM – 1 PM", venue: "Sharma Niwas, C-Scheme", dress: "Yellow / White Casual", high: "Phoolon Wali Haldi + Dhol", img: "https://images.unsplash.com/photo-1622122201714-77da0ca8e5d2?q=80&w=800&auto=format&fit=crop", fallback: "haldi1", icon: "fa-sun", color: "#FFC93C", desc: "A morning of laughter, marigold showers and turmeric blessings. Family applies haldi to glow the bride & groom. Expect flower rain, dhol beats and filter coffee." },
+            { id: 1, title: "Mehndi", date: "09 FEB • TUESDAY", time: "4 PM – 9 PM", venue: "Iyer Residence Lawns", dress: "Green / Festive Boho", high: "Live Henna Artists + Folk Singers", img: "https://images.unsplash.com/photo-1610992015732-2449b76344bc?q=80&w=800&auto=format&fit=crop", fallback: "mehndi1", icon: "fa-hand-sparkles", color: "#4ADE80", desc: "Intricate henna, ghunghat swings, bangles and soulful Rajasthani folk. Diya's mehndi hides Aarav's name — can he find it? Paan & chaat counters all evening." },
+            { id: 2, title: "Sangeet", date: "10 FEB • WEDNESDAY", time: "7 PM – Midnight", venue: "Rajmahal Palace Ballroom", dress: "Glitter Ethnic / Indo-Western", high: "Family Dance Battle + DJ + Dhol", img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop", fallback: "sangeet1", icon: "fa-music", color: "#F0ABFC", desc: "The great Sharma vs Iyer dance-off! Qawwali meets Bollywood. Antakshari, couple performance, and a midnight surprise by the cousins." },
+            { id: 3, title: "Baraat & Pheras", date: "12 FEB • FRIDAY", time: "5 PM – 11 PM", venue: "City Palace, Chandra Mahal", dress: "Sherwani / Lehenga / Silk Saree", high: "Ghodi Baraat • 7 Pheras at 7:42 PM", img: "https://images.unsplash.com/photo-1587271407852-7d438ca9fdf6?q=80&w=800&auto=format&fit=crop", fallback: "pheras1", icon: "fa-fire", color: "#FB923C", desc: "The main event. Aarav arrives on a decorated ghodi with band-baaja. Jaimala under the flower chadar, then seven sacred pheras around the havan kund as mantras echo." },
+            { id: 4, title: "Reception", date: "13 FEB • SATURDAY", time: "7 PM onwards", venue: "Rambagh Palace Lawns", dress: "Gowns / Bandhgala", high: "Fireworks + Live Counters + Jazz", img: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=800&auto=format&fit=crop", fallback: "reception1", icon: "fa-champagne-glasses", color: "#93C5FD", desc: "A starlit royal reception. Fireworks over the palace, 42 live food counters, Sufi-jazz fusion, and the couple's first dance as husband & wife." },
+            { id: 5, title: "Vidaai & Blessings", date: "14 FEB • SUNDAY", time: "10 AM", venue: "City Palace Gate", dress: "Pastel Ethnic", high: "Phoolon Ki Vidaai", img: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=800&auto=format&fit=crop", fallback: "vidaai1", icon: "fa-heart", color: "#FDA4AF", desc: "An emotional, beautiful farewell with flower showers and dhol. Diya throws back rice as blessings for her parents. Brunch follows for all guests." }
+        ];
+        const GALLERY = [
+            { src: "https://images.unsplash.com/photo-1587271407852-7d438ca9fdf6?q=80&w=800&auto=format&fit=crop", cat: "decor", cap: "MARIGOLD MANDAP CONCEPT", seed: "g1" },
+            { src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=800&auto=format&fit=crop", cat: "couple", cap: "THE ROYAL COUPLE", seed: "g2" },
+            { src: "https://images.unsplash.com/photo-1610173827043-9ad5998c0f7d?q=80&w=800&auto=format&fit=crop", cat: "couple", cap: "BRIDAL GLOW", seed: "g3" },
+            { src: "https://images.unsplash.com/photo-1604423043492-41303788de4d?q=80&w=800&auto=format&fit=crop", cat: "ritual", cap: "DIYAS OF BLESSING", seed: "g4" },
+            { src: "https://images.unsplash.com/photo-1610992015732-2449b76344bc?q=80&w=800&auto=format&fit=crop", cat: "ritual", cap: "MEHNDI ARTISTRY", seed: "g5" },
+            { src: "https://images.unsplash.com/photo-1604608672516-f1b9b1d37076?q=80&w=800&auto=format&fit=crop", cat: "decor", cap: "TORAN & MARIGOLD", seed: "g6" },
+            { src: "https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?q=80&w=800&auto=format&fit=crop", cat: "couple", cap: "LEHENGA DREAMS", seed: "g7" },
+            { src: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=800&auto=format&fit=crop", cat: "ritual", cap: "GANGA AARTI VOW", seed: "g8" },
+        ];
+        const PHERAS = [
+            { s: "॥ पहला फेरा — अन्न ॥", t: "1. Nourishment", d: "Together we shall provide food, prosperity and a home filled with abundance. Groom promises to care; bride promises to nurture." },
+            { s: "॥ दूसरा फेरा — शक्ति ॥", t: "2. Strength", d: "We shall protect each other in body, mind and spirit — standing as one through every storm and celebration." },
+            { s: "॥ तीसरा फेरा — धन ॥", t: "3. Prosperity", d: "We shall grow together in wealth and wisdom, sharing all fortune with family, charity and dharma." },
+            { s: "॥ चौथा फेरा — सुख ॥", t: "4. Happiness", d: "We promise joy, friendship and laughter. Every sorrow divided, every happiness multiplied between us." },
+            { s: "॥ पाँचवाँ फेरा — संतान ॥", t: "5. Family", d: "We shall honour our parents, raise noble children and keep our culture and values alive for generations." },
+            { s: "॥ छठा फेरा — स्वास्थ्य ॥", t: "6. Health & Harmony", d: "We vow to care for each other's health, to live in peace, loyalty and understanding all our days." },
+            { s: "॥ सातवाँ फेरा — साथ ॥", t: "7. Eternal Togetherness", d: "With this final circle we become one soul — friends, lovers, partners for this janma and all janmas to come." }
+        ];
+        const FAM_G = [["Rajesh Sharma", "Father of Groom • Business"], ["Meena Sharma", "Mother of Groom"], ["Aditya Sharma", "Brother • Best Man"], ["Kavya Sharma", "Sister • Sangeet Lead"]];
+        const FAM_B = [["Vikram Iyer", "Father of Bride • Professor"], ["Lakshmi Iyer", "Mother of Bride"], ["Arjun Iyer", "Brother"], ["Sneha Iyer", "Sister • Maid of Honour"]];
+
+        /* ============ PRELOADER ============ */
+        let lp = 0; const loadInt = setInterval(() => { lp += Math.random() * 14; if (lp >= 100) { lp = 100; clearInterval(loadInt); setTimeout(() => { document.getElementById('preloader').classList.add('hidden'); startReveals(); }, 600); } document.getElementById('loadBar').style.width = lp + '%'; document.getElementById('loadPct').textContent = Math.floor(lp) + '%'; }, 160);
+
+        /* ============ TORAN + MANDALA PETALS ============ */
+        (() => {
+            const t = document.getElementById('toran'); const cols = ['#FF6B00', '#FFC93C', '#C1121F', '#2A9D48', '#D4AF37']; for (let i = 0; i < 48; i++) { const s = document.createElement('span'); s.style.background = cols[i % cols.length]; s.style.boxShadow = '0 4px 10px rgba(0,0,0,.4)'; if (i % 2 == 0) s.style.transform = 'translateY(4px)'; t.appendChild(s); }
+            const mp = document.getElementById('mandalaPetals'); for (let i = 0; i < 24; i++) { const a = i * 15 * Math.PI / 180; const e = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse'); e.setAttribute('cx', 200 + Math.cos(a) * 130); e.setAttribute('cy', 200 + Math.sin(a) * 130); e.setAttribute('rx', 14); e.setAttribute('ry', 34); e.setAttribute('transform', `rotate(${i * 15} ${200 + Math.cos(a) * 130} ${200 + Math.sin(a) * 130})`); e.setAttribute('opacity', '.5'); mp.appendChild(e); }
+        })();
+
+        /* ============ CURSOR / NAV / PROGRESS ============ */
+        const cur = document.getElementById('cursor'), cdot = document.getElementById('cursorDot');
+        document.addEventListener('mousemove', e => { cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px'; cdot.style.left = e.clientX + 'px'; cdot.style.top = e.clientY + 'px'; });
+        document.querySelectorAll('a,button,.gallery-item,.tilt').forEach(el => { el.addEventListener('mouseenter', () => cur.classList.add('hovering')); el.addEventListener('mouseleave', () => cur.classList.remove('hovering')); });
+        document.getElementById('menuBtn').onclick = () => document.getElementById('mobileMenu').classList.toggle('hidden');
+        document.querySelectorAll('#mobileMenu a').forEach(a => a.onclick = () => document.getElementById('mobileMenu').classList.add('hidden'));
+        window.addEventListener('scroll', () => { const h = document.documentElement; const p = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100; document.getElementById('scrollProgress').style.width = p + '%'; document.getElementById('topBtn').style.display = h.scrollTop > 600 ? 'flex' : 'none'; }, { passive: true });
+        document.getElementById('topBtn').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        /* ============ COUNTDOWN ============ */
+        const WED = new Date('2027-02-12T19:00:00+05:30').getTime();
+        setInterval(() => {
+            let d = WED - Date.now(); if (d < 0) d = 0; const dd = Math.floor(d / 864e5), hh = Math.floor(d / 36e5) % 24, mm = Math.floor(d / 6e4) % 60, ss = Math.floor(d / 1e3) % 60;
+            document.getElementById('cdD').textContent = String(dd).padStart(2, '0'); document.getElementById('cdH').textContent = String(hh).padStart(2, '0'); document.getElementById('cdM').textContent = String(mm).padStart(2, '0'); document.getElementById('cdS').textContent = String(ss).padStart(2, '0');
+        }, 1000);
+
+        /* ============ TILT ============ */
+        function attachTilt() { document.querySelectorAll('.tilt').forEach(card => { card.onmousemove = e => { const r = card.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; card.style.transform = `perspective(900px) rotateY(${x * 14}deg) rotateX(${-y * 14}deg) translateY(-4px)`; }; card.onmouseleave = () => card.style.transform = 'perspective(900px) rotateY(0) rotateX(0)'; }); }
+
+        /* ============ EVENTS ============ */
+        const eg = document.getElementById('eventsGrid');
+        EVENTS.forEach(ev => { const d = document.createElement('div'); d.className = 'tilt event-card rounded-3xl overflow-hidden cursor-pointer reveal'; d.innerHTML = `<div class="relative h-52 overflow-hidden"><img src="${ev.img}" onerror="this.src='https://picsum.photos/seed/${ev.fallback}/800/600'" class="w-full h-full object-cover" alt="${ev.title}"><div class="absolute inset-0 bg-gradient-to-t from-[#1E0B06] via-transparent to-transparent"></div><div class="absolute top-3 left-3 glass border border-gold/30 rounded-full px-4 py-1.5 text-[10px] tracking-[.25em] text-goldlight">${ev.date}</div><div class="absolute bottom-3 left-4 flex items-center gap-3"><div class="w-11 h-11 rounded-full flex items-center justify-center text-lg" style="background:${ev.color}22;border:1px solid ${ev.color};color:${ev.color}"><i class="fa-solid ${ev.icon}"></i></div><h3 class="font-serif text-2xl text-cream">${ev.title}</h3></div></div><div class="p-5"><p class="text-sm text-cream/60 font-light line-clamp-2">${ev.desc}</p><div class="flex justify-between items-center mt-4 text-xs tracking-widest"><span class="text-gold/80">${ev.time}</span><span class="text-goldlight">DETAILS →</span></div></div>`; d.onclick = () => openEvent(ev.id); eg.appendChild(d); });
+        function openEvent(id) { const ev = EVENTS[id]; document.getElementById('emImg').src = ev.img; document.getElementById('emImg').onerror = function () { this.src = 'https://picsum.photos/seed/' + ev.fallback + '/800/600' }; document.getElementById('emDate').textContent = ev.date; document.getElementById('emTitle').textContent = ev.title; document.getElementById('emDesc').textContent = ev.desc; document.getElementById('emTime').textContent = ev.time; document.getElementById('emVenue').textContent = ev.venue; document.getElementById('emDress').textContent = ev.dress; document.getElementById('emHigh').textContent = ev.high; document.getElementById('eventModal').classList.add('open'); chime(660); }
+        document.getElementById('emClose').onclick = () => document.getElementById('eventModal').classList.remove('open');
+        document.getElementById('emRsvp').onclick = () => document.getElementById('eventModal').classList.remove('open');
+        document.getElementById('eventModal').addEventListener('click', e => { if (e.target.id === 'eventModal') e.target.classList.remove('open'); });
+
+        /* ============ PHERAS ============ */
+        let pheraIdx = 0; const dots = document.getElementById('pheraDots');
+        PHERAS.forEach((p, i) => { const b = document.createElement('div'); b.className = 'phera-dot' + (i === 0 ? ' active' : ''); b.textContent = ['१', '२', '३', '४', '५', '६', '७'][i]; b.onclick = () => setPhera(i); dots.appendChild(b); });
+        function setPhera(i) { pheraIdx = (i + PHERAS.length) % PHERAS.length; const p = PHERAS[pheraIdx]; document.getElementById('pheraSanskrit').textContent = p.s; document.getElementById('pheraTitle').textContent = p.t; document.getElementById('pheraDesc').textContent = p.d; document.getElementById('pheraBar').style.width = ((pheraIdx + 1) / 7 * 100) + '%';[...dots.children].forEach((d, j) => { d.className = 'phera-dot' + (j === pheraIdx ? ' active' : j < pheraIdx ? ' done' : ''); }); gsap.fromTo('#pheraTitle', { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: .5 }); chime(520 + pheraIdx * 60); if (pheraIdx === 6) { petalBurst(); } }
+        document.getElementById('pheraNext').onclick = () => setPhera(pheraIdx + 1);
+        document.getElementById('pheraPrev').onclick = () => setPhera(pheraIdx - 1);
+        setPhera(0);
+
+        /* ============ GALLERY ============ */
+        const gg = document.getElementById('galleryGrid'); let galFilter = 'all', lbIdx = 0, visibleGal = [];
+        function renderGal() { gg.innerHTML = ''; visibleGal = GALLERY.filter(g => galFilter === 'all' || g.cat === galFilter); visibleGal.forEach((g, i) => { const d = document.createElement('div'); d.className = 'gallery-item h-52 md:h-64 border border-gold/20'; d.innerHTML = `<img src="${g.src}" onerror="this.src='https://picsum.photos/seed/${g.seed}/600/700'" class="w-full h-full object-cover" alt="">`; d.onclick = () => openLB(i); gg.appendChild(d); }); gsap.fromTo('.gallery-item', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: .6, stagger: .06 }); }
+        document.querySelectorAll('.gf').forEach(b => b.onclick = () => { document.querySelectorAll('.gf').forEach(x => x.classList.remove('active')); b.classList.add('active'); galFilter = b.dataset.f; renderGal(); });
+        renderGal();
+        function openLB(i) { lbIdx = i; const g = visibleGal[i]; const im = document.getElementById('lbImg'); im.src = g.src; im.onerror = function () { this.src = 'https://picsum.photos/seed/' + g.seed + '/900/900' }; document.getElementById('lbCap').textContent = g.cap; document.getElementById('lightbox').classList.add('open'); }
+        document.getElementById('lbClose').onclick = () => document.getElementById('lightbox').classList.remove('open');
+        document.getElementById('lbNext').onclick = e => { e.stopPropagation(); openLB((lbIdx + 1) % visibleGal.length) };
+        document.getElementById('lbPrev').onclick = e => { e.stopPropagation(); openLB((lbIdx - 1 + visibleGal.length) % visibleGal.length) };
+        document.getElementById('lightbox').addEventListener('click', e => { if (e.target.id === 'lightbox') e.target.classList.remove('open'); });
+        document.addEventListener('keydown', e => { if (document.getElementById('lightbox').classList.contains('open')) { if (e.key === 'ArrowRight') document.getElementById('lbNext').click(); if (e.key === 'ArrowLeft') document.getElementById('lbPrev').click(); if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open'); } });
+
+        /* ============ FAMILY ============ */
+        function fam(el, arr) { const c = document.getElementById(el); arr.forEach(([n, r], i) => { c.innerHTML += `<div class="flex items-center gap-4 rounded-2xl border border-gold/15 p-3 hover:border-gold/50 transition bg-white/[.02]"><div class="w-12 h-12 rounded-full bg-gradient-to-br from-gold/40 to-maroon2 flex items-center justify-center font-serif text-xl text-goldlight border border-gold/40">${n[0]}</div><div><p class="font-medium text-cream">${n}</p><p class="text-xs text-cream/50 tracking-widest">${r.toUpperCase()}</p></div><span class="ml-auto text-gold/40">❋</span></div>`; }); }
+        fam('famGroom', FAM_G); fam('famBride', FAM_B);
+
+        /* ============ RSVP ============ */
+        let side = 'Groom';
+        document.querySelectorAll('.sideBtn').forEach(b => b.onclick = () => { document.querySelectorAll('.sideBtn').forEach(x => x.classList.remove('active')); b.classList.add('active'); side = b.dataset.side; });
+        document.getElementById('rsvpForm').addEventListener('submit', e => {
+            e.preventDefault(); const name = document.getElementById('rName').value.trim(); if (!name) return;
+            document.getElementById('tName').textContent = name; document.getElementById('tMeta').textContent = `${side.toUpperCase()} SIDE • ${document.getElementById('rGuests').value} GUEST(S) • ${document.getElementById('rAttend').value.split('—')[0]}`;
+            document.getElementById('rsvpDone').classList.remove('hidden'); drawQR(name); document.getElementById('rsvpDone').scrollIntoView({ behavior: 'smooth', block: 'center' }); chime(880); petalBurst(); confettiBurst();
+        });
+        function drawQR(seed) { const c = document.getElementById('qrCanvas'), x = c.getContext('2d'); x.fillStyle = '#FFF8E7'; x.fillRect(0, 0, 110, 110); let h = 0; for (const ch of seed) h = (h * 31 + ch.charCodeAt(0)) >>> 0; const rnd = () => { h = (h * 1103515245 + 12345) >>> 0; return h / 4294967296; }; x.fillStyle = '#3A0B0B'; for (let i = 0; i < 12; i++)for (let j = 0; j < 12; j++) if (rnd() > .5) x.fillRect(8 + i * 8, 8 + j * 8, 6, 6); x.strokeStyle = '#9C7A1A'; x.lineWidth = 3; x.strokeRect(1, 1, 108, 108); }
+        document.getElementById('addCal').onclick = () => { const ics = 'BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:20270212T133000Z\nDTEND:20270212T180000Z\nSUMMARY:Aarav ❋ Diya Wedding - Pheras\nLOCATION:City Palace Jaipur\nDESCRIPTION:Shubh Muhurat 7:42 PM IST. Baraat 5 PM.\nEND:VEVENT\nEND:VCALENDAR'; const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'aarav-diya-wedding.ics'; a.click(); };
+
+        /* ============ WISHES ============ */
+        let wishes = JSON.parse(localStorage.getItem('ad_wishes') || 'null') || [
+            { n: "Dadi Amma", t: "Sada suhagan raho beta. Bhagwan tumhari jodi salamat rakhe!", e: "❋" },
+            { n: "Rohan Mehta", t: "From college canteen to City Palace — what a journey! So happy for you both.", e: "💛" },
+            { n: "Aunty Lakshmi's Kit", t: "Diya kanna, you look like a dream. Aarav, take care of our princess!", e: "🌺" },
+            { n: "Pandit Harishankar", t: "॥ सर्वे भवन्तु सुखिनः ॥ May dharma guide your grihastha jeevan.", e: "🪔" },
+            { n: "Cousins Squad", t: "Sangeet revenge loading... Be ready Sharma vs Iyer ROUND 2!", e: "🦚" },
+            { n: "Karan & Anita", t: "Wishing you seven janmas of laughter, travel and filter coffee together.", e: "💛" }];
+        function renderWishes() { const w = document.getElementById('wishWall'); w.innerHTML = ''; wishes.slice().reverse().forEach(x => { w.innerHTML += `<div class="wish-card rounded-2xl p-5"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gold/15 border border-gold/40 flex items-center justify-center text-lg">${x.e}</div><p class="font-medium text-goldlight">${x.n}</p></div><p class="text-sm text-cream/70 font-light mt-3 italic">“${x.t}”</p></div>`; }); }
+        renderWishes();
+        document.getElementById('wishForm').addEventListener('submit', e => { e.preventDefault(); const n = document.getElementById('wName').value.trim(), t = document.getElementById('wText').value.trim(), em = document.getElementById('wEmoji').value; if (!n || !t) return; wishes.push({ n, t, e: em }); localStorage.setItem('ad_wishes', JSON.stringify(wishes)); renderWishes(); e.target.reset(); chime(740); petalBurst(); });
+
+        /* ============ AUDIO (WebAudio temple ambience) ============ */
+        let AC = null, musicOn = false, droneNodes = [];
+        function chime(freq = 660) { try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); const o = AC.createOscillator(), g = AC.createGain(); o.type = 'sine'; o.frequency.value = freq; g.gain.setValueAtTime(.18, AC.currentTime); g.gain.exponentialRampToValueAtTime(.001, AC.currentTime + 1.4); o.connect(g).connect(AC.destination); o.start(); o.stop(AC.currentTime + 1.5); } catch (e) { } }
+        document.getElementById('musicBtn').onclick = function () {
+            musicOn = !musicOn; this.classList.toggle('!bg-gold', musicOn); this.classList.toggle('!text-deep', musicOn);
+            if (musicOn) { try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); AC.resume();[110, 165, 220].forEach((f, i) => { const o = AC.createOscillator(), g = AC.createGain(), fl = AC.createBiquadFilter(); o.type = i === 2 ? 'triangle' : 'sine'; o.frequency.value = f; fl.type = 'lowpass'; fl.frequency.value = 500; g.gain.value = .035; o.connect(fl).connect(g).connect(AC.destination); o.start(); droneNodes.push(o); }); const bell = () => { if (!musicOn) return; chime([523, 587, 659, 784][Math.floor(Math.random() * 4)]); setTimeout(bell, 6000 + Math.random() * 6000); }; bell(); } catch (e) { } } else { droneNodes.forEach(o => { try { o.stop() } catch (e) { } }); droneNodes = []; }
+        };
+
+        /* ============ GSAP REVEALS ============ */
+        gsap.registerPlugin(ScrollTrigger);
+        function startReveals() { document.querySelectorAll('.reveal').forEach(el => { gsap.to(el, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } }); }); attachTilt(); }
+        window.addEventListener('load', () => { setTimeout(() => { if (!document.getElementById('preloader').classList.contains('hidden')) { document.getElementById('preloader').classList.add('hidden'); startReveals(); } }, 4500); });
+
+        function petalBurst() { if (window.__burst) window.__burst(); }
+        function confettiBurst() { for (let i = 0; i < 40; i++) { const s = document.createElement('div'); s.textContent = ['❋', '✦', '🌼', '🌺'][i % 4]; s.style.cssText = `position:fixed;left:${20 + Math.random() * 60}vw;top:-30px;z-index:70;font-size:${14 + Math.random() * 18}px;pointer-events:none;`; document.body.appendChild(s); gsap.to(s, { y: innerHeight + 80, x: (Math.random() - .5) * 300, rotation: Math.random() * 720, duration: 2.5 + Math.random() * 2, ease: 'power1.in', onComplete: () => s.remove() }); } }
+
+        /* ============================================================
+           THREE.JS — 3D HINDU WEDDING MANDAP WORLD
+        ============================================================ */
+        (function () {
+            const canvas = document.getElementById('webgl');
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+            renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+            renderer.setSize(innerWidth, innerHeight);
+            renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.outputEncoding = THREE.sRGBEncoding;
+
+            const scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x120402, 0.016);
+            const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, .1, 300);
+            camera.position.set(0, 7, 26);
+
+            scene.add(new THREE.AmbientLight(0xffe6b0, .55));
+            const hemi = new THREE.HemisphereLight(0xffd9a0, 0x2a0f08, .5); scene.add(hemi);
+            const moon = new THREE.DirectionalLight(0xcfd8ff, .5); moon.position.set(-20, 30, 10); moon.castShadow = true; scene.add(moon);
+            const warm = new THREE.DirectionalLight(0xffb36b, .5); warm.position.set(15, 20, -10); scene.add(warm);
+            const fireLight = new THREE.PointLight(0xff6a00, 2.2, 30, 2); fireLight.position.set(0, 2.2, 0); scene.add(fireLight);
+            const fireLight2 = new THREE.PointLight(0xffc93c, 1.2, 22, 2); fireLight2.position.set(0, 4, 0); scene.add(fireLight2);
+
+            /* --- textures via canvas --- */
+            function rangoliTexture() {
+                const c = document.createElement('canvas'); c.width = c.height = 1024; const x = c.getContext('2d');
+                x.fillStyle = '#1b0705'; x.fillRect(0, 0, 1024, 1024);
+                const cx = 512, cy = 512;
+                for (let r = 480; r > 20; r -= 24) { x.beginPath(); x.arc(cx, cy, r, 0, 7); x.strokeStyle = `rgba(212,175,55,${.08 + (480 - r) / 480 * .35})`; x.lineWidth = r % 96 < 24 ? 4 : 1.5; x.stroke(); }
+                for (let i = 0; i < 48; i++) { const a = i / 48 * Math.PI * 2; x.save(); x.translate(cx, cy); x.rotate(a); x.fillStyle = i % 2 ? 'rgba(193,18,31,.55)' : 'rgba(255,150,0,.55)'; x.beginPath(); x.ellipse(0, -330, 26, 90, 0, 0, 7); x.fill(); x.strokeStyle = '#F5D67B'; x.lineWidth = 2; x.stroke(); x.restore(); }
+                for (let i = 0; i < 24; i++) { const a = i / 24 * Math.PI * 2 + .13; x.save(); x.translate(cx, cy); x.rotate(a); x.fillStyle = i % 2 ? 'rgba(42,157,72,.5)' : 'rgba(212,175,55,.5)'; x.beginPath(); x.ellipse(0, -190, 20, 60, 0, 0, 7); x.fill(); x.restore(); }
+                x.fillStyle = '#D4AF37'; x.beginPath(); x.arc(cx, cy, 60, 0, 7); x.fill(); x.fillStyle = '#7A1C1C'; x.beginPath(); x.arc(cx, cy, 44, 0, 7); x.fill();
+                x.fillStyle = '#F5D67B'; x.font = 'bold 56px serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('ॐ', cx, cy + 4);
+                const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; return t;
+            }
+            function glowTexture() { const c = document.createElement('canvas'); c.width = c.height = 128; const x = c.getContext('2d'); const g = x.createRadialGradient(64, 64, 2, 64, 64, 64); g.addColorStop(0, 'rgba(255,240,180,1)'); g.addColorStop(.25, 'rgba(255,200,80,.9)'); g.addColorStop(.6, 'rgba(255,120,0,.35)'); g.addColorStop(1, 'rgba(255,80,0,0)'); x.fillStyle = g; x.fillRect(0, 0, 128, 128); return new THREE.CanvasTexture(c); }
+            function petalTexture() { const c = document.createElement('canvas'); c.width = 64; c.height = 64; const x = c.getContext('2d'); x.fillStyle = '#FF8C00'; x.beginPath(); x.ellipse(32, 32, 26, 16, 0, 0, 7); x.fill(); x.fillStyle = '#FFC93C'; x.beginPath(); x.ellipse(28, 28, 14, 9, 0, 0, 7); x.fill(); return new THREE.CanvasTexture(c); }
+            function omTexture() { const c = document.createElement('canvas'); c.width = 256; c.height = 256; const x = c.getContext('2d'); x.shadowColor = '#D4AF37'; x.shadowBlur = 30; x.fillStyle = '#F5D67B'; x.font = '150px serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('ॐ', 128, 140); return new THREE.CanvasTexture(c); }
+            const glowTex = glowTexture(), petalTex = petalTexture();
+
+            /* --- ground --- */
+            const ground = new THREE.Mesh(new THREE.CircleGeometry(70, 64), new THREE.MeshStandardMaterial({ map: rangoliTexture(), roughness: .9, metalness: .15 }));
+            ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+            const floor2 = new THREE.Mesh(new THREE.CircleGeometry(14, 48), new THREE.MeshStandardMaterial({ color: 0x2a0f08, roughness: .6, metalness: .4 })); floor2.rotation.x = -Math.PI / 2; floor2.position.y = .02; scene.add(floor2);
+
+            /* --- materials --- */
+            const goldMat = new THREE.MeshStandardMaterial({ color: 0xD4AF37, metalness: .9, roughness: .28, emissive: 0x332200, emissiveIntensity: .35 });
+            const goldBright = new THREE.MeshStandardMaterial({ color: 0xF5D67B, metalness: .85, roughness: .25, emissive: 0x664400, emissiveIntensity: .5 });
+            const redSilk = new THREE.MeshStandardMaterial({ color: 0x9D1C1C, roughness: .7, metalness: .1, side: THREE.DoubleSide });
+            const creamSilk = new THREE.MeshStandardMaterial({ color: 0xF5E6C8, roughness: .65, side: THREE.DoubleSide, transparent: true, opacity: .92 });
+            const woodMat = new THREE.MeshStandardMaterial({ color: 0x5a2c14, roughness: .9 });
+            const marigoldMat = new THREE.MeshStandardMaterial({ color: 0xff8c00, roughness: .6, emissive: 0x552200, emissiveIntensity: .4 });
+            const marigoldMat2 = new THREE.MeshStandardMaterial({ color: 0xffc93c, roughness: .6, emissive: 0x554400, emissiveIntensity: .4 });
+            const leafMat = new THREE.MeshStandardMaterial({ color: 0x1e7a34, roughness: .8 });
+
+            /* --- MANDAP --- */
+            const mandap = new THREE.Group(); scene.add(mandap);
+            const pillarPos = [[-4.5, -4.5], [4.5, -4.5], [-4.5, 4.5], [4.5, 4.5]];
+            pillarPos.forEach(([px, pz]) => {
+                const base = new THREE.Mesh(new THREE.BoxGeometry(1.7, .6, 1.7), goldMat); base.position.set(px, .3, pz); base.castShadow = true; mandap.add(base);
+                const pil = new THREE.Mesh(new THREE.CylinderGeometry(.38, .5, 8, 20), goldMat); pil.position.set(px, 4.6, pz); pil.castShadow = true; mandap.add(pil);
+                for (let i = 0; i < 5; i++) { const ring = new THREE.Mesh(new THREE.TorusGeometry(.52, .09, 10, 24), goldBright); ring.rotation.x = Math.PI / 2; ring.position.set(px, 1.6 + i * 1.5, pz); mandap.add(ring); }
+                const cap = new THREE.Mesh(new THREE.BoxGeometry(1.4, .5, 1.4), goldMat); cap.position.set(px, 8.8, pz); mandap.add(cap);
+                // marigold spiral around pillar
+                for (let i = 0; i < 26; i++) { const a = i * .7, y = 1 + i * .27; const f = new THREE.Mesh(new THREE.SphereGeometry(.22, 8, 8), i % 2 ? marigoldMat : marigoldMat2); f.position.set(px + Math.cos(a) * .55, y, pz + Math.sin(a) * .55); mandap.add(f); }
+            });
+            // canopy
+            const canopy = new THREE.Mesh(new THREE.BoxGeometry(11.5, .45, 11.5), redSilk); canopy.position.y = 9.3; canopy.castShadow = true; mandap.add(canopy);
+            const canopyTrim = new THREE.Mesh(new THREE.BoxGeometry(12, .18, 12), goldMat); canopyTrim.position.y = 9.0; mandap.add(canopyTrim);
+            // under-canopy cream drape ceiling
+            const ceil = new THREE.Mesh(new THREE.PlaneGeometry(10.5, 10.5), creamSilk); ceil.rotation.x = Math.PI / 2; ceil.position.y = 9.05; mandap.add(ceil);
+            // hanging drapes (animated)
+            const drapes = [];
+            [[0, -5.6, 11, 2.6, 0], [0, 5.6, 11, 2.6, 0], [-5.6, 0, 11, 2.6, Math.PI / 2], [5.6, 0, 11, 2.6, Math.PI / 2]].forEach(([dx, dz, w, h, ry]) => {
+                const g = new THREE.PlaneGeometry(w, h, 24, 6); const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: 0xc1121f, transparent: true, opacity: .85, side: THREE.DoubleSide, roughness: .8 })); m.position.set(dx, 7.6, dz); m.rotation.y = ry; m.userData.base = m.geometry.attributes.position.array.slice(); mandap.add(m); drapes.push(m);
+            });
+            // toran garlands along canopy edges
+            function garland(x1, z1, x2, z2) { const n = 26; for (let i = 0; i <= n; i++) { const t = i / n; const x = x1 + (x2 - x1) * t, z = z1 + (z2 - z1) * t; const sag = Math.sin(t * Math.PI) * -.9; const m = new THREE.Mesh(new THREE.SphereGeometry(.24, 8, 8), i % 3 === 0 ? leafMat : (i % 2 ? marigoldMat : marigoldMat2)); m.position.set(x, 8.85 + sag, z); mandap.add(m); } }
+            garland(-5.6, -5.6, 5.6, -5.6); garland(-5.6, 5.6, 5.6, 5.6); garland(-5.6, -5.6, -5.6, 5.6); garland(5.6, -5.6, 5.6, 5.6);
+            // domes + spires
+            function dome(x, z, s) { const d = new THREE.Mesh(new THREE.SphereGeometry(s, 20, 14, 0, Math.PI * 2, 0, Math.PI / 2), goldBright); d.position.set(x, 9.55, z); d.castShadow = true; mandap.add(d); const sp = new THREE.Mesh(new THREE.ConeGeometry(.18, s * 1.4, 10), goldMat); sp.position.set(x, 9.55 + s + s * .5, z); mandap.add(sp); const orb = new THREE.Mesh(new THREE.SphereGeometry(.16, 10, 10), new THREE.MeshBasicMaterial({ color: 0xffe9a8 })); orb.position.set(x, 9.6 + s + s * 1.1, z); mandap.add(orb); }
+            dome(-4.5, -4.5, .95); dome(4.5, -4.5, .95); dome(-4.5, 4.5, .95); dome(4.5, 4.5, .95); dome(0, 0, 2.1);
+            // flag
+            const flagPole = new THREE.Mesh(new THREE.CylinderGeometry(.06, .06, 3, 8), goldMat); flagPole.position.set(0, 13, 0); mandap.add(flagPole);
+            const flag = new THREE.Mesh(new THREE.PlaneGeometry(1.8, 1, 8, 4), new THREE.MeshStandardMaterial({ color: 0xff6b00, side: THREE.DoubleSide, emissive: 0x662200, emissiveIntensity: .5 })); flag.position.set(.95, 14, 0); flag.userData.base = flag.geometry.attributes.position.array.slice(); mandap.add(flag);
+            // flower carpet ring
+            for (let i = 0; i < 70; i++) { const a = i / 70 * Math.PI * 2; const r = 6.4 + Math.sin(i * 2) * .15; const f = new THREE.Mesh(new THREE.SphereGeometry(.28, 8, 8), [marigoldMat, marigoldMat2, new THREE.MeshStandardMaterial({ color: 0xc1121f, roughness: .6 })][i % 3]); f.position.set(Math.cos(a) * r, .25, Math.sin(a) * r); f.scale.y = .6; scene.add(f); }
+            // steps
+            for (let i = 0; i < 3; i++) { const st = new THREE.Mesh(new THREE.BoxGeometry(5 - i * .7, .35, 1.4), new THREE.MeshStandardMaterial({ color: 0x8a5a2b, roughness: .8 })); st.position.set(0, .18 + i * .35, 7.6 + i * 1.1); st.receiveShadow = true; scene.add(st); }
+
+            /* --- HAVAN KUND + FIRE --- */
+            const kund = new THREE.Mesh(new THREE.CylinderGeometry(1.7, 1.0, 1.1, 4), new THREE.MeshStandardMaterial({ color: 0x7a3b1a, roughness: .85 })); kund.rotation.y = Math.PI / 4; kund.position.y = .75; kund.castShadow = true; scene.add(kund);
+            const kundRim = new THREE.Mesh(new THREE.BoxGeometry(2.7, .22, 2.7), goldMat); kundRim.position.y = 1.35; scene.add(kundRim);
+            for (let i = 0; i < 5; i++) { const log = new THREE.Mesh(new THREE.CylinderGeometry(.12, .12, 1.8, 8), woodMat); log.rotation.z = Math.PI / 2; log.rotation.y = i * .6; log.position.y = 1.5; scene.add(log); }
+            let fireOn = true;
+            const flames = [];
+            for (let i = 0; i < 26; i++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: i % 3 ? 0xff7b00 : 0xffd23c, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false })); s.userData = { a: Math.random() * Math.PI * 2, r: Math.random() * .7, h: Math.random() * 1.6, sp: .8 + Math.random() * 1.5 }; s.position.set(0, 2, 0); s.scale.set(1.4, 2, 1); scene.add(s); flames.push(s); }
+            const fireGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xff9a00, transparent: true, opacity: .55, blending: THREE.AdditiveBlending, depthWrite: false })); fireGlow.scale.set(8, 8, 1); fireGlow.position.y = 2.2; scene.add(fireGlow);
+
+            /* --- DIYAS --- */
+            const diyas = [], diyaFlames = []; let litCount = 0;
+            function makeDiya(x, z, ring) {
+                const g = new THREE.Group();
+                const bowl = new THREE.Mesh(new THREE.CylinderGeometry(.42, .22, .26, 14), new THREE.MeshStandardMaterial({ color: 0x8a4a1a, roughness: .8 })); bowl.castShadow = true; g.add(bowl);
+                const oil = new THREE.Mesh(new THREE.CircleGeometry(.34, 14), new THREE.MeshStandardMaterial({ color: 0x2b1505, roughness: .3, metalness: .5 })); oil.rotation.x = -Math.PI / 2; oil.position.y = .14; g.add(oil);
+                const fl = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xffc93c, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false })); fl.scale.set(.9, 1.3, 1); fl.position.y = .65; fl.visible = false; g.add(fl);
+                const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xff9a00, transparent: true, opacity: .35, blending: THREE.AdditiveBlending, depthWrite: false })); halo.scale.set(2.4, 2.4, 1); halo.position.y = .6; halo.visible = false; g.add(halo);
+                g.position.set(x, .15, z); g.userData = { fl, halo, lit: false, phase: Math.random() * 7, ring }; g.traverse(o => { o.userData.root = g; }); scene.add(g); diyas.push(g); diyaFlames.push(fl); return g;
+            }
+            for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; makeDiya(Math.cos(a) * 8.6, Math.sin(a) * 8.6, 0); }
+            for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2 + .2; makeDiya(Math.cos(a) * 12.5, Math.sin(a) * 12.5, 1); }
+            // pre-light some
+            [0, 3, 5, 8, 12, 15, 20, 25].forEach(i => lightDiya(diyas[i], true));
+            function lightDiya(g, silent) { if (!g || g.userData.lit) return; g.userData.lit = true; g.userData.fl.visible = true; g.userData.halo.visible = true; litCount++; updateDiyaUI(); if (!silent) chime(600 + Math.random() * 400); }
+            function updateDiyaUI() { document.getElementById('diyaCount').textContent = litCount; document.getElementById('diyaCountHero').textContent = litCount; document.getElementById('diyaBar').style.width = (litCount / diyas.length * 100) + '%'; }
+            updateDiyaUI();
+            document.getElementById('lightAllBtn').onclick = () => { diyas.forEach((d, i) => setTimeout(() => lightDiya(d, true), i * 60)); chime(880); };
+            document.getElementById('diyaFloat').onclick = () => { const un = diyas.filter(d => !d.userData.lit); if (un.length) { lightDiya(un[Math.floor(Math.random() * un.length)]); confettiDiya(); } else { diyas.forEach(d => { d.userData.lit = false; d.userData.fl.visible = false; d.userData.halo.visible = false; }); litCount = 0; updateDiyaUI(); } document.getElementById('mandap3d').scrollIntoView({ behavior: 'smooth' }); };
+            function confettiDiya() { const s = document.createElement('div'); s.textContent = '🪔 +1 Blessing'; s.style.cssText = 'position:fixed;right:80px;bottom:70px;z-index:70;color:#F5D67B;font-size:14px;letter-spacing:.1em;pointer-events:none;'; document.body.appendChild(s); gsap.to(s, { y: -60, opacity: 0, duration: 1.4, onComplete: () => s.remove() }); }
+
+            /* --- PETALS --- */
+            let petalCount = 260, petalsOn = true;
+            const petalGeo = new THREE.PlaneGeometry(.42, .3);
+            const petalMat = new THREE.MeshBasicMaterial({ map: petalTex, transparent: true, side: THREE.DoubleSide, depthWrite: false });
+            const petals = new THREE.InstancedMesh(petalGeo, petalMat, 400); scene.add(petals);
+            const petalData = []; for (let i = 0; i < 400; i++) petalData.push({ x: (Math.random() - .5) * 50, y: Math.random() * 28, z: (Math.random() - .5) * 50, rx: Math.random() * 7, ry: Math.random() * 7, sp: .6 + Math.random() * 1.4, sw: Math.random() * 7 });
+            const dummy = new THREE.Object3D();
+            function updatePetals(t, dt) { let shown = 0; for (let i = 0; i < 400; i++) { const p = petalData[i]; if (i < petalCount && petalsOn) { p.y -= p.sp * dt * 2.2; p.x += Math.sin(t * 1.4 + p.sw) * dt * .9; p.rx += dt * 2; p.ry += dt * 1.4; if (p.y < 0) { p.y = 26 + Math.random() * 4; p.x = (Math.random() - .5) * 50; p.z = (Math.random() - .5) * 50; } dummy.position.set(p.x, p.y, p.z); dummy.rotation.set(p.rx, p.ry, 0); dummy.scale.setScalar(1); } else { dummy.position.set(0, -50, 0); dummy.scale.setScalar(.001); } dummy.updateMatrix(); petals.setMatrixAt(i, dummy.matrix); } petals.instanceMatrix.needsUpdate = true; }
+            window.__burst = () => { petalData.forEach(p => { if (Math.random() > .5) { p.y = 4 + Math.random() * 20; } }); petalCount = 400; document.getElementById('petalRange').value = 400; document.getElementById('petalVal').textContent = 400; setTimeout(() => { petalCount = +document.getElementById('petalRange').value; }, 4000); };
+            document.getElementById('petalRange').addEventListener('input', e => { petalCount = +e.target.value; document.getElementById('petalVal').textContent = petalCount; });
+            document.getElementById('togglePetals').onclick = function () { petalsOn = !petalsOn; this.classList.toggle('active', petalsOn); this.innerHTML = petalsOn ? '<i class="fa-solid fa-fan mr-1 text-orange-300"></i> PETALS ON' : '<i class="fa-solid fa-fan mr-1"></i> PETALS OFF'; };
+
+            /* --- STARS + RINGS + OM --- */
+            const starGeo = new THREE.BufferGeometry(); const sp = []; for (let i = 0; i < 1200; i++) { const r = 90 + Math.random() * 80, t = Math.random() * Math.PI * 2, ph = Math.random() * Math.PI; sp.push(r * Math.sin(ph) * Math.cos(t), Math.abs(r * Math.cos(ph)) * .7 + 4, r * Math.sin(ph) * Math.sin(t)); } starGeo.setAttribute('position', new THREE.Float32BufferAttribute(sp, 3));
+            const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffe9b0, size: .7, transparent: true, opacity: .9 })); scene.add(stars);
+            const rings = [];
+            [[26, 0xD4AF37, .25], [32, 0x7A1C1C, .2], [38, 0xF5D67B, .14]].forEach(([r, c, o], i) => { const m = new THREE.Mesh(new THREE.TorusGeometry(r, .18, 10, 140), new THREE.MeshBasicMaterial({ color: c, transparent: true, opacity: o })); m.rotation.x = Math.PI / 2; m.position.y = 2 + i * 2; scene.add(m); rings.push(m); });
+            const om = new THREE.Sprite(new THREE.SpriteMaterial({ map: omTexture(), transparent: true, opacity: .95, depthWrite: false })); om.scale.set(5, 5, 1); om.position.set(0, 16.5, -6); scene.add(om);
+            // side elephants (stylized gold)
+            function elephant(x, z, ry) { const g = new THREE.Group(); const body = new THREE.Mesh(new THREE.SphereGeometry(1.3, 14, 12), goldMat); body.scale.set(1.4, 1, 1); body.position.y = 1.5; g.add(body); const head = new THREE.Mesh(new THREE.SphereGeometry(.9, 12, 10), goldMat); head.position.set(1.7, 1.9, 0); g.add(head); const trunk = new THREE.Mesh(new THREE.CylinderGeometry(.22, .32, 1.6, 8), goldMat); trunk.position.set(2.3, 1.1, 0); trunk.rotation.z = .5; g.add(trunk);[[-.7, .6], [-.7, -.6], [.7, .6], [.7, -.6]].forEach(([lx, lz]) => { const l = new THREE.Mesh(new THREE.CylinderGeometry(.28, .32, 1.2, 8), goldMat); l.position.set(lx, .6, lz); g.add(l); }); const cloth = new THREE.Mesh(new THREE.BoxGeometry(1.6, .2, 1.8), redSilk); cloth.position.y = 2.5; g.add(cloth); g.position.set(x, 0, z); g.rotation.y = ry; g.traverse(o => { o.castShadow = true; }); scene.add(g); }
+            elephant(-8.5, 9, .5); elephant(8.5, 9, -.5);
+            // banana / flower pillars at entrance
+            [[-3.5, 12], [3.5, 12]].forEach(([x, z]) => { const pole = new THREE.Mesh(new THREE.CylinderGeometry(.15, .15, 5, 8), leafMat); pole.position.set(x, 2.5, z); scene.add(pole); for (let i = 0; i < 10; i++) { const f = new THREE.Mesh(new THREE.SphereGeometry(.3, 8, 8), i % 2 ? marigoldMat : marigoldMat2); f.position.set(x, .6 + i * .45, z); scene.add(f); } });
+
+            /* --- camera control: drag orbit + scroll dolly + view presets --- */
+            let targetTheta = .0, theta = 0, targetPhi = 1.08, phi = 1.08, radius = 27, targetRadius = 27, autoOrbit = true, dragging = false, px = 0, py = 0, mouseX = 0, mouseY = 0;
+            canvas.style.pointerEvents = 'auto';
+            canvas.addEventListener('pointerdown', e => { dragging = true; px = e.clientX; py = e.clientY; });
+            window.addEventListener('pointerup', () => dragging = false);
+            window.addEventListener('pointermove', e => { mouseX = (e.clientX / innerWidth - .5); mouseY = (e.clientY / innerHeight - .5); if (dragging) { targetTheta -= (e.clientX - px) * .005; targetPhi = Math.min(1.45, Math.max(.35, targetPhi - (e.clientY - py) * .003)); px = e.clientX; py = e.clientY; } });
+            window.addEventListener('wheel', e => { if (window.scrollY < innerHeight * .6) { targetRadius = Math.min(46, Math.max(10, targetRadius + e.deltaY * .02)); } }, { passive: true });
+            // touch pinch-ish: two finger? keep simple
+            const views = { front: { th: 0, ph: 1.08, r: 27 }, top: { th: .6, ph: .35, r: 34 }, fire: { th: .4, ph: 1.25, r: 11 }, wide: { th: -.7, ph: 1.0, r: 42 } };
+            document.querySelectorAll('.viewBtn').forEach(b => b.onclick = () => { document.querySelectorAll('.viewBtn').forEach(x => x.classList.remove('active')); b.classList.add('active'); const v = views[b.dataset.view]; targetTheta = v.th; targetPhi = v.ph; targetRadius = v.r; chime(700); });
+            document.getElementById('toggleRotate').onclick = function () { autoOrbit = !autoOrbit; this.classList.toggle('active', autoOrbit); };
+            document.getElementById('toggleFire').onclick = function () { fireOn = !fireOn; this.classList.toggle('active', fireOn); fireLight.visible = fireOn; fireLight2.visible = fireOn; fireGlow.visible = fireOn; flames.forEach(f => f.visible = fireOn); };
+            // raycast diya clicks
+            const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(); let downAt = 0;
+            canvas.addEventListener('pointerdown', () => downAt = Date.now());
+            canvas.addEventListener('pointerup', e => { if (Date.now() - downAt > 250 || Math.abs(e.movementX) > 8) return; ptr.x = (e.clientX / innerWidth) * 2 - 1; ptr.y = -(e.clientY / innerHeight) * 2 + 1; ray.setFromCamera(ptr, camera); const hits = ray.intersectObjects(diyas, true); if (hits.length) { const root = hits[0].object.userData.root || hits[0].object; lightDiya(root); confettiDiya(); } });
+
+            /* --- day/night --- */
+            let night = true;
+            document.getElementById('dayNightBtn').onclick = function () {
+                night = !night; this.innerHTML = night ? '<i class="fa-solid fa-moon text-sm"></i>' : '<i class="fa-solid fa-sun text-sm"></i>';
+                if (night) { scene.fog.color.set(0x120402); scene.fog.density = .016; stars.material.opacity = .9; moon.intensity = .5; warm.intensity = .5; renderer.setClearColor(0x000000, 0); } else { scene.fog.color.set(0xffd9a8); scene.fog.density = .008; stars.material.opacity = 0; moon.intensity = 1.1; warm.intensity = 1.0; renderer.setClearColor(0xffd9a8, .18); } chime(night ? 440 : 780);
+            };
+
+            /* --- animate --- */
+            const clock = new THREE.Clock();
+            function animate() {
+                requestAnimationFrame(animate); const dt = Math.min(clock.getDelta(), .05), t = clock.elapsedTime;
+                if (autoOrbit && !dragging) targetTheta += dt * .12;
+                theta += (targetTheta - theta) * .06; phi += (targetPhi - phi) * .06; radius += (targetRadius - radius) * .06;
+                // scroll fly: rise camera as user scrolls
+                const sc = Math.min(1, window.scrollY / (document.body.scrollHeight - innerHeight || 1));
+                const lift = sc * 14, back = sc * 10;
+                camera.position.set(Math.sin(theta) * radius + mouseX * 2, Math.cos(phi) * radius * .7 + 4 + lift * .4 + mouseY * -2, Math.cos(theta) * (radius + back * .5));
+                camera.lookAt(0, 4 + lift * .35, 0);
+                // fire flicker
+                if (fireOn) {
+                    fireLight.intensity = 2 + Math.sin(t * 22) * .5 + Math.random() * .4; fireLight2.intensity = 1.1 + Math.sin(t * 17) * .3; fireGlow.material.opacity = .45 + Math.sin(t * 9) * .12;
+                    flames.forEach(f => { const u = f.userData; u.h += dt * u.sp * 2; if (u.h > 2.4) { u.h = 0; u.a = Math.random() * 7; u.r = Math.random() * .7; } const s = 1 - u.h / 3; f.position.set(Math.cos(u.a + t * 3) * u.r * .6, 1.5 + u.h, Math.sin(u.a + t * 3) * u.r * .6); f.scale.set(1.1 * s + .3, 1.7 * s + .3, 1); f.material.opacity = s; });
+                }
+                // diya flames flicker
+                diyas.forEach(d => { if (d.userData.lit) { const s = 1 + Math.sin(t * 14 + d.userData.phase) * .18; d.userData.fl.scale.set(.9 * s, 1.3 * s, 1); d.userData.halo.material.opacity = .3 + Math.sin(t * 10 + d.userData.phase) * .1; } });
+                // drapes wave
+                drapes.forEach((m, mi) => { const pos = m.geometry.attributes.position, base = m.userData.base; for (let i = 0; i < pos.count; i++) { const bx = base[i * 3]; pos.array[i * 3 + 2] = Math.sin(t * 1.6 + bx * 1.2 + mi) * .22; } pos.needsUpdate = true; });
+                // flag wave
+                { const pos = flag.geometry.attributes.position, base = flag.userData.base; for (let i = 0; i < pos.count; i++) { const bx = base[i * 3]; pos.array[i * 3 + 2] = Math.sin(t * 4 + bx * 2) * .18 * (bx + .9); } pos.needsUpdate = true; }
+                rings.forEach((r, i) => { r.rotation.z += dt * (.05 + i * .03); });
+                om.position.y = 16.5 + Math.sin(t * .9) * .5; om.material.opacity = .8 + Math.sin(t * 1.3) * .15;
+                stars.rotation.y += dt * .008;
+                updatePetals(t, dt);
+                renderer.render(scene, camera);
+            }
+            animate();
+            window.addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Shower Invitation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff0f5 50%, #e8f4f8 100%);
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #ui-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .invitation-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #5a4a6a;
+            opacity: 0;
+            animation: fadeInCard 2s ease-out 2s forwards;
+        }
+
+        @keyframes fadeInCard {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .invitation-card h1 {
+            font-size: 4rem;
+            font-family: 'Brush Script MT', cursive;
+            color: #d66d75;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .invitation-card h2 {
+            font-size: 2.5rem;
+            color: #7b6d8d;
+            margin-bottom: 1.5rem;
+            font-family: 'Georgia', serif;
+        }
+
+        .invitation-card p {
+            font-size: 1.4rem;
+            line-height: 2;
+            margin-bottom: 0.5rem;
+        }
+
+        .invitation-card .details {
+            margin-top: 2rem;
+            padding: 1.5rem 3rem;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(214, 109, 117, 0.2);
+            display: inline-block;
+        }
+
+        .invitation-card .rsvp-btn {
+            margin-top: 2rem;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #d66d75, #e29587);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+            font-family: 'Georgia', serif;
+        }
+
+        .invitation-card .rsvp-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(214, 109, 117, 0.4);
+        }
+
+        .top-text,
+        .bottom-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #8b7a9e;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .top-text {
+            top: 30px;
+        }
+
+        .bottom-text {
+            bottom: 30px;
+        }
+
+        .click-hint {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #a99bbe;
+            font-size: 0.9rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ffd700;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .invitation-card h1 {
+                font-size: 2.5rem;
+            }
+
+            .invitation-card h2 {
+                font-size: 1.5rem;
+            }
+
+            .invitation-card p {
+                font-size: 1rem;
+            }
+
+            .invitation-card .details {
+                padding: 1rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="canvas-container"></div>
+
+    <div class="stars" id="stars"></div>
+
+    <div id="ui-overlay">
+        <div class="top-text">✨ You're Invited ✨</div>
+
+        <div class="invitation-card">
+            <h1>Baby Shower</h1>
+            <h2>It's a Girl!</h2>
+            <div class="details">
+                <p>👶 Please join us to celebrate</p>
+                <p>the upcoming arrival of</p>
+                <p><strong>Baby Lily Rose</strong></p>
+                <br>
+                <p>📅 Saturday, March 15th, 2025</p>
+                <p>🕐 2:00 PM - 5:00 PM</p>
+                <p>📍 123 Sunshine Boulevard</p>
+                <p>🏠 The Garden Party Venue</p>
+                <br>
+                <p>🎁 Registry: BabyList.com/lily</p>
+                <button class="rsvp-btn" onclick="rsvpClicked()">RSVP Now</button>
+            </div>
+        </div>
+
+        <div class="bottom-text">Scroll or Drag to Explore • Click Objects</div>
+        <div class="click-hint">✨ Click anywhere to interact ✨</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Create stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 20; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 2 + 's';
+            star.style.transform = `scale(${Math.random() * 0.5 + 0.5})`;
+            starsContainer.appendChild(star);
+        }
+
+        // Three.js Scene
+        let scene, camera, renderer;
+        let balloons = [];
+        let ribbons = [];
+        let confetti = [];
+        let giftBoxes = [];
+        let clouds = [];
+        let mouseX = 0, mouseY = 0;
+        let targetRotationX = 0, targetRotationY = 0;
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+        let autoRotate = true;
+
+        function init() {
+            // Scene
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0xfff0f5, 0.015);
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 2, 20);
+            camera.lookAt(0, 0, 0);
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(10, 20, 10);
+            directionalLight.castShadow = true;
+            scene.add(directionalLight);
+
+            const pointLight1 = new THREE.PointLight(0xffb6c1, 0.5, 50);
+            pointLight1.position.set(-10, 10, 5);
+            scene.add(pointLight1);
+
+            const pointLight2 = new THREE.PointLight(0xadd8e6, 0.5, 50);
+            pointLight2.position.set(10, 10, -5);
+            scene.add(pointLight2);
+
+            // Create elements
+            createBalloons();
+            createRibbons();
+            createConfetti();
+            createGiftBoxes();
+            createClouds();
+            createFloor();
+
+            // Event listeners
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mousedown', onMouseDown);
+            document.addEventListener('mouseup', onMouseUp);
+            document.addEventListener('touchstart', onTouchStart);
+            document.addEventListener('touchmove', onTouchMove);
+            document.addEventListener('touchend', onTouchEnd);
+            document.addEventListener('click', onDocumentClick);
+            window.addEventListener('resize', onWindowResize);
+
+            animate();
+        }
+
+        function createBalloons() {
+            const colors = [0xff69b4, 0xffb6c1, 0xdda0dd, 0xb0e0e6, 0x98fb98, 0xfffacd];
+
+            for (let i = 0; i < 25; i++) {
+                const color = colors[Math.floor(Math.random() * colors.length)];
+
+                // Balloon body
+                const balloonGeometry = new THREE.SphereGeometry(1 + Math.random() * 0.5, 32, 32);
+                const balloonMaterial = new THREE.MeshPhongMaterial({
+                    color: color,
+                    shininess: 100,
+                    specular: 0xffffff,
+                    emissive: color,
+                    emissiveIntensity: 0.1
+                });
+                const balloon = new THREE.Mesh(balloonGeometry, balloonMaterial);
+
+                // Balloon knot
+                const knotGeometry = new THREE.ConeGeometry(0.15, 0.3, 8);
+                const knot = new THREE.Mesh(knotGeometry, balloonMaterial);
+                knot.position.y = -1;
+                balloon.add(knot);
+
+                // String
+                const stringPoints = [];
+                for (let j = 0; j < 20; j++) {
+                    stringPoints.push(new THREE.Vector3(
+                        Math.sin(j * 0.2) * 0.1,
+                        -1.2 - j * 0.3,
+                        0
+                    ));
+                }
+                const stringGeometry = new THREE.BufferGeometry().setFromPoints(stringPoints);
+                const stringMaterial = new THREE.LineBasicMaterial({ color: 0x888888 });
+                const string = new THREE.Line(stringGeometry, stringMaterial);
+                balloon.add(string);
+
+                // Position
+                const angle = (i / 25) * Math.PI * 2;
+                const radius = 8 + Math.random() * 8;
+                balloon.position.set(
+                    Math.cos(angle) * radius,
+                    Math.random() * 15 - 5,
+                    Math.sin(angle) * radius - 5
+                );
+
+                balloon.userData = {
+                    originalY: balloon.position.y,
+                    floatSpeed: 0.5 + Math.random() * 0.5,
+                    floatOffset: Math.random() * Math.PI * 2,
+                    rotationSpeed: (Math.random() - 0.5) * 0.02
+                };
+
+                balloons.push(balloon);
+                scene.add(balloon);
+            }
+        }
+
+        function createRibbons() {
+            const ribbonGroup = new THREE.Group();
+            const ribbonColors = [0xff69b4, 0xdda0dd, 0xb0e0e6];
+
+            for (let i = 0; i < 15; i++) {
+                const curve = new THREE.CatmullRomCurve3([
+                    new THREE.Vector3(Math.random() * 20 - 10, Math.random() * 15, Math.random() * 10 - 15),
+                    new THREE.Vector3(Math.random() * 20 - 10, Math.random() * 10, Math.random() * 10 - 15),
+                    new THREE.Vector3(Math.random() * 20 - 10, Math.random() * 5, Math.random() * 10 - 15),
+                ]);
+
+                const ribbonGeometry = new THREE.TubeGeometry(curve, 20, 0.1, 8, false);
+                const ribbonMaterial = new THREE.MeshPhongMaterial({
+                    color: ribbonColors[Math.floor(Math.random() * ribbonColors.length)],
+                    side: THREE.DoubleSide,
+                    shininess: 50
+                });
+                const ribbon = new THREE.Mesh(ribbonGeometry, ribbonMaterial);
+                ribbon.userData = {
+                    curve: curve,
+                    speed: 0.5 + Math.random() * 0.5
+                };
+                ribbons.push(ribbon);
+                ribbonGroup.add(ribbon);
+            }
+            scene.add(ribbonGroup);
+        }
+
+        function createConfetti() {
+            const colors = [0xff69b4, 0xffb6c1, 0xdda0dd, 0xadd8e6, 0x98fb98, 0xffd700];
+
+            for (let i = 0; i < 200; i++) {
+                const geometry = new THREE.PlaneGeometry(0.2 + Math.random() * 0.2, 0.3 + Math.random() * 0.2);
+                const material = new THREE.MeshPhongMaterial({
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                const confettiPiece = new THREE.Mesh(geometry, material);
+
+                confettiPiece.position.set(
+                    Math.random() * 40 - 20,
+                    Math.random() * 30 - 10,
+                    Math.random() * 20 - 10
+                );
+
+                confettiPiece.rotation.set(
+                    Math.random() * Math.PI,
+                    Math.random() * Math.PI,
+                    Math.random() * Math.PI
+                );
+
+                confettiPiece.userData = {
+                    velocity: new THREE.Vector3(
+                        (Math.random() - 0.5) * 0.05,
+                        -0.02 - Math.random() * 0.03,
+                        (Math.random() - 0.5) * 0.05
+                    ),
+                    rotationSpeed: new THREE.Vector3(
+                        (Math.random() - 0.5) * 0.1,
+                        (Math.random() - 0.5) * 0.1,
+                        (Math.random() - 0.5) * 0.1
+                    )
+                };
+
+                confetti.push(confettiPiece);
+                scene.add(confettiPiece);
+            }
+        }
+
+        function createGiftBoxes() {
+            const colors = [0xff69b4, 0xffb6c1, 0xdda0dd, 0xb0e0e6];
+
+            for (let i = 0; i < 6; i++) {
+                const boxGroup = new THREE.Group();
+                const color = colors[i % colors.length];
+
+                // Box
+                const boxGeometry = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+                const boxMaterial = new THREE.MeshPhongMaterial({
+                    color: color,
+                    shininess: 30
+                });
+                const box = new THREE.Mesh(boxGeometry, boxMaterial);
+                box.castShadow = true;
+                boxGroup.add(box);
+
+                // Lid
+                const lidGeometry = new THREE.BoxGeometry(1.7, 0.3, 1.7);
+                const lid = new THREE.Mesh(lidGeometry, boxMaterial);
+                lid.position.y = 0.9;
+                boxGroup.add(lid);
+
+                // Ribbon
+                const ribbonMaterial = new THREE.MeshPhongMaterial({
+                    color: 0xffd700,
+                    shininess: 100
+                });
+
+                const verticalRibbon = new THREE.BoxGeometry(0.2, 1.5, 0.2);
+                const vRibbon = new THREE.Mesh(verticalRibbon, ribbonMaterial);
+                boxGroup.add(vRibbon);
+
+                const horizontalRibbon = new THREE.BoxGeometry(1.5, 0.2, 0.2);
+                const hRibbon = new THREE.Mesh(horizontalRibbon, ribbonMaterial);
+                boxGroup.add(hRibbon);
+
+                // Bow
+                const bowGeometry = new THREE.TorusGeometry(0.3, 0.1, 8, 16, Math.PI);
+                const bow1 = new THREE.Mesh(bowGeometry, ribbonMaterial);
+                bow1.position.y = 1.2;
+                bow1.rotation.x = Math.PI / 2;
+                bow1.rotation.z = Math.PI / 4;
+                boxGroup.add(bow1);
+
+                const bow2 = new THREE.Mesh(bowGeometry, ribbonMaterial);
+                bow2.position.y = 1.2;
+                bow2.rotation.x = Math.PI / 2;
+                bow2.rotation.z = -Math.PI / 4;
+                boxGroup.add(bow2);
+
+                const bowKnot = new THREE.SphereGeometry(0.15, 16, 16);
+                const knot = new THREE.Mesh(bowKnot, ribbonMaterial);
+                knot.position.y = 1.3;
+                boxGroup.add(knot);
+
+                boxGroup.position.set(
+                    Math.cos(i * Math.PI / 3) * 12,
+                    -3 + Math.random() * 2,
+                    Math.sin(i * Math.PI / 3) * 12 - 5
+                );
+                boxGroup.rotation.y = Math.random() * Math.PI;
+
+                boxGroup.userData = {
+                    originalY: boxGroup.position.y,
+                    bounceSpeed: 1 + Math.random() * 0.5,
+                    rotationSpeed: 0.005 + Math.random() * 0.005
+                };
+
+                giftBoxes.push(boxGroup);
+                scene.add(boxGroup);
+            }
+        }
+
+        function createClouds() {
+            for (let i = 0; i < 8; i++) {
+                const cloudGroup = new THREE.Group();
+                const cloudMaterial = new THREE.MeshPhongMaterial({
+                    color: 0xffffff,
+                    transparent: true,
+                    opacity: 0.9
+                });
+
+                for (let j = 0; j < 5; j++) {
+                    const sphere = new THREE.Mesh(
+                        new THREE.SphereGeometry(1 + Math.random(), 16, 16),
+                        cloudMaterial
+                    );
+                    sphere.position.set(
+                        j * 1.5 - 3 + Math.random(),
+                        Math.random() * 0.5,
+                        Math.random() * 2 - 1
+                    );
+                    cloudGroup.add(sphere);
+                }
+
+                cloudGroup.position.set(
+                    Math.random() * 60 - 30,
+                    12 + Math.random() * 8,
+                    -15 + Math.random() * 10
+                );
+
+                cloudGroup.userData = {
+                    speed: 0.01 + Math.random() * 0.02,
+                    originalX: cloudGroup.position.x
+                };
+
+                clouds.push(cloudGroup);
+                scene.add(cloudGroup);
+            }
+        }
+
+        function createFloor() {
+            const floorGeometry = new THREE.CircleGeometry(30, 64);
+            const floorMaterial = new THREE.MeshPhongMaterial({
+                color: 0xffe4e1,
+                transparent: true,
+                opacity: 0.5
+            });
+            const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+            floor.rotation.x = -Math.PI / 2;
+            floor.position.y = -4;
+            floor.receiveShadow = true;
+            scene.add(floor);
+
+            // Decorative ring
+            const ringGeometry = new THREE.RingGeometry(5, 5.5, 64);
+            const ringMaterial = new THREE.MeshPhongMaterial({
+                color: 0xffb6c1,
+                transparent: true,
+                opacity: 0.5,
+                side: THREE.DoubleSide
+            });
+            const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+            ring.rotation.x = -Math.PI / 2;
+            ring.position.y = -3.9;
+            scene.add(ring);
+        }
+
+        function onMouseMove(event) {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = (event.clientY / window.innerHeight) * 2 - 1;
+
+            if (isDragging) {
+                const deltaX = event.clientX - previousMousePosition.x;
+                const deltaY = event.clientY - previousMousePosition.y;
+
+                targetRotationY += deltaX * 0.005;
+                targetRotationX += deltaY * 0.005;
+
+                autoRotate = false;
+            }
+
+            previousMousePosition = {
+                x: event.clientX,
+                y: event.clientY
+            };
+        }
+
+        function onMouseDown(event) {
+            isDragging = true;
+            previousMousePosition = {
+                x: event.clientX,
+                y: event.clientY
+            };
+        }
+
+        function onMouseUp() {
+            isDragging = false;
+            setTimeout(() => { autoRotate = true; }, 2000);
+        }
+
+        function onTouchStart(event) {
+            if (event.touches.length === 1) {
+                isDragging = true;
+                previousMousePosition = {
+                    x: event.touches[0].clientX,
+                    y: event.touches[0].clientY
+                };
+            }
+        }
+
+        function onTouchMove(event) {
+            if (event.touches.length === 1 && isDragging) {
+                const deltaX = event.touches[0].clientX - previousMousePosition.x;
+                const deltaY = event.touches[0].clientY - previousMousePosition.y;
+
+                targetRotationY += deltaX * 0.005;
+                targetRotationX += deltaY * 0.005;
+
+                autoRotate = false;
+
+                previousMousePosition = {
+                    x: event.touches[0].clientX,
+                    y: event.touches[0].clientY
+                };
+            }
+        }
+
+        function onTouchEnd() {
+            isDragging = false;
+            setTimeout(() => { autoRotate = true; }, 2000);
+        }
+
+        function onDocumentClick(event) {
+            // Raycaster for click detection
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2();
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+
+            // Animate clicked balloons
+            const intersects = raycaster.intersectObjects(balloons);
+            if (intersects.length > 0) {
+                const balloon = intersects[0].object;
+                animateBounce(balloon);
+            }
+        }
+
+        function animateBounce(balloon) {
+            const startY = balloon.position.y;
+            const bounceHeight = 2;
+            let time = 0;
+
+            function bounce() {
+                time += 0.1;
+                balloon.position.y = startY + Math.sin(time * 3) * bounceHeight * Math.exp(-time);
+
+                if (time < 3) {
+                    requestAnimationFrame(bounce);
+                }
+            }
+            bounce();
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const time = Date.now() * 0.001;
+
+            // Animate balloons
+            balloons.forEach((balloon, i) => {
+                balloon.position.y = balloon.userData.originalY +
+                    Math.sin(time * balloon.userData.floatSpeed + balloon.userData.floatOffset) * 0.5;
+                balloon.rotation.y += balloon.userData.rotationSpeed;
+                balloon.rotation.z = Math.sin(time * 0.5) * 0.1;
+            });
+
+            // Animate confetti
+            confetti.forEach((piece) => {
+                piece.position.add(piece.userData.velocity);
+                piece.rotation.x += piece.userData.rotationSpeed.x;
+                piece.rotation.y += piece.userData.rotationSpeed.y;
+                piece.rotation.z += piece.userData.rotationSpeed.z;
+
+                if (piece.position.y < -10) {
+                    piece.position.y = 20;
+                    piece.position.x = Math.random() * 40 - 20;
+                    piece.position.z = Math.random() * 20 - 10;
+                }
+            });
+
+            // Animate gift boxes
+            giftBoxes.forEach((box) => {
+                box.position.y = box.userData.originalY +
+                    Math.sin(time * box.userData.bounceSpeed) * 0.2;
+                if (autoRotate) {
+                    box.rotation.y += box.userData.rotationSpeed;
+                }
+            });
+
+            // Animate clouds
+            clouds.forEach((cloud) => {
+                cloud.position.x = cloud.userData.originalX + Math.sin(time * cloud.userData.speed * 10) * 2;
+                cloud.position.y += Math.sin(time * 0.2) * 0.005;
+            });
+
+            // Camera movement
+            if (autoRotate) {
+                targetRotationY += 0.002;
+            }
+
+            camera.position.x += (targetRotationY * 5 - camera.position.x) * 0.05;
+            camera.position.y += (2 + targetRotationX * 3 - camera.position.y) * 0.05;
+            camera.lookAt(0, 0, 0);
+
+            renderer.render(scene, camera);
+        }
+
+        function rsvpClicked() {
+            // Create heart explosion effect
+            for (let i = 0; i < 30; i++) {
+                const heartGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+                const heartMaterial = new THREE.MeshPhongMaterial({
+                    color: 0xff69b4,
+                    transparent: true,
+                    opacity: 1
+                });
+                const heart = new THREE.Mesh(heartGeometry, heartMaterial);
+
+                heart.position.set(
+                    (Math.random() - 0.5) * 5,
+                    0,
+                    (Math.random() - 0.5) * 5
+                );
+
+                heart.userData = {
+                    velocity: new THREE.Vector3(
+                        (Math.random() - 0.5) * 0.3,
+                        0.2 + Math.random() * 0.3,
+                        (Math.random() - 0.5) * 0.3
+                    ),
+                    life: 1
+                };
+
+                scene.add(heart);
+
+                function animateHeart() {
+                    heart.position.add(heart.userData.velocity);
+                    heart.userData.velocity.y -= 0.01;
+                    heart.userData.life -= 0.02;
+                    heart.material.opacity = heart.userData.life;
+                    heart.scale.setScalar(heart.userData.life);
+
+                    if (heart.userData.life > 0) {
+                        requestAnimationFrame(animateHeart);
+                    } else {
+                        scene.remove(heart);
+                    }
+                }
+                animateHeart();
+            }
+
+            alert('Thank you for your RSVP! We can\'t wait to celebrate with you! 🎉');
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
