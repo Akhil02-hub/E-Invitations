@@ -3,2051 +3,483 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vellum & Vine — 3D Wedding Invitations</title>
+    <title>Amara & Julian — Wedding Invitation</title>
     <meta name="description"
-        content="Vellum & Vine crafts dimensional, motion-rich wedding invitations — letterpress, gold foil and interactive 3D card experiences for modern celebrations.">
+        content="You are invited to the wedding celebration of Amara & Julian. June 14, 2026 — The Rosewood Estate, Napa Valley.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Jost:wght@200;300;400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Great+Vibes&family=Jost:wght@200;300;400;500&display=swap"
         rel="stylesheet">
-    <style>
-        :root {
-            --cream: #FBF7F2;
-            --sand: #F2E8DC;
-            --ink: #221C18;
-            --ink-soft: #4A3F38;
-            --muted: #877466;
-            --clay: #B4674F;
-            --clay-dark: #96513C;
-            --gold: #C2954F;
-            --gold-light: #E3C48D;
-            --sage: #6F7D66;
-            --line: rgba(34, 28, 24, .12);
-            --shadow-s: 0 2px 10px rgba(80, 55, 35, .06);
-            --shadow-m: 0 18px 40px -18px rgba(90, 62, 38, .28);
-            --shadow-l: 0 50px 90px -40px rgba(70, 45, 28, .55);
-            --ease: cubic-bezier(.22, 1, .36, 1);
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ivory: '#FAF6EF',
+                        cream: '#F4EDE2',
+                        gold: '#B8935A',
+                        golddark: '#9A7B4F',
+                        ink: '#2E2A26',
+                        blush: '#E9D8C8'
+                    },
+                    fontFamily: {
+                        script: ['"Great Vibes"', 'cursive'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['Jost', 'sans-serif']
+                    }
+                }
+            }
         }
-
+    </script>
+    <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box
+            -webkit-tap-highlight-color: transparent;
         }
 
         html {
             scroll-behavior: smooth;
-            -webkit-text-size-adjust: 100%
         }
 
         body {
-            font-family: 'Jost', system-ui, sans-serif;
-            background: var(--cream);
-            color: var(--ink);
+            background: #FAF6EF;
+            color: #2E2A26;
             overflow-x: hidden;
-            line-height: 1.65;
-            -webkit-font-smoothing: antialiased;
         }
 
-        img {
-            max-width: 100%;
-            display: block
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none
-        }
-
-        button,
-        input,
-        select,
-        textarea {
-            font-family: inherit;
-            font-size: inherit;
-            color: inherit
+        section {
+            scroll-margin-top: 90px;
         }
 
         ::selection {
-            background: rgba(194, 149, 79, .28)
+            background: rgba(184, 147, 90, 0.25);
         }
 
-        .container {
-            width: min(1220px, 90%);
-            margin-inline: auto
-        }
-
-        .section {
-            padding: clamp(72px, 9vw, 132px) 0;
-            position: relative
-        }
-
-        /* ---------- Typography ---------- */
-        .display {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-weight: 500;
-            line-height: 1.03;
-            letter-spacing: -.015em;
-            color: var(--ink);
-        }
-
-        h1.display {
-            font-size: clamp(2.9rem, 8.2vw, 6.4rem)
-        }
-
-        h2.display {
-            font-size: clamp(2.25rem, 5.2vw, 4.15rem);
-            line-height: 1.08
-        }
-
-        h3.display {
-            font-size: clamp(1.55rem, 2.6vw, 2.15rem)
-        }
-
-        .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: .85rem;
-            font-size: .72rem;
-            letter-spacing: .32em;
-            text-transform: uppercase;
-            font-weight: 500;
-            color: var(--clay);
-        }
-
-        .eyebrow .bar {
-            width: 44px;
-            height: 1px;
-            background: linear-gradient(90deg, var(--gold), rgba(194, 149, 79, 0));
-            display: inline-block
-        }
-
-        .eyebrow.center .bar.right {
-            background: linear-gradient(270deg, var(--gold), rgba(194, 149, 79, 0))
-        }
-
-        .lead {
-            font-size: clamp(1.02rem, 1.5vw, 1.19rem);
-            color: var(--ink-soft);
-            font-weight: 300;
-            line-height: 1.85
-        }
-
-        .muted {
-            color: var(--muted)
-        }
-
-        .italic {
-            font-style: italic;
-            font-family: 'Cormorant Garamond', serif
-        }
-
-        /* ---------- Buttons ---------- */
-        .btn {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: .75rem;
-            padding: 1.02rem 2.15rem;
-            border-radius: 999px;
-            border: 1px solid transparent;
-            font-size: .79rem;
-            letter-spacing: .19em;
-            text-transform: uppercase;
-            font-weight: 500;
-            cursor: pointer;
-            overflow: hidden;
-            isolation: isolate;
-            transition: transform .55s var(--ease), box-shadow .55s var(--ease), background .45s ease, color .45s ease, border-color .45s ease;
-            white-space: nowrap;
-        }
-
-        .btn-primary {
-            background: var(--clay);
-            color: #fff;
-            box-shadow: 0 16px 34px -16px rgba(150, 81, 60, .72)
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 26px 46px -16px rgba(150, 81, 60, .62)
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: var(--ink);
-            border-color: rgba(34, 28, 24, .22)
-        }
-
-        .btn-ghost:hover {
-            transform: translateY(-3px);
-            border-color: var(--clay);
-            color: var(--clay);
-            box-shadow: var(--shadow-m)
-        }
-
-        .btn-light {
-            background: rgba(255, 255, 255, .1);
-            color: #fff;
-            border-color: rgba(255, 255, 255, .36);
-            backdrop-filter: blur(6px)
-        }
-
-        .btn-light:hover {
-            background: #fff;
-            color: var(--ink);
-            transform: translateY(-3px)
-        }
-
-        .btn .sheen {
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            background: linear-gradient(115deg, transparent 22%, rgba(255, 255, 255, .42) 46%, transparent 68%);
-            transform: translateX(-120%);
-            transition: transform .85s var(--ease);
-        }
-
-        .btn:hover .sheen {
-            transform: translateX(120%)
-        }
-
-        .btn .arrow {
-            width: 15px;
-            height: 15px;
-            transition: transform .5s var(--ease)
-        }
-
-        .btn:hover .arrow {
-            transform: translateX(5px)
-        }
-
-        /* ---------- Scroll progress ---------- */
-        .progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 2.5px;
-            width: 100%;
-            z-index: 200;
-            background: transparent;
-            pointer-events: none;
-        }
-
-        .progress span {
-            display: block;
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--clay), var(--gold), var(--gold-light));
-            box-shadow: 0 0 12px rgba(194, 149, 79, .55);
-        }
-
-        /* ---------- Nav ---------- */
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 150;
-            padding: 1.35rem 0;
-            transition: background .5s ease, padding .5s ease, box-shadow .5s ease, border-color .5s;
-            border-bottom: 1px solid transparent;
-        }
-
-        .nav.scrolled {
-            background: rgba(251, 247, 242, .88);
-            backdrop-filter: blur(16px) saturate(150%);
-            -webkit-backdrop-filter: blur(16px) saturate(150%);
-            padding: .78rem 0;
-            border-bottom-color: var(--line);
-            box-shadow: 0 12px 30px -22px rgba(80, 52, 32, .5);
-        }
-
-        .nav-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1.5rem
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: .72rem;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.42rem;
-            letter-spacing: .02em;
-            font-weight: 600
-        }
-
-        .brand .mark {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            flex: none;
-            background: radial-gradient(circle at 32% 28%, var(--gold-light), var(--clay) 78%);
-            display: grid;
-            place-items: center;
-            color: #fff;
-            font-size: .95rem;
-            letter-spacing: .02em;
-            box-shadow: 0 10px 22px -10px rgba(150, 81, 60, .75);
-        }
-
-        .brand small {
-            display: block;
-            font-family: 'Jost';
-            font-size: .58rem;
-            letter-spacing: .36em;
-            text-transform: uppercase;
-            color: var(--muted);
-            font-weight: 400;
-            margin-top: -4px
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 2.15rem
-        }
-
-        .nav-links a {
-            position: relative;
-            font-size: .775rem;
-            letter-spacing: .17em;
-            text-transform: uppercase;
-            font-weight: 400;
-            color: var(--ink-soft);
-            padding: .35rem 0;
-            transition: color .35s ease;
-        }
-
-        .nav-links a::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            height: 1.5px;
-            background: var(--clay);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform .45s var(--ease);
-        }
-
-        .nav-links a:hover {
-            color: var(--clay)
-        }
-
-        .nav-links a:hover::after {
-            transform: scaleX(1);
-            transform-origin: left
-        }
-
-        .nav-cta {
-            padding: .72rem 1.55rem;
-            font-size: .72rem
-        }
-
-        .burger {
-            display: none;
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            border: 1px solid var(--line);
-            background: rgba(255, 255, 255, .55);
-            cursor: pointer;
-            position: relative
-        }
-
-        .burger span {
-            position: absolute;
-            left: 13px;
-            width: 20px;
-            height: 1.6px;
-            background: var(--ink);
-            transition: transform .45s var(--ease), opacity .3s ease
-        }
-
-        .burger span:nth-child(1) {
-            top: 18px
-        }
-
-        .burger span:nth-child(2) {
-            top: 23px
-        }
-
-        .burger span:nth-child(3) {
-            top: 28px
-        }
-
-        body.menu-open .burger span:nth-child(1) {
-            transform: translateY(5px) rotate(45deg)
-        }
-
-        body.menu-open .burger span:nth-child(2) {
-            opacity: 0
-        }
-
-        body.menu-open .burger span:nth-child(3) {
-            transform: translateY(-5px) rotate(-45deg)
-        }
-
-        .mobile-menu {
+        /* ---------- Preloader ---------- */
+        #preloader {
             position: fixed;
             inset: 0;
-            z-index: 140;
-            background: var(--cream);
+            background: #FAF6EF;
+            z-index: 100;
             display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            gap: .35rem;
-            padding: 0 8%;
-            clip-path: circle(0% at 92% 5%);
-            transition: clip-path .72s var(--ease);
-            pointer-events: none;
+            transition: opacity 0.9s ease, visibility 0.9s ease;
         }
 
-        body.menu-open .mobile-menu {
-            clip-path: circle(150% at 92% 5%);
-            pointer-events: auto
-        }
-
-        .mobile-menu a {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2rem, 8vw, 2.9rem);
-            padding: .32rem 0;
+        #preloader.done {
             opacity: 0;
-            transform: translateY(26px);
-            transition: opacity .55s ease, transform .55s var(--ease), color .3s;
-            border-bottom: 1px solid var(--line);
+            visibility: hidden;
         }
 
-        .mobile-menu a:hover {
-            color: var(--clay)
+        .loader-line {
+            width: 0;
+            height: 1px;
+            background: #B8935A;
+            margin: 18px auto 0;
+            animation: growLine 1.1s ease forwards;
         }
 
-        body.menu-open .mobile-menu a {
-            opacity: 1;
-            transform: none
-        }
-
-        /* ---------- Hero ---------- */
-        .hero {
-            position: relative;
-            min-height: 100svh;
-            display: flex;
-            align-items: center;
-            padding: clamp(120px, 15vw, 168px) 0 clamp(70px, 9vw, 110px);
-            overflow: hidden
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: -8% 0 -12%;
-            z-index: -3
-        }
-
-        .hero-bg img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scale(1.12);
-            animation: kenburns 26s ease-in-out infinite alternate;
-            filter: saturate(.92)
-        }
-
-        @keyframes kenburns {
-            0% {
-                transform: scale(1.12) translate3d(0, 0, 0)
-            }
-
-            100% {
-                transform: scale(1.24) translate3d(-2.2%, -2%, 0)
+        @keyframes growLine {
+            to {
+                width: 80px;
             }
         }
 
-        .hero-veil {
-            position: absolute;
-            inset: 0;
-            z-index: -2;
-            background:
-                linear-gradient(100deg, rgba(28, 20, 15, .86) 0%, rgba(38, 26, 19, .66) 38%, rgba(46, 31, 22, .30) 68%, rgba(60, 40, 28, .42) 100%),
-                linear-gradient(to top, rgba(251, 247, 242, 1) 1%, rgba(251, 247, 242, 0) 34%);
+        .loader-pulse {
+            animation: pulse 1.6s ease infinite;
         }
 
-        #petals {
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1.06fr .94fr;
-            gap: clamp(2.2rem, 5vw, 4.6rem);
-            align-items: center;
-            width: 100%
-        }
-
-        .hero-copy .eyebrow {
-            color: var(--gold-light)
-        }
-
-        .hero-copy .eyebrow .bar {
-            background: linear-gradient(90deg, var(--gold-light), rgba(227, 196, 141, 0))
-        }
-
-        .hero-title {
-            color: #fff;
-            margin: 1.35rem 0 1.15rem;
-            text-shadow: 0 22px 50px rgba(20, 12, 8, .32)
-        }
-
-        .hero-title .amp {
-            font-style: italic;
-            font-weight: 300;
-            color: var(--gold-light);
-            display: inline-block;
-            padding: 0 .12em
-        }
-
-        .line-mask {
-            display: block;
-            overflow: hidden;
-            padding-bottom: .06em
-        }
-
-        .line-mask>span {
-            display: block;
-            transform: translateY(112%);
-            opacity: 0;
-            transition: transform 1.15s var(--ease), opacity 1s ease
-        }
-
-        .loaded .line-mask>span {
-            transform: translateY(0);
-            opacity: 1
-        }
-
-        .hero-sub {
-            color: rgba(255, 255, 255, .86);
-            font-size: clamp(1.02rem, 1.55vw, 1.22rem);
-            font-weight: 300;
-            max-width: 32rem;
-            line-height: 1.85
-        }
-
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .95rem;
-            margin-top: 2.15rem
-        }
-
-        .hero-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2.15rem;
-            margin-top: 2.9rem;
-            padding-top: 1.85rem;
-            border-top: 1px solid rgba(255, 255, 255, .19)
-        }
-
-        .hero-meta div span {
-            display: block;
-            font-size: .685rem;
-            letter-spacing: .28em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, .62);
-            margin-bottom: .32rem
-        }
-
-        .hero-meta div strong {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.32rem;
-            font-weight: 500;
-            color: #fff;
-            letter-spacing: .015em
-        }
-
-        /* fade-up utility for hero */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity .95s ease, transform 1.05s var(--ease)
-        }
-
-        .loaded .fade-up {
-            opacity: 1;
-            transform: none
-        }
-
-        /* ---------- 3D invitation card ---------- */
-        .card-stage {
-            position: relative;
-            perspective: 1500px;
-            perspective-origin: 60% 45%;
-            min-height: clamp(420px, 58vw, 620px);
-            display: grid;
-            place-items: center
-        }
-
-        .card-3d {
-            position: relative;
-            width: min(100%, 420px);
-            aspect-ratio: .715/1;
-            transform-style: preserve-3d;
-            transform: rotateY(-19deg) rotateX(7deg) rotateZ(1.4deg);
-            transition: transform .85s var(--ease);
-            will-change: transform;
-        }
-
-        .card-face {
-            position: absolute;
-            inset: 0;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow-l);
-            backface-visibility: hidden;
-        }
-
-        .card-front img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover
-        }
-
-        .card-front::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(30, 19, 13, .16) 0%, rgba(30, 19, 13, .42) 55%, rgba(24, 15, 10, .82) 100%);
-        }
-
-        .card-content {
-            position: absolute;
-            inset: auto 0 0 0;
-            padding: clamp(1.55rem, 3.4vw, 2.35rem);
-            z-index: 2;
-            text-align: center;
-            color: #fff;
-        }
-
-        .card-content .k {
-            font-size: .635rem;
-            letter-spacing: .42em;
-            text-transform: uppercase;
-            color: var(--gold-light)
-        }
-
-        .card-content h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.95rem, 4.4vw, 2.62rem);
-            font-weight: 500;
-            line-height: 1.06;
-            margin: .62rem 0 .78rem
-        }
-
-        .card-content h3 em {
-            font-style: italic;
-            color: var(--gold-light);
-            font-size: .72em;
-            display: block;
-            letter-spacing: .06em
-        }
-
-        .card-rule {
-            width: 64px;
-            height: 1px;
-            background: rgba(227, 196, 141, .72);
-            margin: .95rem auto;
-            position: relative
-        }
-
-        .card-rule::before,
-        .card-rule::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: var(--gold-light);
-            transform: translateY(-50%) rotate(45deg)
-        }
-
-        .card-rule::before {
-            left: -11px
-        }
-
-        .card-rule::after {
-            right: -11px
-        }
-
-        .card-content p {
-            font-size: .845rem;
-            letter-spacing: .19em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, .84);
-            font-weight: 300
-        }
-
-        .card-frame {
-            position: absolute;
-            inset: 12px;
-            border: 1px solid rgba(227, 196, 141, .42);
-            border-radius: 9px;
-            z-index: 1;
-            pointer-events: none
-        }
-
-        .card-shine {
-            position: absolute;
-            inset: 0;
-            border-radius: 16px;
-            pointer-events: none;
-            z-index: 3;
-            mix-blend-mode: screen;
-            background: radial-gradient(420px circle at var(--mx, 32%) var(--my, 22%), rgba(255, 238, 206, .36), transparent 62%);
-            opacity: .85;
-        }
-
-        .float-chip {
-            position: absolute;
-            background: rgba(255, 255, 255, .93);
-            border-radius: 14px;
-            padding: .82rem 1.12rem;
-            box-shadow: 0 26px 50px -22px rgba(60, 36, 20, .55);
-            display: flex;
-            align-items: center;
-            gap: .72rem;
-            font-size: .715rem;
-            letter-spacing: .13em;
-            text-transform: uppercase;
-            color: var(--ink-soft);
-            white-space: nowrap;
-        }
-
-        .float-chip .dot {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            flex: none;
-            display: grid;
-            place-items: center;
-            background: var(--sand);
-            color: var(--clay)
-        }
-
-        .chip-a {
-            top: 6%;
-            left: -4%;
-            animation: floaty 7.5s ease-in-out infinite
-        }
-
-        .chip-b {
-            bottom: 9%;
-            right: -6%;
-            animation: floaty 9s ease-in-out infinite .8s
-        }
-
-        @keyframes floaty {
+        @keyframes pulse {
 
             0%,
             100% {
-                transform: translate3d(0, 0, 0)
+                opacity: 1;
             }
 
             50% {
-                transform: translate3d(0, -17px, 0)
+                opacity: 0.5;
             }
         }
 
-        .orbit {
+        /* ---------- Gold gradient text ---------- */
+        .gold-text {
+            background: linear-gradient(120deg, #D9BC92 0%, #B8935A 35%, #8F6F44 60%, #C9A96E 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* ---------- Nav ---------- */
+        #nav {
+            transition: all 0.45s ease;
+        }
+
+        #nav.scrolled {
+            background: rgba(250, 246, 239, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 1px 0 rgba(184, 147, 90, 0.22);
+            padding-top: 18px;
+            padding-bottom: 18px;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-link::after {
+            content: '';
             position: absolute;
-            width: min(78%, 430px);
-            aspect-ratio: 1;
-            border-radius: 50%;
-            border: 1px dashed rgba(227, 196, 141, .32);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: spin 42s linear infinite;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #B8935A;
+            transition: width 0.35s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: #B8935A;
+        }
+
+        /* ---------- 3D Card ---------- */
+        .card-stage {
+            perspective: 2200px;
+        }
+
+        .card-tilt {
+            transition: transform 0.3s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        .card-flip {
+            transform-style: preserve-3d;
+            transition: transform 1.1s cubic-bezier(0.45, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .card-flip.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .card-back {
+            position: absolute;
+            inset: 0;
+            transform: rotateY(180deg);
+        }
+
+        .card-shadow {
+            filter: drop-shadow(0 40px 60px rgba(110, 85, 50, 0.28));
+        }
+
+        /* ---------- Petals ---------- */
+        .petal {
+            position: absolute;
+            top: -60px;
+            opacity: 0;
             pointer-events: none;
+            animation-name: fall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
         }
 
-        .orbit::after {
-            content: "";
-            position: absolute;
-            top: -5px;
-            left: 50%;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--gold-light);
-            box-shadow: 0 0 18px rgba(227, 196, 141, .9);
-            transform: translateX(-50%);
-        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-8vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
 
-        @keyframes spin {
-            to {
-                transform: translate(-50%, -50%) rotate(360deg)
+            12% {
+                opacity: 0.65;
+            }
+
+            88% {
+                opacity: 0.65;
+            }
+
+            100% {
+                transform: translateY(112vh) translateX(90px) rotate(340deg);
+                opacity: 0;
             }
         }
 
-        /* ---------- Marquee band ---------- */
-        .band {
-            background: var(--ink);
-            color: #fff;
-            padding: 1.15rem 0;
-            overflow: hidden;
-            position: relative
-        }
-
-        .marquee {
-            display: flex;
-            width: max-content;
-            animation: slide 38s linear infinite
-        }
-
-        .band:hover .marquee {
-            animation-play-state: paused
-        }
-
-        .marquee span {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.15rem, 2.2vw, 1.72rem);
-            letter-spacing: .13em;
-            text-transform: uppercase;
-            padding: 0 1.85rem;
+        /* ---------- Flourish divider ---------- */
+        .flourish {
             display: flex;
             align-items: center;
-            gap: 1.85rem;
-            color: rgba(255, 255, 255, .9);
-            white-space: nowrap;
+            justify-content: center;
+            gap: 18px;
         }
 
-        .marquee span i {
-            width: 7px;
-            height: 7px;
-            background: var(--gold);
-            border-radius: 50%;
+        .flourish::before,
+        .flourish::after {
+            content: '';
+            height: 1px;
+            width: 72px;
+        }
+
+        .flourish::before {
+            background: linear-gradient(90deg, transparent, #B8935A);
+        }
+
+        .flourish::after {
+            background: linear-gradient(90deg, #B8935A, transparent);
+        }
+
+        /* ---------- Buttons ---------- */
+        .btn-gold {
             display: inline-block;
-            flex: none
+            background: linear-gradient(135deg, #C9A96E, #B8935A);
+            color: #FAF6EF;
+            padding: 17px 50px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 400;
+            transition: all 0.45s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #B8935A;
         }
 
-        @keyframes slide {
-            to {
-                transform: translateX(-50%)
-            }
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-gold:hover::before {
+            left: 100%;
+        }
+
+        .btn-gold:hover {
+            box-shadow: 0 18px 38px rgba(184, 147, 90, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            display: inline-block;
+            border: 1px solid #B8935A;
+            color: #B8935A;
+            padding: 17px 50px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            font-size: 11px;
+            transition: all 0.45s ease;
+        }
+
+        .btn-outline:hover {
+            background: #B8935A;
+            color: #FAF6EF;
+            transform: translateY(-3px);
+            box-shadow: 0 18px 38px rgba(184, 147, 90, 0.3);
+        }
+
+        /* ---------- Reveal on scroll ---------- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(46px);
         }
 
         /* ---------- Countdown ---------- */
-        .countdown {
-            background: linear-gradient(180deg, var(--cream), var(--sand))
-        }
-
-        .count-wrap {
-            background: #fff;
-            border-radius: 26px;
-            padding: clamp(1.9rem, 4.2vw, 3.15rem);
-            box-shadow: 0 42px 80px -46px rgba(96, 64, 38, .5);
-            border: 1px solid rgba(194, 149, 79, .17);
-            display: grid;
-            grid-template-columns: 1.15fr 1.85fr;
-            gap: clamp(1.6rem, 4vw, 3.25rem);
-            align-items: center;
-        }
-
-        .count-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: .85rem
-        }
-
-        .count-item {
-            background: linear-gradient(160deg, #FBF5EC, #F4E9DA);
-            border-radius: 16px;
-            padding: 1.15rem .55rem 1rem;
-            text-align: center;
-            border: 1px solid rgba(194, 149, 79, .18);
+        .countdown-box {
             position: relative;
-            overflow: hidden;
+            padding: 22px 8px 26px;
         }
 
-        .count-item::after {
-            content: "";
+        .countdown-box::after {
+            content: '';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(120deg, transparent 38%, rgba(255, 255, 255, .72) 50%, transparent 62%);
-            transform: translateX(-130%);
-            animation: sweep 6.5s ease-in-out infinite;
-        }
-
-        .count-item:nth-child(2)::after {
-            animation-delay: .55s
-        }
-
-        .count-item:nth-child(3)::after {
-            animation-delay: 1.1s
-        }
-
-        .count-item:nth-child(4)::after {
-            animation-delay: 1.65s
-        }
-
-        @keyframes sweep {
-
-            0%,
-            55% {
-                transform: translateX(-130%)
-            }
-
-            85%,
-            100% {
-                transform: translateX(130%)
-            }
-        }
-
-        .count-num {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.95rem, 4.6vw, 2.85rem);
-            font-weight: 600;
-            color: var(--clay-dark);
-            line-height: 1;
-            display: block;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .count-num.tick {
-            animation: tick .55s var(--ease)
-        }
-
-        @keyframes tick {
-            0% {
-                transform: translateY(-42%) rotateX(-72deg);
-                opacity: .25
-            }
-
-            100% {
-                transform: none;
-                opacity: 1
-            }
-        }
-
-        .count-label {
-            font-size: .625rem;
-            letter-spacing: .29em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-top: .55rem;
-            display: block
-        }
-
-        /* ---------- Collection / flip cards ---------- */
-        .sec-head {
-            max-width: 660px
-        }
-
-        .sec-head.center {
-            margin-inline: auto;
-            text-align: center
-        }
-
-        .sec-head h2 {
-            margin: 1.15rem 0 1.15rem
-        }
-
-        .filter-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .62rem;
-            justify-content: center;
-            margin: 2.45rem 0 2.85rem
-        }
-
-        .chip {
-            padding: .66rem 1.35rem;
-            border-radius: 999px;
-            border: 1px solid var(--line);
-            background: transparent;
-            font-size: .725rem;
-            letter-spacing: .19em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all .42s var(--ease);
-            color: var(--ink-soft);
-        }
-
-        .chip:hover {
-            border-color: var(--clay);
-            color: var(--clay);
-            transform: translateY(-2px)
-        }
-
-        .chip.active {
-            background: var(--ink);
-            color: #fff;
-            border-color: var(--ink)
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: clamp(1.35rem, 2.6vw, 2.15rem)
-        }
-
-        .flip {
-            perspective: 1400px;
-            cursor: pointer
-        }
-
-        .flip-inner {
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform .95s var(--ease);
-            border-radius: 20px;
-            min-height: clamp(390px, 44vw, 470px);
-        }
-
-        .flip:hover .flip-inner,
-        .flip.flipped .flip-inner {
-            transform: rotateY(180deg)
-        }
-
-        .flip-face {
-            position: absolute;
-            inset: 0;
-            border-radius: 20px;
-            overflow: hidden;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            box-shadow: var(--shadow-m);
-        }
-
-        .flip-front img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 1.15s var(--ease)
-        }
-
-        .flip:hover .flip-front img {
-            transform: scale(1.09)
-        }
-
-        .flip-front::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(28, 18, 12, .86) 2%, rgba(28, 18, 12, .12) 56%, rgba(28, 18, 12, .06))
-        }
-
-        .flip-info {
-            position: absolute;
-            left: 0;
-            right: 0;
             bottom: 0;
-            padding: 1.75rem 1.65rem;
-            z-index: 2;
-            color: #fff
-        }
-
-        .flip-info .tag {
-            display: inline-block;
-            font-size: .615rem;
-            letter-spacing: .28em;
-            text-transform: uppercase;
-            padding: .36rem .82rem;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, .17);
-            border: 1px solid rgba(255, 255, 255, .28);
-            margin-bottom: .85rem;
-            backdrop-filter: blur(6px);
-        }
-
-        .flip-info h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.62rem;
-            font-weight: 500;
-            line-height: 1.18
-        }
-
-        .flip-info p {
-            font-size: .875rem;
-            color: rgba(255, 255, 255, .79);
-            font-weight: 300;
-            margin-top: .38rem
-        }
-
-        .flip-back {
-            transform: rotateY(180deg);
-            background: linear-gradient(158deg, #FFFCF8, #F3E7D7);
-            padding: 2.15rem 1.85rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border: 1px solid rgba(194, 149, 79, .26);
-        }
-
-        .flip-back h4 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.72rem;
-            font-weight: 600;
-            margin-bottom: .85rem
-        }
-
-        .spec {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            padding: .72rem 0;
-            border-bottom: 1px dashed rgba(140, 100, 66, .24);
-            font-size: .835rem
-        }
-
-        .spec span:first-child {
-            color: var(--muted);
-            letter-spacing: .11em;
-            text-transform: uppercase;
-            font-size: .665rem
-        }
-
-        .spec span:last-child {
-            font-weight: 500;
-            color: var(--ink)
-        }
-
-        .price {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.15rem;
-            color: var(--clay-dark);
-            margin: 1.15rem 0 .35rem;
-            font-weight: 600
-        }
-
-        .price small {
-            font-size: .72rem;
-            letter-spacing: .22em;
-            text-transform: uppercase;
-            color: var(--muted);
-            font-family: 'Jost'
-        }
-
-        /* ---------- Feature split / parallax ---------- */
-        .split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: clamp(2.25rem, 5.5vw, 5.25rem);
-            align-items: center
-        }
-
-        .split.reverse .split-media {
-            order: 2
-        }
-
-        .media-stack {
-            position: relative
-        }
-
-        .media-main {
-            border-radius: 22px;
-            overflow: hidden;
-            box-shadow: 0 52px 90px -48px rgba(84, 54, 32, .68);
-            position: relative;
-        }
-
-        .media-main img {
-            width: 100%;
-            height: clamp(360px, 52vw, 560px);
-            object-fit: cover;
-            transform: scale(1.14);
-            transition: transform .2s linear
-        }
-
-        .media-badge {
-            position: absolute;
-            right: -18px;
-            bottom: -26px;
-            width: min(220px, 52%);
-            background: #fff;
-            border-radius: 18px;
-            padding: 1.35rem 1.35rem;
-            box-shadow: 0 34px 62px -30px rgba(80, 50, 28, .62);
-            border: 1px solid rgba(194, 149, 79, .2);
-        }
-
-        .media-badge .num {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.35rem;
-            font-weight: 600;
-            color: var(--clay-dark);
-            line-height: 1
-        }
-
-        .media-badge p {
-            font-size: .725rem;
-            letter-spacing: .17em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-top: .32rem
-        }
-
-        .media-ring {
-            position: absolute;
-            left: -34px;
-            top: -34px;
-            width: 128px;
-            height: 128px;
-            border-radius: 50%;
-            border: 1px solid rgba(194, 149, 79, .42);
-        }
-
-        .media-ring::after {
-            content: "";
-            position: absolute;
-            inset: 16px;
-            border-radius: 50%;
-            border: 1px dashed rgba(194, 149, 79, .36);
-            animation: spin 26s linear infinite
-        }
-
-        .feature-list {
-            margin-top: 2.15rem;
-            display: grid;
-            gap: 1.15rem
-        }
-
-        .feature-item {
-            display: flex;
-            gap: 1.05rem;
-            align-items: flex-start;
-            padding: 1.05rem 1.15rem;
-            border-radius: 14px;
-            transition: background .45s ease, transform .5s var(--ease), box-shadow .5s ease
-        }
-
-        .feature-item:hover {
-            background: #fff;
-            transform: translateX(7px);
-            box-shadow: var(--shadow-m)
-        }
-
-        .feature-item .ic {
-            width: 42px;
-            height: 42px;
-            flex: none;
-            border-radius: 12px;
-            display: grid;
-            place-items: center;
-            background: linear-gradient(150deg, rgba(194, 149, 79, .18), rgba(180, 103, 79, .16));
-            color: var(--clay-dark);
-        }
-
-        .feature-item h4 {
-            font-size: 1.035rem;
-            font-weight: 500;
-            letter-spacing: .012em
-        }
-
-        .feature-item p {
-            font-size: .925rem;
-            color: var(--muted);
-            font-weight: 300;
-            line-height: 1.72;
-            margin-top: .18rem
-        }
-
-        /* ---------- Stats ---------- */
-        .stats {
-            background: var(--ink);
-            color: #fff;
-            position: relative;
-            overflow: hidden
-        }
-
-        .stats::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(900px 380px at 12% 12%, rgba(194, 149, 79, .22), transparent 62%),
-                radial-gradient(760px 340px at 88% 88%, rgba(180, 103, 79, .24), transparent 62%);
-        }
-
-        .stats-grid {
-            position: relative;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.65rem;
-            text-align: center
-        }
-
-        .stat .n {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.55rem, 5.6vw, 4.15rem);
-            font-weight: 500;
-            line-height: 1;
-            background: linear-gradient(120deg, #fff, var(--gold-light));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent
-        }
-
-        .stat p {
-            font-size: .715rem;
-            letter-spacing: .29em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, .62);
-            margin-top: .85rem
-        }
-
-        .stat .divider {
-            width: 38px;
+            left: 22%;
+            right: 22%;
             height: 1px;
-            background: rgba(227, 196, 141, .5);
-            margin: 1.15rem auto 0
+            background: rgba(184, 147, 90, 0.35);
         }
 
-        /* ---------- Timeline / process ---------- */
-        .timeline {
-            position: relative;
-            margin-top: 3.65rem
-        }
-
-        .timeline-line {
-            position: absolute;
-            top: 26px;
-            left: 6%;
-            right: 6%;
-            height: 1.5px;
-            background: linear-gradient(90deg, rgba(194, 149, 79, .12), rgba(194, 149, 79, .62), rgba(194, 149, 79, .12));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 1.5s var(--ease)
-        }
-
-        .timeline.is-visible .timeline-line {
-            transform: scaleX(1)
-        }
-
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.85rem;
-            position: relative
-        }
-
-        .step {
+        /* ---------- Detail cards ---------- */
+        .detail-card {
+            background: #FAF6EF;
+            padding: 52px 36px;
             text-align: center;
-            padding: 0 .65rem
+            border: 1px solid rgba(184, 147, 90, 0.15);
+            transition: all 0.55s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .step .node {
-            width: 53px;
-            height: 53px;
-            border-radius: 50%;
-            margin: 0 auto 1.55rem;
-            display: grid;
-            place-items: center;
-            background: #fff;
-            border: 1px solid rgba(194, 149, 79, .42);
-            color: var(--clay-dark);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.18rem;
-            font-weight: 600;
-            box-shadow: 0 18px 32px -18px rgba(120, 78, 44, .72);
-            transform: scale(.55);
-            opacity: 0;
-            transition: transform .75s var(--ease), opacity .6s ease, background .4s, color .4s;
+        .detail-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(184, 147, 90, 0.45);
+            box-shadow: 0 34px 70px rgba(184, 147, 90, 0.18);
         }
 
-        .timeline.is-visible .step .node {
-            transform: scale(1);
-            opacity: 1
-        }
-
-        .step:hover .node {
-            background: var(--clay);
-            color: #fff;
-            border-color: var(--clay)
-        }
-
-        .step h4 {
-            font-size: 1.115rem;
-            font-weight: 500;
-            letter-spacing: .012em
-        }
-
-        .step p {
-            font-size: .915rem;
-            color: var(--muted);
-            font-weight: 300;
-            margin-top: .58rem;
-            line-height: 1.78
-        }
-
-        /* ---------- Gallery marquee ---------- */
-        .gallery {
-            overflow: hidden;
-            padding: clamp(2.25rem, 5vw, 3.65rem) 0;
-            background: var(--sand)
-        }
-
-        .g-track {
-            display: flex;
-            gap: 1.35rem;
-            width: max-content;
-            animation: slide 46s linear infinite
-        }
-
-        .gallery:hover .g-track {
-            animation-play-state: paused
-        }
-
-        .g-item {
-            width: clamp(220px, 26vw, 330px);
-            height: clamp(265px, 31vw, 400px);
-            border-radius: 18px;
-            overflow: hidden;
+        /* ---------- Gallery ---------- */
+        .gallery-item {
             position: relative;
-            flex: none
+            overflow: hidden;
+            cursor: pointer;
         }
 
-        .g-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 1.1s var(--ease), filter .7s ease;
-            filter: saturate(.94)
+        .gallery-item img {
+            transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .g-item:hover img {
-            transform: scale(1.11);
-            filter: saturate(1.1)
+        .gallery-item:hover img {
+            transform: scale(1.09);
         }
 
-        .g-item::after {
-            content: attr(data-label);
-            position: absolute;
-            left: 1rem;
-            bottom: 1rem;
-            color: #fff;
-            font-size: .685rem;
-            letter-spacing: .24em;
-            text-transform: uppercase;
-            background: rgba(28, 18, 12, .5);
-            padding: .52rem .95rem;
-            border-radius: 999px;
+        .gallery-overlay {
             opacity: 0;
-            transform: translateY(12px);
-            transition: all .55s var(--ease);
-            backdrop-filter: blur(6px);
+            transition: opacity 0.55s ease;
         }
 
-        .g-item:hover::after {
+        .gallery-item:hover .gallery-overlay {
             opacity: 1;
-            transform: none
         }
 
-        /* ---------- Testimonials ---------- */
-        .quotes {
-            position: relative;
-            overflow: hidden
-        }
-
-        .quote-track {
-            position: relative;
-            min-height: 330px
-        }
-
-        .quote {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transform: translateY(28px) scale(.985);
-            transition: opacity .85s ease, transform .95s var(--ease);
-            pointer-events: none;
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: clamp(1.55rem, 3.6vw, 3.15rem);
-            align-items: center;
-        }
-
-        .quote.active {
-            opacity: 1;
-            transform: none;
-            pointer-events: auto
-        }
-
-        .quote-img {
-            width: clamp(128px, 17vw, 196px);
-            height: clamp(128px, 17vw, 196px);
-            border-radius: 50%;
-            overflow: hidden;
-            flex: none;
-            position: relative
-        }
-
-        .quote-img::after {
-            content: "";
-            position: absolute;
-            inset: -11px;
-            border-radius: 50%;
-            border: 1px dashed rgba(194, 149, 79, .5);
-            animation: spin 30s linear infinite
-        }
-
-        .quote-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover
-        }
-
-        .quote-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.32rem, 2.85vw, 2.12rem);
-            line-height: 1.52;
-            font-weight: 400;
-            font-style: italic;
-            color: var(--ink)
-        }
-
-        .quote-author {
-            margin-top: 1.35rem;
-            display: flex;
-            align-items: center;
-            gap: .85rem
-        }
-
-        .quote-author .line {
-            width: 38px;
-            height: 1.5px;
-            background: var(--clay)
-        }
-
-        .quote-author strong {
-            font-family: 'Jost';
-            font-size: .795rem;
-            letter-spacing: .22em;
-            text-transform: uppercase;
-            font-weight: 500
-        }
-
-        .quote-author span {
-            font-size: .775rem;
-            letter-spacing: .16em;
-            text-transform: uppercase;
-            color: var(--muted)
-        }
-
-        .quote-nav {
-            display: flex;
-            align-items: center;
-            gap: .85rem;
-            margin-top: 2.35rem
-        }
-
-        .q-btn {
-            width: 51px;
-            height: 51px;
-            border-radius: 50%;
-            border: 1px solid var(--line);
+        /* ---------- Forms ---------- */
+        .form-input {
             background: transparent;
-            cursor: pointer;
-            display: grid;
-            place-items: center;
-            transition: all .45s var(--ease);
-            color: var(--ink)
-        }
-
-        .q-btn:hover {
-            background: var(--clay);
-            color: #fff;
-            border-color: var(--clay);
-            transform: translateY(-3px)
-        }
-
-        .dots {
-            display: flex;
-            gap: .55rem;
-            margin-left: .85rem
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(34, 28, 24, .2);
-            cursor: pointer;
-            transition: all .45s var(--ease)
-        }
-
-        .dot.active {
-            width: 30px;
-            border-radius: 999px;
-            background: var(--clay)
-        }
-
-        /* ---------- RSVP ---------- */
-        .rsvp {
-            position: relative;
-            overflow: hidden;
-            background: var(--ink);
-            color: #fff
-        }
-
-        .rsvp-bg {
-            position: absolute;
-            inset: 0;
-            opacity: .36
-        }
-
-        .rsvp-bg img {
+            border: none;
+            border-bottom: 1px solid #D8C9B4;
+            padding: 13px 4px;
             width: 100%;
-            height: 100%;
-            object-fit: cover
-        }
-
-        .rsvp::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(112deg, rgba(26, 17, 12, .94), rgba(32, 21, 15, .72))
-        }
-
-        .rsvp .container {
-            position: relative;
-            z-index: 2
-        }
-
-        .rsvp-grid {
-            display: grid;
-            grid-template-columns: 1.02fr .98fr;
-            gap: clamp(2.25rem, 5.5vw, 4.85rem);
-            align-items: center
-        }
-
-        .rsvp h2 {
-            color: #fff
-        }
-
-        .rsvp .lead {
-            color: rgba(255, 255, 255, .79)
-        }
-
-        .form-card {
-            background: rgba(255, 255, 255, .965);
-            border-radius: 22px;
-            padding: clamp(1.75rem, 3.6vw, 2.65rem);
-            box-shadow: 0 52px 92px -42px rgba(0, 0, 0, .72)
-        }
-
-        .field {
-            position: relative;
-            margin-bottom: 1.15rem
-        }
-
-        .field input,
-        .field select,
-        .field textarea {
-            width: 100%;
-            padding: 1.12rem 1.12rem .62rem;
-            border: 1px solid rgba(34, 28, 24, .16);
-            border-radius: 12px;
-            background: #FCFAF7;
-            font-size: .945rem;
-            transition: border-color .38s ease, box-shadow .38s ease, background .38s;
             outline: none;
+            transition: border-color 0.35s;
+            font-family: 'Jost', sans-serif;
+            font-size: 15px;
+            color: #2E2A26;
+        }
+
+        .form-input:focus {
+            border-color: #B8935A;
+        }
+
+        .form-input::placeholder {
+            color: rgba(46, 42, 38, 0.35);
+        }
+
+        select.form-input {
             appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
         }
 
-        .field textarea {
-            min-height: 112px;
-            resize: vertical;
-            padding-top: 1.55rem
-        }
-
-        .field label {
-            position: absolute;
-            left: 1.12rem;
-            top: .98rem;
-            font-size: .925rem;
-            color: var(--muted);
-            pointer-events: none;
-            transition: all .32s var(--ease);
-        }
-
-        .field input:focus,
-        .field select:focus,
-        .field textarea:focus {
-            border-color: var(--clay);
-            box-shadow: 0 0 0 4px rgba(180, 103, 79, .13);
-            background: #fff
-        }
-
-        .field input:focus+label,
-        .field input:not(:placeholder-shown)+label,
-        .field textarea:focus+label,
-        .field textarea:not(:placeholder-shown)+label,
-        .field select:focus+label,
-        .field select.filled+label {
-            top: .42rem;
-            font-size: .625rem;
-            letter-spacing: .22em;
+        .radio-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 26px;
+            border: 1px solid #D8C9B4;
+            cursor: pointer;
+            transition: all 0.35s;
+            font-size: 12px;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--clay-dark);
-            font-weight: 500;
+            color: rgba(46, 42, 38, 0.65);
         }
 
-        .field-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.15rem
+        .radio-card:has(input:checked) {
+            border-color: #B8935A;
+            background: rgba(184, 147, 90, 0.09);
+            color: #B8935A;
         }
 
-        .form-note {
-            font-size: .775rem;
-            color: var(--muted);
-            letter-spacing: .055em;
-            margin-top: .95rem;
-            text-align: center
-        }
-
-        .success {
-            text-align: center;
-            padding: 1.65rem .5rem;
+        .radio-card input {
             display: none;
         }
 
-        .success.show {
-            display: block;
-            animation: pop .72s var(--ease)
-        }
-
-        @keyframes pop {
-            from {
-                opacity: 0;
-                transform: translateY(22px) scale(.96)
-            }
-
-            to {
-                opacity: 1;
-                transform: none
-            }
-        }
-
-        .check-ring {
-            width: 82px;
-            height: 82px;
+        .radio-dot {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #B8935A;
             border-radius: 50%;
-            background: rgba(111, 125, 102, .13);
-            display: grid;
-            place-items: center;
-            margin: 0 auto 1.35rem
+            position: relative;
         }
 
-        .check-ring svg {
-            width: 38px;
-            height: 38px
-        }
-
-        .check-ring path {
-            stroke-dasharray: 60;
-            stroke-dashoffset: 60;
-            animation: draw .8s .18s var(--ease) forwards
-        }
-
-        @keyframes draw {
-            to {
-                stroke-dashoffset: 0
-            }
-        }
-
-        /* ---------- Footer ---------- */
-        .footer {
-            background: var(--cream);
-            padding: clamp(3.65rem, 7vw, 5.65rem) 0 2.15rem
-        }
-
-        .foot-grid {
-            display: grid;
-            grid-template-columns: 1.55fr 1fr 1fr 1.25fr;
-            gap: 2.55rem
-        }
-
-        .foot h5 {
-            font-size: .715rem;
-            letter-spacing: .29em;
-            text-transform: uppercase;
-            color: var(--ink);
-            margin-bottom: 1.32rem;
-            font-weight: 500
-        }
-
-        .foot ul {
-            list-style: none;
-            display: grid;
-            gap: .72rem
-        }
-
-        .foot ul a {
-            font-size: .925rem;
-            color: var(--muted);
-            transition: color .35s ease, padding-left .38s var(--ease);
-            display: inline-block
-        }
-
-        .foot ul a:hover {
-            color: var(--clay);
-            padding-left: 7px
-        }
-
-        .socials {
-            display: flex;
-            gap: .72rem;
-            margin-top: 1.55rem
-        }
-
-        .socials a {
-            width: 43px;
-            height: 43px;
+        .radio-card input:checked+.radio-dot::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: #B8935A;
             border-radius: 50%;
-            border: 1px solid var(--line);
-            display: grid;
-            place-items: center;
-            transition: all .45s var(--ease);
-            color: var(--ink-soft)
         }
 
-        .socials a:hover {
-            background: var(--clay);
-            color: #fff;
-            border-color: var(--clay);
-            transform: translateY(-4px)
+        /* ---------- Decorative rings ---------- */
+        .deco-ring {
+            position: absolute;
+            border: 1px solid rgba(184, 147, 90, 0.18);
+            border-radius: 50%;
+            pointer-events: none;
         }
 
-        .foot-bottom {
-            margin-top: 3.25rem;
-            padding-top: 1.85rem;
-            border-top: 1px solid var(--line);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.15rem;
-            justify-content: space-between;
-            align-items: center
+        /* ---------- Mobile menu ---------- */
+        #mobileMenu {
+            transition: opacity 0.4s ease;
         }
 
-        .foot-bottom p {
-            font-size: .825rem;
-            color: var(--muted);
-            letter-spacing: .055em
+        /* ---------- Scroll indicator ---------- */
+        .scroll-line {
+            width: 1px;
+            height: 56px;
+            background: rgba(184, 147, 90, 0.5);
+            position: relative;
+            overflow: hidden;
         }
 
-        .foot-bottom .links {
-            display: flex;
-            gap: 1.55rem;
-            flex-wrap: wrap
+        .scroll-line::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #B8935A;
+            animation: scrollDrop 2s ease infinite;
         }
 
-        .foot-bottom .links a {
-            font-size: .795rem;
-            letter-spacing: .145em;
-            text-transform: uppercase;
-            color: var(--muted);
-            transition: color .35s
-        }
-
-        .foot-bottom .links a:hover {
-            color: var(--clay)
-        }
-
-        /* ---------- Reveal ---------- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(32px);
-            transition: opacity .92s ease, transform 1.02s var(--ease);
-            transition-delay: var(--d, 0ms)
-        }
-
-        .reveal.in {
-            opacity: 1;
-            transform: none
-        }
-
-        .reveal-scale {
-            opacity: 0;
-            transform: scale(.94);
-            transition: opacity 1s ease, transform 1.15s var(--ease);
-            transition-delay: var(--d, 0ms)
-        }
-
-        .reveal-scale.in {
-            opacity: 1;
-            transform: none
-        }
-
-        /* ---------- Responsive ---------- */
-        @media (max-width:1080px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-                gap: 3.25rem
+        @keyframes scrollDrop {
+            0% {
+                top: -100%;
             }
 
-            .card-stage {
-                min-height: auto;
-                padding: 1.5rem 0
-            }
-
-            .card-3d {
-                width: min(100%, 392px)
-            }
-
-            .count-wrap {
-                grid-template-columns: 1fr;
-                text-align: center
-            }
-
-            .cards-grid {
-                grid-template-columns: repeat(2, 1fr)
-            }
-
-            .foot-grid {
-                grid-template-columns: 1.5fr 1fr 1fr
+            100% {
+                top: 100%;
             }
         }
 
-        @media (max-width:900px) {
-
-            .nav-links,
-            .nav-cta {
-                display: none
-            }
-
-            .burger {
-                display: block
-            }
-
-            .split {
-                grid-template-columns: 1fr;
-                gap: 2.85rem
-            }
-
-            .split.reverse .split-media {
-                order: 0
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2.35rem
-            }
-
-            .steps {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2.35rem
-            }
-
-            .timeline-line {
-                display: none
-            }
-
-            .rsvp-grid {
-                grid-template-columns: 1fr;
-                gap: 2.65rem
-            }
-
-            .quote {
-                grid-template-columns: 1fr;
-                text-align: left
-            }
-
-            .quote-img {
-                width: 112px;
-                height: 112px
-            }
+        /* ---------- Timeline ---------- */
+        .timeline-img {
+            transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.9s ease;
         }
 
-        @media (max-width:680px) {
-            .cards-grid {
-                grid-template-columns: 1fr
-            }
-
-            .count-grid {
-                grid-template-columns: repeat(2, 1fr)
-            }
-
-            .field-row {
-                grid-template-columns: 1fr
-            }
-
-            .foot-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 2.15rem
-            }
-
-            .hero-meta {
-                gap: 1.55rem
-            }
-
-            .float-chip {
-                display: none
-            }
-
-            .media-badge {
-                right: -6px;
-                bottom: -18px;
-                padding: 1.05rem
-            }
-
-            .quote-track {
-                min-height: 430px
-            }
+        .timeline-img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 30px 60px rgba(110, 85, 50, 0.22);
         }
 
-        @media (max-width:420px) {
-            .foot-grid {
-                grid-template-columns: 1fr
-            }
+        @media (max-width: 640px) {
 
-            .btn {
-                padding: .92rem 1.65rem;
-                font-size: .725rem
-            }
-
-            .hero-actions {
-                flex-direction: column;
-                align-items: stretch
-            }
-
-            .hero-actions .btn {
-                width: 100%
-            }
-        }
-
-        @media (prefers-reduced-motion:reduce) {
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: .001ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: .001ms !important;
-                scroll-behavior: auto !important
-            }
-
-            .reveal,
-            .reveal-scale,
-            .fade-up {
-                opacity: 1 !important;
-                transform: none !important
-            }
-
-            .line-mask>span {
-                transform: none !important;
-                opacity: 1 !important
+            .btn-gold,
+            .btn-outline {
+                padding: 15px 36px;
             }
         }
     </style>
@@ -2055,1321 +487,684 @@
 
 <body>
 
-    <div class="progress"><span id="progressBar"></span></div>
+    <!-- ==================== PRELOADER ==================== -->
+    <div id="preloader">
+        <div class="text-center">
+            <div class="font-script text-6xl gold-text loader-pulse">A &amp; J</div>
+            <div class="loader-line"></div>
+        </div>
+    </div>
 
-    <!-- NAV -->
-    <header class="nav" id="nav">
-        <div class="container nav-inner">
-            <a href="#top" class="brand" aria-label="Vellum and Vine home">
-                <span class="mark">V&amp;V</span>
-                <span>Vellum &amp; Vine<small>Invitation Atelier</small></span>
-            </a>
-            <nav class="nav-links" aria-label="Primary">
-                <a href="#collection">Collection</a>
-                <a href="#craft">The Craft</a>
-                <a href="#process">Process</a>
-                <a href="#stories">Stories</a>
-                <a href="#rsvp">Rsvp</a>
-            </nav>
-            <a href="#rsvp" class="btn btn-primary nav-cta"><span class="sheen"></span>Book a Fitting</a>
-            <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
-                <span></span><span></span><span></span>
+    <!-- ==================== NAVIGATION ==================== -->
+    <nav id="nav" class="fixed top-0 left-0 w-full z-50 py-7 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#home" class="font-script text-2xl md:text-3xl gold-text">Amara &amp; Julian</a>
+            <div class="hidden md:flex items-center gap-10 text-[11px] tracking-[0.28em] uppercase text-ink/80">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#story" class="nav-link">Our Story</a>
+                <a href="#details" class="nav-link">Details</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
+                <a href="#rsvp" class="nav-link">RSVP</a>
+            </div>
+            <button id="menuBtn" class="md:hidden text-ink" aria-label="Menu">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="4" y1="8" x2="24" y2="8" />
+                    <line x1="4" y1="14" x2="24" y2="14" />
+                    <line x1="4" y1="20" x2="24" y2="20" />
+                </svg>
             </button>
         </div>
-    </header>
+    </nav>
 
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#collection">Collection</a>
-        <a href="#craft">The Craft</a>
-        <a href="#process">Process</a>
-        <a href="#stories">Stories</a>
-        <a href="#rsvp">Book a Fitting</a>
+    <!-- Mobile menu -->
+    <div id="mobileMenu"
+        class="fixed inset-0 bg-ivory z-40 hidden flex-col items-center justify-center gap-9 opacity-0">
+        <a href="#home" class="mobile-link font-serif text-3xl text-ink hover:text-gold transition">Home</a>
+        <a href="#story" class="mobile-link font-serif text-3xl text-ink hover:text-gold transition">Our Story</a>
+        <a href="#details" class="mobile-link font-serif text-3xl text-ink hover:text-gold transition">Details</a>
+        <a href="#gallery" class="mobile-link font-serif text-3xl text-ink hover:text-gold transition">Gallery</a>
+        <a href="#rsvp" class="mobile-link font-serif text-3xl text-ink hover:text-gold transition">RSVP</a>
+        <div class="flourish mt-4"><span class="w-1.5 h-1.5 rotate-45 border border-gold"></span></div>
     </div>
 
-    <!-- HERO -->
-    <section class="hero" id="top">
-        <div class="hero-bg" data-parallax="0.12">
-            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=2000&q=80"
-                alt="Elegant outdoor wedding ceremony arch with flowers">
-        </div>
-        <div class="hero-veil"></div>
-        <canvas id="petals"></canvas>
+    <!-- ==================== HERO ==================== -->
+    <section id="home" class="relative min-h-screen flex items-center overflow-hidden">
+        <!-- decorative rings -->
+        <div class="deco-ring" style="width:520px;height:520px;top:-180px;right:-160px;"></div>
+        <div class="deco-ring" style="width:700px;height:700px;bottom:-320px;left:-280px;"></div>
+        <!-- petals -->
+        <div id="petals" class="absolute inset-0 pointer-events-none z-[5]"></div>
 
-        <div class="container hero-grid">
-            <div class="hero-copy">
-                <div class="eyebrow fade-up" style="transition-delay:.15s"><span class="bar"></span> Dimensional
-                    Stationery Studio · Est. 2014</div>
+        <div
+            class="max-w-7xl mx-auto px-6 md:px-12 pt-36 pb-28 grid lg:grid-cols-2 gap-16 items-center relative z-10 w-full">
 
-                <h1 class="display hero-title">
-                    <span class="line-mask"><span style="transition-delay:.28s">Invitations</span></span>
-                    <span class="line-mask"><span style="transition-delay:.40s">that <em class="italic amp">move</em>
-                            before</span></span>
-                    <span class="line-mask"><span style="transition-delay:.52s">they are opened.</span></span>
-                </h1>
-
-                <p class="hero-sub fade-up" style="transition-delay:.66s">
-                    Letterpress, gold foil and kinetic 3D card experiences — designed in our Florence atelier
-                    and delivered to the people who matter most.
-                </p>
-
-                <div class="hero-actions fade-up" style="transition-delay:.80s">
-                    <a href="#collection" class="btn btn-primary magnetic"><span class="sheen"></span>
-                        Explore the Collection
-                        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-                            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                    <a href="#craft" class="btn btn-light magnetic"><span class="sheen"></span>Watch the Craft</a>
+            <!-- Left: Text -->
+            <div class="hero-text text-center lg:text-left">
+                <div class="flex items-center gap-5 justify-center lg:justify-start mb-7">
+                    <div class="h-px w-10 bg-gold"></div>
+                    <p class="text-[10px] md:text-[11px] tracking-[0.4em] uppercase text-gold">The Wedding Celebration
+                        of</p>
+                    <div class="h-px w-10 bg-gold lg:hidden"></div>
                 </div>
 
-                <div class="hero-meta fade-up" style="transition-delay:.94s">
-                    <div><span>Weddings Styled</span><strong>1,240+</strong></div>
-                    <div><span>Paper Stocks</span><strong>36 Cottons</strong></div>
-                    <div><span>Turnaround</span><strong>3–4 Weeks</strong></div>
+                <h1 class="font-script text-[64px] sm:text-7xl md:text-8xl gold-text leading-[1.1]">Amara<br>&amp;
+                    Julian</h1>
+
+                <div class="mt-9 flex items-center gap-5 justify-center lg:justify-start">
+                    <div class="h-px w-12 bg-gold/70"></div>
+                    <p class="font-serif italic text-lg md:text-xl text-ink/80">Sunday, June 14th, 2026</p>
+                    <div class="h-px w-12 bg-gold/70"></div>
+                </div>
+
+                <p class="mt-5 text-[11px] md:text-xs tracking-[0.3em] uppercase text-ink/50">The Rosewood Estate
+                    &nbsp;·&nbsp; Napa Valley, California</p>
+
+                <div class="mt-12 flex flex-wrap gap-5 justify-center lg:justify-start">
+                    <a href="#rsvp" class="btn-gold">RSVP Now</a>
+                    <a href="#details" class="btn-outline">View Details</a>
                 </div>
             </div>
 
-            <!-- 3D CARD -->
-            <div class="card-stage fade-up" style="transition-delay:.55s" id="cardStage">
-                <div class="orbit"></div>
+            <!-- Right: 3D Card -->
+            <div class="flex flex-col items-center">
+                <div class="card-stage">
+                    <div class="card-tilt" id="cardTilt">
+                        <div class="card-flip card-shadow" id="cardFlip">
 
-                <div class="float-chip chip-a">
-                    <span class="dot">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.6">
-                            <path d="M12 3l2.4 5.6L20 10l-4.4 3.6L16.8 20 12 16.6 7.2 20l1.2-6.4L4 10l5.6-1.4L12 3z"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </span>
-                    24k Gold Foil
-                </div>
-
-                <div class="card-3d" id="card3d">
-                    <div class="card-face card-front">
-                        <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1000&q=80"
-                            alt="Couple at their wedding celebration">
-                        <div class="card-frame"></div>
-                        <div class="card-shine" id="cardShine"></div>
-                        <div class="card-content">
-                            <p class="k">Together with their families</p>
-                            <h3>Amara <em>&amp;</em> Julian</h3>
-                            <div class="card-rule"></div>
-                            <p>Saturday · 20 June 2026</p>
-                            <p style="margin-top:.38rem;opacity:.72;letter-spacing:.16em">Villa Aurelia — Florence</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="float-chip chip-b">
-                    <span class="dot">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.6">
-                            <rect x="3" y="5" width="18" height="14" rx="3" />
-                            <path d="M3.5 7l8.5 6 8.5-6" stroke-linecap="round" />
-                        </svg>
-                    </span>
-                    Interactive RSVP
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- MARQUEE BAND -->
-    <div class="band" aria-hidden="true">
-        <div class="marquee" id="marquee">
-            <span>Letterpress <i></i></span><span>Gold Foil <i></i></span><span>Deckled Edges <i></i></span>
-            <span>Wax Seals <i></i></span><span>3D Motion Cards <i></i></span><span>Silk Ribbon <i></i></span>
-            <span>Letterpress <i></i></span><span>Gold Foil <i></i></span><span>Deckled Edges <i></i></span>
-            <span>Wax Seals <i></i></span><span>3D Motion Cards <i></i></span><span>Silk Ribbon <i></i></span>
-        </div>
-    </div>
-
-    <!-- COUNTDOWN -->
-    <section class="section countdown">
-        <div class="container">
-            <div class="count-wrap reveal">
-                <div>
-                    <div class="eyebrow"><span class="bar"></span> The Countdown</div>
-                    <h2 class="display" style="margin:1.05rem 0 .95rem;font-size:clamp(1.95rem,3.6vw,2.75rem)">
-                        Every detail, <em class="italic" style="color:var(--clay-dark)">timed</em> to perfection.
-                    </h2>
-                    <p class="lead" style="font-size:1.02rem">
-                        From first proof to final delivery, our studio timeline keeps your stationery
-                        choreographed with the rhythm of your celebration.
-                    </p>
-                </div>
-                <div class="count-grid" id="countdown" aria-label="Countdown to the next atelier release">
-                    <div class="count-item"><span class="count-num" id="cd-days">00</span><span
-                            class="count-label">Days</span></div>
-                    <div class="count-item"><span class="count-num" id="cd-hours">00</span><span
-                            class="count-label">Hours</span></div>
-                    <div class="count-item"><span class="count-num" id="cd-mins">00</span><span
-                            class="count-label">Minutes</span></div>
-                    <div class="count-item"><span class="count-num" id="cd-secs">00</span><span
-                            class="count-label">Seconds</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- COLLECTION -->
-    <section class="section" id="collection">
-        <div class="container">
-            <div class="sec-head center reveal">
-                <div class="eyebrow center"><span class="bar"></span> Signature Suites <span class="bar right"></span>
-                </div>
-                <h2 class="display">Three-dimensional <em class="italic" style="color:var(--clay-dark)">paper</em>
-                    stories</h2>
-                <p class="lead">Hover — or tap — any suite to reveal its construction, finishes and pricing.
-                    Each design is fully bespoke: colours, typography and motion are tailored to your day.</p>
-            </div>
-
-            <div class="filter-row reveal" style="--d:120ms" id="filters">
-                <button class="chip active" data-filter="all">All Suites</button>
-                <button class="chip" data-filter="foil">Gold Foil</button>
-                <button class="chip" data-filter="letterpress">Letterpress</button>
-                <button class="chip" data-filter="motion">Motion Cards</button>
-            </div>
-
-            <div class="cards-grid" id="cardsGrid">
-                <article class="flip reveal" data-cat="foil" style="--d:0ms" tabindex="0">
-                    <div class="flip-inner">
-                        <div class="flip-face flip-front">
-                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80"
-                                alt="Floral wedding stationery suite with rings">
-                            <div class="flip-info">
-                                <span class="tag">Gold Foil</span>
-                                <h3>The Aurelia Suite</h3>
-                                <p>Hand-foiled script on warm cotton</p>
-                            </div>
-                        </div>
-                        <div class="flip-face flip-back">
-                            <h4>Aurelia</h4>
-                            <div class="spec"><span>Paper</span><span>600gsm Cotton</span></div>
-                            <div class="spec"><span>Finish</span><span>24k Foil + Emboss</span></div>
-                            <div class="spec"><span>Pieces</span><span>Invitation, RSVP, Details</span></div>
-                            <div class="spec"><span>Delivery</span><span>3 Weeks</span></div>
-                            <div class="price">$14 <small>/ guest</small></div>
-                            <a href="#rsvp" class="btn btn-primary" style="margin-top:.65rem"><span
-                                    class="sheen"></span>Request Sample</a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="flip reveal" data-cat="motion" style="--d:110ms" tabindex="0">
-                    <div class="flip-inner">
-                        <div class="flip-face flip-front">
-                            <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=900&q=80"
-                                alt="Elegant wedding table setting with candles">
-                            <div class="flip-info">
-                                <span class="tag">Motion Card</span>
-                                <h3>The Kinetic Vine</h3>
-                                <p>Layered panels that unfold in sequence</p>
-                            </div>
-                        </div>
-                        <div class="flip-face flip-back">
-                            <h4>Kinetic Vine</h4>
-                            <div class="spec"><span>Paper</span><span>Layered Duplex</span></div>
-                            <div class="spec"><span>Finish</span><span>Die-cut + Ribbon</span></div>
-                            <div class="spec"><span>Pieces</span><span>5-panel Unfold</span></div>
-                            <div class="spec"><span>Delivery</span><span>4 Weeks</span></div>
-                            <div class="price">$19 <small>/ guest</small></div>
-                            <a href="#rsvp" class="btn btn-primary" style="margin-top:.65rem"><span
-                                    class="sheen"></span>Request Sample</a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="flip reveal" data-cat="letterpress" style="--d:220ms" tabindex="0">
-                    <div class="flip-inner">
-                        <div class="flip-face flip-front">
-                            <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=900&q=80"
-                                alt="Wedding cake with floral decoration">
-                            <div class="flip-info">
-                                <span class="tag">Letterpress</span>
-                                <h3>The Botanica</h3>
-                                <p>Deep impression, hand-mixed inks</p>
-                            </div>
-                        </div>
-                        <div class="flip-face flip-back">
-                            <h4>Botanica</h4>
-                            <div class="spec"><span>Paper</span><span>Fluorescent White</span></div>
-                            <div class="spec"><span>Finish</span><span>2-colour Letterpress</span></div>
-                            <div class="spec"><span>Pieces</span><span>Invitation + Envelope</span></div>
-                            <div class="spec"><span>Delivery</span><span>3 Weeks</span></div>
-                            <div class="price">$12 <small>/ guest</small></div>
-                            <a href="#rsvp" class="btn btn-primary" style="margin-top:.65rem"><span
-                                    class="sheen"></span>Request Sample</a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="flip reveal" data-cat="foil" style="--d:0ms" tabindex="0">
-                    <div class="flip-inner">
-                        <div class="flip-face flip-front">
-                            <img src="https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&w=900&q=80"
-                                alt="Soft pink floral arrangement">
-                            <div class="flip-info">
-                                <span class="tag">Gold Foil</span>
-                                <h3>The Rosalie</h3>
-                                <p>Blush cotton with rose-gold detailing</p>
-                            </div>
-                        </div>
-                        <div class="flip-face flip-back">
-                            <h4>Rosalie</h4>
-                            <div class="spec"><span>Paper</span><span>Blush Cotton 540gsm</span></div>
-                            <div class="spec"><span>Finish</span><span>Rose-gold Foil</span></div>
-                            <div class="spec"><span>Pieces</span><span>Suite of Four</span></div>
-                            <div class="spec"><span>Delivery</span><span>3 Weeks</span></div>
-                            <div class="price">$15 <small>/ guest</small></div>
-                            <a href="#rsvp" class="btn btn-primary" style="margin-top:.65rem"><span
-                                    class="sheen"></span>Request Sample</a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="flip reveal" data-cat="motion" style="--d:110ms" tabindex="0">
-                    <div class="flip-inner">
-                        <div class="flip-face flip-front">
-                            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80"
-                                alt="Wedding reception table with elegant décor">
-                            <div class="flip-info">
-                                <span class="tag">Motion Card</span>
-                                <h3>The Carousel</h3>
-                                <p>Rotating vellum reveal with foil edge</p>
-                            </div>
-                        </div>
-                        <div class="flip-face flip-back">
-                            <h4>Carousel</h4>
-                            <div class="spec"><span>Paper</span><span>Vellum + Board</span></div>
-                            <div class="spec"><span>Finish</span><span>Rotating Disc</span></div>
-                            <div class="spec"><span>Pieces</span><span>Interactive Set</span></div>
-                            <div class="spec"><span>Delivery</span><span>4 Weeks</span></div>
-                            <div class="price">$21 <small>/ guest</small></div>
-                            <a href="#rsvp" class="btn btn-primary" style="margin-top:.65rem"><span
-                                    class="sheen"></span>Request Sample</a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="flip reveal" data-cat="letterpress" style="--d:220ms" tabindex="0">
-                    <div class="flip-inner">
-                        <div class="flip-face flip-front">
-                            <img src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=900&q=80"
-                                alt="Couple silhouetted at golden hour">
-                            <div class="flip-info">
-                                <span class="tag">Letterpress</span>
-                                <h3>The Nocturne</h3>
-                                <p>Midnight stock, blind deboss typography</p>
-                            </div>
-                        </div>
-                        <div class="flip-face flip-back">
-                            <h4>Nocturne</h4>
-                            <div class="spec"><span>Paper</span><span>Midnight Duplex</span></div>
-                            <div class="spec"><span>Finish</span><span>Blind Deboss + Foil</span></div>
-                            <div class="spec"><span>Pieces</span><span>Suite of Three</span></div>
-                            <div class="spec"><span>Delivery</span><span>3 Weeks</span></div>
-                            <div class="price">$16 <small>/ guest</small></div>
-                            <a href="#rsvp" class="btn btn-primary" style="margin-top:.65rem"><span
-                                    class="sheen"></span>Request Sample</a>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- CRAFT / SPLIT -->
-    <section class="section" id="craft"
-        style="background:linear-gradient(180deg,var(--cream),#F7EFE6 52%,var(--cream))">
-        <div class="container split">
-            <div class="split-media media-stack reveal-scale">
-                <div class="media-ring"></div>
-                <div class="media-main">
-                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=80"
-                        alt="Wedding couple holding hands with bouquet" data-parallax-img="0.06">
-                </div>
-                <div class="media-badge">
-                    <div class="num" data-count="98">0</div>
-                    <p>Couples who<br>recommend us</p>
-                </div>
-            </div>
-
-            <div>
-                <div class="eyebrow reveal"><span class="bar"></span> The Craft</div>
-                <h2 class="display reveal" style="--d:110ms">Made slowly, <em class="italic"
-                        style="color:var(--clay-dark)">felt</em> instantly.</h2>
-                <p class="lead reveal" style="--d:190ms">
-                    Each suite passes through seven pairs of hands — from the first typographic sketch
-                    to the final wax seal. We print on century-old Heidelberg presses, then finish
-                    every edge by hand.
-                </p>
-
-                <div class="feature-list">
-                    <div class="feature-item reveal" style="--d:250ms">
-                        <div class="ic">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.6">
-                                <path d="M4 20l7.5-7.5M13 5l6 6-8 8H5v-6l8-8z" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h4>Hand-drawn typography</h4>
-                            <p>Bespoke monograms and calligraphy drawn for your names — never a template.</p>
-                        </div>
-                    </div>
-                    <div class="feature-item reveal" style="--d:320ms">
-                        <div class="ic">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.6">
-                                <rect x="3" y="4" width="18" height="16" rx="3" />
-                                <path d="M3 9h18M8 4v5" stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h4>Dimensional layering</h4>
-                            <p>Vellum wraps, floating panels and ribbon pulls that create real depth in hand.</p>
-                        </div>
-                    </div>
-                    <div class="feature-item reveal" style="--d:390ms">
-                        <div class="ic">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.6">
-                                <circle cx="12" cy="12" r="8.2" />
-                                <path d="M12 6.4V12l3.6 2.3" stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h4>On-time, every time</h4>
-                            <p>A dedicated producer, weekly proof updates and tracked delivery to your door.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <a href="#process" class="btn btn-ghost magnetic reveal" style="--d:450ms;margin-top:2.15rem">
-                    <span class="sheen"></span>See how it's made
-                    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-                        <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- STATS -->
-    <section class="section stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat reveal">
-                    <div class="n"><span data-count="1240">0</span>+</div>
-                    <p>Weddings Styled</p>
-                    <div class="divider"></div>
-                </div>
-                <div class="stat reveal" style="--d:110ms">
-                    <div class="n"><span data-count="36">0</span></div>
-                    <p>Paper Stocks</p>
-                    <div class="divider"></div>
-                </div>
-                <div class="stat reveal" style="--d:220ms">
-                    <div class="n"><span data-count="21">0</span></div>
-                    <p>Design Awards</p>
-                    <div class="divider"></div>
-                </div>
-                <div class="stat reveal" style="--d:330ms">
-                    <div class="n"><span data-count="12">0</span></div>
-                    <p>Countries Served</p>
-                    <div class="divider"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PROCESS -->
-    <section class="section" id="process">
-        <div class="container">
-            <div class="sec-head center reveal">
-                <div class="eyebrow center"><span class="bar"></span> How It Unfolds <span class="bar right"></span>
-                </div>
-                <h2 class="display">A considered <em class="italic" style="color:var(--clay-dark)">four-step</em>
-                    journey</h2>
-                <p class="lead">Clear milestones, generous revisions and a producer beside you from
-                    the first sketch to the sealed envelope.</p>
-            </div>
-
-            <div class="timeline reveal" id="timeline">
-                <div class="timeline-line"></div>
-                <div class="steps">
-                    <div class="step">
-                        <div class="node">01</div>
-                        <h4>Discovery</h4>
-                        <p>A relaxed consultation about your story, palette, venue and the feeling you want guests to
-                            have.</p>
-                    </div>
-                    <div class="step">
-                        <div class="node">02</div>
-                        <h4>Design</h4>
-                        <p>Two distinct directions, refined with you over two generous rounds of revisions.</p>
-                    </div>
-                    <div class="step">
-                        <div class="node">03</div>
-                        <h4>Production</h4>
-                        <p>Printing, foiling, edge painting and hand assembly — with progress photos along the way.</p>
-                    </div>
-                    <div class="step">
-                        <div class="node">04</div>
-                        <h4>Delivery</h4>
-                        <p>Boxed, tissue-wrapped and shipped worldwide, plus digital RSVP setup if you wish.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- GALLERY MARQUEE -->
-    <div class="gallery" aria-label="Gallery of our stationery and weddings">
-        <div class="g-track" id="gTrack">
-            <div class="g-item" data-label="Floral Suites"><img
-                    src="https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&w=800&q=80"
-                    alt="Floral arrangement"></div>
-            <div class="g-item" data-label="Reception Styling"><img
-                    src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80"
-                    alt="Reception table styling"></div>
-            <div class="g-item" data-label="Ceremony"><img
-                    src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80"
-                    alt="Wedding ceremony arch"></div>
-            <div class="g-item" data-label="Golden Hour"><img
-                    src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=800&q=80"
-                    alt="Couple at golden hour"></div>
-            <div class="g-item" data-label="Cakes &amp; Details"><img
-                    src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=800&q=80"
-                    alt="Wedding cake detail"></div>
-            <div class="g-item" data-label="Fine Dining"><img
-                    src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80"
-                    alt="Fine dining table setting"></div>
-            <!-- duplicate for seamless loop -->
-            <div class="g-item" data-label="Floral Suites"><img
-                    src="https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&w=800&q=80"
-                    alt=""></div>
-            <div class="g-item" data-label="Reception Styling"><img
-                    src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80"
-                    alt=""></div>
-            <div class="g-item" data-label="Ceremony"><img
-                    src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80"
-                    alt=""></div>
-            <div class="g-item" data-label="Golden Hour"><img
-                    src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=800&q=80"
-                    alt=""></div>
-            <div class="g-item" data-label="Cakes &amp; Details"><img
-                    src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=800&q=80"
-                    alt=""></div>
-            <div class="g-item" data-label="Fine Dining"><img
-                    src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80"
-                    alt=""></div>
-        </div>
-    </div>
-
-    <!-- SPLIT 2 -->
-    <section class="section">
-        <div class="container split reverse">
-            <div class="split-media media-stack reveal-scale">
-                <div class="media-main">
-                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80"
-                        alt="Wedding rings resting on floral stationery" data-parallax-img="0.05">
-                </div>
-                <div class="media-badge" style="right:auto;left:-18px;bottom:-26px">
-                    <div class="num"><span data-count="7">0</span></div>
-                    <p>Hand finishing<br>stages per suite</p>
-                </div>
-            </div>
-
-            <div>
-                <div class="eyebrow reveal"><span class="bar"></span> Materials</div>
-                <h2 class="display reveal" style="--d:110ms">Paper you can <em class="italic"
-                        style="color:var(--clay-dark)">hear</em> unfold.</h2>
-                <p class="lead reveal" style="--d:190ms">
-                    We source cotton rag papers from three family-run mills, print with vegetable-based inks,
-                    and finish with genuine wax — because the tactile moment is half the memory.
-                </p>
-
-                <div class="feature-list">
-                    <div class="feature-item reveal" style="--d:250ms">
-                        <div class="ic">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.6">
-                                <path d="M12 21s7-4.2 7-9.6A7 7 0 005 11.4C5 16.8 12 21 12 21z"
-                                    stroke-linejoin="round" />
-                                <circle cx="12" cy="11" r="2.5" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h4>Responsibly sourced</h4>
-                            <p>FSC-certified cotton rag, tree-free fibres and carbon-balanced shipping on every order.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="feature-item reveal" style="--d:320ms">
-                        <div class="ic">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.6">
-                                <path
-                                    d="M12 3l2.6 6.1 6.4.6-4.9 4.3 1.5 6.4L12 17.1 6.4 20.4l1.5-6.4L3 9.7l6.4-.6L12 3z"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h4>Archival inks &amp; foils</h4>
-                            <p>Colour-fast for generations — your invitation becomes an heirloom, not a throwaway.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section class="section quotes" id="stories" style="background:linear-gradient(180deg,var(--cream),#F6EEE5)">
-        <div class="container">
-            <div class="sec-head center reveal" style="margin-bottom:2.65rem">
-                <div class="eyebrow center"><span class="bar"></span> Kind Words <span class="bar right"></span></div>
-                <h2 class="display">Stories from <em class="italic" style="color:var(--clay-dark)">our couples</em></h2>
-            </div>
-
-            <div class="quote-track reveal" id="quoteTrack">
-                <figure class="quote active">
-                    <div class="quote-img"><img
-                            src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=500&q=80"
-                            alt="Happy couple"></div>
-                    <div>
-                        <blockquote class="quote-text">“Guests rang us before the RSVPs were even due — just to say the
-                            invitation was the most beautiful thing they'd ever received.”</blockquote>
-                        <figcaption class="quote-author"><span class="line"></span><strong>Amara &amp;
-                                Julian</strong><span>— Florence, Italy</span></figcaption>
-                    </div>
-                </figure>
-
-                <figure class="quote">
-                    <div class="quote-img"><img
-                            src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=500&q=80"
-                            alt="Couple at sunset"></div>
-                    <div>
-                        <blockquote class="quote-text">“The layered vellum suite set the tone for the entire wedding.
-                            Impeccable craft, and genuinely lovely people to work with.”</blockquote>
-                        <figcaption class="quote-author"><span class="line"></span><strong>Noor &amp;
-                                Elias</strong><span>— Marrakech, Morocco</span></figcaption>
-                    </div>
-                </figure>
-
-                <figure class="quote">
-                    <div class="quote-img"><img
-                            src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80"
-                            alt="Couple holding hands"></div>
-                    <div>
-                        <blockquote class="quote-text">“From the first sketch to the wax seal, every detail felt
-                            considered. Three years later, ours is still framed in the hallway.”</blockquote>
-                        <figcaption class="quote-author"><span class="line"></span><strong>Sofia &amp;
-                                Marcus</strong><span>— Copenhagen, Denmark</span></figcaption>
-                    </div>
-                </figure>
-            </div>
-
-            <div class="quote-nav reveal">
-                <button class="q-btn" id="qPrev" aria-label="Previous testimonial">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.7">
-                        <path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </button>
-                <button class="q-btn" id="qNext" aria-label="Next testimonial">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.7">
-                        <path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </button>
-                <div class="dots" id="qDots">
-                    <span class="dot active" data-i="0"></span>
-                    <span class="dot" data-i="1"></span>
-                    <span class="dot" data-i="2"></span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- RSVP / CTA -->
-    <section class="section rsvp" id="rsvp">
-        <div class="rsvp-bg">
-            <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1800&q=80"
-                alt="Elegant candlelit wedding reception">
-        </div>
-        <div class="container">
-            <div class="rsvp-grid">
-                <div>
-                    <div class="eyebrow reveal" style="color:var(--gold-light)"><span class="bar"></span> Begin Your
-                        Suite</div>
-                    <h2 class="display reveal" style="--d:110ms;margin:1.15rem 0 1.15rem">
-                        Let's design something<br><em class="italic" style="color:var(--gold-light)">unforgettable.</em>
-                    </h2>
-                    <p class="lead reveal" style="--d:190ms">
-                        Tell us a little about your celebration and we'll send a curated proposal,
-                        paper samples and pricing within two working days.
-                    </p>
-
-                    <div class="reveal" style="--d:250ms;margin-top:2.35rem;display:grid;gap:1.15rem">
-                        <div style="display:flex;align-items:center;gap:.95rem">
-                            <div
-                                style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(227,196,141,.42);display:grid;place-items:center;color:var(--gold-light);flex:none">
-                                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="1.6">
-                                    <rect x="3" y="5" width="18" height="14" rx="3" />
-                                    <path d="M3.6 7l8.4 6 8.4-6" stroke-linecap="round" />
+                            <!-- CARD FRONT -->
+                            <div class="card-face w-[320px] sm:w-[380px] h-[520px] sm:h-[580px] bg-[#FCF9F3] relative">
+                                <div class="absolute inset-4 border border-gold/55"></div>
+                                <div class="absolute inset-[26px] border border-gold/25"></div>
+                                <!-- corner accents -->
+                                <svg class="absolute top-6 left-6 w-5 h-5 text-gold/60" viewBox="0 0 20 20" fill="none"
+                                    stroke="currentColor" stroke-width="1">
+                                    <path d="M1 19 L1 6 Q1 1 6 1 L19 1" />
                                 </svg>
-                            </div>
-                            <div><strong style="font-weight:500;display:block">hello@vellumandvine.studio</strong><span
-                                    style="color:rgba(255,255,255,.62);font-size:.865rem">Replies within 48 hours</span>
-                            </div>
-                        </div>
-                        <div style="display:flex;align-items:center;gap:.95rem">
-                            <div
-                                style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(227,196,141,.42);display:grid;place-items:center;color:var(--gold-light);flex:none">
-                                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="1.6">
-                                    <path d="M12 21s7-4.2 7-9.6A7 7 0 005 11.4C5 16.8 12 21 12 21z"
-                                        stroke-linejoin="round" />
-                                    <circle cx="12" cy="11" r="2.4" />
+                                <svg class="absolute top-6 right-6 w-5 h-5 text-gold/60" viewBox="0 0 20 20" fill="none"
+                                    stroke="currentColor" stroke-width="1">
+                                    <path d="M19 19 L19 6 Q19 1 14 1 L1 1" />
                                 </svg>
+                                <svg class="absolute bottom-6 left-6 w-5 h-5 text-gold/60" viewBox="0 0 20 20"
+                                    fill="none" stroke="currentColor" stroke-width="1">
+                                    <path d="M1 1 L1 14 Q1 19 6 19 L19 19" />
+                                </svg>
+                                <svg class="absolute bottom-6 right-6 w-5 h-5 text-gold/60" viewBox="0 0 20 20"
+                                    fill="none" stroke="currentColor" stroke-width="1">
+                                    <path d="M19 1 L19 14 Q19 19 14 19 L1 19" />
+                                </svg>
+
+                                <div
+                                    class="h-full flex flex-col items-center justify-center text-center px-8 relative z-10">
+                                    <div
+                                        class="w-14 h-14 rounded-full border border-gold/70 flex items-center justify-center mb-8">
+                                        <span class="font-script text-xl gold-text">A·J</span>
+                                    </div>
+                                    <p class="text-[9px] tracking-[0.38em] uppercase text-ink/55 mb-5">Together with
+                                        their families</p>
+                                    <h2 class="font-script text-[42px] sm:text-5xl gold-text leading-snug">Amara &amp;
+                                        Julian</h2>
+                                    <div class="my-6 flex items-center gap-3">
+                                        <div class="h-px w-9 bg-gold/50"></div>
+                                        <div class="w-1.5 h-1.5 rotate-45 border border-gold"></div>
+                                        <div class="h-px w-9 bg-gold/50"></div>
+                                    </div>
+                                    <p class="font-serif italic text-ink/75 text-[15px] leading-relaxed">request the
+                                        pleasure of your company<br>at the celebration of their marriage</p>
+                                    <div class="mt-7">
+                                        <p class="text-[10px] tracking-[0.32em] uppercase text-gold">Sunday, June 14th,
+                                            2026</p>
+                                        <p class="text-[9px] tracking-[0.22em] uppercase text-ink/45 mt-2">Four o'clock
+                                            in the afternoon</p>
+                                        <p class="font-serif text-ink/60 text-sm mt-3 italic">The Rosewood Estate, Napa
+                                            Valley</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div><strong style="font-weight:500;display:block">Atelier &amp; Showroom</strong><span
-                                    style="color:rgba(255,255,255,.62);font-size:.865rem">14 Via della Vigna,
-                                    Florence</span></div>
+
+                            <!-- CARD BACK -->
+                            <div
+                                class="card-face card-back w-[320px] sm:w-[380px] h-[520px] sm:h-[580px] relative overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=900&auto=format&fit=crop"
+                                    alt="Couple" class="absolute inset-0 w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-[#2E2A26]/72"></div>
+                                <div class="absolute inset-4 border border-gold/55"></div>
+                                <div
+                                    class="h-full flex flex-col items-center justify-center text-center px-9 relative z-10">
+                                    <p class="font-script text-4xl gold-text mb-9">The Details</p>
+                                    <div class="space-y-7 w-full">
+                                        <div>
+                                            <p class="text-[9px] tracking-[0.35em] uppercase text-gold mb-1.5">Ceremony
+                                            </p>
+                                            <p class="font-serif italic text-ivory/90">4:00 PM — The Rosewood Chapel</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-[9px] tracking-[0.35em] uppercase text-gold mb-1.5">Reception
+                                            </p>
+                                            <p class="font-serif italic text-ivory/90">6:00 PM — The Garden Pavilion</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-[9px] tracking-[0.35em] uppercase text-gold mb-1.5">Dress
+                                                Code</p>
+                                            <p class="font-serif italic text-ivory/90">Black Tie Optional</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-10 flex items-center gap-3">
+                                        <div class="h-px w-8 bg-gold/50"></div>
+                                        <div class="w-1.5 h-1.5 rotate-45 border border-gold"></div>
+                                        <div class="h-px w-8 bg-gold/50"></div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
 
-                <div class="form-card reveal-scale" style="--d:180ms">
-                    <form id="rsvpForm" novalidate>
-                        <h3 class="display" style="font-size:1.72rem;margin-bottom:.35rem">Request your proposal</h3>
-                        <p class="muted" style="font-size:.915rem;margin-bottom:1.55rem">No obligation — just beautiful
-                            ideas.</p>
+                <div class="mt-9 flex items-center gap-3 text-[10px] tracking-[0.28em] uppercase text-ink/40">
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                        stroke-width="1.2">
+                        <path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 1v3.5H10" />
+                    </svg>
+                    Click the card to flip &nbsp;·&nbsp; Move mouse to tilt
+                </div>
+            </div>
+        </div>
 
-                        <div class="field-row">
-                            <div class="field">
-                                <input type="text" id="fname" placeholder=" " required>
-                                <label for="fname">First name</label>
-                            </div>
-                            <div class="field">
-                                <input type="text" id="lname" placeholder=" " required>
-                                <label for="lname">Last name</label>
-                            </div>
+        <!-- scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10">
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ==================== COUNTDOWN ==================== -->
+    <section class="relative py-24 md:py-28 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?q=80&w=1800&auto=format&fit=crop" alt=""
+            class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-[#2E2A26]/88"></div>
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+            <p class="font-sans text-[10px] tracking-[0.4em] uppercase text-gold mb-5 reveal">Mark Your Calendars</p>
+            <h2 class="font-script text-5xl md:text-6xl gold-text reveal">Counting Down the Moments</h2>
+            <div class="flourish mt-8 mb-14 reveal"><span class="w-1.5 h-1.5 rotate-45 border border-gold"></span></div>
+            <div class="grid grid-cols-4 gap-3 md:gap-8 reveal">
+                <div class="countdown-box">
+                    <div id="days" class="font-serif text-5xl md:text-7xl text-ivory font-light">00</div>
+                    <div class="mt-3 text-[9px] md:text-[11px] tracking-[0.32em] uppercase text-gold">Days</div>
+                </div>
+                <div class="countdown-box">
+                    <div id="hours" class="font-serif text-5xl md:text-7xl text-ivory font-light">00</div>
+                    <div class="mt-3 text-[9px] md:text-[11px] tracking-[0.32em] uppercase text-gold">Hours</div>
+                </div>
+                <div class="countdown-box">
+                    <div id="minutes" class="font-serif text-5xl md:text-7xl text-ivory font-light">00</div>
+                    <div class="mt-3 text-[9px] md:text-[11px] tracking-[0.32em] uppercase text-gold">Minutes</div>
+                </div>
+                <div class="countdown-box">
+                    <div id="seconds" class="font-serif text-5xl md:text-7xl text-ivory font-light">00</div>
+                    <div class="mt-3 text-[9px] md:text-[11px] tracking-[0.32em] uppercase text-gold">Seconds</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== OUR STORY ==================== -->
+    <section id="story" class="py-24 md:py-32 px-6 md:px-12 relative overflow-hidden">
+        <div class="deco-ring" style="width:420px;height:420px;top:10%;right:-200px;"></div>
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-20 reveal">
+                <p class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">Our Journey</p>
+                <h2 class="font-script text-6xl md:text-7xl gold-text">Our Story</h2>
+                <div class="flourish mt-8"><span class="w-1.5 h-1.5 rotate-45 border border-gold"></span></div>
+            </div>
+
+            <div class="space-y-24 md:space-y-32">
+                <!-- 1 -->
+                <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center reveal">
+                    <div class="overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1000&auto=format&fit=crop"
+                            alt="First meeting" class="timeline-img w-full h-80 md:h-[420px] object-cover">
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="h-px w-10 bg-gold"></div>
+                            <p class="text-[10px] tracking-[0.32em] uppercase text-gold">2019 — The First Hello</p>
                         </div>
+                        <h3 class="font-serif text-3xl md:text-4xl text-ink mb-5 font-light">A Chance Encounter</h3>
+                        <p class="text-ink/65 leading-[1.9] font-light text-[15px]">It began on a rainy afternoon at a
+                            small bookshop in San Francisco. Amara reached for the last copy of a poetry collection at
+                            the exact moment Julian did. Coffee followed the argument over who saw it first — and
+                            neither of them wanted the conversation to end.</p>
+                    </div>
+                </div>
 
-                        <div class="field">
-                            <input type="email" id="email" placeholder=" " required>
-                            <label for="email">Email address</label>
+                <!-- 2 -->
+                <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center reveal">
+                    <div class="md:order-2 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?q=80&w=1000&auto=format&fit=crop"
+                            alt="Falling in love" class="timeline-img w-full h-80 md:h-[420px] object-cover">
+                    </div>
+                    <div class="md:order-1 md:text-right">
+                        <div class="flex items-center gap-4 mb-4 md:justify-end">
+                            <p class="text-[10px] tracking-[0.32em] uppercase text-gold">2021 — Falling in Love</p>
+                            <div class="h-px w-10 bg-gold"></div>
                         </div>
+                        <h3 class="font-serif text-3xl md:text-4xl text-ink mb-5 font-light">Two Years of Adventures
+                        </h3>
+                        <p class="text-ink/65 leading-[1.9] font-light text-[15px]">From sunrise hikes in Yosemite to
+                            getting wonderfully lost in the streets of Kyoto, every adventure only drew them closer.
+                            They built a love rooted in laughter, quiet Sunday mornings, and the certainty that home was
+                            wherever they were together.</p>
+                    </div>
+                </div>
 
-                        <div class="field-row">
-                            <div class="field">
-                                <select id="date" required>
-                                    <option value="" disabled selected></option>
-                                    <option>Spring 2026</option>
-                                    <option>Summer 2026</option>
-                                    <option>Autumn 2026</option>
-                                    <option>Winter 2026</option>
-                                    <option>2027 or later</option>
-                                </select>
-                                <label for="date">Wedding season</label>
-                            </div>
-                            <div class="field">
-                                <select id="guests" required>
-                                    <option value="" disabled selected></option>
-                                    <option>Under 50 guests</option>
-                                    <option>50 – 120 guests</option>
-                                    <option>120 – 250 guests</option>
-                                    <option>250+ guests</option>
-                                </select>
-                                <label for="guests">Guest count</label>
-                            </div>
+                <!-- 3 -->
+                <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center reveal">
+                    <div class="overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1000&auto=format&fit=crop"
+                            alt="The proposal" class="timeline-img w-full h-80 md:h-[420px] object-cover">
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="h-px w-10 bg-gold"></div>
+                            <p class="text-[10px] tracking-[0.32em] uppercase text-gold">2025 — The Proposal</p>
                         </div>
-
-                        <div class="field">
-                            <textarea id="message" placeholder=" "></textarea>
-                            <label for="message">Tell us about your celebration</label>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:.45rem">
-                            <span class="sheen"></span>Send My Request
-                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-                                <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </button>
-                        <p class="form-note">We respect your privacy. No spam, ever.</p>
-                    </form>
-
-                    <div class="success" id="formSuccess">
-                        <div class="check-ring">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="#6F7D66" stroke-width="2">
-                                <path d="M4.5 12.6l4.6 4.6L19.5 7" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                        <h3 class="display" style="font-size:1.95rem">Thank you — it's on its way.</h3>
-                        <p class="muted" style="margin-top:.85rem;max-width:24rem;margin-inline:auto">
-                            Your proposal request has been received. Our studio will be in touch within two working days
-                            with samples, ideas and pricing.
-                        </p>
-                        <button class="btn btn-ghost" id="resetForm" style="margin-top:1.65rem"><span
-                                class="sheen"></span>Send another request</button>
+                        <h3 class="font-serif text-3xl md:text-4xl text-ink mb-5 font-light">A Sunset Promise</h3>
+                        <p class="text-ink/65 leading-[1.9] font-light text-[15px]">On a golden evening overlooking the
+                            Napa Valley vineyards, Julian knelt with a ring and a heart full of hope. Through happy
+                            tears, Amara said yes before he could even finish the question. Now, they invite you to
+                            witness the beginning of forever.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container">
-            <div class="foot-grid">
-                <div class="foot reveal">
-                    <a href="#top" class="brand" style="margin-bottom:1.15rem">
-                        <span class="mark">V&amp;V</span>
-                        <span>Vellum &amp; Vine<small>Invitation Atelier</small></span>
-                    </a>
-                    <p class="muted" style="max-width:22rem;font-size:.945rem;line-height:1.82">
-                        A boutique stationery studio crafting dimensional, motion-rich wedding invitations
-                        for celebrations across the world.
-                    </p>
-                    <div class="socials">
-                        <a href="#" aria-label="Instagram">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.6">
-                                <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" />
-                                <circle cx="12" cy="12" r="4" />
-                                <circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none" />
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Pinterest">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.6">
-                                <circle cx="12" cy="12" r="8.8" />
-                                <path
-                                    d="M10 18l1.7-6.4M9.6 10.4c0-1.7 1.3-3 3-3 1.6 0 2.8 1.1 2.8 2.7 0 2-1.1 3.8-2.7 3.8-.8 0-1.4-.6-1.2-1.4"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Email">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.6">
-                                <rect x="3" y="5" width="18" height="14" rx="3" />
-                                <path d="M3.6 7l8.4 6 8.4-6" stroke-linecap="round" />
-                            </svg>
-                        </a>
+    <!-- ==================== EVENT DETAILS ==================== -->
+    <section id="details" class="py-24 md:py-32 bg-cream relative overflow-hidden">
+        <div class="deco-ring" style="width:500px;height:500px;bottom:-220px;left:-220px;"></div>
+        <div class="max-w-6xl mx-auto px-6 md:px-12">
+            <div class="text-center mb-20 reveal">
+                <p class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">Save the Date</p>
+                <h2 class="font-script text-6xl md:text-7xl gold-text">Event Details</h2>
+                <div class="flourish mt-8"><span class="w-1.5 h-1.5 rotate-45 border border-gold"></span></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Ceremony -->
+                <div class="detail-card reveal">
+                    <svg class="mx-auto" width="52" height="52" viewBox="0 0 52 52" fill="none" stroke="#B8935A"
+                        stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M26 5 L26 11" />
+                        <path d="M22 9 L26 5 L30 9" />
+                        <path d="M12 47 L12 25 Q12 12 26 12 Q40 12 40 25 L40 47" />
+                        <path d="M22 47 L22 33 Q22 29 26 29 Q30 29 30 33 L30 47" />
+                        <line x1="8" y1="47" x2="44" y2="47" />
+                    </svg>
+                    <h3 class="font-serif text-2xl mt-8 mb-3 font-light">The Ceremony</h3>
+                    <p class="text-gold text-[11px] tracking-[0.3em] uppercase mb-5">4:00 PM — 5:30 PM</p>
+                    <p class="text-ink/60 font-light leading-[1.9] text-[14px]">The Rosewood Chapel<br>1200 Vineyard
+                        Lane, Napa Valley<br><span class="italic text-ink/45">Please arrive by 3:30 PM</span></p>
+                </div>
+
+                <!-- Reception -->
+                <div class="detail-card reveal">
+                    <svg class="mx-auto" width="52" height="52" viewBox="0 0 52 52" fill="none" stroke="#B8935A"
+                        stroke-width="1.3" stroke-linecap="round">
+                        <path d="M18 6 L14 20 C14 25 17 27 19 27 L19 40" />
+                        <path d="M14 20 L24 20" />
+                        <path d="M34 6 L38 20 C38 25 35 27 33 27 L33 40" />
+                        <path d="M28 20 L38 20" />
+                        <line x1="19" y1="40" x2="19" y2="44" />
+                        <line x1="33" y1="40" x2="33" y2="44" />
+                        <line x1="13" y1="44" x2="39" y2="44" />
+                        <line x1="22" y1="10" x2="22" y2="14" />
+                        <line x1="30" y1="10" x2="30" y2="14" />
+                    </svg>
+                    <h3 class="font-serif text-2xl mt-8 mb-3 font-light">The Reception</h3>
+                    <p class="text-gold text-[11px] tracking-[0.3em] uppercase mb-5">6:00 PM — Midnight</p>
+                    <p class="text-ink/60 font-light leading-[1.9] text-[14px]">The Garden Pavilion<br>Dinner, dancing
+                        &amp; celebration<br><span class="italic text-ink/45">Cocktail hour begins at 5:30 PM</span></p>
+                </div>
+
+                <!-- Dress code -->
+                <div class="detail-card reveal">
+                    <svg class="mx-auto" width="52" height="52" viewBox="0 0 52 52" fill="none" stroke="#B8935A"
+                        stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M24 22 L10 13 L10 33 L24 27 Z" />
+                        <path d="M28 22 L42 13 L42 33 L28 27 Z" />
+                        <rect x="23" y="20" width="6" height="11" rx="2" />
+                    </svg>
+                    <h3 class="font-serif text-2xl mt-8 mb-3 font-light">Dress Code</h3>
+                    <p class="text-gold text-[11px] tracking-[0.3em] uppercase mb-5">Black Tie Optional</p>
+                    <p class="text-ink/60 font-light leading-[1.9] text-[14px]">Formal evening attire<br>Rich jewel
+                        tones &amp; neutrals encouraged<br><span class="italic text-ink/45">Kindly avoid white &amp;
+                            ivory</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== GALLERY ==================== -->
+    <section id="gallery" class="py-24 md:py-32 px-6 md:px-12">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <p class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">Captured Moments</p>
+                <h2 class="font-script text-6xl md:text-7xl gold-text">Our Gallery</h2>
+                <div class="flourish mt-8"><span class="w-1.5 h-1.5 rotate-45 border border-gold"></span></div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-7">
+                <div class="gallery-item reveal">
+                    <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=900&auto=format&fit=crop"
+                        alt="Engagement" class="w-full h-64 md:h-80 object-cover">
+                    <div class="gallery-overlay absolute inset-0 bg-[#B8935A]/45 flex items-center justify-center">
+                        <p class="font-script text-3xl text-white">The Proposal</p>
                     </div>
                 </div>
-
-                <div class="foot reveal" style="--d:110ms">
-                    <h5>Studio</h5>
-                    <ul>
-                        <li><a href="#craft">Our Craft</a></li>
-                        <li><a href="#process">The Process</a></li>
-                        <li><a href="#stories">Client Stories</a></li>
-                        <li><a href="#rsvp">Book a Fitting</a></li>
-                    </ul>
+                <div class="gallery-item reveal">
+                    <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?q=80&w=900&auto=format&fit=crop"
+                        alt="Together" class="w-full h-64 md:h-80 object-cover">
+                    <div class="gallery-overlay absolute inset-0 bg-[#B8935A]/45 flex items-center justify-center">
+                        <p class="font-script text-3xl text-white">Together</p>
+                    </div>
                 </div>
-
-                <div class="foot reveal" style="--d:190ms">
-                    <h5>Collection</h5>
-                    <ul>
-                        <li><a href="#collection">Gold Foil Suites</a></li>
-                        <li><a href="#collection">Letterpress</a></li>
-                        <li><a href="#collection">Motion Cards</a></li>
-                        <li><a href="#collection">Day-of Stationery</a></li>
-                    </ul>
+                <div class="gallery-item reveal">
+                    <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=900&auto=format&fit=crop"
+                        alt="Bride" class="w-full h-64 md:h-80 object-cover">
+                    <div class="gallery-overlay absolute inset-0 bg-[#B8935A]/45 flex items-center justify-center">
+                        <p class="font-script text-3xl text-white">The Bride</p>
+                    </div>
                 </div>
-
-                <div class="foot reveal" style="--d:270ms">
-                    <h5>Visit the Atelier</h5>
-                    <p class="muted" style="font-size:.945rem;line-height:1.82">
-                        14 Via della Vigna<br>50125 Florence, Italy<br><br>
-                        Mon – Fri · 9:00 – 18:00<br>
-                        Sat · By appointment
-                    </p>
+                <div class="gallery-item reveal">
+                    <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=900&auto=format&fit=crop"
+                        alt="Reception" class="w-full h-64 md:h-80 object-cover">
+                    <div class="gallery-overlay absolute inset-0 bg-[#B8935A]/45 flex items-center justify-center">
+                        <p class="font-script text-3xl text-white">Celebration</p>
+                    </div>
                 </div>
-            </div>
-
-            <div class="foot-bottom">
-                <p>© <span id="year">2025</span> Vellum &amp; Vine Atelier. All rights reserved.</p>
-                <div class="links">
-                    <a href="#">Privacy</a>
-                    <a href="#">Terms</a>
-                    <a href="#">Shipping</a>
-                    <a href="#top">Back to top</a>
+                <div class="gallery-item reveal">
+                    <img src="https://images.unsplash.com/photo-1478146896981-b80fe463b330?q=80&w=900&auto=format&fit=crop"
+                        alt="Flowers" class="w-full h-64 md:h-80 object-cover">
+                    <div class="gallery-overlay absolute inset-0 bg-[#B8935A]/45 flex items-center justify-center">
+                        <p class="font-script text-3xl text-white">Florals</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal">
+                    <img src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?q=80&w=900&auto=format&fit=crop"
+                        alt="Venue" class="w-full h-64 md:h-80 object-cover">
+                    <div class="gallery-overlay absolute inset-0 bg-[#B8935A]/45 flex items-center justify-center">
+                        <p class="font-script text-3xl text-white">The Venue</p>
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- ==================== QUOTE DIVIDER ==================== -->
+    <section class="relative py-24 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1800&auto=format&fit=crop" alt=""
+            class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-[#2E2A26]/80"></div>
+        <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
+            <svg class="mx-auto mb-8 opacity-70" width="42" height="32" viewBox="0 0 42 32" fill="none" stroke="#B8935A"
+                stroke-width="1.2">
+                <path
+                    d="M17 4 C8 8 3 15 3 22 C3 28 7 31 12 31 C16 31 19 28 19 24 C19 20 16 18 13 18 C14 13 17 9 21 6 Z" />
+                <path
+                    d="M38 4 C29 8 24 15 24 22 C24 28 28 31 33 31 C37 31 40 28 40 24 C40 20 37 18 34 18 C35 13 38 9 42 6 Z" />
+            </svg>
+            <p class="font-serif italic text-2xl md:text-3xl text-ivory/90 leading-relaxed font-light reveal">"And
+                suddenly, all the love songs were about you."</p>
+            <div class="flourish mt-10 reveal"><span class="w-1.5 h-1.5 rotate-45 border border-gold"></span></div>
+        </div>
+    </section>
+
+    <!-- ==================== RSVP ==================== -->
+    <section id="rsvp" class="py-24 md:py-32 bg-cream relative overflow-hidden">
+        <div class="deco-ring" style="width:460px;height:460px;top:-180px;right:-180px;"></div>
+        <div class="deco-ring" style="width:380px;height:380px;bottom:-160px;left:-140px;"></div>
+
+        <div class="max-w-2xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <p class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">Be Our Guest</p>
+                <h2 class="font-script text-6xl md:text-7xl gold-text">RSVP</h2>
+                <div class="flourish mt-8"><span class="w-1.5 h-1.5 rotate-45 border border-gold"></span></div>
+                <p class="mt-8 text-ink/55 font-light text-[15px]">Kindly respond by <span class="text-gold">May 1st,
+                        2026</span> so we can prepare a wonderful evening for you.</p>
+            </div>
+
+            <form id="rsvpForm" class="space-y-10 reveal" novalidate>
+                <div>
+                    <label class="block text-[10px] tracking-[0.3em] uppercase text-ink/50 mb-1">Full Name</label>
+                    <input type="text" id="guestName" required class="form-input" placeholder="Your full name">
+                </div>
+                <div>
+                    <label class="block text-[10px] tracking-[0.3em] uppercase text-ink/50 mb-1">Email Address</label>
+                    <input type="email" required class="form-input" placeholder="your@email.com">
+                </div>
+                <div>
+                    <label class="block text-[10px] tracking-[0.3em] uppercase text-ink/50 mb-3">Will You Be
+                        Attending?</label>
+                    <div class="flex flex-wrap gap-4">
+                        <label class="radio-card">
+                            <input type="radio" name="attend" value="yes" checked>
+                            <span class="radio-dot"></span>
+                            <span>Joyfully Accept</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="attend" value="no">
+                            <span class="radio-dot"></span>
+                            <span>Regretfully Decline</span>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[10px] tracking-[0.3em] uppercase text-ink/50 mb-1">Number of
+                        Guests</label>
+                    <div class="relative">
+                        <select class="form-input pr-8">
+                            <option>1 Guest</option>
+                            <option>2 Guests</option>
+                            <option>3 Guests</option>
+                            <option>4 Guests</option>
+                        </select>
+                        <svg class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" width="12" height="8"
+                            viewBox="0 0 12 8" fill="none" stroke="#B8935A" stroke-width="1.5">
+                            <path d="M1 1 L6 6 L11 1" />
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[10px] tracking-[0.3em] uppercase text-ink/50 mb-1">Message for the Couple
+                        <span class="normal-case tracking-normal text-ink/35">(optional)</span></label>
+                    <textarea rows="3" class="form-input resize-none" placeholder="Share your wishes..."></textarea>
+                </div>
+                <button type="submit" class="btn-gold w-full text-center">Confirm RSVP</button>
+            </form>
+
+            <!-- Success state -->
+            <div id="rsvpSuccess" class="hidden text-center py-14">
+                <div class="w-20 h-20 rounded-full border border-gold mx-auto flex items-center justify-center mb-9">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#B8935A" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 15 L12 21 L24 9" />
+                    </svg>
+                </div>
+                <h3 class="font-script text-5xl gold-text mb-5">Thank You!</h3>
+                <p class="text-ink/55 font-light leading-relaxed max-w-sm mx-auto">Your response has been received with
+                    joy. We cannot wait to celebrate this magical day with you.</p>
+                <div class="flourish mt-10"><span class="w-1.5 h-1.5 rotate-45 border border-gold"></span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="py-20 md:py-24 text-center bg-[#2E2A26] text-ivory relative overflow-hidden">
+        <div class="deco-ring"
+            style="width:340px;height:340px;top:-160px;left:50%;transform:translateX(-50%);border-color:rgba(184,147,90,0.12);">
+        </div>
+        <div class="relative z-10">
+            <div class="w-14 h-14 rounded-full border border-gold/60 flex items-center justify-center mx-auto mb-8">
+                <span class="font-script text-xl gold-text">A·J</span>
+            </div>
+            <div class="font-script text-5xl md:text-6xl gold-text mb-6">Amara &amp; Julian</div>
+            <div class="flourish mb-8"><span class="w-1.5 h-1.5 rotate-45 border border-gold"></span></div>
+            <p class="text-ivory/50 text-[11px] tracking-[0.32em] uppercase">June 14, 2026 &nbsp;·&nbsp; The Rosewood
+                Estate &nbsp;·&nbsp; Napa Valley</p>
+            <p class="mt-12 text-ivory/25 text-[10px] tracking-[0.25em] uppercase">Crafted with love, for a love like
+                ours</p>
         </div>
     </footer>
 
+    <!-- ==================== SCRIPTS ==================== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
-        (function () {
-            "use strict";
-            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            (function () {
+                'use strict';
 
-            /* ---------- Hero load ---------- */
-            window.addEventListener('load', () => document.body.classList.add('loaded'));
-            // Fallback in case load fires late (images)
-            setTimeout(() => document.body.classList.add('loaded'), 700);
-
-            /* ---------- Year ---------- */
-            const yearEl = document.getElementById('year');
-            if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-            /* ---------- Scroll progress + nav state + parallax ---------- */
-            const nav = document.getElementById('nav');
-            const progressBar = document.getElementById('progressBar');
-            const parallaxEls = Array.from(document.querySelectorAll('[data-parallax]'));
-            const parallaxImgs = Array.from(document.querySelectorAll('[data-parallax-img]'));
-            let ticking = false;
-
-            function onScroll() {
-                const y = window.pageYOffset;
-                const docH = Math.max(document.body.scrollHeight - window.innerHeight, 1);
-                if (progressBar) progressBar.style.width = Math.min((y / docH) * 100, 100) + '%';
-                if (nav) nav.classList.toggle('scrolled', y > 42);
-
-                if (!reduceMotion) {
-                    const vh = window.innerHeight;
-                    parallaxEls.forEach(el => {
-                        const speed = parseFloat(el.dataset.parallax) || 0.1;
-                        const rect = el.getBoundingClientRect();
-                        if (rect.bottom > -200 && rect.top < vh + 200) {
-                            el.style.transform = 'translate3d(0,' + ((vh / 2 - (rect.top + rect.height / 2)) * speed).toFixed(2) + 'px,0)';
-                        }
-                    });
-                    parallaxImgs.forEach(img => {
-                        const speed = parseFloat(img.dataset.parallaxImg) || 0.05;
-                        const rect = img.getBoundingClientRect();
-                        if (rect.bottom > -100 && rect.top < vh + 100) {
-                            const offset = (vh / 2 - (rect.top + rect.height / 2)) * speed;
-                            img.style.transform = 'scale(1.14) translate3d(0,' + offset.toFixed(2) + 'px,0)';
-                        }
-                    });
-                }
-                ticking = false;
-            }
-            window.addEventListener('scroll', () => {
-                if (!ticking) { ticking = true; window.requestAnimationFrame(onScroll); }
-            }, { passive: true });
-            onScroll();
-
-            /* ---------- Mobile menu ---------- */
-            const burger = document.getElementById('burger');
-            const mobileMenu = document.getElementById('mobileMenu');
-            if (burger) {
-                burger.addEventListener('click', () => {
-                    const open = document.body.classList.toggle('menu-open');
-                    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-                    document.body.style.overflow = open ? 'hidden' : '';
-                    if (mobileMenu) {
-                        Array.from(mobileMenu.querySelectorAll('a')).forEach((a, i) => {
-                            a.style.transitionDelay = open ? (0.12 + i * 0.075) + 's' : '0s';
-                        });
-                    }
-                });
-                if (mobileMenu) {
-                    mobileMenu.addEventListener('click', e => {
-                        if (e.target.tagName === 'A') {
-                            document.body.classList.remove('menu-open');
-                            document.body.style.overflow = '';
-                            burger.setAttribute('aria-expanded', 'false');
-                        }
-                    });
-                }
-            }
-
-            /* ---------- Reveal on scroll ---------- */
-            const revealEls = document.querySelectorAll('.reveal, .reveal-scale');
-            if ('IntersectionObserver' in window) {
-                const io = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('in');
-                            io.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-                revealEls.forEach(el => io.observe(el));
-            } else {
-                revealEls.forEach(el => el.classList.add('in'));
-            }
-
-            /* ---------- Timeline draw ---------- */
-            const timeline = document.getElementById('timeline');
-            if (timeline && 'IntersectionObserver' in window) {
-                const tio = new IntersectionObserver((entries) => {
-                    entries.forEach(e => {
-                        if (e.isIntersecting) {
-                            timeline.classList.add('is-visible');
-                            const nodes = timeline.querySelectorAll('.step .node');
-                            nodes.forEach((n, i) => n.style.transitionDelay = (0.22 + i * 0.16) + 's');
-                            tio.disconnect();
-                        }
-                    });
-                }, { threshold: 0.25 });
-                tio.observe(timeline);
-            } else if (timeline) {
-                timeline.classList.add('is-visible');
-            }
-
-            /* ---------- Counters ---------- */
-            const counters = document.querySelectorAll('[data-count]');
-            function animateCount(el) {
-                const target = parseFloat(el.dataset.count) || 0;
-                const duration = 1650;
-                const start = performance.now();
-                const isInt = Number.isInteger(target);
-                function frame(now) {
-                    const p = Math.min((now - start) / duration, 1);
-                    const eased = 1 - Math.pow(1 - p, 3);
-                    const val = target * eased;
-                    el.textContent = isInt ? Math.round(val).toLocaleString() : val.toFixed(1);
-                    if (p < 1) requestAnimationFrame(frame);
-                    else el.textContent = isInt ? target.toLocaleString() : target.toFixed(1);
-                }
-                requestAnimationFrame(frame);
-            }
-            if ('IntersectionObserver' in window) {
-                const cio = new IntersectionObserver((entries) => {
-                    entries.forEach(e => {
-                        if (e.isIntersecting) {
-                            animateCount(e.target);
-                            cio.unobserve(e.target);
-                        }
-                    });
-                }, { threshold: 0.5 });
-                counters.forEach(c => cio.observe(c));
-            } else {
-                counters.forEach(c => c.textContent = c.dataset.count);
-            }
-
-            /* ---------- Countdown ---------- */
-            const cdEls = {
-                d: document.getElementById('cd-days'),
-                h: document.getElementById('cd-hours'),
-                m: document.getElementById('cd-mins'),
-                s: document.getElementById('cd-secs')
-            };
-            const targetDate = new Date();
-            targetDate.setMonth(targetDate.getMonth() + 4);
-            targetDate.setHours(16, 0, 0, 0);
-
-            function pad(n) { return String(Math.max(0, n)).padStart(2, '0'); }
-            function setNum(el, val) {
-                if (!el) return;
-                const v = pad(val);
-                if (el.textContent !== v) {
-                    el.textContent = v;
-                    if (!reduceMotion) {
-                        el.classList.remove('tick');
-                        void el.offsetWidth;
-                        el.classList.add('tick');
-                    }
-                }
-            }
-            function tickCountdown() {
-                const diff = targetDate.getTime() - Date.now();
-                const total = Math.max(diff, 0);
-                const sec = Math.floor(total / 1000);
-                setNum(cdEls.d, Math.floor(sec / 86400));
-                setNum(cdEls.h, Math.floor((sec % 86400) / 3600));
-                setNum(cdEls.m, Math.floor((sec % 3600) / 60));
-                setNum(cdEls.s, sec % 60);
-            }
-            tickCountdown();
-            setInterval(tickCountdown, 1000);
-
-            /* ---------- Hero 3D card tilt + shine ---------- */
-            const cardStage = document.getElementById('cardStage');
-            const card3d = document.getElementById('card3d');
-            const cardShine = document.getElementById('cardShine');
-            const hero = document.querySelector('.hero');
-
-            if (card3d && hero && !reduceMotion && window.matchMedia('(pointer:fine)').matches) {
-                let rafId = null;
-                hero.addEventListener('mousemove', (e) => {
-                    if (rafId) return;
-                    rafId = requestAnimationFrame(() => {
-                        const r = hero.getBoundingClientRect();
-                        const px = (e.clientX - r.left) / r.width;
-                        const py = (e.clientY - r.top) / r.height;
-                        const rotY = -19 + (px - 0.5) * 26;
-                        const rotX = 7 - (py - 0.5) * 20;
-                        card3d.style.transform = `rotateY(${rotY.toFixed(2)}deg) rotateX(${rotX.toFixed(2)}deg) rotateZ(1.4deg)`;
-                        if (cardShine) {
-                            cardShine.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
-                            cardShine.style.setProperty('--my', (py * 100).toFixed(1) + '%');
-                        }
-                        rafId = null;
-                    });
-                });
-                hero.addEventListener('mouseleave', () => {
-                    card3d.style.transform = 'rotateY(-19deg) rotateX(7deg) rotateZ(1.4deg)';
-                });
-            }
-
-            /* ---------- Magnetic buttons ---------- */
-            if (window.matchMedia('(pointer:fine)').matches && !reduceMotion) {
-                document.querySelectorAll('.magnetic').forEach(btn => {
-                    btn.addEventListener('mousemove', (e) => {
-                        const r = btn.getBoundingClientRect();
-                        const x = e.clientX - r.left - r.width / 2;
-                        const y = e.clientY - r.top - r.height / 2;
-                        btn.style.transform = `translate(${(x * 0.16).toFixed(2)}px, ${(y * 0.22 - 3).toFixed(2)}px)`;
-                    });
-                    btn.addEventListener('mouseleave', () => {
-                        btn.style.transform = '';
-                    });
-                });
-            }
-
-            /* ---------- Collection filters ---------- */
-            const filters = document.getElementById('filters');
-            const cards = Array.from(document.querySelectorAll('#cardsGrid .flip'));
-            if (filters) {
-                filters.addEventListener('click', (e) => {
-                    const btn = e.target.closest('.chip');
-                    if (!btn) return;
-                    filters.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-                    btn.classList.add('active');
-                    const f = btn.dataset.filter;
-                    cards.forEach((card, i) => {
-                        const match = (f === 'all' || card.dataset.cat === f);
-                        if (match) {
-                            card.style.display = '';
-                            card.style.transitionDelay = (i * 70) + 'ms';
-                            requestAnimationFrame(() => {
-                                card.style.opacity = '1';
-                                card.style.transform = 'none';
-                            });
-                        } else {
-                            card.style.opacity = '0';
-                            card.style.transform = 'scale(.94) translateY(14px)';
-                            setTimeout(() => {
-                                if (!(f === 'all' || card.dataset.cat === f)) card.style.display = 'none';
-                            }, 320);
-                        }
-                    });
-                });
-            }
-
-            /* Flip cards: tap support for touch devices */
-            cards.forEach(card => {
-                card.addEventListener('click', (e) => {
-                    if (e.target.closest('a')) return;
-                    if (!window.matchMedia('(hover:hover)').matches) {
-                        cards.forEach(c => { if (c !== card) c.classList.remove('flipped'); });
-                        card.classList.toggle('flipped');
-                    }
-                });
-                card.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        card.classList.toggle('flipped');
-                    }
-                });
-            });
-
-            /* ---------- Testimonials slider ---------- */
-            const quotes = Array.from(document.querySelectorAll('.quote'));
-            const dots = Array.from(document.querySelectorAll('#qDots .dot'));
-            const qPrev = document.getElementById('qPrev');
-            const qNext = document.getElementById('qNext');
-            let qIndex = 0, qTimer = null;
-
-            function showQuote(i) {
-                if (!quotes.length) return;
-                qIndex = (i + quotes.length) % quotes.length;
-                quotes.forEach((q, n) => q.classList.toggle('active', n === qIndex));
-                dots.forEach((d, n) => d.classList.toggle('active', n === qIndex));
-            }
-            function startQTimer() {
-                if (reduceMotion) return;
-                clearInterval(qTimer);
-                qTimer = setInterval(() => showQuote(qIndex + 1), 7000);
-            }
-            if (qPrev) qPrev.addEventListener('click', () => { showQuote(qIndex - 1); startQTimer(); });
-            if (qNext) qNext.addEventListener('click', () => { showQuote(qIndex + 1); startQTimer(); });
-            dots.forEach(d => d.addEventListener('click', () => { showQuote(parseInt(d.dataset.i, 10)); startQTimer(); }));
-            startQTimer();
-
-            /* ---------- Form ---------- */
-            const form = document.getElementById('rsvpForm');
-            const success = document.getElementById('formSuccess');
-            const resetBtn = document.getElementById('resetForm');
-
-            document.querySelectorAll('.field select').forEach(sel => {
-                sel.addEventListener('change', () => sel.classList.toggle('filled', !!sel.value));
-                if (sel.value) sel.classList.add('filled');
-            });
-
-            if (form) {
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    let valid = true;
-                    form.querySelectorAll('[required]').forEach(field => {
-                        const ok = field.value.trim() !== '' &&
-                            (field.type !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim()));
-                        if (!ok) {
-                            valid = false;
-                            field.style.borderColor = '#B4674F';
-                            field.style.boxShadow = '0 0 0 4px rgba(180,103,79,.12)';
-                            field.addEventListener('input', function clear() {
-                                field.style.borderColor = '';
-                                field.style.boxShadow = '';
-                                field.removeEventListener('input', clear);
-                            });
-                        }
-                    });
-                    if (!valid) return;
-
-                    const btn = form.querySelector('button[type="submit"]');
-                    const original = btn.innerHTML;
-                    btn.innerHTML = '<span class="sheen"></span>Sending…';
-                    btn.disabled = true;
-
-                    setTimeout(() => {
-                        form.style.display = 'none';
-                        if (success) success.classList.add('show');
-                        btn.innerHTML = original;
-                        btn.disabled = false;
-                    }, 850);
-                });
-            }
-
-            if (resetBtn && form && success) {
-                resetBtn.addEventListener('click', () => {
-                    form.reset();
-                    document.querySelectorAll('.field select').forEach(s => s.classList.remove('filled'));
-                    success.classList.remove('show');
-                    form.style.display = '';
-                });
-            }
-
-            /* ---------- Petals canvas (hero) ---------- */
-            const canvas = document.getElementById('petals');
-            if (canvas && canvas.getContext && !reduceMotion) {
-                const ctx = canvas.getContext('2d');
-                let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
-                let petals = [];
-                const COLORS = [
-                    'rgba(227,196,141,',
-                    'rgba(255,236,210,',
-                    'rgba(212,166,120,',
-                    'rgba(255,255,255,'
-                ];
-
-                function resize() {
-                    const rect = canvas.getBoundingClientRect();
-                    w = rect.width; h = rect.height;
-                    canvas.width = Math.floor(w * dpr);
-                    canvas.height = Math.floor(h * dpr);
-                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-                    const count = Math.min(34, Math.max(14, Math.round(w / 42)));
-                    petals = new Array(count).fill(0).map(() => spawn(true));
-                }
-
-                function spawn(initial) {
-                    return {
-                        x: Math.random() * w,
-                        y: initial ? Math.random() * h : -30 - Math.random() * 120,
-                        r: 4 + Math.random() * 11,
-                        speed: 0.22 + Math.random() * 0.62,
-                        drift: (Math.random() - 0.5) * 0.55,
-                        rot: Math.random() * Math.PI * 2,
-                        rotSpeed: (Math.random() - 0.5) * 0.017,
-                        alpha: 0.16 + Math.random() * 0.42,
-                        color: COLORS[Math.floor(Math.random() * COLORS.length)],
-                        sway: Math.random() * Math.PI * 2,
-                        swaySpeed: 0.004 + Math.random() * 0.010
-                    };
-                }
-
-                let raf = null, running = true;
-                function draw() {
-                    if (!running) { raf = null; return; }
-                    ctx.clearRect(0, 0, w, h);
-                    for (let i = 0; i < petals.length; i++) {
-                        const p = petals[i];
-                        p.y += p.speed;
-                        p.sway += p.swaySpeed;
-                        p.x += p.drift + Math.sin(p.sway) * 0.55;
-                        p.rot += p.rotSpeed;
-
-                        if (p.y > h + 40 || p.x < -60 || p.x > w + 60) {
-                            petals[i] = spawn(false);
-                            continue;
-                        }
-
-                        ctx.save();
-                        ctx.translate(p.x, p.y);
-                        ctx.rotate(p.rot);
-                        ctx.scale(1, 0.56 + Math.sin(p.sway) * 0.16);
-                        const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, p.r);
-                        grad.addColorStop(0, p.color + (p.alpha * 1.15).toFixed(3) + ')');
-                        grad.addColorStop(1, p.color + '0)');
-                        ctx.fillStyle = grad;
-                        ctx.beginPath();
-                        ctx.arc(0, 0, p.r, 0, Math.PI * 2);
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    raf = requestAnimationFrame(draw);
-                }
-
-                resize();
-                draw();
-
-                let resizeTimer = null;
-                window.addEventListener('resize', () => {
-                    clearTimeout(resizeTimer);
-                    resizeTimer = setTimeout(() => {
-                        dpr = Math.min(window.devicePixelRatio || 1, 2);
-                        resize();
-                    }, 180);
+                /* ---------- Preloader ---------- */
+                window.addEventListener('load', function () {
+                    setTimeout(function () {
+                        document.getElementById('preloader').classList.add('done');
+                    }, 1300);
                 });
 
-                document.addEventListener('visibilitychange', () => {
-                    if (document.hidden) {
-                        running = false;
-                        if (raf) cancelAnimationFrame(raf);
-                        raf = null;
+                /* ---------- Navbar scroll state ---------- */
+                var nav = document.getElementById('nav');
+                window.addEventListener('scroll', function () {
+                    nav.classList.toggle('scrolled', window.scrollY > 80);
+                });
+
+                /* ---------- Mobile menu ---------- */
+                var menuBtn = document.getElementById('menuBtn');
+                var mobileMenu = document.getElementById('mobileMenu');
+                var menuOpen = false;
+
+                function toggleMenu(force) {
+                    menuOpen = typeof force === 'boolean' ? force : !menuOpen;
+                    if (menuOpen) {
+                        mobileMenu.classList.remove('hidden');
+                        mobileMenu.classList.add('flex');
+                        requestAnimationFrame(function () { mobileMenu.style.opacity = '1'; });
                     } else {
-                        if (!running) { running = true; draw(); }
+                        mobileMenu.style.opacity = '0';
+                        setTimeout(function () {
+                            mobileMenu.classList.add('hidden');
+                            mobileMenu.classList.remove('flex');
+                        }, 350);
+                    }
+                }
+                menuBtn.addEventListener('click', function () { toggleMenu(); });
+                document.querySelectorAll('.mobile-link').forEach(function (link) {
+                    link.addEventListener('click', function () { toggleMenu(false); });
+                });
+
+                /* ---------- 3D Card tilt (mouse) ---------- */
+                var heroSection = document.getElementById('home');
+                var cardTilt = document.getElementById('cardTilt');
+
+                heroSection.addEventListener('mousemove', function (e) {
+                    var rect = heroSection.getBoundingClientRect();
+                    var x = (e.clientX - rect.left) / rect.width - 0.5;
+                    var y = (e.clientY - rect.top) / rect.height - 0.5;
+                    cardTilt.style.transform = 'rotateY(' + (x * 16) + 'deg) rotateX(' + (-y * 16) + 'deg)';
+                });
+                heroSection.addEventListener('mouseleave', function () {
+                    cardTilt.style.transform = 'rotateY(0deg) rotateX(0deg)';
+                });
+
+                /* ---------- 3D Card flip (click) ---------- */
+                var cardFlip = document.getElementById('cardFlip');
+                cardFlip.addEventListener('click', function () {
+                    cardFlip.classList.toggle('flipped');
+                });
+
+                /* ---------- Floating petals ---------- */
+                var petalsContainer = document.getElementById('petals');
+                var petalColors = ['#E9D8C8', '#F0E2D0', '#DCC3A8', '#EFD9C4', '#E2CBB2'];
+                for (var i = 0; i < 16; i++) {
+                    var petal = document.createElement('div');
+                    petal.className = 'petal';
+                    var size = 8 + Math.random() * 12;
+                    petal.style.width = size + 'px';
+                    petal.style.height = (size * 1.5) + 'px';
+                    petal.style.left = (Math.random() * 100) + '%';
+                    petal.style.background = petalColors[Math.floor(Math.random() * petalColors.length)];
+                    petal.style.borderRadius = '50% 4px 50% 50%';
+                    petal.style.animationDuration = (9 + Math.random() * 11) + 's';
+                    petal.style.animationDelay = (Math.random() * 14) + 's';
+                    petalsContainer.appendChild(petal);
+                }
+
+                /* ---------- Countdown timer ---------- */
+                var weddingDate = new Date('2026-06-14T16:00:00').getTime();
+                function updateCountdown() {
+                    var diff = weddingDate - Date.now();
+                    if (diff < 0) diff = 0;
+                    var d = Math.floor(diff / 86400000);
+                    var h = Math.floor((diff % 86400000) / 3600000);
+                    var m = Math.floor((diff % 3600000) / 60000);
+                    var s = Math.floor((diff % 60000) / 1000);
+                    document.getElementById('days').textContent = String(d).padStart(2, '0');
+                    document.getElementById('hours').textContent = String(h).padStart(2, '0');
+                    document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+                    document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+                }
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+
+                /* ---------- RSVP form ---------- */
+                var rsvpForm = document.getElementById('rsvpForm');
+                rsvpForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    var nameField = document.getElementById('guestName');
+                    if (!nameField.value.trim()) {
+                        nameField.focus();
+                        nameField.style.borderColor = '#c0392b';
+                        setTimeout(function () { nameField.style.borderColor = ''; }, 2000);
+                        return;
+                    }
+                    rsvpForm.classList.add('hidden');
+                    var success = document.getElementById('rsvpSuccess');
+                    success.classList.remove('hidden');
+                    if (typeof gsap !== 'undefined') {
+                        gsap.from(success, { opacity: 0, scale: 0.92, y: 20, duration: 0.7, ease: 'back.out(1.6)' });
                     }
                 });
-            }
 
-            /* ---------- Smooth anchor offset for fixed nav ---------- */
-            document.querySelectorAll('a[href^="#"]').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    const id = link.getAttribute('href');
-                    if (!id || id === '#' || id.length < 2) return;
-                    const target = document.querySelector(id);
-                    if (!target) return;
-                    e.preventDefault();
-                    const navH = nav ? nav.offsetHeight : 0;
-                    const top = target.getBoundingClientRect().top + window.pageYOffset - navH - 12;
-                    window.scrollTo({ top: Math.max(top, 0), behavior: reduceMotion ? 'auto' : 'smooth' });
-                });
-            });
+                /* ---------- GSAP animations ---------- */
+                if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                    gsap.registerPlugin(ScrollTrigger);
 
-            /* ---------- Image fallback ---------- */
-            document.querySelectorAll('img').forEach(img => {
-                img.addEventListener('error', function () {
-                    this.style.background = 'linear-gradient(135deg,#E8D8C4,#C9A781)';
-                    this.style.minHeight = this.style.minHeight || '220px';
-                    this.removeAttribute('src');
-                });
-            });
+                    // Hero entrance
+                    gsap.from('.hero-text > *', {
+                        opacity: 0, y: 34, stagger: 0.16, duration: 1.1, delay: 1.5, ease: 'power3.out'
+                    });
+                    gsap.from('#cardTilt', {
+                        opacity: 0, y: 70, rotateY: -24, duration: 1.3, delay: 1.8, ease: 'power3.out'
+                    });
 
-        })();
+                    // Scroll reveals
+                    gsap.utils.toArray('.reveal').forEach(function (el) {
+                        gsap.to(el, {
+                            opacity: 1, y: 0, duration: 1.1, ease: 'power3.out',
+                            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+                        });
+                    });
+
+                    // Subtle parallax on countdown background
+                    gsap.to('#home .deco-ring', {
+                        y: -40, ease: 'none',
+                        scrollTrigger: { trigger: '#home', start: 'top top', end: 'bottom top', scrub: 1 }
+                    });
+                } else {
+                    // Fallback if GSAP fails to load
+                    document.querySelectorAll('.reveal').forEach(function (el) {
+                        el.style.opacity = '1';
+                        el.style.transform = 'none';
+                    });
+                }
+            })();
     </script>
 </body>
 

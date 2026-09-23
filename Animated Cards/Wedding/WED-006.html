@@ -189,8 +189,10 @@
             const container = document.getElementById('canvas-container');
             const scene = new THREE.Scene();
             scene.fog = new THREE.FogExp2(0x0a0612, 0.018);
+
             const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 0.1, 200);
             camera.position.set(0, 1.8, 9.5);
+
             const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(innerWidth, innerHeight);
             renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -200,6 +202,7 @@
             renderer.toneMappingExposure = 1.15;
             renderer.outputEncoding = THREE.sRGBEncoding;
             container.appendChild(renderer.domElement);
+
             const controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.06;
@@ -210,8 +213,10 @@
             controls.target.set(0, 0.3, 0);
             controls.autoRotate = false;
             controls.autoRotateSpeed = 0.6;
-            const ambient = new THREE.AmbientLight(0x2a1a3a, 0.55);
-            scene.add(ambient);
+
+            /* --- Lighting --- */
+            scene.add(new THREE.AmbientLight(0x2a1a3a, 0.55));
+
             const keyLight = new THREE.DirectionalLight(0xffe8c0, 1.4);
             keyLight.position.set(5, 10, 7);
             keyLight.castShadow = true;
@@ -224,24 +229,30 @@
             keyLight.shadow.camera.bottom = -10;
             keyLight.shadow.bias = -0.0003;
             scene.add(keyLight);
+
             const fillLight = new THREE.DirectionalLight(0xc8a0ff, 0.45);
             fillLight.position.set(-6, 4, -4);
             scene.add(fillLight);
+
             const rimLight = new THREE.PointLight(0xf5d78e, 1.8, 20);
             rimLight.position.set(0, 3, -3);
             scene.add(rimLight);
+
             const softGlow = new THREE.PointLight(0xff9ec8, 0.6, 15);
             softGlow.position.set(-2, 1, 4);
             scene.add(softGlow);
+
+            /* --- Card --- */
             const cardGroup = new THREE.Group();
             scene.add(cardGroup);
             const CARD_W = 4.2, CARD_H = 5.8, CARD_D = 0.06;
+
+            /* --- Texture helpers --- */
             function createPaperTexture(w, h, opts = {}) {
                 const c = document.createElement('canvas');
                 c.width = w; c.height = h;
                 const ctx = c.getContext('2d');
-                const bg = opts.bg || '#faf6f0';
-                ctx.fillStyle = bg;
+                ctx.fillStyle = opts.bg || '#faf6f0';
                 ctx.fillRect(0, 0, w, h);
                 const g = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w * 0.7);
                 g.addColorStop(0, 'rgba(255,250,240,0.3)');
@@ -250,8 +261,7 @@
                 ctx.fillRect(0, 0, w, h);
                 for (let i = 0; i < 8000; i++) {
                     const x = Math.random() * w, y = Math.random() * h;
-                    const a = Math.random() * 0.06;
-                    ctx.fillStyle = `rgba(120,90,50,${a})`;
+                    ctx.fillStyle = `rgba(120,90,50,${Math.random() * 0.06})`;
                     ctx.fillRect(x, y, 1.2, 1.2);
                 }
                 if (opts.border) {
@@ -259,7 +269,6 @@
                     ctx.lineWidth = opts.borderWidth || 8;
                     const m = opts.borderMargin || 40;
                     ctx.strokeRect(m, m, w - m * 2, h - m * 2);
-                    ctx.strokeStyle = opts.borderColor || '#c9a84c';
                     ctx.lineWidth = 2;
                     const m2 = m + 16;
                     ctx.strokeRect(m2, m2, w - m2 * 2, h - m2 * 2);
@@ -322,18 +331,13 @@
                 ctx.arc(cx, cy, 4, 0, Math.PI * 2);
                 ctx.stroke();
             }
+
+            /* --- Textures --- */
             const coverTex = createPaperTexture(1024, 1408, {
                 bg: '#f7f0e6',
-                border: true,
-                borderColor: '#c9a84c',
-                borderWidth: 10,
-                borderMargin: 48,
-                ornament: true,
-                ornamentY: 280,
-                ornamentScale: 1.4,
-                flourish: true,
-                flourishY: 980,
-                flourishW: 260,
+                border: true, borderColor: '#c9a84c', borderWidth: 10, borderMargin: 48,
+                ornament: true, ornamentY: 280, ornamentScale: 1.4,
+                flourish: true, flourishY: 980, flourishW: 260,
                 lines: [
                     { text: 'You\'re Invited', font: 'italic 52px "Cormorant Garamond"', color: '#8b7355', y: 420, alpha: 0.85 },
                     { text: 'Sophia & James', font: '120px "Great Vibes"', color: '#2c1810', y: 600 },
@@ -342,15 +346,11 @@
                     { text: '✦', font: '28px serif', color: '#c9a84c', y: 1080 }
                 ]
             });
+
             const insideLeftTex = createPaperTexture(1024, 1408, {
                 bg: '#faf6f0',
-                border: true,
-                borderColor: '#c9a84c',
-                borderWidth: 6,
-                borderMargin: 40,
-                ornament: true,
-                ornamentY: 200,
-                ornamentScale: 0.9,
+                border: true, borderColor: '#c9a84c', borderWidth: 6, borderMargin: 40,
+                ornament: true, ornamentY: 200, ornamentScale: 0.9,
                 lines: [
                     { text: 'Together with their families', font: 'italic 32px "Cormorant Garamond"', color: '#6b5535', y: 340 },
                     { text: 'Sophia Elizabeth Hart', font: '72px "Great Vibes"', color: '#2c1810', y: 480 },
@@ -363,18 +363,12 @@
                     { text: 'at half past four in the afternoon', font: 'italic 28px "Cormorant Garamond"', color: '#6b5535', y: 1120 }
                 ]
             });
+
             const insideRightTex = createPaperTexture(1024, 1408, {
                 bg: '#faf6f0',
-                border: true,
-                borderColor: '#c9a84c',
-                borderWidth: 6,
-                borderMargin: 40,
-                ornament: true,
-                ornamentY: 200,
-                ornamentScale: 0.9,
-                flourish: true,
-                flourishY: 720,
-                flourishW: 200,
+                border: true, borderColor: '#c9a84c', borderWidth: 6, borderMargin: 40,
+                ornament: true, ornamentY: 200, ornamentScale: 0.9,
+                flourish: true, flourishY: 720, flourishW: 200,
                 lines: [
                     { text: 'Reception to follow', font: 'italic 36px "Cormorant Garamond"', color: '#6b5535', y: 340 },
                     { text: 'The Grand Rose Garden', font: '600 38px "Cormorant Garamond"', color: '#2c1810', y: 450 },
@@ -387,71 +381,68 @@
                     { text: 'We cannot wait to celebrate with you', font: 'italic 28px "Cormorant Garamond"', color: '#6b5535', y: 1160 }
                 ]
             });
+
             const backTex = createPaperTexture(1024, 1408, {
                 bg: '#f0e8dc',
-                border: true,
-                borderColor: '#c9a84c',
-                borderWidth: 8,
-                borderMargin: 48,
-                ornament: true,
-                ornamentY: 500,
-                ornamentScale: 2,
+                border: true, borderColor: '#c9a84c', borderWidth: 8, borderMargin: 48,
+                ornament: true, ornamentY: 500, ornamentScale: 2,
                 lines: [
                     { text: 'S  ❤  J', font: '64px "Great Vibes"', color: '#c9a84c', y: 700 },
                     { text: 'Forever Begins', font: 'italic 36px "Cormorant Garamond"', color: '#8b7355', y: 820 }
                 ]
             });
-            const paperMat = (map, side = THREE.FrontSide) => ({
-                map,
-                roughness: 0.75,
-                metalness: 0.05,
-                side
-            });
+
+            /* ============================================================
+               CARD GEOMETRY
+               ------------------------------------------------------------
+               Layout (local group space, spine at x=0):
+                 • Right panel  (back cover of the book) at x = +CARD_W/2
+                 • Cover pivot at x = 0
+                 • Cover mesh inside pivot at x = +CARD_W/2
+               When closed, cover sits directly on top of the right panel.
+               Group offset -CARD_W/2 centres the closed cover on screen.
+               When open, cover rotates ~180° and lands at x = -CARD_W/2,
+               while the group animates to x = 0 so the spread is centred.
+               ============================================================ */
+
+            cardGroup.position.set(-CARD_W / 2, 0.3, 0);
+
+            const edgeMat = new THREE.MeshStandardMaterial({ color: 0xe8dcc8, roughness: 0.8 });
+
+            /* --- Right panel (back cover of the book / inside-right page) --- */
+            const panelGeo = new THREE.BoxGeometry(CARD_W, CARD_H, CARD_D * 0.7);
+            const rightMats = [
+                edgeMat, edgeMat, edgeMat, edgeMat,
+                new THREE.MeshStandardMaterial({ map: insideRightTex, roughness: 0.75, metalness: 0.05 }),
+                new THREE.MeshStandardMaterial({ map: backTex, roughness: 0.75, metalness: 0.05 })
+            ];
+            const rightPanel = new THREE.Mesh(panelGeo, rightMats);
+            rightPanel.castShadow = true;
+            rightPanel.receiveShadow = true;
+            rightPanel.position.set(CARD_W / 2, 0, 0);
+            cardGroup.add(rightPanel);
+
+            /* --- Front cover (rotates on a spine hinge) --- */
             const coverGeo = new THREE.BoxGeometry(CARD_W, CARD_H, CARD_D);
             const coverMats = [
-                new THREE.MeshStandardMaterial({ color: 0xe8dcc8, roughness: 0.8 }),
-                new THREE.MeshStandardMaterial({ color: 0xe8dcc8, roughness: 0.8 }),
-                new THREE.MeshStandardMaterial({ color: 0xe8dcc8, roughness: 0.8 }),
-                new THREE.MeshStandardMaterial({ color: 0xe8dcc8, roughness: 0.8 }),
-                new THREE.MeshStandardMaterial(paperMat(coverTex)),
-                new THREE.MeshStandardMaterial(paperMat(backTex))
+                edgeMat, edgeMat, edgeMat, edgeMat,
+                // +z face: outer front cover
+                new THREE.MeshStandardMaterial({ map: coverTex, roughness: 0.75, metalness: 0.05 }),
+                // -z face: inside-left page (revealed when open)
+                new THREE.MeshStandardMaterial({ map: insideLeftTex, roughness: 0.75, metalness: 0.05 })
             ];
             const cover = new THREE.Mesh(coverGeo, coverMats);
             cover.castShadow = true;
             cover.receiveShadow = true;
-            cover.position.z = CARD_D / 2;
+            // Offset within the pivot so its left edge sits exactly on the spine
+            cover.position.set(CARD_W / 2, 0, CARD_D / 2 + 0.001);
+
             const coverPivot = new THREE.Group();
-            coverPivot.position.set(-CARD_W / 2, 0, 0);
-            cover.position.x = CARD_W / 2;
+            coverPivot.position.set(0, 0, 0); // spine
             coverPivot.add(cover);
             cardGroup.add(coverPivot);
-            const insideGeo = new THREE.BoxGeometry(CARD_W, CARD_H, CARD_D * 0.7);
-            const leftMats = [
-                new THREE.MeshStandardMaterial({ color: 0xe8dcc8, roughness: 0.8 }),
-                new THREE.MeshStandardMaterial({ color: 0xe8dcc8, roughness: 0.8 }),
-                new THREE.MeshStandardMaterial({ color: 0xe8dcc8, roughness: 0.8 }),
-                new THREE.MeshStandardMaterial({ color: 0xe8dcc8, roughness: 0.8 }),
-                new THREE.MeshStandardMaterial(paperMat(insideLeftTex)),
-                new THREE.MeshStandardMaterial({ color: 0xe8d9c8, roughness: 0.85 })
-            ];
-            const leftPanel = new THREE.Mesh(insideGeo, leftMats);
-            leftPanel.castShadow = true;
-            leftPanel.receiveShadow = true;
-            leftPanel.position.set(-CARD_W / 2, 0, -CARD_D * 0.5);
-            cardGroup.add(leftPanel);
-            const rightMats = [
-                new THREE.MeshStandardMaterial({ color: 0xe8dcc8, roughness: 0.8 }),
-                new THREE.MeshStandardMaterial({ color: 0xe8dcc8, roughness: 0.8 }),
-                new THREE.MeshStandardMaterial({ color: 0xe8dcc8, roughness: 0.8 }),
-                new THREE.MeshStandardMaterial({ color: 0xe8dcc8, roughness: 0.8 }),
-                new THREE.MeshStandardMaterial(paperMat(insideRightTex)),
-                new THREE.MeshStandardMaterial({ color: 0xe8d9c8, roughness: 0.85 })
-            ];
-            const rightPanel = new THREE.Mesh(insideGeo, rightMats);
-            rightPanel.castShadow = true;
-            rightPanel.receiveShadow = true;
-            rightPanel.position.set(CARD_W / 2, 0, -CARD_D * 0.5);
-            cardGroup.add(rightPanel);
+
+            /* --- Ribbon & bow attached to the cover --- */
             function makeRibbon() {
                 const g = new THREE.Group();
                 const mat = new THREE.MeshStandardMaterial({ color: 0xb8952c, metalness: 0.6, roughness: 0.3, emissive: 0x3a2800, emissiveIntensity: 0.15 });
@@ -482,8 +473,9 @@
                 g.add(t2);
                 return g;
             }
-            const ribbon = makeRibbon();
-            cover.add(ribbon);
+            cover.add(makeRibbon());
+
+            /* --- Interlocked wedding rings --- */
             function makeRing(r, tube, color) {
                 const mat = new THREE.MeshStandardMaterial({ color, metalness: 0.95, roughness: 0.12, emissive: color, emissiveIntensity: 0.08 });
                 const ring = new THREE.Mesh(new THREE.TorusGeometry(r, tube, 16, 48), mat);
@@ -492,18 +484,16 @@
             }
             const rings = new THREE.Group();
             const ring1 = makeRing(0.35, 0.045, 0xf5d78e);
-            ring1.rotation.x = Math.PI / 2.2;
-            ring1.rotation.z = 0.3;
-            ring1.position.set(-0.2, 0, 0);
+            ring1.rotation.x = Math.PI / 2.2; ring1.rotation.z = 0.3; ring1.position.set(-0.2, 0, 0);
             rings.add(ring1);
             const ring2 = makeRing(0.35, 0.045, 0xe8c878);
-            ring2.rotation.x = Math.PI / 2.2;
-            ring2.rotation.z = -0.3;
-            ring2.position.set(0.2, 0, 0);
+            ring2.rotation.x = Math.PI / 2.2; ring2.rotation.z = -0.3; ring2.position.set(0.2, 0, 0);
             rings.add(ring2);
             rings.position.set(0, -CARD_H / 2 - 0.8, 0);
             rings.visible = false;
             cardGroup.add(rings);
+
+            /* --- Roses --- */
             const petalGeo = new THREE.SphereGeometry(1, 8, 8);
             petalGeo.scale(0.5, 1, 0.15);
             function createRose(scale, color) {
@@ -533,8 +523,7 @@
                 const leaf = new THREE.Mesh(new THREE.SphereGeometry(1, 6, 6), leafMat);
                 leaf.scale.set(0.12, 0.06, 0.02);
                 leaf.position.set(0.1, -0.2, 0);
-                leaf.rotation.z = -0.5;
-                leaf.rotation.y = 0.3;
+                leaf.rotation.z = -0.5; leaf.rotation.y = 0.3;
                 g.add(leaf);
                 g.scale.setScalar(scale);
                 return g;
@@ -556,6 +545,8 @@
                 roses.add(rose);
             });
             cardGroup.add(roses);
+
+            /* --- Ground --- */
             const groundGeo = new THREE.CircleGeometry(8, 64);
             const groundMat = new THREE.MeshStandardMaterial({ color: 0x120a1a, roughness: 0.95, metalness: 0, transparent: true, opacity: 0.7 });
             const ground = new THREE.Mesh(groundGeo, groundMat);
@@ -563,6 +554,8 @@
             ground.position.y = -3.2;
             ground.receiveShadow = true;
             scene.add(ground);
+
+            /* --- Particles --- */
             const particleCount = 400;
             const pGeo = new THREE.BufferGeometry();
             const pPos = new Float32Array(particleCount * 3);
@@ -574,22 +567,17 @@
                 pVel.push({
                     x: (Math.random() - 0.5) * 0.003,
                     y: 0.004 + Math.random() * 0.008,
-                    z: (Math.random() - 0.5) * 0.003,
-                    rot: Math.random() * Math.PI * 2
+                    z: (Math.random() - 0.5) * 0.003
                 });
             }
             pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-            const pMat = new THREE.PointsMaterial({
-                color: 0xf5d78e,
-                size: 0.06,
-                transparent: true,
-                opacity: 0.65,
-                blending: THREE.AdditiveBlending,
-                depthWrite: false,
-                sizeAttenuation: true
-            });
-            const particles = new THREE.Points(pGeo, pMat);
+            const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({
+                color: 0xf5d78e, size: 0.06, transparent: true, opacity: 0.65,
+                blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+            }));
             scene.add(particles);
+
+            /* --- Confetti --- */
             const confettiCount = 80;
             const confettiGroup = new THREE.Group();
             scene.add(confettiGroup);
@@ -611,6 +599,8 @@
                     rz: (Math.random() - 0.5) * 0.04
                 });
             }
+
+            /* --- Glowing gold rings on the ground --- */
             const goldRing = new THREE.Mesh(
                 new THREE.TorusGeometry(5.5, 0.015, 8, 100),
                 new THREE.MeshStandardMaterial({ color: 0xf5d78e, metalness: 0.9, roughness: 0.2, emissive: 0xf5d78e, emissiveIntensity: 0.25, transparent: true, opacity: 0.5 })
@@ -623,35 +613,42 @@
             goldRing2.material = goldRing.material.clone();
             goldRing2.material.opacity = 0.3;
             scene.add(goldRing2);
+
+            /* ============================================================
+               UI / STATE
+               ============================================================ */
             let isOpen = false;
             let openProgress = 0;
             let targetOpen = 0;
             let autoSpin = false;
+
             const btnOpen = document.getElementById('btn-open');
             const btnSpin = document.getElementById('btn-spin');
             const btnReset = document.getElementById('btn-reset');
+
             btnOpen.addEventListener('click', () => {
                 targetOpen = targetOpen < 0.5 ? 1 : 0;
                 isOpen = targetOpen > 0.5;
                 btnOpen.textContent = isOpen ? 'Close Card' : 'Open Card';
                 btnOpen.classList.toggle('active', isOpen);
-                rings.visible = isOpen;
             });
+
             btnSpin.addEventListener('click', () => {
                 autoSpin = !autoSpin;
                 controls.autoRotate = autoSpin;
                 btnSpin.classList.toggle('active', autoSpin);
             });
+
             btnReset.addEventListener('click', () => {
                 targetOpen = 0; isOpen = false;
                 btnOpen.textContent = 'Open Card';
                 btnOpen.classList.remove('active');
-                rings.visible = false;
                 autoSpin = false;
                 controls.autoRotate = false;
                 btnSpin.classList.remove('active');
                 gsapCamera({ x: 0, y: 1.8, z: 9.5 }, 0.3);
             });
+
             function gsapCamera(pos, targetY) {
                 const start = { x: camera.position.x, y: camera.position.y, z: camera.position.z };
                 const startT = controls.target.y;
@@ -667,14 +664,26 @@
                     if (t < 1) requestAnimationFrame(anim);
                 })();
             }
+
             cardGroup.rotation.y = -0.15;
-            cardGroup.position.y = 0.3;
+
+            /* ============================================================
+               ANIMATION
+               ============================================================ */
             let time = 0;
+
             function animate() {
                 requestAnimationFrame(animate);
                 time += 0.016;
-                openProgress += (targetOpen - openProgress) * 0.04;
-                coverPivot.rotation.y = -openProgress * Math.PI * 0.92;
+
+                /* Card open / close animation */
+                openProgress += (targetOpen - openProgress) * 0.05;
+                // Swing the cover around the spine
+                coverPivot.rotation.y = -openProgress * Math.PI * 0.96;
+                // Slide the whole group so the closed cover (or open spread) stays centred
+                cardGroup.position.x = -CARD_W / 2 * (1 - openProgress);
+
+                /* Rings rise when card opens */
                 if (openProgress > 0.3) {
                     const s = Math.min((openProgress - 0.3) / 0.5, 1);
                     rings.scale.setScalar(s);
@@ -683,12 +692,18 @@
                 } else {
                     rings.visible = false;
                 }
+
+                /* Gentle idle motion */
                 cardGroup.position.y = 0.3 + Math.sin(time * 0.7) * 0.08;
                 cardGroup.rotation.z = Math.sin(time * 0.4) * 0.015;
+
+                /* Roses drift */
                 roses.children.forEach((r, i) => {
                     r.rotation.y += 0.002 * (i % 2 === 0 ? 1 : -1);
                     r.position.y += Math.sin(time * 0.8 + i) * 0.0003;
                 });
+
+                /* Rising gold particles */
                 const positions = particles.geometry.attributes.position.array;
                 for (let i = 0; i < particleCount; i++) {
                     positions[i * 3] += pVel[i].x;
@@ -702,6 +717,8 @@
                 }
                 particles.geometry.attributes.position.needsUpdate = true;
                 particles.rotation.y = time * 0.02;
+
+                /* Falling confetti */
                 confettiGroup.children.forEach((c, i) => {
                     const d = confettiData[i];
                     c.position.x += d.vx;
@@ -716,26 +733,34 @@
                         c.position.z = (Math.random() - 0.5) * 8;
                     }
                 });
+
+                /* Light breathing */
                 rimLight.intensity = 1.5 + Math.sin(time * 1.5) * 0.3;
                 softGlow.intensity = 0.5 + Math.sin(time * 1.2) * 0.2;
                 goldRing.rotation.z = time * 0.1;
                 goldRing2.rotation.z = -time * 0.07;
+
                 controls.update();
                 renderer.render(scene, camera);
             }
+
+            /* Resize */
             window.addEventListener('resize', () => {
                 camera.aspect = innerWidth / innerHeight;
                 camera.updateProjectionMatrix();
                 renderer.setSize(innerWidth, innerHeight);
                 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
             });
-            let touchStartX = 0;
+
+            /* Double-click toggles the card */
             renderer.domElement.addEventListener('dblclick', () => {
                 targetOpen = targetOpen < 0.5 ? 1 : 0;
                 isOpen = targetOpen > 0.5;
                 btnOpen.textContent = isOpen ? 'Close Card' : 'Open Card';
                 btnOpen.classList.toggle('active', isOpen);
             });
+
+            /* Boot */
             setTimeout(() => {
                 document.getElementById('loader').classList.add('hide');
                 animate();

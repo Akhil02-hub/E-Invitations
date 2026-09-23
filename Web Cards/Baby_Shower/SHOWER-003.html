@@ -1,325 +1,1446 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="neutral">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Twinkle Twinkle Little Star • Mia's Baby Shower</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Twinkle, Twinkle — A Baby Shower for Sarah &amp; James</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23e79fb5' d='M12 2l2.9 6.26 6.6.7-4.9 4.5 1.35 6.5L12 16.9 6.05 19.96 7.4 13.46 2.5 8.96l6.6-.7z'/></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&family=Great+Vibes&family=Fredoka:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: { extend: { fontFamily: { baloo: ['"Baloo 2"', 'cursive'], quick: ['Quicksand', 'sans-serif'], script: ['"Great Vibes"', 'cursive'], fredoka: ['Fredoka', 'sans-serif'] } } }
-        }
-    </script>
     <style>
-        :root {
-            --bg: #FFF9F0;
-            --c1: #FFD6E8;
-            --c2: #C5ECFF;
-            --c3: #FFF3B0;
-            --c4: #D6FAD8;
-            --accent: #FF8FB1;
-            --accent2: #7DD3FC;
-            --deep: #4A3F55;
-            --gold: #E9B44C;
-        }
-
-        [data-theme="girl"] {
-            --bg: #FFF5F9;
-            --c1: #FFC2D6;
-            --c2: #FFD6E8;
-            --c3: #FFE4EE;
-            --c4: #FFEDF4;
-            --accent: #FF5E8A;
-            --accent2: #FF9EC6;
-            --gold: #E9B44C;
-        }
-
-        [data-theme="boy"] {
-            --bg: #F2FAFF;
-            --c1: #B8E6FF;
-            --c2: #9AD7FF;
-            --c3: #D6F0FF;
-            --c4: #C5ECFF;
-            --accent: #2AA8FF;
-            --accent2: #7DD3FC;
-            --gold: #3AA0E8;
-        }
-
-        [data-theme="neutral"] {
-            --bg: #FFF9F0;
-            --c1: #FFD6A5;
-            --c2: #CAFFBF;
-            --c3: #9BF6FF;
-            --c4: #FFC6FF;
-            --accent: #FF8FB1;
-            --accent2: #3AC6A5;
-            --gold: #E9B44C;
-        }
-
+        /* ============ base ============ */
         * {
-            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --ink: #443147;
+            --ink-soft: #7d6a84;
+            --rose: #e79fb5;
+            --rose-deep: #d67fa3;
+            --rose-soft: #f6c9d8;
+            --gold: #c9a06c;
+            --gold-soft: #e6cfa9;
+            --cream: #fffdf8;
+            --serif: 'Cormorant Garamond', Georgia, serif;
+            --script: 'Great Vibes', cursive;
+            --sans: 'Quicksand', sans-serif;
+            --ease: cubic-bezier(.22, 1, .36, 1);
         }
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 96px
         }
 
         body {
-            background: var(--bg);
-            color: var(--deep);
-            font-family: 'Quicksand', sans-serif;
+            font-family: var(--sans);
+            color: var(--ink);
             overflow-x: hidden;
-            transition: background .8s;
+            -webkit-font-smoothing: antialiased
+        }
+
+        body.lock {
+            overflow: hidden
         }
 
         ::selection {
-            background: var(--accent);
-            color: white;
+            background: var(--rose);
+            color: #fff
         }
 
         ::-webkit-scrollbar {
-            width: 12px;
+            width: 10px
         }
 
         ::-webkit-scrollbar-track {
-            background: #fff;
+            background: #f7e6ec
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(var(--accent), var(--accent2));
-            border-radius: 20px;
-            border: 3px solid #fff;
+            background: var(--rose-soft);
+            border-radius: 99px
         }
 
-        .font-script {
-            font-family: 'Great Vibes', cursive;
+        :focus-visible {
+            outline: 2px solid var(--rose-deep);
+            outline-offset: 3px;
+            border-radius: 6px
         }
 
-        .glass {
-            background: rgba(255, 255, 255, .72);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1.5px solid rgba(255, 255, 255, .9);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, .08), inset 0 1px 0 white;
+        img,
+        svg {
+            display: inline-block;
+            vertical-align: middle
         }
 
-        .blob {
+        a {
+            color: var(--rose-deep)
+        }
+
+        /* layers */
+        #bg {
             position: fixed;
-            border-radius: 50%;
-            filter: blur(90px);
-            opacity: .55;
-            pointer-events: none;
+            inset: 0;
             z-index: 0;
-            animation: drift 12s ease-in-out infinite alternate;
+            background: linear-gradient(180deg, #fdf1f5 0%, #fae2ea 34%, #f2d9ea 62%, #e7d5ef 100%)
         }
 
-        @keyframes drift {
+        #scene {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.6s ease .15s
+        }
+
+        body.ready #scene {
+            opacity: 1
+        }
+
+        .grain {
+            position: fixed;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            opacity: .05;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.6'/></svg>");
+            background-size: 160px
+        }
+
+        main {
+            position: relative;
+            z-index: 3
+        }
+
+        #confetti {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 120;
+            pointer-events: none
+        }
+
+        #toasts {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 130;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            pointer-events: none;
+            width: max-content;
+            max-width: 92vw
+        }
+
+        .toast {
+            background: #3a2b40;
+            color: #ffeee6;
+            padding: 12px 22px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 16px 40px -10px rgba(0, 0, 0, .4);
+            opacity: 0;
+            transform: translateY(-14px);
+            transition: .45s var(--ease)
+        }
+
+        .toast.on {
+            opacity: 1;
+            transform: none
+        }
+
+        /* ============ nav ============ */
+        .nav {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translate(-50%, -18px);
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 8px 10px 8px 22px;
+            border-radius: 999px;
+            z-index: 40;
+            opacity: 0;
+            transition: opacity .8s var(--ease) .4s, transform .8s var(--ease) .4s, background .4s, box-shadow .4s
+        }
+
+        body.ready .nav {
+            opacity: 1;
+            transform: translate(-50%, 0)
+        }
+
+        .nav.scrolled {
+            background: rgba(255, 255, 255, .68);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 12px 34px -14px rgba(160, 100, 130, .45)
+        }
+
+        .brand {
+            font-family: var(--script);
+            font-size: 26px;
+            color: var(--ink);
+            text-decoration: none;
+            line-height: 1
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px
+        }
+
+        .nav-links a {
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ink);
+            opacity: .72;
+            text-decoration: none;
+            transition: .3s
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--rose-deep)
+        }
+
+        /* ============ buttons ============ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 30px;
+            border-radius: 999px;
+            font-family: var(--sans);
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: .4px;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            transition: transform .35s var(--ease), box-shadow .35s, background .35s, color .35s, border-color .35s
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px
+        }
+
+        .btn-solid {
+            background: var(--rose);
+            color: #fff;
+            box-shadow: 0 16px 32px -12px rgba(216, 126, 160, .75)
+        }
+
+        .btn-solid:hover {
+            background: var(--rose-deep);
+            transform: translateY(-3px)
+        }
+
+        .btn-ghost {
+            background: rgba(255, 255, 255, .55);
+            color: var(--ink);
+            border: 1.5px solid rgba(69, 51, 71, .25);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px)
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--ink);
+            transform: translateY(-3px)
+        }
+
+        .btn-sm {
+            padding: 10px 22px;
+            font-size: 13px
+        }
+
+        .btn:active {
+            transform: translateY(0) scale(.98)
+        }
+
+        .btn.loading {
+            pointer-events: none;
+            background: var(--rose-deep)
+        }
+
+        .btn.loading .btn-ic,
+        .btn.loading .btn-txt {
+            display: none
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, .4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            display: none;
+            animation: rot .8s linear infinite
+        }
+
+        .btn.loading .spinner {
+            display: inline-block
+        }
+
+        @keyframes rot {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        /* ============ hero ============ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 90px;
+            position: relative
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 0;
+            max-width: 840px
+        }
+
+        .hero-inner::before {
+            content: '';
+            position: absolute;
+            inset: -70px -50px;
+            z-index: -1;
+            background: radial-gradient(closest-side, rgba(255, 252, 250, .82), rgba(255, 252, 250, 0) 78%)
+        }
+
+        .fx {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity 1s var(--ease) var(--d, 0s), transform 1s var(--ease) var(--d, 0s)
+        }
+
+        body.ready .fx {
+            opacity: 1;
+            transform: none
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: var(--gold)
+        }
+
+        .hero h1 {
+            font-family: var(--serif);
+            font-style: italic;
+            font-weight: 500;
+            font-size: clamp(3.1rem, 10vw, 6.6rem);
+            line-height: .95;
+            margin-top: 18px
+        }
+
+        .hero-script {
+            font-family: var(--script);
+            font-size: clamp(2.2rem, 6vw, 3.4rem);
+            color: var(--rose-deep);
+            margin-top: 2px
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            justify-content: center;
+            margin: 22px 0
+        }
+
+        .d-line {
+            height: 1px;
+            width: 64px;
+            background: rgba(201, 160, 108, .6)
+        }
+
+        .star-ic {
+            width: 12px;
+            height: 12px;
+            color: var(--gold);
+            fill: currentColor
+        }
+
+        .hero-lead {
+            max-width: 560px;
+            margin: 0 auto;
+            font-size: 16.5px;
+            line-height: 1.75;
+            color: var(--ink-soft)
+        }
+
+        .hero-honor {
+            margin-top: 20px;
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.3rem
+        }
+
+        .hero-honor em {
+            font-family: var(--script);
+            font-style: normal;
+            font-size: 1.9rem;
+            color: var(--rose-deep)
+        }
+
+        .hero-date {
+            margin-top: 14px;
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ink-soft)
+        }
+
+        .hero-actions {
+            margin-top: 32px;
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .scroll-cue {
+            position: absolute;
+            left: 50%;
+            bottom: 22px;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 9px;
+            color: var(--ink-soft);
+            opacity: 0;
+            transition: opacity 1s ease 1.6s
+        }
+
+        body.ready .scroll-cue {
+            opacity: 1
+        }
+
+        .sc-line {
+            width: 1px;
+            height: 44px;
+            background: rgba(69, 51, 71, .22);
+            position: relative;
+            overflow: hidden
+        }
+
+        .sc-line::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: -40%;
+            width: 100%;
+            height: 40%;
+            background: var(--rose-deep);
+            animation: scDrop 2.2s ease-in-out infinite
+        }
+
+        @keyframes scDrop {
             0% {
-                transform: translate(0, 0) scale(1);
+                top: -40%
+            }
+
+            60%,
+            100% {
+                top: 110%
+            }
+        }
+
+        .sc-txt {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3.5px;
+            text-transform: uppercase
+        }
+
+        /* ============ sections ============ */
+        .section {
+            padding: 92px 20px;
+            position: relative
+        }
+
+        .section-head {
+            text-align: center;
+            margin-bottom: 44px
+        }
+
+        .script-accent {
+            font-family: var(--script);
+            font-size: clamp(1.7rem, 4vw, 2.3rem);
+            color: var(--rose-deep);
+            line-height: 1;
+            margin-bottom: 4px
+        }
+
+        .serif-h {
+            font-family: var(--serif);
+            font-weight: 600;
+            font-size: clamp(2rem, 4.6vw, 2.85rem);
+            letter-spacing: .5px
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(34px);
+            transition: opacity .95s var(--ease), transform .95s var(--ease)
+        }
+
+        .reveal.in {
+            opacity: 1;
+            transform: none
+        }
+
+        /* ============ countdown ============ */
+        .cd-panel {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 44px 26px 38px;
+            text-align: center
+        }
+
+        .cd-grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(10px, 3vw, 26px);
+            flex-wrap: wrap
+        }
+
+        .cd-cell {
+            min-width: 86px
+        }
+
+        .cd-num {
+            font-family: var(--serif);
+            font-weight: 600;
+            font-size: clamp(2.5rem, 7vw, 3.9rem);
+            line-height: 1;
+            font-variant-numeric: tabular-nums
+        }
+
+        .cd-num.tick {
+            animation: cdTick .5s var(--ease)
+        }
+
+        @keyframes cdTick {
+            0% {
+                transform: translateY(-10px);
+                opacity: 0;
+                filter: blur(3px)
             }
 
             100% {
-                transform: translate(40px, -40px) scale(1.15);
+                transform: none;
+                opacity: 1;
+                filter: none
             }
+        }
+
+        .cd-label {
+            margin-top: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--ink-soft)
+        }
+
+        .cd-sep {
+            display: flex
+        }
+
+        .cd-note {
+            margin-top: 28px;
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--ink-soft)
+        }
+
+        /* ============ stationery ============ */
+        .stationery {
+            position: relative;
+            max-width: 560px;
+            margin: 0 auto;
+            background: var(--cream);
+            border: 1px solid #f0e0cb;
+            border-radius: 18px;
+            padding: 60px 36px 48px;
+            text-align: center;
+            box-shadow: 0 34px 70px -32px rgba(160, 100, 130, .5)
+        }
+
+        .stationery::before {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            border: 1px solid rgba(201, 160, 108, .55);
+            border-radius: 12px;
+            pointer-events: none
+        }
+
+        .corner {
+            position: absolute;
+            width: 13px;
+            height: 13px;
+            color: var(--gold);
+            fill: currentColor;
+            opacity: .9
+        }
+
+        .c-tl {
+            top: 22px;
+            left: 22px
+        }
+
+        .c-tr {
+            top: 22px;
+            right: 22px;
+            transform: rotate(18deg)
+        }
+
+        .c-bl {
+            bottom: 22px;
+            left: 22px;
+            transform: rotate(-14deg)
+        }
+
+        .c-br {
+            bottom: 22px;
+            right: 22px;
+            transform: rotate(8deg)
+        }
+
+        .stat-weekday {
+            font-family: var(--script);
+            font-size: clamp(2.2rem, 6vw, 2.9rem);
+            color: var(--rose-deep);
+            line-height: 1
+        }
+
+        .stat-date {
+            margin-top: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase
+        }
+
+        .stat-time {
+            margin-top: 10px;
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.15rem;
+            color: var(--ink-soft)
+        }
+
+        .stat-venue {
+            margin-top: 4px;
+            font-family: var(--serif);
+            font-weight: 600;
+            font-size: 1.55rem;
+            letter-spacing: 1px
+        }
+
+        .stat-addr {
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--ink-soft);
+            line-height: 1.6
+        }
+
+        .stat-host {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.12rem;
+            color: var(--ink-soft)
+        }
+
+        .stat-host em {
+            color: var(--rose-deep);
+            font-style: italic
+        }
+
+        .stat-rsvp {
+            margin-top: 26px;
+            font-size: 12.5px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--ink-soft)
+        }
+
+        .stat-rsvp a {
+            font-weight: 700;
+            text-decoration: underline;
+            text-underline-offset: 3px
+        }
+
+        .stationery .divider {
+            margin: 24px 0
+        }
+
+        .stationery .d-line {
+            width: 52px
+        }
+
+        /* ============ reveal ============ */
+        .reveal-wrap {
+            text-align: center
+        }
+
+        .reveal-stage {
+            display: grid;
+            place-items: center;
+            min-height: 330px
+        }
+
+        .reveal-stage>* {
+            grid-area: 1/1
+        }
+
+        .reveal-btn {
+            width: 172px;
+            height: 172px;
+            border-radius: 50%;
+            border: none;
+            background: var(--cream);
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            box-shadow: 0 20px 48px -16px rgba(216, 126, 160, .55), 0 0 0 12px rgba(255, 255, 255, .4);
+            transition: transform .5s var(--ease), opacity .6s, box-shadow .5s
+        }
+
+        .reveal-btn::before {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            border: 1.5px dashed rgba(201, 160, 108, .8);
+            border-radius: 50%;
+            animation: spin 26s linear infinite
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .reveal-btn:hover {
+            transform: scale(1.06);
+            box-shadow: 0 26px 56px -16px rgba(216, 126, 160, .65), 0 0 0 16px rgba(255, 255, 255, .45)
+        }
+
+        .reveal-btn:active {
+            transform: scale(.97)
+        }
+
+        .rb-top {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold)
+        }
+
+        .rb-word {
+            font-family: var(--serif);
+            font-style: italic;
+            font-weight: 500;
+            font-size: 30px;
+            line-height: 1.05
+        }
+
+        .rb-or {
+            font-family: var(--script);
+            font-size: 21px;
+            color: var(--rose-deep);
+            line-height: 1
+        }
+
+        .reveal-wrap.revealed .reveal-btn {
+            opacity: 0;
+            transform: scale(.55);
+            pointer-events: none
+        }
+
+        .reveal-cap {
+            margin-top: 14px;
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.05rem;
+            color: var(--ink-soft);
+            transition: opacity .5s
+        }
+
+        .reveal-wrap.revealed .reveal-cap {
+            opacity: 0
+        }
+
+        .reveal-result {
+            position: relative;
+            opacity: 0;
+            transform: scale(.92);
+            pointer-events: none;
+            transition: opacity .8s var(--ease), transform .8s var(--ease);
+            padding: 10px 16px
+        }
+
+        .reveal-result.show {
+            opacity: 1;
+            transform: none
+        }
+
+        .rr-big {
+            font-family: var(--script);
+            font-size: clamp(3rem, 10vw, 4.8rem);
+            color: var(--rose-deep);
+            line-height: 1.1;
+            transform: rotate(-2deg)
+        }
+
+        .rr-kicker {
+            margin-top: 14px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: var(--gold)
+        }
+
+        .rr-name {
+            margin-top: 6px;
+            font-family: var(--serif);
+            font-weight: 600;
+            font-size: clamp(2rem, 6vw, 3rem)
+        }
+
+        .rr-sub {
+            margin-top: 10px;
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.08rem;
+            color: var(--ink-soft)
+        }
+
+        .fl-heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            color: var(--rose);
+            opacity: 0;
+            transition: opacity 1s ease 1.1s;
+            animation: floaty 3.4s ease-in-out infinite
+        }
+
+        .reveal-result.show .fl-heart {
+            opacity: .85
+        }
+
+        .fh1 {
+            top: 2%;
+            left: 8%;
+            animation-delay: .2s
+        }
+
+        .fh2 {
+            top: 6%;
+            right: 6%;
+            animation-delay: 1.2s;
+            width: 15px;
+            height: 15px
+        }
+
+        .fh3 {
+            bottom: 0;
+            left: 32%;
+            animation-delay: 2.1s;
+            width: 16px;
+            height: 16px
         }
 
         @keyframes floaty {
 
             0%,
             100% {
-                transform: translateY(0) rotate(-2deg);
+                transform: translateY(0) rotate(-6deg)
             }
 
             50% {
-                transform: translateY(-18px) rotate(2deg);
+                transform: translateY(-13px) rotate(7deg)
             }
         }
 
-        @keyframes floaty2 {
+        /* ============ rsvp ============ */
+        .glass {
+            background: rgba(255, 255, 255, .55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, .75);
+            border-radius: 28px;
+            box-shadow: 0 26px 60px -26px rgba(190, 120, 150, .4)
+        }
+
+        .rsvp-card {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: clamp(28px, 5vw, 52px)
+        }
+
+        .f-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 24px;
+            margin-bottom: 20px
+        }
+
+        .field label {
+            display: block;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin-bottom: 9px
+        }
+
+        .field .opt {
+            text-transform: none;
+            letter-spacing: 0;
+            font-weight: 500;
+            font-size: 11px;
+            color: #a293a8
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            font-family: var(--sans);
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--ink);
+            background: rgba(255, 255, 255, .78);
+            border: 1.5px solid rgba(69, 51, 71, .18);
+            border-radius: 14px;
+            padding: 14px 16px;
+            transition: border-color .3s, box-shadow .3s;
+            outline: none
+        }
+
+        .field textarea {
+            resize: vertical;
+            min-height: 90px;
+            line-height: 1.6
+        }
+
+        .field select {
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%237d6a84' stroke-width='2' stroke-linecap='round'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: var(--rose);
+            box-shadow: 0 0 0 4px rgba(231, 159, 181, .22)
+        }
+
+        .field input::placeholder,
+        .field textarea::placeholder {
+            color: #b6a8bb
+        }
+
+        .err-msg {
+            display: none;
+            margin-top: 7px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #c25b6e
+        }
+
+        .field.invalid .err-msg {
+            display: block
+        }
+
+        .field.invalid input,
+        .field.invalid select,
+        .field.invalid textarea {
+            border-color: #c25b6e;
+            box-shadow: 0 0 0 4px rgba(194, 91, 110, .15)
+        }
+
+        .field.invalid {
+            animation: shake .4s
+        }
+
+        @keyframes shake {
 
             0%,
             100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-28px);
-            }
-        }
-
-        @keyframes twinkle {
-
-            0%,
-            100% {
-                opacity: .2;
-                transform: scale(.8) rotate(0);
-            }
-
-            50% {
-                opacity: 1;
-                transform: scale(1.2) rotate(20deg);
-            }
-        }
-
-        @keyframes wiggle {
-
-            0%,
-            100% {
-                transform: rotate(-6deg);
-            }
-
-            50% {
-                transform: rotate(6deg);
-            }
-        }
-
-        @keyframes bounceSoft {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        @keyframes marquee {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        @keyframes spinSlow {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes heartbeat {
-
-            0%,
-            100% {
-                transform: scale(1);
+                transform: translateX(0)
             }
 
             25% {
-                transform: scale(1.08);
+                transform: translateX(-6px)
             }
 
-            50% {
-                transform: scale(1);
+            75% {
+                transform: translateX(6px)
             }
         }
 
-        @keyframes shimmer {
+        .pill-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .pill {
+            position: relative;
+            display: inline-flex
+        }
+
+        .pill input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none
+        }
+
+        .pill span {
+            display: inline-flex;
+            padding: 12px 20px;
+            border-radius: 999px;
+            border: 1.5px solid rgba(69, 51, 71, .22);
+            background: rgba(255, 255, 255, .65);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: .3s;
+            color: var(--ink-soft)
+        }
+
+        .pill:hover span {
+            border-color: var(--rose)
+        }
+
+        .pill input:checked+span {
+            background: var(--rose);
+            border-color: var(--rose);
+            color: #fff;
+            box-shadow: 0 10px 22px -8px rgba(216, 126, 160, .8)
+        }
+
+        .pill input:focus-visible+span {
+            outline: 2px solid var(--rose-deep);
+            outline-offset: 3px
+        }
+
+        .form-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-top: 6px
+        }
+
+        .form-note {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink-soft)
+        }
+
+        .form-note span {
+            color: var(--rose-deep)
+        }
+
+        .rsvp-success {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 16px 8px
+        }
+
+        .rsvp-success.on {
+            display: flex
+        }
+
+        .rsvp-success>* {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .7s var(--ease), transform .7s var(--ease)
+        }
+
+        .rsvp-success.on>* {
+            opacity: 1;
+            transform: none
+        }
+
+        .rsvp-success.on>*:nth-child(2) {
+            transition-delay: .15s
+        }
+
+        .rsvp-success.on>*:nth-child(3) {
+            transition-delay: .3s
+        }
+
+        .rsvp-success.on>*:nth-child(4) {
+            transition-delay: .45s
+        }
+
+        .check-svg {
+            width: 84px;
+            height: 84px;
+            margin-bottom: 18px
+        }
+
+        .ck-c {
+            stroke-dasharray: 189;
+            stroke-dashoffset: 189;
+            animation: draw 1s var(--ease) .2s forwards
+        }
+
+        .ck-p {
+            stroke-dasharray: 42;
+            stroke-dashoffset: 42;
+            animation: draw .55s var(--ease) 1s forwards
+        }
+
+        @keyframes draw {
+            to {
+                stroke-dashoffset: 0
+            }
+        }
+
+        .rsvp-success h3 {
+            font-family: var(--serif);
+            font-weight: 600;
+            font-size: 2rem
+        }
+
+        .rsvp-success p {
+            max-width: 460px;
+            margin-top: 12px;
+            line-height: 1.7;
+            color: var(--ink-soft);
+            font-size: 15.5px
+        }
+
+        .rsvp-success .btn {
+            margin-top: 26px
+        }
+
+        /* ============ registry & footer ============ */
+        .registry-pill {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 28px 34px;
+            border-radius: 24px
+        }
+
+        .reg-ic {
+            flex: none;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: rgba(231, 159, 181, .18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--rose-deep)
+        }
+
+        .reg-ic svg {
+            width: 24px;
+            height: 24px
+        }
+
+        .registry-pill p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--ink-soft)
+        }
+
+        .registry-pill strong {
+            color: var(--ink)
+        }
+
+        .footer {
+            padding: 80px 20px 110px;
+            text-align: center
+        }
+
+        .mono {
+            width: 58px;
+            height: 58px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--serif);
+            font-size: 24px;
+            color: var(--gold);
+            margin: 0 auto 20px
+        }
+
+        .f-script {
+            font-family: var(--script);
+            font-size: 2rem;
+            color: var(--rose-deep)
+        }
+
+        .f-note {
+            margin-top: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--ink-soft)
+        }
+
+        .f-tiny {
+            margin-top: 14px;
+            font-size: 12px;
+            color: var(--ink-soft);
+            opacity: .75
+        }
+
+        /* ============ music button ============ */
+        .music-btn {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, .8);
+            background: rgba(255, 255, 255, .6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: var(--ink-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 45;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity .8s var(--ease) 1.2s, transform .8s var(--ease) 1.2s, color .3s, box-shadow .3s;
+            box-shadow: 0 14px 34px -12px rgba(160, 100, 130, .5)
+        }
+
+        body.ready .music-btn {
+            opacity: 1;
+            transform: none
+        }
+
+        .music-btn svg {
+            width: 20px;
+            height: 20px
+        }
+
+        .music-btn:hover {
+            color: var(--rose-deep)
+        }
+
+        .music-btn.playing {
+            color: var(--rose-deep)
+        }
+
+        .music-btn.playing::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(214, 127, 163, .6);
+            animation: pulse 2s ease-out infinite
+        }
+
+        @keyframes pulse {
             0% {
-                background-position: -200% 0;
+                transform: scale(.85);
+                opacity: 1
             }
 
             100% {
-                background-position: 200% 0;
+                transform: scale(1.35);
+                opacity: 0
             }
         }
 
-        .animate-floaty {
-            animation: floaty 5s ease-in-out infinite;
-        }
-
-        .animate-floaty2 {
-            animation: floaty2 6s ease-in-out infinite;
-        }
-
-        .twinkle-star {
-            animation: twinkle 2.5s ease-in-out infinite;
-        }
-
-        .marquee-track {
+        /* ============ intro overlay ============ */
+        #intro {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
             display: flex;
-            width: max-content;
-            animation: marquee 22s linear infinite;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 44px;
+            background: radial-gradient(ellipse at 50% 36%, #4a3a52 0%, #2e2334 55%, #241b2b 100%);
+            transition: opacity .95s ease
         }
 
-        .shimmer-text {
-            background: linear-gradient(110deg, var(--accent) 20%, #FFD86B 40%, var(--accent2) 60%, var(--accent) 80%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: shimmer 4s linear infinite;
+        #intro.done {
+            opacity: 0;
+            pointer-events: none
         }
 
-        /* envelope */
-        .envelope-wrap {
-            perspective: 1200px;
+        .sf {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 1px;
+            border-radius: 50%;
+            animation: sfTw 4.5s ease-in-out infinite alternate;
+            pointer-events: none
+        }
+
+        @keyframes sfTw {
+            from {
+                opacity: .35
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        .env-persp {
+            perspective: 1100px
         }
 
         .envelope {
-            width: min(380px, 90vw);
-            height: 250px;
             position: relative;
-            margin: 0 auto;
-            cursor: pointer;
-            transform-style: preserve-3d;
-            transition: transform .5s;
-        }
-
-        .envelope:hover {
-            transform: translateY(-6px) rotateX(4deg);
+            width: min(370px, 84vw);
+            aspect-ratio: 8/5;
+            transform-style: preserve-3d
         }
 
         .env-back {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, #FFD6E8, #C5ECFF);
-            border-radius: 22px;
-            box-shadow: 0 30px 60px rgba(255, 143, 177, .35);
+            background: #f7eddc;
+            border-radius: 12px;
+            box-shadow: 0 30px 60px -18px rgba(0, 0, 0, .55)
         }
 
-        .env-letter {
+        .letter {
             position: absolute;
-            left: 14px;
-            right: 14px;
-            top: 14px;
-            bottom: 14px;
-            background: #fff;
-            border-radius: 16px;
+            left: 4%;
+            right: 4%;
+            top: 5%;
+            height: 88%;
+            background: var(--cream);
+            border-radius: 8px;
             z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
-            transition: all .9s cubic-bezier(.34, 1.56, .64, 1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, .1);
+            padding-top: 20px;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, .14);
+            transition: transform .75s var(--ease)
+        }
+
+        .letter.up {
+            transform: translateY(-58%);
+            z-index: 5
+        }
+
+        .letter .star-ic {
+            width: 11px;
+            height: 11px;
+            margin-bottom: 8px
+        }
+
+        .l-script {
+            font-family: var(--script);
+            font-size: 1.75rem;
+            color: var(--rose-deep);
+            line-height: 1
+        }
+
+        .l-eyebrow {
+            margin-top: 8px;
+            font-size: 8.5px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold)
+        }
+
+        .l-names {
+            margin-top: 5px;
+            font-family: var(--serif);
+            font-weight: 600;
+            font-size: 1.4rem
         }
 
         .env-front {
             position: absolute;
             inset: 0;
             z-index: 3;
-            border-radius: 22px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, .4), transparent);
-            clip-path: polygon(0 35%, 50% 62%, 100% 35%, 100% 100%, 0 100%);
-            background-color: #fff;
-            background-image: linear-gradient(135deg, var(--c1), var(--c2));
-            border-radius: 22px;
-            box-shadow: inset 0 -20px 40px rgba(0, 0, 0, .06);
-            pointer-events: none;
+            background: #efe2cb;
+            border-radius: 12px;
+            clip-path: polygon(0 32%, 50% 60%, 100% 32%, 100% 100%, 0 100%)
+        }
+
+        .env-name {
+            position: absolute;
+            bottom: 11%;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-family: var(--script);
+            font-size: 1.5rem;
+            color: #8a6f5a;
+            opacity: .85
         }
 
         .env-flap {
@@ -327,1179 +1448,935 @@
             left: 0;
             right: 0;
             top: 0;
-            height: 58%;
+            height: 60%;
             z-index: 4;
-            background: linear-gradient(180deg, var(--accent), var(--accent2));
+            background: #f2e5cf;
             clip-path: polygon(0 0, 100% 0, 50% 100%);
-            border-radius: 22px 22px 0 0;
-            transform-origin: top center;
-            transition: all .7s cubic-bezier(.4, 0, .2, 1);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, .15);
-        }
-
-        .env-seal {
-            position: absolute;
-            left: 50%;
-            top: 48%;
-            transform: translate(-50%, -50%);
-            width: 64px;
-            height: 64px;
-            background: white;
-            border-radius: 50%;
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, .2);
-            transition: all .5s;
-            border: 3px solid var(--gold);
+            transform-origin: 50% 0;
+            transition: transform .85s cubic-bezier(.6, .05, .4, 1);
+            filter: drop-shadow(0 3px 3px rgba(90, 60, 40, .28))
         }
 
         .envelope.open .env-flap {
             transform: rotateX(180deg);
-            z-index: 1;
-            opacity: .9;
+            z-index: 1
         }
 
-        .envelope.open .env-seal {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0) rotate(180deg);
-        }
-
-        .envelope.open .env-letter {
-            transform: translateY(-78%) scale(1.05) rotate(-2deg);
-            z-index: 5;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, .2);
-        }
-
-        .tilt-card {
-            transform-style: preserve-3d;
-            transition: transform .2s ease-out;
-            will-change: transform;
-        }
-
-        .tilt-inner {
-            transform: translateZ(40px);
-        }
-
-        .count-box {
-            transform-style: preserve-3d;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, .08);
-            border: 2px solid #fff;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .count-box::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -80%;
-            width: 60%;
-            height: 100%;
-            background: linear-gradient(105deg, transparent, rgba(255, 255, 255, .8), transparent);
-            transform: skewX(-20deg);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% {
-                left: -80%;
-            }
-
-            60%,
-            100% {
-                left: 130%;
-            }
-        }
-
-        .btn-magical {
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            color: white;
-            font-weight: 800;
-            border-radius: 999px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, .15), inset 0 2px 0 rgba(255, 255, 255, .4);
-            transition: .3s;
-        }
-
-        .btn-magical:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 18px 40px rgba(0, 0, 0, .2);
-        }
-
-        .btn-magical::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -75%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, .6), transparent);
-            transform: skewX(-20deg);
-            animation: shine 2.5s infinite;
-        }
-
-        .timeline-dot::before {
-            content: '';
+        .seal {
             position: absolute;
             left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: linear-gradient(var(--accent), var(--accent2), var(--gold));
+            bottom: -27px;
             transform: translateX(-50%);
-            border-radius: 99px;
-            opacity: .3;
-        }
-
-        .gift-card {
-            transition: .4s cubic-bezier(.34, 1.56, .64, 1);
-        }
-
-        .gift-card:hover {
-            transform: translateY(-8px) rotate(-1deg);
-        }
-
-        .gift-card.claimed {
-            filter: grayscale(.2);
-        }
-
-        .gift-card.claimed .gift-overlay {
-            opacity: 1;
-        }
-
-        .vote-bar {
-            transition: width 1s cubic-bezier(.34, 1.56, .64, 1);
-        }
-
-        #cursor {
-            position: fixed;
-            width: 18px;
-            height: 18px;
-            background: var(--accent);
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: multiply;
-            opacity: .6;
-            transform: translate(-50%, -50%);
-            transition: width .2s, height .2s;
-        }
-
-        .sparkle-trail {
-            position: fixed;
-            pointer-events: none;
-            z-index: 9998;
-            font-size: 14px;
-            animation: sparkFade 1s forwards;
-        }
-
-        @keyframes sparkFade {
-            0% {
-                opacity: 1;
-                transform: scale(1) rotate(0);
-            }
-
-            100% {
-                opacity: 0;
-                transform: scale(0) translateY(-30px) rotate(90deg);
-            }
-        }
-
-        .balloon2d {
-            position: absolute;
+            border: none;
             cursor: pointer;
-            transition: transform .2s;
-            user-select: none;
-            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, .15));
-        }
-
-        .balloon2d:hover {
-            transform: scale(1.12);
-        }
-
-        .balloon2d:active {
-            transform: scale(.9);
-        }
-
-        #preloader {
-            position: fixed;
-            inset: 0;
-            z-index: 10000;
-            background: linear-gradient(135deg, #FFF9F0, #FFE4EE, #D6F0FF);
+            background: var(--rose-deep);
+            color: #fffdf8;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity .8s, visibility .8s;
+            font-family: var(--serif);
+            font-weight: 600;
+            font-size: 24px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .4), inset 0 -4px 8px rgba(0, 0, 0, .25), inset 0 3px 6px rgba(255, 255, 255, .25);
+            animation: sealPulse 2.2s ease-in-out infinite
         }
 
-        #preloader.hide {
-            opacity: 0;
-            visibility: hidden;
+        .seal::before {
+            content: '';
+            position: absolute;
+            inset: 7px;
+            border: 1.5px dashed rgba(255, 255, 255, .5);
+            border-radius: 50%
         }
 
-        .loader-balloon {
-            font-size: 70px;
-            animation: bounceSoft 1s infinite, wiggle 2s infinite;
+        .seal:hover {
+            background: #c76d92
         }
 
-        .loader-bar {
-            width: 220px;
-            height: 10px;
-            background: #fff;
-            border-radius: 99px;
-            overflow: hidden;
-            margin-top: 20px;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, .1);
-        }
-
-        .loader-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent2));
-            border-radius: 99px;
-            transition: width .3s;
-        }
-
-        .modal-bg {
-            background: rgba(74, 63, 85, .5);
-            backdrop-filter: blur(8px);
-        }
-
-        .music-bar {
-            width: 4px;
-            background: white;
-            border-radius: 99px;
-            animation: musicEq 1s ease-in-out infinite;
-        }
-
-        @keyframes musicEq {
+        @keyframes sealPulse {
 
             0%,
             100% {
-                height: 8px;
+                transform: translateX(-50%) scale(1)
             }
 
             50% {
-                height: 20px;
+                transform: translateX(-50%) scale(1.07)
             }
         }
 
-        .polaroid {
-            background: white;
-            padding: 10px 10px 38px 10px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, .12);
-            border-radius: 8px;
-            transition: .4s;
+        .seal.pop {
+            animation: sealPop .45s ease forwards
         }
 
-        .polaroid:hover {
-            transform: rotate(0deg) !important;
-            scale: 1.05;
-            z-index: 10;
-        }
-
-        .cloud-shape {
-            background: white;
-            border-radius: 999px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, .06);
-        }
-
-        input,
-        textarea,
-        select {
-            outline: none;
-        }
-
-        input:focus,
-        textarea:focus {
-            border-color: var(--accent) !important;
-            box-shadow: 0 0 0 4px rgba(255, 143, 177, .15);
-        }
-
-        .toast {
-            animation: toastIn .5s cubic-bezier(.34, 1.56, .64, 1);
-        }
-
-        @keyframes toastIn {
-            from {
-                transform: translateY(20px) scale(.9);
-                opacity: 0;
+        @keyframes sealPop {
+            0% {
+                transform: translateX(-50%) scale(1)
             }
 
-            to {
-                transform: translateY(0) scale(1);
-                opacity: 1;
+            60% {
+                transform: translateX(-50%) scale(1.18)
+            }
+
+            100% {
+                transform: translateX(-50%) scale(0);
+                opacity: 0
             }
         }
 
-        .baby-block {
-            width: 56px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Baloo 2';
-            font-weight: 800;
-            font-size: 28px;
-            color: white;
-            border-radius: 14px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, .15), inset 0 2px 0 rgba(255, 255, 255, .4);
-            animation: floaty 4s ease-in-out infinite;
+        .intro-hint {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.1rem;
+            color: rgba(255, 240, 228, .8);
+            animation: hintPulse 2.6s ease-in-out infinite;
+            text-align: center;
+            padding: 0 20px
         }
 
-        @media(max-width:768px) {
-            #cursor {
-                display: none;
+        @keyframes hintPulse {
+
+            0%,
+            100% {
+                opacity: .55
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+
+        /* ============ responsive ============ */
+        @media (max-width:720px) {
+            .nav-links {
+                display: none
+            }
+
+            .f-grid {
+                grid-template-columns: 1fr
+            }
+
+            .registry-pill {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 24px
+            }
+
+            .stationery {
+                padding: 52px 24px 42px
+            }
+        }
+
+        @media (max-width:560px) {
+            .cd-sep {
+                display: none
+            }
+
+            .cd-cell {
+                min-width: 72px
+            }
+
+            .hero-actions .btn {
+                width: min(300px, 100%)
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+
+            .seal,
+            .scroll-cue .sc-line::after,
+            .reveal-btn::before,
+            .sf,
+            .fl-heart {
+                animation: none
+            }
+
+            html {
+                scroll-behavior: auto
             }
         }
     </style>
 </head>
 
-<body>
+<body class="lock">
 
-    <div id="cursor"></div>
-    <div id="trail-container"></div>
+    <div id="bg"></div>
+    <canvas id="scene"></canvas>
+    <div class="grain"></div>
 
-    <!-- PRELOADER -->
-    <div id="preloader">
-        <div class="flex gap-2 mb-4">
-            <div class="baby-block" style="background:#FF8FB1; animation-delay:0s">B</div>
-            <div class="baby-block" style="background:#7DD3FC; animation-delay:.2s">A</div>
-            <div class="baby-block" style="background:#E9B44C; animation-delay:.4s">B</div>
-            <div class="baby-block" style="background:#3AC6A5; animation-delay:.6s">Y</div>
+    <!-- hidden icon symbol -->
+    <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+        <symbol id="ic-star" viewBox="0 0 24 24">
+            <path fill="currentColor"
+                d="M12 2l2.9 6.26 6.6.7-4.9 4.5 1.35 6.5L12 16.9 6.05 19.96 7.4 13.46 2.5 8.96l6.6-.7z" />
+        </symbol>
+    </svg>
+
+    <nav class="nav" id="nav">
+        <a class="brand" href="#top">S &amp; J</a>
+        <div class="nav-links">
+            <a href="#details">Details</a>
+            <a href="#reveal">The Reveal</a>
+            <a href="#rsvp">RSVP</a>
         </div>
-        <div class="loader-balloon">🎈</div>
-        <h2 class="font-baloo font-bold text-2xl mt-2 text-[#4A3F55]">Inflating balloons...</h2>
-        <div class="loader-bar">
-            <div class="loader-fill" id="loaderFill"></div>
-        </div>
-        <p class="text-sm mt-3 opacity-60 font-semibold tracking-widest" id="loaderPct">0%</p>
-    </div>
-
-    <!-- BG BLOBS -->
-    <div class="blob w-[500px] h-[500px] left-[-100px] top-[-100px]" style="background:var(--c1)"></div>
-    <div class="blob w-[600px] h-[600px] right-[-150px] top-[30%]" style="background:var(--c2); animation-delay:2s">
-    </div>
-    <div class="blob w-[400px] h-[400px] left-[10%] bottom-[-100px]" style="background:var(--c3); animation-delay:4s">
-    </div>
-
-    <!-- NAV -->
-    <nav
-        class="fixed top-4 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-4 md:px-8 py-3 flex items-center gap-4 md:gap-8 w-[94%] md:w-auto max-w-5xl justify-between shadow-xl">
-        <a href="#home" class="flex items-center gap-2 font-baloo font-800 font-extrabold text-lg">
-            <span class="w-9 h-9 rounded-full flex items-center justify-center text-white text-xl"
-                style="background:linear-gradient(135deg,var(--accent),var(--accent2))">★</span>
-            <span class="hidden sm:block shimmer-text">Little Star</span>
-        </a>
-        <div class="hidden md:flex items-center gap-6 font-bold text-sm tracking-wide">
-            <a href="#invitation" class="hover:text-pink-500 transition">Invitation</a>
-            <a href="#details" class="hover:text-pink-500 transition">Details</a>
-            <a href="#rsvp" class="hover:text-pink-500 transition">RSVP</a>
-            <a href="#games" class="hover:text-pink-500 transition">Games</a>
-            <a href="#gifts" class="hover:text-pink-500 transition">Registry</a>
-        </div>
-        <a href="#rsvp" class="btn-magical px-5 py-2 text-sm">RSVP Now</a>
+        <a href="#rsvp" class="btn btn-solid btn-sm">RSVP</a>
     </nav>
 
-    <!-- HERO / 3D -->
-    <header id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-16">
-        <canvas id="bg3d" class="absolute inset-0 w-full h-full" style="z-index:1"></canvas>
-        <div class="absolute inset-0 pointer-events-none"
-            style="z-index:2; background:radial-gradient(ellipse at center,transparent 40%,var(--bg) 95%); opacity:.9">
-        </div>
-        <!-- 2D clickable balloons layer -->
-        <div id="balloonLayer" class="absolute inset-0 pointer-events-none" style="z-index:3"></div>
+    <main>
+        <!-- ============ HERO ============ -->
+        <header class="hero" id="top">
+            <div class="hero-inner">
+                <p class="eyebrow fx" style="--d:.05s">The Whitmore Family &middot; With Great Joy</p>
+                <h1 class="fx" style="--d:.15s">Twinkle,<br>Twinkle</h1>
+                <p class="hero-script fx" style="--d:.3s">a Baby Shower</p>
+                <div class="divider fx" style="--d:.4s">
+                    <span class="d-line"></span>
+                    <svg class="star-ic" aria-hidden="true">
+                        <use href="#ic-star" />
+                    </svg>
+                    <span class="d-line"></span>
+                </div>
+                <p class="hero-lead fx" style="--d:.5s">A little star is on the way — please join us for an afternoon of
+                    laughter, love &amp; lemonade as we celebrate the newest light in our sky.</p>
+                <p class="hero-honor fx" style="--d:.58s">in honor of <em>Sarah &amp; James</em></p>
+                <p class="hero-date fx" style="--d:.66s"><span id="heroDate"></span> &middot; The Rosewood Garden
+                    &middot; 2 PM</p>
+                <div class="hero-actions fx" style="--d:.78s">
+                    <a href="#details" class="btn btn-ghost">See the details</a>
+                    <a href="#rsvp" class="btn btn-solid">RSVP with love</a>
+                </div>
+            </div>
+            <div class="scroll-cue"><span class="sc-line"></span><span class="sc-txt">scroll</span></div>
+        </header>
 
-        <div class="relative text-center px-6 max-w-4xl mx-auto" style="z-index:5">
-            <div
-                class="hero-anim inline-flex items-center gap-2 glass rounded-full px-5 py-2 text-xs md:text-sm font-bold tracking-widest uppercase mb-6">
-                <span class="twinkle-star">✦</span> You're Invited <span class="twinkle-star"
-                    style="animation-delay:.8s">✦</span>
+        <!-- ============ COUNTDOWN ============ -->
+        <section class="section" id="countdown">
+            <div class="section-head reveal">
+                <p class="script-accent">counting down</p>
+                <h2 class="serif-h">Days of Anticipation</h2>
             </div>
-            <p class="hero-anim font-script text-4xl md:text-6xl" style="color:var(--accent)">Twinkle Twinkle Little
-                Star</p>
-            <h1 class="hero-anim font-baloo font-extrabold leading-[.95] text-5xl md:text-8xl mt-2 drop-shadow-sm">MIA'S
-                <br><span class="shimmer-text">BABY SHOWER</span></h1>
-            <p class="hero-anim mt-5 text-base md:text-xl font-semibold opacity-70 max-w-xl mx-auto">Join us for a
-                dreamy afternoon of love, laughter & tiny little shoes — in magical 3D!</p>
-
-            <div class="hero-anim flex flex-wrap justify-center gap-3 mt-8">
-                <button onclick="openInvitation(true)"
-                    class="btn-magical px-8 py-4 text-base flex items-center gap-2"><i
-                        class="fa-solid fa-envelope-open-text"></i> Open Invitation</button>
-                <a href="#details"
-                    class="glass px-8 py-4 rounded-full font-extrabold hover:scale-105 transition flex items-center gap-2"><i
-                        class="fa-solid fa-location-dot" style="color:var(--accent)"></i> View Details</a>
-            </div>
-
-            <div
-                class="hero-anim glass rounded-2xl mt-8 p-4 flex items-center justify-center gap-4 md:gap-8 max-w-2xl mx-auto flex-wrap">
-                <div class="flex items-center gap-2 font-bold text-sm"><span
-                        class="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">📅</span> Sun, Oct
-                    18 • 2PM</div>
-                <div class="w-px h-8 bg-gray-300 hidden md:block"></div>
-                <div class="flex items-center gap-2 font-bold text-sm"><span
-                        class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">📍</span> Willow
-                    Garden Hall</div>
-                <div class="w-px h-8 bg-gray-300 hidden md:block"></div>
-                <div class="flex items-center gap-2 font-bold text-sm"><span
-                        class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">🎈</span> <span
-                        id="popCountLabel">0 / 10 pops</span></div>
-            </div>
-            <p class="mt-4 text-xs font-bold tracking-widest uppercase opacity-50 animate-pulse">✦ Tip: Click the 3D
-                balloons to pop them! ✦</p>
-        </div>
-
-        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-60"
-            style="z-index:5">
-            <span class="text-[11px] font-bold tracking-widest uppercase">Scroll for magic</span>
-            <div class="w-6 h-10 border-2 border-current rounded-full flex justify-center pt-2">
-                <div class="w-1 h-2 bg-current rounded-full animate-bounce"></div>
-            </div>
-        </div>
-
-        <!-- floating badges -->
-        <div class="hidden lg:block absolute left-8 top-1/3 glass rounded-2xl p-4 rotate-[-8deg] animate-floaty"
-            style="z-index:5">
-            <div class="text-3xl">🧸</div>
-            <div class="font-baloo font-bold text-sm">Team Bear?</div>
-        </div>
-        <div class="hidden lg:block absolute right-8 top-1/4 glass rounded-2xl p-4 rotate-[8deg] animate-floaty2"
-            style="z-index:5">
-            <div class="text-3xl">🌙</div>
-            <div class="font-baloo font-bold text-sm">Over the Moon!</div>
-        </div>
-    </header>
-
-    <!-- MARQUEE -->
-    <div class="relative py-4 overflow-hidden text-white font-baloo font-bold text-lg tracking-wide"
-        style="background:linear-gradient(90deg,var(--accent),var(--accent2),var(--gold),var(--accent)); z-index:10">
-        <div class="marquee-track gap-8">
-            <span class="flex gap-8 pr-8">★ OH BABY ★ TWINKLE TWINKLE LITTLE STAR ★ OCT 18TH 2PM ★ WILLOW GARDEN ★ GAMES
-                • CAKE • LOVE ★ OH BABY ★ TWINKLE TWINKLE LITTLE STAR ★ OCT 18TH 2PM ★ WILLOW GARDEN ★</span>
-            <span class="flex gap-8 pr-8">★ OH BABY ★ TWINKLE TWINKLE LITTLE STAR ★ OCT 18TH 2PM ★ WILLOW GARDEN ★ GAMES
-                • CAKE • LOVE ★ OH BABY ★ TWINKLE TWINKLE LITTLE STAR ★ OCT 18TH 2PM ★ WILLOW GARDEN ★</span>
-        </div>
-    </div>
-
-    <!-- ENVELOPE SECTION -->
-    <section id="invitation" class="relative py-24 px-6">
-        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-            <div class="reveal">
-                <p class="font-script text-4xl" style="color:var(--accent)">You've got mail...</p>
-                <h2 class="font-baloo font-extrabold text-4xl md:text-5xl mt-2">A Magical Invite<br>Awaits You!</h2>
-                <p class="mt-4 opacity-70 font-medium leading-relaxed">Our little star is about to arrive, and mama
-                    <b>Sofia Bennett</b> can't wait to celebrate with you! Tap the enchanted envelope to reveal your
-                    personal invitation card in full 3D.</p>
-                <div class="flex gap-3 mt-6 flex-wrap">
-                    <div class="glass rounded-2xl px-4 py-3 flex items-center gap-3"><i
-                            class="fa-solid fa-wand-magic-sparkles text-xl" style="color:var(--gold)"></i>
-                        <div>
-                            <div class="font-bold text-sm">Interactive</div>
-                            <div class="text-xs opacity-60">Tap • Tilt • Explore</div>
-                        </div>
+            <div class="glass cd-panel reveal">
+                <div class="cd-grid">
+                    <div class="cd-cell">
+                        <div class="cd-num" id="cdD">00</div>
+                        <div class="cd-label">days</div>
                     </div>
-                    <div class="glass rounded-2xl px-4 py-3 flex items-center gap-3"><i class="fa-solid fa-cube text-xl"
-                            style="color:var(--accent2)"></i>
-                        <div>
-                            <div class="font-bold text-sm">Real 3D</div>
-                            <div class="text-xs opacity-60">Drag & Play Scene</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-8 flex items-center gap-4">
-                    <button onclick="openInvitation(true)" class="btn-magical px-7 py-3">✨ Reveal Card</button>
-                    <button onclick="burstConfetti()"
-                        class="glass px-6 py-3 rounded-full font-bold hover:scale-105 transition">🎉 Test
-                        Confetti</button>
-                </div>
-            </div>
-            <div class="reveal text-center">
-                <div class="envelope-wrap py-16">
-                    <div class="envelope" id="envelope" onclick="openInvitation()">
-                        <div class="env-back"></div>
-                        <div class="env-letter">
-                            <div class="font-script text-3xl" style="color:var(--accent)">You're Invited!</div>
-                            <div class="font-baloo font-extrabold">MIA'S BABY SHOWER</div>
-                            <div class="text-xs font-bold mt-1 opacity-60 tracking-widest">OCT 18 • 2PM • WILLOW GARDEN
-                            </div>
-                            <div class="mt-2 text-2xl">🌙⭐🧸</div>
-                        </div>
-                        <div class="env-front"></div>
-                        <div class="env-flap"></div>
-                        <div class="env-seal">💌</div>
-                    </div>
-                    <p class="mt-8 font-bold text-sm tracking-widest uppercase opacity-50 animate-pulse" id="envHint">👆
-                        Click envelope to open</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- COUNTDOWN -->
-    <section class="px-6 pb-10">
-        <div class="max-w-5xl mx-auto glass rounded-[32px] p-8 md:p-12 text-center reveal relative overflow-hidden">
-            <div class="absolute -top-10 -left-10 text-[120px] opacity-10 rotate-[-15deg]">🌙</div>
-            <div class="absolute -bottom-10 -right-10 text-[120px] opacity-10 rotate-[15deg]">⭐</div>
-            <p class="font-script text-4xl" style="color:var(--accent)">Counting down to cuddles</p>
-            <h3 class="font-baloo font-extrabold text-3xl md:text-4xl">Baby Mia Arrives Soon!</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 max-w-2xl mx-auto">
-                <div class="count-box p-5">
-                    <div class="font-baloo font-extrabold text-4xl md:text-5xl" id="cdD">00</div>
-                    <div class="text-xs font-bold tracking-widest uppercase opacity-60 mt-1">Days</div>
-                </div>
-                <div class="count-box p-5">
-                    <div class="font-baloo font-extrabold text-4xl md:text-5xl" id="cdH">00</div>
-                    <div class="text-xs font-bold tracking-widest uppercase opacity-60 mt-1">Hours</div>
-                </div>
-                <div class="count-box p-5">
-                    <div class="font-baloo font-extrabold text-4xl md:text-5xl" id="cdM">00</div>
-                    <div class="text-xs font-bold tracking-widest uppercase opacity-60 mt-1">Mins</div>
-                </div>
-                <div class="count-box p-5">
-                    <div class="font-baloo font-extrabold text-4xl md:text-5xl" id="cdS" style="color:var(--accent)">00
-                    </div>
-                    <div class="text-xs font-bold tracking-widest uppercase opacity-60 mt-1">Secs</div>
-                </div>
-            </div>
-            <div class="mt-6 max-w-xl mx-auto">
-                <div class="flex justify-between text-xs font-bold mb-2"><span>PREGNANCY JOURNEY</span><span>34 / 40
-                        weeks</span></div>
-                <div class="h-4 bg-white rounded-full overflow-hidden shadow-inner">
-                    <div id="pregBar" class="h-full rounded-full"
-                        style="width:0%; background:linear-gradient(90deg,var(--accent),var(--gold))"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- DETAILS -->
-    <section id="details" class="py-20 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center reveal">
-                <p class="font-script text-4xl" style="color:var(--accent)">When & Where</p>
-                <h2 class="font-baloo font-extrabold text-4xl md:text-5xl">Party Details</h2>
-                <p class="opacity-60 font-semibold mt-2">Everything you need to know for the big day</p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-6 mt-10">
-                <div class="reveal glass rounded-[28px] p-8 text-center tilt-card group">
-                    <div class="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center text-3xl rotate-[-6deg] group-hover:rotate-[6deg] transition"
-                        style="background:linear-gradient(135deg,#FFD6E8,#FF9EC6)">📅</div>
-                    <h3 class="font-baloo font-extrabold text-xl mt-4">Date & Time</h3>
-                    <p class="font-bold mt-2">Sunday, October 18th, 2026</p>
-                    <p class="opacity-60 text-sm font-semibold">2:00 PM – 5:00 PM</p>
-                    <button onclick="addToCalendar()"
-                        class="mt-4 text-sm font-bold px-5 py-2 rounded-full bg-white shadow hover:scale-105 transition">+
-                        Add to Calendar</button>
-                </div>
-                <div class="reveal glass rounded-[28px] p-8 text-center tilt-card group">
-                    <div class="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center text-3xl rotate-[6deg] group-hover:rotate-[-6deg] transition"
-                        style="background:linear-gradient(135deg,#C5ECFF,#7DD3FC)">📍</div>
-                    <h3 class="font-baloo font-extrabold text-xl mt-4">Venue</h3>
-                    <p class="font-bold mt-2">The Willow Garden Hall</p>
-                    <p class="opacity-60 text-sm font-semibold">123 Starlight Lane, Beverly Hills</p>
-                    <button
-                        onclick="document.getElementById('mapBox').scrollIntoView({behavior:'smooth',block:'center'})"
-                        class="mt-4 text-sm font-bold px-5 py-2 rounded-full bg-white shadow hover:scale-105 transition">Get
-                        Directions</button>
-                </div>
-                <div class="reveal glass rounded-[28px] p-8 text-center tilt-card group">
-                    <div class="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center text-3xl rotate-[-6deg] group-hover:rotate-[6deg] transition"
-                        style="background:linear-gradient(135deg,#FFF3B0,#E9B44C)">👗</div>
-                    <h3 class="font-baloo font-extrabold text-xl mt-4">Dress Code</h3>
-                    <p class="font-bold mt-2">Pastel Chic & Comfy</p>
-                    <p class="opacity-60 text-sm font-semibold">Think dreamy, soft & starry ✨</p>
-                    <div class="flex justify-center gap-2 mt-4"><span
-                            class="w-7 h-7 rounded-full border-2 border-white shadow"
-                            style="background:#FFC2D6"></span><span
-                            class="w-7 h-7 rounded-full border-2 border-white shadow"
-                            style="background:#B8E6FF"></span><span
-                            class="w-7 h-7 rounded-full border-2 border-white shadow"
-                            style="background:#FFF3B0"></span><span
-                            class="w-7 h-7 rounded-full border-2 border-white shadow" style="background:#D6FAD8"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid lg:grid-cols-2 gap-6 mt-8">
-                <div id="mapBox" class="reveal glass rounded-[28px] p-3 overflow-hidden">
-                    <div class="rounded-[22px] overflow-hidden h-[320px] relative">
-                        <iframe
-                            src="https://maps.google.com/maps?q=Beverly%20Hills%20California&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                            class="w-full h-full border-0" loading="lazy"></iframe>
-                        <div
-                            class="absolute bottom-3 left-3 right-3 glass rounded-2xl p-3 flex items-center justify-between">
-                            <div class="text-left">
-                                <div class="font-bold text-sm">Willow Garden Hall</div>
-                                <div class="text-xs opacity-60">Free parking • Stroller friendly</div>
-                            </div>
-                            <a href="https://maps.google.com/?q=Beverly+Hills" target="_blank"
-                                class="btn-magical px-4 py-2 text-xs">Navigate</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="reveal glass rounded-[28px] p-8">
-                    <h3 class="font-baloo font-extrabold text-2xl mb-6 flex items-center gap-2">🕒 Party Timeline</h3>
-                    <div class="space-y-4">
-                        <div class="flex gap-4 items-center bg-white/70 rounded-2xl p-3 hover:scale-[1.02] transition">
-                            <div class="font-baloo font-extrabold text-sm px-3 py-2 rounded-xl text-white shrink-0"
-                                style="background:var(--accent)">2:00</div>
-                            <div>
-                                <div class="font-bold text-sm">Welcome & Mocktails ✨</div>
-                                <div class="text-xs opacity-60">Starry photo wall + guest book</div>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-center bg-white/70 rounded-2xl p-3 hover:scale-[1.02] transition">
-                            <div class="font-baloo font-extrabold text-sm px-3 py-2 rounded-xl text-white shrink-0"
-                                style="background:var(--accent2)">2:45</div>
-                            <div>
-                                <div class="font-bold text-sm">Baby Games Extravaganza 🎮</div>
-                                <div class="text-xs opacity-60">Bingo, onesie decorating, quiz</div>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-center bg-white/70 rounded-2xl p-3 hover:scale-[1.02] transition">
-                            <div class="font-baloo font-extrabold text-sm px-3 py-2 rounded-xl text-white shrink-0"
-                                style="background:var(--gold)">3:30</div>
-                            <div>
-                                <div class="font-bold text-sm">Cake Cutting & Wishes 🎂</div>
-                                <div class="text-xs opacity-60">Moon & stars cake + advice cards</div>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-center bg-white/70 rounded-2xl p-3 hover:scale-[1.02] transition">
-                            <div class="font-baloo font-extrabold text-sm px-3 py-2 rounded-xl text-white shrink-0"
-                                style="background:#B388FF">4:15</div>
-                            <div>
-                                <div class="font-bold text-sm">Gift Opening + Goodie Bags 🎁</div>
-                                <div class="text-xs opacity-60">Thank yous & starry favors</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Gallery -->
-            <div class="mt-12 reveal">
-                <h3 class="font-baloo font-extrabold text-2xl text-center mb-6">Sneak Peek: Dreamy Theme 🌙</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="polaroid rotate-[-4deg]"><img
-                            src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=600&q=80&auto=format&fit=crop"
-                            onerror="this.src='https://picsum.photos/seed/babyball/600/600'"
-                            class="rounded-md h-48 w-full object-cover" alt="balloons">
-                        <p class="text-center font-script text-xl mt-2">pastel dreams</p>
-                    </div>
-                    <div class="polaroid rotate-[3deg]"><img
-                            src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600&q=80&auto=format&fit=crop"
-                            onerror="this.src='https://picsum.photos/seed/babyconf/600/600'"
-                            class="rounded-md h-48 w-full object-cover" alt="confetti">
-                        <p class="text-center font-script text-xl mt-2">confetti love</p>
-                    </div>
-                    <div class="polaroid rotate-[-2deg]"><img
-                            src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=600&q=80&auto=format&fit=crop"
-                            onerror="this.src='https://picsum.photos/seed/babycloth/600/600'"
-                            class="rounded-md h-48 w-full object-cover" alt="clothes">
-                        <p class="text-center font-script text-xl mt-2">tiny outfits</p>
-                    </div>
-                    <div class="polaroid rotate-[4deg]"><img
-                            src="https://images.unsplash.com/photo-1555009393-f20bdb245c4d?w=600&q=80&auto=format&fit=crop"
-                            onerror="this.src='https://picsum.photos/seed/babyfeet/600/600'"
-                            class="rounded-md h-48 w-full object-cover" alt="baby">
-                        <p class="text-center font-script text-xl mt-2">little toes</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- RSVP -->
-    <section id="rsvp" class="py-20 px-6 relative">
-        <div class="max-w-6xl mx-auto grid lg:grid-cols-5 gap-6">
-            <div class="lg:col-span-2 reveal glass rounded-[32px] p-8 md:p-10">
-                <p class="font-script text-4xl" style="color:var(--accent)">Will you join us?</p>
-                <h2 class="font-baloo font-extrabold text-4xl">RSVP</h2>
-                <p class="text-sm opacity-60 font-semibold mt-1">Kindly respond by Oct 10th 💌</p>
-                <div class="flex gap-3 mt-5">
-                    <div class="flex-1 bg-white rounded-2xl p-3 text-center shadow">
-                        <div class="font-baloo font-extrabold text-2xl" id="statGoing" style="color:var(--accent)">18
-                        </div>
-                        <div class="text-[11px] font-bold tracking-widest uppercase opacity-60">Going</div>
-                    </div>
-                    <div class="flex-1 bg-white rounded-2xl p-3 text-center shadow">
-                        <div class="font-baloo font-extrabold text-2xl" id="statSeats">32</div>
-                        <div class="text-[11px] font-bold tracking-widest uppercase opacity-60">Seats left</div>
-                    </div>
-                    <div class="flex-1 bg-white rounded-2xl p-3 text-center shadow">
-                        <div class="font-baloo font-extrabold text-2xl">50</div>
-                        <div class="text-[11px] font-bold tracking-widest uppercase opacity-60">Total</div>
-                    </div>
-                </div>
-                <form id="rsvpForm" class="mt-6 space-y-4">
-                    <div><label class="text-xs font-bold tracking-widest uppercase opacity-60">Your Name *</label><input
-                            required id="fName" type="text" placeholder="e.g. Emma Wilson"
-                            class="mt-1 w-full bg-white border-2 border-transparent rounded-2xl px-4 py-3 font-semibold">
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div><label class="text-xs font-bold tracking-widest uppercase opacity-60">Attending?
-                                *</label><select id="fAttend"
-                                class="mt-1 w-full bg-white border-2 border-transparent rounded-2xl px-4 py-3 font-semibold">
-                                <option value="yes">Joyfully Accepts ✨</option>
-                                <option value="no">Regretfully Declines 💔</option>
-                            </select></div>
-                        <div><label class="text-xs font-bold tracking-widest uppercase opacity-60">Guests</label><select
-                                id="fGuests"
-                                class="mt-1 w-full bg-white border-2 border-transparent rounded-2xl px-4 py-3 font-semibold">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select></div>
-                    </div>
-                    <div><label class="text-xs font-bold tracking-widest uppercase opacity-60">Message for Baby
-                            Mia</label><textarea id="fMsg" rows="3" placeholder="We can't wait to meet you..."
-                            class="mt-1 w-full bg-white border-2 border-transparent rounded-2xl px-4 py-3 font-semibold resize-none"></textarea>
-                    </div>
-                    <div><label class="text-xs font-bold tracking-widest uppercase opacity-60">Meal Preference</label>
-                        <div class="grid grid-cols-3 gap-2 mt-2" id="mealPick">
-                            <button type="button" data-meal="Veggie"
-                                class="meal-btn bg-white rounded-xl py-2 text-sm font-bold border-2 border-transparent shadow">🥗
-                                Veggie</button>
-                            <button type="button" data-meal="Chicken"
-                                class="meal-btn bg-white rounded-xl py-2 text-sm font-bold border-2 shadow"
-                                style="border-color:var(--accent)">🍗 Chicken</button>
-                            <button type="button" data-meal="Vegan"
-                                class="meal-btn bg-white rounded-xl py-2 text-sm font-bold border-2 border-transparent shadow">🌱
-                                Vegan</button>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-magical w-full py-4 text-lg">Send RSVP 💌</button>
-                </form>
-            </div>
-            <div class="lg:col-span-3 reveal glass rounded-[32px] p-8 md:p-10">
-                <div class="flex items-center justify-between flex-wrap gap-3">
-                    <h3 class="font-baloo font-extrabold text-2xl">Guest Wall of Love 💕 <span id="guestCount"
-                            class="text-sm opacity-60 font-quick">(6)</span></h3>
-                    <div class="flex gap-2"><input id="guestSearch" placeholder="Search guests..."
-                            class="bg-white rounded-full px-4 py-2 text-sm font-semibold shadow w-40"><button
-                            onclick="shuffleGuests()"
-                            class="w-10 h-10 rounded-full bg-white shadow font-bold hover:rotate-180 transition duration-500">🔀</button>
-                    </div>
-                </div>
-                <div id="guestWall" class="grid sm:grid-cols-2 gap-3 mt-6 max-h-[520px] overflow-y-auto pr-1"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- GAMES -->
-    <section id="games" class="py-20 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center reveal">
-                <p class="font-script text-4xl" style="color:var(--accent)">Let's play!</p>
-                <h2 class="font-baloo font-extrabold text-4xl md:text-5xl">Shower Games & Polls</h2>
-                <p class="opacity-60 font-semibold">Vote now — winners announced at the party!</p>
-            </div>
-            <div class="grid lg:grid-cols-2 gap-6 mt-10">
-                <div class="reveal glass rounded-[32px] p-8">
-                    <h3 class="font-baloo font-extrabold text-2xl text-center">💙 or 🩷 Guess the Vibe?</h3>
-                    <p class="text-center text-sm opacity-60 font-semibold">What will Baby Mia's nursery theme be?</p>
-                    <div class="grid grid-cols-2 gap-4 mt-6">
-                        <button onclick="voteGender('boy')"
-                            class="rounded-3xl p-6 text-center bg-gradient-to-br from-sky-200 to-sky-400 hover:scale-105 transition shadow-lg">
-                            <div class="text-5xl">🧸</div>
-                            <div class="font-baloo font-extrabold text-white text-lg mt-2">Blue Bear</div>
-                            <div class="text-white/90 text-xs font-bold" id="boyVotesLabel">42 votes</div>
-                        </button>
-                        <button onclick="voteGender('girl')"
-                            class="rounded-3xl p-6 text-center bg-gradient-to-br from-pink-200 to-pink-500 hover:scale-105 transition shadow-lg">
-                            <div class="text-5xl">🌸</div>
-                            <div class="font-baloo font-extrabold text-white text-lg mt-2">Pink Bloom</div>
-                            <div class="text-white/90 text-xs font-bold" id="girlVotesLabel">58 votes</div>
-                        </button>
-                    </div>
-                    <div class="mt-5 h-5 bg-white rounded-full overflow-hidden flex shadow-inner">
-                        <div id="boyBar" class="vote-bar h-full bg-sky-400" style="width:42%"></div>
-                        <div id="girlBar" class="vote-bar h-full bg-pink-400" style="width:58%"></div>
-                    </div>
-                    <p class="text-center text-xs font-bold mt-2 opacity-60" id="genderMsg">Pink is leading! Cast your
-                        vote ✨</p>
-                </div>
-                <div class="reveal glass rounded-[32px] p-8">
-                    <h3 class="font-baloo font-extrabold text-2xl text-center">✨ Vote: Middle Name?</h3>
-                    <p class="text-center text-sm opacity-60 font-semibold">Help mama choose Mia's middle name</p>
-                    <div class="space-y-3 mt-6" id="namePoll"></div>
-                </div>
-            </div>
-            <div class="reveal glass rounded-[32px] p-8 mt-6 text-center relative overflow-hidden">
-                <h3 class="font-baloo font-extrabold text-2xl">🎈 Balloon Pop Challenge</h3>
-                <p class="opacity-60 font-semibold text-sm mt-1">Pop 10 balloons in the 3D sky to unlock a <b>secret
-                        message</b> from mama!</p>
-                <div class="max-w-md mx-auto mt-4 h-6 bg-white rounded-full overflow-hidden shadow-inner relative">
-                    <div id="popProgress" class="h-full rounded-full transition-all duration-500"
-                        style="width:0%; background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2))">
-                    </div>
-                </div>
-                <p class="font-baloo font-bold mt-2" id="popProgressLabel">0 / 10 popped</p>
-                <button
-                    onclick="window.scrollTo({top:0,behavior:'smooth'}); toast('Look up! Click the floating balloons 🎈')"
-                    class="btn-magical px-7 py-3 mt-4 text-sm">Go Pop Balloons ↑</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- GIFTS -->
-    <section id="gifts" class="py-20 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center reveal">
-                <p class="font-script text-4xl" style="color:var(--accent)">Spoil little Mia</p>
-                <h2 class="font-baloo font-extrabold text-4xl md:text-5xl">Gift Registry</h2>
-                <p class="opacity-60 font-semibold mt-2">Tap <b>Reserve</b> to claim a gift — no duplicates, all love!
-                </p>
-            </div>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10" id="giftGrid"></div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="px-6 pb-28 pt-10">
-        <div class="max-w-5xl mx-auto rounded-[32px] p-10 text-center text-white relative overflow-hidden"
-            style="background:linear-gradient(135deg,#4A3F55,#7A5C9E,#FF8FB1)">
-            <div class="absolute inset-0 opacity-20"
-                style="background-image:radial-gradient(white 2px,transparent 2px); background-size:30px 30px;"></div>
-            <div class="relative">
-                <div class="font-script text-5xl">Thank you!</div>
-                <h2 class="font-baloo font-extrabold text-3xl mt-1">Can't wait to celebrate with you ✨</h2>
-                <p class="opacity-80 font-semibold mt-2">Hosted with love by Emma & The Bennett Family • Questions?
-                    (555) 123-4567</p>
-                <div class="flex justify-center gap-3 mt-6 flex-wrap">
-                    <button onclick="burstConfetti()"
-                        class="bg-white text-[#4A3F55] px-6 py-3 rounded-full font-extrabold hover:scale-105 transition">🎉
-                        Celebrate</button>
-                    <button onclick="shareInvite()"
-                        class="bg-white/20 backdrop-blur border border-white/40 px-6 py-3 rounded-full font-extrabold hover:scale-105 transition">🔗
-                        Share Invite</button>
-                </div>
-                <p class="mt-8 text-xs opacity-60 font-bold tracking-widest uppercase">Made with 💕 for Baby Mia • Oct
-                    2026</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- FLOATING TOOLBAR -->
-    <div
-        class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-3 py-2 flex items-center gap-2 shadow-2xl">
-        <div class="flex bg-white rounded-full p-1 gap-1 shadow-inner">
-            <button onclick="setTheme('girl')" title="Girl theme"
-                class="w-8 h-8 rounded-full font-bold text-sm hover:scale-110 transition"
-                style="background:#FF9EC6">♀</button>
-            <button onclick="setTheme('boy')" title="Boy theme"
-                class="w-8 h-8 rounded-full font-bold text-sm text-white hover:scale-110 transition"
-                style="background:#2AA8FF">♂</button>
-            <button onclick="setTheme('neutral')" title="Neutral theme"
-                class="w-8 h-8 rounded-full font-bold text-sm hover:scale-110 transition"
-                style="background:linear-gradient(135deg,#FFD6A5,#CAFFBF,#9BF6FF)">★</button>
-        </div>
-        <button id="musicBtn" onclick="toggleMusic()"
-            class="w-11 h-11 rounded-full text-white flex items-center justify-center gap-[3px] hover:scale-105 transition"
-            style="background:linear-gradient(135deg,var(--accent),var(--accent2))">
-            <span id="musicIcon"><i class="fa-solid fa-music"></i></span>
-        </button>
-        <button onclick="window.scrollTo({top:0,behavior:'smooth'})"
-            class="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center hover:scale-105 transition">↑</button>
-    </div>
-
-    <!-- INVITATION MODAL -->
-    <div id="inviteModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 modal-bg">
-        <div class="max-w-lg w-full relative">
-            <button onclick="closeInvitation()"
-                class="absolute -top-4 -right-2 w-11 h-11 bg-white rounded-full shadow-xl font-bold hover:rotate-90 transition z-10">✕</button>
-            <div class="tilt-card bg-white rounded-[32px] overflow-hidden shadow-2xl" id="inviteCard">
-                <div class="h-48 relative flex items-center justify-center overflow-hidden"
-                    style="background:linear-gradient(135deg,var(--c1),var(--c2),var(--c3))">
-                    <div class="absolute inset-0 opacity-30"
-                        style="background-image:radial-gradient(white 3px,transparent 3px); background-size:28px 28px;">
-                    </div>
-                    <div class="text-center tilt-inner">
-                        <div class="text-5xl animate-floaty">🌙</div>
-                        <div class="font-script text-4xl text-white drop-shadow-lg mt-1">Twinkle Twinkle</div>
-                    </div>
-                    <div class="absolute bottom-0 left-0 right-0"><svg viewBox="0 0 1440 80" class="w-full block">
-                            <path fill="white" d="M0,40 C360,90 1080,0 1440,50 L1440,80 L0,80 Z" />
+                    <div class="cd-sep"><svg class="star-ic" aria-hidden="true">
+                            <use href="#ic-star" />
                         </svg></div>
+                    <div class="cd-cell">
+                        <div class="cd-num" id="cdH">00</div>
+                        <div class="cd-label">hours</div>
+                    </div>
+                    <div class="cd-sep"><svg class="star-ic" aria-hidden="true">
+                            <use href="#ic-star" />
+                        </svg></div>
+                    <div class="cd-cell">
+                        <div class="cd-num" id="cdM">00</div>
+                        <div class="cd-label">minutes</div>
+                    </div>
+                    <div class="cd-sep"><svg class="star-ic" aria-hidden="true">
+                            <use href="#ic-star" />
+                        </svg></div>
+                    <div class="cd-cell">
+                        <div class="cd-num" id="cdS">00</div>
+                        <div class="cd-label">seconds</div>
+                    </div>
                 </div>
-                <div class="p-8 text-center -mt-2">
-                    <p class="text-xs font-bold tracking-[.3em] uppercase opacity-50">You are cordially invited to</p>
-                    <h2 class="font-baloo font-extrabold text-3xl mt-2">Sofia's Baby Shower</h2>
-                    <p class="font-script text-3xl mt-1" style="color:var(--accent)">honoring Baby Mia</p>
-                    <div class="flex items-center justify-center gap-3 my-5">
-                        <div class="h-px flex-1 bg-gradient-to-r from-transparent to-pink-300"></div><span
-                            class="text-xl">⭐</span>
-                        <div class="h-px flex-1 bg-gradient-to-l from-transparent to-pink-300"></div>
+                <p class="cd-note">until we shower Baby Whitmore with love</p>
+            </div>
+        </section>
+
+        <!-- ============ DETAILS ============ -->
+        <section class="section" id="details">
+            <div class="section-head reveal">
+                <p class="script-accent">when &amp; where</p>
+                <h2 class="serif-h">The Celebration</h2>
+            </div>
+            <div class="stationery reveal">
+                <svg class="corner c-tl" aria-hidden="true">
+                    <use href="#ic-star" />
+                </svg>
+                <svg class="corner c-tr" aria-hidden="true">
+                    <use href="#ic-star" />
+                </svg>
+                <svg class="corner c-bl" aria-hidden="true">
+                    <use href="#ic-star" />
+                </svg>
+                <svg class="corner c-br" aria-hidden="true">
+                    <use href="#ic-star" />
+                </svg>
+                <div class="stat-weekday" id="statWeekday">Saturday</div>
+                <div class="stat-date" id="statDate">—</div>
+                <div class="stat-time">at two o'clock in the afternoon</div>
+                <div class="divider"><span class="d-line"></span><svg class="star-ic" aria-hidden="true">
+                        <use href="#ic-star" />
+                    </svg><span class="d-line"></span></div>
+                <div class="stat-venue">The Rosewood Garden</div>
+                <div class="stat-addr">128 Willow Lane &middot; Portland, Oregon<br>rain or shine, under the garden
+                    pergola</div>
+                <div class="divider"><span class="d-line"></span><svg class="star-ic" aria-hidden="true">
+                        <use href="#ic-star" />
+                    </svg><span class="d-line"></span></div>
+                <p class="stat-host">hosted with love by <em>Emma &amp; Chloe</em></p>
+                <p class="stat-rsvp">kindly reply by <span id="statReply">—</span> &middot; <a href="#rsvp">rsvp
+                        below</a></p>
+            </div>
+        </section>
+
+        <!-- ============ GENDER REVEAL ============ -->
+        <section class="section" id="reveal">
+            <div class="section-head reveal">
+                <p class="script-accent">a little mystery</p>
+                <h2 class="serif-h">The Great Reveal</h2>
+            </div>
+            <div class="reveal-wrap reveal" id="revealWrap">
+                <div class="reveal-stage">
+                    <button class="reveal-btn" id="revealBtn" aria-label="Tap to reveal the baby's gender">
+                        <span class="rb-top">tap to find out</span>
+                        <span class="rb-word">boy</span>
+                        <span class="rb-or">or</span>
+                        <span class="rb-word">girl?</span>
+                    </button>
+                    <div class="reveal-result" id="revealResult">
+                        <i data-lucide="heart" class="fl-heart fh1"></i>
+                        <i data-lucide="heart" class="fl-heart fh2"></i>
+                        <i data-lucide="heart" class="fl-heart fh3"></i>
+                        <h3 class="rr-big">It's a Girl!</h3>
+                        <p class="rr-kicker">say hello to</p>
+                        <p class="rr-name">Luna Rose</p>
+                        <p class="rr-sub">Whitmore &middot; arriving this <span id="rrSeason">autumn</span>, into arms
+                            already open</p>
                     </div>
-                    <div class="grid grid-cols-3 gap-2 text-center">
-                        <div>
-                            <div class="text-[11px] font-bold tracking-widest uppercase opacity-50">Date</div>
-                            <div class="font-baloo font-bold">Oct 18</div>
-                            <div class="text-xs font-semibold opacity-60">Sunday</div>
+                </div>
+                <p class="reveal-cap">one little tap &middot; one big surprise</p>
+            </div>
+        </section>
+
+        <!-- ============ RSVP ============ -->
+        <section class="section" id="rsvp">
+            <div class="section-head reveal">
+                <p class="script-accent">kindly reply</p>
+                <h2 class="serif-h">Will You Join Us?</h2>
+            </div>
+            <div class="glass rsvp-card reveal" id="rsvpCard">
+                <form id="rsvpForm" novalidate>
+                    <div class="f-grid">
+                        <div class="field">
+                            <label for="fName">Your name</label>
+                            <input id="fName" type="text" placeholder="e.g. Aunt Rosie" autocomplete="name">
+                            <p class="err-msg"></p>
                         </div>
-                        <div class="border-x">
-                            <div class="text-[11px] font-bold tracking-widest uppercase opacity-50">Time</div>
-                            <div class="font-baloo font-bold">2 PM</div>
-                            <div class="text-xs font-semibold opacity-60">- 5 PM -</div>
-                        </div>
-                        <div>
-                            <div class="text-[11px] font-bold tracking-widest uppercase opacity-50">Venue</div>
-                            <div class="font-baloo font-bold">Willow Hall</div>
-                            <div class="text-xs font-semibold opacity-60">Beverly Hills</div>
+                        <div class="field">
+                            <label for="fEmail">Email</label>
+                            <input id="fEmail" type="email" placeholder="you@somewhere.com" autocomplete="email">
+                            <p class="err-msg"></p>
                         </div>
                     </div>
-                    <p class="text-sm font-semibold opacity-60 mt-5">Hosted by Emma Wilson & Family<br>RSVP by Oct 10 •
-                        (555) 123-4567</p>
-                    <div class="flex gap-3 mt-6"><a href="#rsvp" onclick="closeInvitation()"
-                            class="btn-magical flex-1 py-3 text-sm">RSVP Yes! 💕</a><button onclick="shareInvite()"
-                            class="flex-1 py-3 text-sm font-extrabold rounded-full bg-gray-100 hover:bg-gray-200 transition">Share</button>
+                    <div class="f-grid">
+                        <div class="field">
+                            <label>Will you be joining us?</label>
+                            <div class="pill-group">
+                                <label class="pill"><input type="radio" name="attend" value="yes" checked><span>Joyfully
+                                        accepts</span></label>
+                                <label class="pill"><input type="radio" name="attend" value="no"><span>Sadly
+                                        misses</span></label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="fGuests">Party size</label>
+                            <select id="fGuests">
+                                <option value="1">Just me</option>
+                                <option value="2">2 guests</option>
+                                <option value="3">3 guests</option>
+                                <option value="4">4 guests</option>
+                            </select>
+                        </div>
                     </div>
+                    <div class="field">
+                        <label for="fWish">A wish for Baby Whitmore <span class="opt">(optional)</span></label>
+                        <textarea id="fWish" rows="3"
+                            placeholder="A few words of love, advice, or hopes for the little one&hellip;"></textarea>
+                    </div>
+                    <div class="form-foot">
+                        <p class="form-note">Kindly reply by <span id="formReply">—</span></p>
+                        <button class="btn btn-solid" type="submit" id="rsvpBtn">
+                            <span class="btn-ic"><i data-lucide="send"></i></span>
+                            <span class="btn-txt">Send with love</span>
+                            <span class="spinner"></span>
+                        </button>
+                    </div>
+                </form>
+                <div class="rsvp-success" id="rsvpSuccess" hidden>
+                    <svg class="check-svg" viewBox="0 0 72 72" aria-hidden="true">
+                        <circle class="ck-c" cx="36" cy="36" r="30" fill="none" stroke="var(--rose)" stroke-width="3" />
+                        <path class="ck-p" d="M23 37.5l9 9 17-19" fill="none" stroke="var(--rose-deep)" stroke-width="4"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h3 id="successTitle">Thank you!</h3>
+                    <p id="successMsg"></p>
+                    <button class="btn btn-ghost" id="editReply" type="button">Change my reply</button>
                 </div>
             </div>
+        </section>
+
+        <!-- ============ REGISTRY ============ -->
+        <section class="section" style="padding-top:20px">
+            <div class="registry-pill glass reveal">
+                <span class="reg-ic"><i data-lucide="gift"></i></span>
+                <p><strong>Your presence is the greatest present.</strong> Should you wish to spoil the little one
+                    anyway, a small registry of our favorite things will be shared at the shower.</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="mono">W</div>
+            <p class="f-script">with love</p>
+            <p class="f-note">Sarah &amp; James &middot; expecting Baby Whitmore</p>
+            <p class="f-tiny">#TwinkleTwinkleWhitmore &middot; crafted under a sky of stars</p>
+        </footer>
+    </main>
+
+    <button class="music-btn" id="musicBtn" aria-label="Toggle lullaby music" aria-pressed="false">
+        <i data-lucide="music"></i>
+    </button>
+
+    <canvas id="confetti"></canvas>
+    <div id="toasts"></div>
+
+    <!-- ============ INTRO / ENVELOPE ============ -->
+    <div id="intro">
+        <div class="env-persp">
+            <div class="envelope" id="envelope">
+                <div class="env-back"></div>
+                <div class="letter" id="letter">
+                    <svg class="star-ic" aria-hidden="true">
+                        <use href="#ic-star" />
+                    </svg>
+                    <p class="l-script">You're invited</p>
+                    <p class="l-eyebrow">to a baby shower honoring</p>
+                    <p class="l-names">Sarah &amp; James</p>
+                </div>
+                <div class="env-front">
+                    <p class="env-name">for you</p>
+                </div>
+                <div class="env-flap"><button class="seal" id="seal" aria-label="Open the invitation">W</button></div>
+            </div>
         </div>
+        <p class="intro-hint">Tap the wax seal to open your invitation</p>
     </div>
 
-    <!-- SECRET MODAL -->
-    <div id="secretModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 modal-bg">
-        <div class="glass rounded-[32px] p-10 max-w-md w-full text-center relative">
-            <button
-                onclick="document.getElementById('secretModal').classList.add('hidden');document.getElementById('secretModal').classList.remove('flex')"
-                class="absolute top-4 right-4 w-9 h-9 bg-white rounded-full shadow font-bold">✕</button>
-            <div class="text-6xl animate-bounce">💌</div>
-            <div class="font-script text-5xl mt-2" style="color:var(--accent)">Secret Unlocked!</div>
-            <p class="font-baloo font-bold mt-3">You popped 10 balloons! Mama Sofia has a message:</p>
-            <div class="bg-white rounded-2xl p-5 mt-4 shadow-inner italic font-semibold">"Thank you for showering our
-                little star with so much love already. We can't wait to hold your hand and introduce you to Mia — she's
-                already kicking with excitement! Love, Sofia & James 💕"</div>
-            <button
-                onclick="burstConfetti();document.getElementById('secretModal').classList.add('hidden');document.getElementById('secretModal').classList.remove('flex')"
-                class="btn-magical px-8 py-3 mt-5">Yay! 🎉</button>
-        </div>
-    </div>
-
-    <div id="toastBox" class="fixed top-24 right-4 z-[200] space-y-2 max-w-xs"></div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script>
-        /* ============ PRELOADER ============ */
-        let loadPct = 0;
-        const loadInt = setInterval(() => { loadPct += Math.random() * 18; if (loadPct >= 100) { loadPct = 100; clearInterval(loadInt); setTimeout(() => { document.getElementById('preloader').classList.add('hide'); heroIntro(); }, 500); } document.getElementById('loaderFill').style.width = loadPct + '%'; document.getElementById('loaderPct').textContent = Math.floor(loadPct) + '%'; }, 180);
+        (function () {
+            'use strict';
+            function byId(id) { return document.getElementById(id); }
+            function rand(a, b) { return a + Math.random() * (b - a); }
 
-        gsap.registerPlugin(ScrollTrigger);
-        function heroIntro() { gsap.from('.hero-anim', { y: 50, opacity: 0, duration: 1, stagger: .12, ease: 'back.out(1.4)' }); }
-        gsap.utils.toArray('.reveal').forEach(el => { gsap.from(el, { y: 60, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } }); });
+            /* ================= dates ================= */
+            const now = new Date();
+            const EVENT = new Date(now.getTime() + 42 * 864e5); EVENT.setHours(14, 0, 0, 0);
+            const RSVP_BY = new Date(EVENT.getTime() - 7 * 864e5);
+            const wd = EVENT.toLocaleDateString('en-US', { weekday: 'long' });
+            const md = EVENT.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+            const mdy = EVENT.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            const replyMD = RSVP_BY.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+            function seasonOf(m) { return (m === 11 || m < 2) ? 'winter' : m < 5 ? 'spring' : m < 8 ? 'summer' : 'autumn'; }
+            byId('heroDate').textContent = wd + ', ' + md;
+            byId('statWeekday').textContent = wd;
+            byId('statDate').textContent = mdy.toUpperCase();
+            byId('statReply').textContent = replyMD;
+            byId('formReply').textContent = replyMD;
+            byId('rrSeason').textContent = seasonOf(EVENT.getMonth());
 
-        /* ============ CURSOR & SPARKLES ============ */
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', e => {
-            cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
-            if (Math.random() > .82) { const s = document.createElement('div'); s.className = 'sparkle-trail'; s.textContent = ['✦', '✧', '★', '💕', '✨'][Math.floor(Math.random() * 5)]; s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px'; s.style.color = ['#FF8FB1', '#7DD3FC', '#E9B44C'][Math.floor(Math.random() * 3)]; document.body.appendChild(s); setTimeout(() => s.remove(), 1000); }
-        });
-        document.querySelectorAll('button,a,.envelope').forEach(b => { b.addEventListener('mouseenter', () => { cursor.style.width = '34px'; cursor.style.height = '34px'; }); b.addEventListener('mouseleave', () => { cursor.style.width = '18px'; cursor.style.height = '18px'; }); });
-
-        /* ============ TOAST & CONFETTI ============ */
-        function toast(msg) { const t = document.createElement('div'); t.className = 'toast glass rounded-2xl px-4 py-3 font-bold text-sm shadow-xl flex items-center gap-2'; t.innerHTML = '<span>✨</span><span>' + msg + '</span>'; document.getElementById('toastBox').appendChild(t); setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(30px)'; t.style.transition = '.4s'; setTimeout(() => t.remove(), 400); }, 3200); }
-        function burstConfetti() { const colors = document.documentElement.dataset.theme === 'boy' ? ['#2AA8FF', '#7DD3FC', '#ffffff', '#B8E6FF'] : document.documentElement.dataset.theme === 'girl' ? ['#FF5E8A', '#FF9EC6', '#FFD6E8', '#ffffff'] : ['#FF8FB1', '#7DD3FC', '#E9B44C', '#ffffff']; confetti({ particleCount: 140, spread: 85, origin: { y: .6 }, colors }); setTimeout(() => confetti({ particleCount: 60, angle: 60, spread: 60, origin: { x: 0 }, colors }), 250); setTimeout(() => confetti({ particleCount: 60, angle: 120, spread: 60, origin: { x: 1 }, colors }), 400); }
-        function popSound() { try { const ctx = popSound.ctx || (popSound.ctx = new (window.AudioContext || window.webkitAudioContext)()); const o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(600, ctx.currentTime); o.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + .08); o.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + .15); g.gain.setValueAtTime(.25, ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .2); o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime + .22); } catch (e) { } }
-
-        /* ============ THREE.JS 3D SCENE ============ */
-        let scene, camera, renderer, balloons = [], clouds = [], stars, moon, bearGroup, mouseX = 0, mouseY = 0, pops = 0, secretShown = false;
-        const palette = { neutral: [0xFF8FB1, 0x7DD3FC, 0xE9B44C, 0x7BE0A0, 0xC9A6FF], girl: [0xFF5E8A, 0xFF9EC6, 0xFFC2D6, 0xFF7AA8, 0xFFD6E8], boy: [0x2AA8FF, 0x7DD3FC, 0x9AD7FF, 0x3AA0E8, 0xB8E6FF] };
-        function init3D() {
-            const canvas = document.getElementById('bg3d');
-            scene = new THREE.Scene();
-            scene.fog = new THREE.Fog(0xFFF9F0, 12, 28);
-            camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, .1, 100);
-            camera.position.set(0, 0, 10);
-            renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-            renderer.setSize(canvas.parentElement.clientWidth, canvas.parentElement.clientHeight);
-            renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-            scene.add(new THREE.AmbientLight(0xffffff, .85));
-            const dir = new THREE.DirectionalLight(0xffffff, .7); dir.position.set(5, 10, 7); scene.add(dir);
-            const p1 = new THREE.PointLight(0xFF8FB1, 1, 30); p1.position.set(-6, 3, 4); scene.add(p1);
-            const p2 = new THREE.PointLight(0x7DD3FC, 1, 30); p2.position.set(6, -2, 4); scene.add(p2);
-            // Moon
-            const moonGeo = new THREE.SphereGeometry(1.1, 32, 32);
-            moon = new THREE.Mesh(moonGeo, new THREE.MeshStandardMaterial({ color: 0xFFF3B0, emissive: 0xFFE58A, emissiveIntensity: .5, roughness: .6 }));
-            moon.position.set(5.5, 3.5, -4); scene.add(moon);
-            const glow = new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32), new THREE.MeshBasicMaterial({ color: 0xFFF3B0, transparent: true, opacity: .22 })); glow.position.copy(moon.position); scene.add(glow);
-            // Stars (points)
-            const starGeo = new THREE.BufferGeometry(); const pos = []; for (let i = 0; i < 180; i++) { pos.push((Math.random() - .5) * 26, (Math.random() - .5) * 16, (Math.random() - .5) * 14 - 2); }
-            starGeo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-            stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xE9B44C, size: .14, transparent: true, opacity: .9 })); scene.add(stars);
-            // Balloons
-            spawnBalloons(13);
-            // Clouds
-            for (let i = 0; i < 5; i++) { const c = makeCloud(); c.position.set((Math.random() - .5) * 18, (Math.random() - .5) * 8 - 1, -5 - Math.random() * 4); c.userData.speed = .002 + Math.random() * .004; clouds.push(c); scene.add(c); }
-            // Teddy bear floating
-            bearGroup = makeBear(); bearGroup.position.set(-5.2, -1.5, -2); bearGroup.scale.setScalar(.9); scene.add(bearGroup);
-            // Events
-            window.addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(canvas.parentElement.clientWidth, canvas.parentElement.clientHeight); });
-            document.addEventListener('mousemove', e => { mouseX = (e.clientX / innerWidth - .5) * 2; mouseY = (e.clientY / innerHeight - .5) * 2; });
-            const ray = new THREE.Raycaster(), ptr = new THREE.Vector2();
-            canvas.addEventListener('click', e => { const r = canvas.getBoundingClientRect(); ptr.x = ((e.clientX - r.left) / r.width) * 2 - 1; ptr.y = -((e.clientY - r.top) / r.height) * 2 + 1; ray.setFromCamera(ptr, camera); const hits = ray.intersectObjects(balloons.map(b => b.mesh)); if (hits.length) { popBalloon(hits[0].object.userData.ref); } });
-            // drag rotate
-            let dragging = false, px = 0; canvas.addEventListener('pointerdown', e => { dragging = true; px = e.clientX; }); window.addEventListener('pointerup', () => dragging = false); window.addEventListener('pointermove', e => { if (dragging) { scene.rotation.y += (e.clientX - px) * .003; px = e.clientX; } });
-            animate();
-        }
-        function balloonColor() { const arr = palette[document.documentElement.dataset.theme] || palette.neutral; return arr[Math.floor(Math.random() * arr.length)]; }
-        function makeBalloon() {
-            const g = new THREE.Group();
-            const col = balloonColor();
-            const mesh = new THREE.Mesh(new THREE.SphereGeometry(.75, 28, 28), new THREE.MeshStandardMaterial({ color: col, roughness: .25, metalness: .15, emissive: col, emissiveIntensity: .12 }));
-            mesh.scale.y = 1.22; g.add(mesh);
-            const knot = new THREE.Mesh(new THREE.ConeGeometry(.12, .18, 12), new THREE.MeshStandardMaterial({ color: col, roughness: .4 })); knot.position.y = -1.0; knot.rotation.x = Math.PI; g.add(knot);
-            const shine = new THREE.Mesh(new THREE.SphereGeometry(.16, 12, 12), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .55 })); shine.position.set(-.28, .35, .55); shine.scale.set(.7, 1.1, .4); g.add(shine);
-            const strGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, -1.1, 0), new THREE.Vector3(.15, -1.6, 0), new THREE.Vector3(-.12, -2.1, 0), new THREE.Vector3(.1, -2.6, 0)]);
-            g.add(new THREE.Line(strGeo, new THREE.LineBasicMaterial({ color: 0x9a8aa0 })));
-            g.position.set((Math.random() - .5) * 16, (Math.random() - .5) * 9, (Math.random() - .5) * 8 - 1);
-            mesh.userData.ref = g; g.userData = { phase: Math.random() * Math.PI * 2, speed: .4 + Math.random() * .6, mesh };
-            return g;
-        }
-        function spawnBalloons(n) { for (let i = 0; i < n; i++) { const b = makeBalloon(); balloons.push({ mesh: b.children[0], group: b }); scene.add(b); } }
-        function makeCloud() { const g = new THREE.Group(); const m = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, transparent: true, opacity: .92 });[[0, 0, 0, 1], [1, 0, 0, .8], [-1, 0, 0, .8], [.4, .5, 0, .7], [-.4, .5, 0, .7]].forEach(p => { const s = new THREE.Mesh(new THREE.SphereGeometry(p[3], 20, 20), m); s.position.set(p[0], p[1], p[2]); g.add(s); }); const s = Math.random() * .7 + .6; g.scale.setScalar(s); return g; }
-        function makeBear() {
-            const g = new THREE.Group(); const fur = new THREE.MeshStandardMaterial({ color: 0xD9A066, roughness: .7 }); const dark = new THREE.MeshStandardMaterial({ color: 0x8A5A2B, roughness: .7 });
-            const body = new THREE.Mesh(new THREE.SphereGeometry(.9, 24, 24), fur); body.scale.set(1, 1.15, .8); g.add(body);
-            const head = new THREE.Mesh(new THREE.SphereGeometry(.65, 24, 24), fur); head.position.y = 1.25; g.add(head);
-            [-.5, .5].forEach(x => { const ear = new THREE.Mesh(new THREE.SphereGeometry(.24, 16, 16), fur); ear.position.set(x * .9, 1.75, 0); g.add(ear); const inner = new THREE.Mesh(new THREE.SphereGeometry(.12, 12, 12), new THREE.MeshStandardMaterial({ color: 0xFFE4C4 })); inner.position.set(x * .9, 1.75, .18); g.add(inner); });
-            const snout = new THREE.Mesh(new THREE.SphereGeometry(.24, 16, 16), new THREE.MeshStandardMaterial({ color: 0xFFF1D6 })); snout.position.set(0, 1.12, .5); g.add(snout);
-            const nose = new THREE.Mesh(new THREE.SphereGeometry(.08, 12, 12), dark); nose.position.set(0, 1.18, .7); g.add(nose);
-            [-.22, .22].forEach(x => { const eye = new THREE.Mesh(new THREE.SphereGeometry(.09, 12, 12), new THREE.MeshStandardMaterial({ color: 0x2b2b2b, roughness: .2 })); eye.position.set(x, 1.38, .52); g.add(eye); });
-            const hat = new THREE.Mesh(new THREE.ConeGeometry(.3, .7, 20), new THREE.MeshStandardMaterial({ color: 0xFF8FB1 })); hat.position.set(0, 2.05, 0); hat.rotation.z = .15; g.add(hat);
-            const pom = new THREE.Mesh(new THREE.SphereGeometry(.11, 12, 12), new THREE.MeshStandardMaterial({ color: 0xffffff })); pom.position.set(-.1, 2.42, 0); g.add(pom);
-            [-.85, .85].forEach(x => { const arm = new THREE.Mesh(new THREE.SphereGeometry(.28, 14, 14), fur); arm.position.set(x, .2, 0); g.add(arm); });
-            const star = new THREE.Mesh(new THREE.OctahedronGeometry(.28), new THREE.MeshStandardMaterial({ color: 0xFFD93B, emissive: 0xFFD93B, emissiveIntensity: .6 })); star.position.set(1.25, .6, 0); star.name = 'star'; g.add(star);
-            return g;
-        }
-        const popMsgs = ["Pop! Baby Mia giggled! 💕", "Sparkle pop! ✨", "So close to the secret! 🌙", "Pop-tastic! 🎈", "The stars cheered! ⭐"];
-        function popBalloon(group) {
-            popSound();
-            const idx = balloons.findIndex(b => b.group === group); if (idx < 0) return;
-            const p = group.position.clone();
-            // scale out
-            gsap.to(group.scale, {
-                x: 1.6, y: 1.6, z: 1.6, duration: .12, onComplete: () => {
-                    scene.remove(group); balloons.splice(idx, 1);
-                    // burst particles (simple confetti at screen pos)
-                    confetti({ particleCount: 25, spread: 50, startVelocity: 25, origin: { x: (p.x / 16 + .5), y: .4 }, colors: ['#FF8FB1', '#7DD3FC', '#E9B44C'], scalar: .8, disableForReducedMotion: true });
-                    const nb = makeBalloon(); nb.position.set((Math.random() - .5) * 16, -6, -2); nb.scale.setScalar(.01); scene.add(nb); balloons.push({ mesh: nb.children[0], group: nb }); gsap.to(nb.scale, { x: 1, y: 1, z: 1, duration: .8, ease: 'back.out' });
+            /* ================= countdown ================= */
+            const cdEls = { d: byId('cdD'), h: byId('cdH'), m: byId('cdM'), s: byId('cdS') };
+            function cdTick() {
+                let ms = EVENT - Date.now(); if (ms < 0) ms = 0;
+                const v = { d: Math.floor(ms / 864e5), h: Math.floor(ms / 36e5) % 24, m: Math.floor(ms / 6e4) % 60, s: Math.floor(ms / 1e3) % 60 };
+                for (const k in v) {
+                    const t = String(v[k]).padStart(2, '0'), el = cdEls[k];
+                    if (el.textContent !== t) { el.textContent = t; el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); }
                 }
+            }
+            cdTick(); setInterval(cdTick, 1000);
+
+            /* ================= toast ================= */
+            function toast(msg) {
+                const el = document.createElement('div'); el.className = 'toast'; el.textContent = msg;
+                byId('toasts').appendChild(el);
+                requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('on')));
+                setTimeout(() => { el.classList.remove('on'); setTimeout(() => el.remove(), 450); }, 3600);
+            }
+
+            /* ================= confetti (canvas 2d) ================= */
+            const cCanvas = byId('confetti'), cx = cCanvas.getContext('2d');
+            const DPR = Math.min(window.devicePixelRatio || 1, 2);
+            function sizeCC() { cCanvas.width = innerWidth * DPR; cCanvas.height = innerHeight * DPR; cx.setTransform(DPR, 0, 0, DPR, 0, 0); }
+            sizeCC(); addEventListener('resize', sizeCC);
+            const PASTELS = ['#f4a7c0', '#ffd9a8', '#c9e4d4', '#d9c6ee', '#ffffff', '#f2cf8d'];
+            const GIRL = ['#f4a7c0', '#f7c1d4', '#ffffff', '#e79fb5', '#f2cf8d', '#d9c6ee'];
+            let parts = [], ccRunning = false, ccLast = 0;
+            function starPath(c, r) { c.beginPath(); for (let i = 0; i < 10; i++) { const rr = i % 2 ? r * .45 : r, a = i / 10 * Math.PI * 2 - Math.PI / 2; i ? c.lineTo(Math.cos(a) * rr, Math.sin(a) * rr) : c.moveTo(Math.cos(a) * rr, Math.sin(a) * rr); } c.closePath(); }
+            function heartPath(c, s) { c.beginPath(); c.moveTo(0, s * .3); c.bezierCurveTo(-s * .5, -s * .25, -s, s * .1, 0, s); c.bezierCurveTo(s, s * .1, s * .5, -s * .25, 0, s * .3); c.closePath(); }
+            function burst(x, y, o) {
+                o = o || {}; const n = o.count || 70, cols = o.colors || PASTELS;
+                for (let i = 0; i < n; i++) {
+                    const a = Math.random() * Math.PI * 2, sp = 120 + Math.random() * 430;
+                    parts.push({
+                        x: x, y: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 240, size: 3.5 + Math.random() * 5.5,
+                        color: cols[(Math.random() * cols.length) | 0], shape: ['circle', 'rect', 'star', 'heart'][(Math.random() * 4) | 0],
+                        rot: Math.random() * 6.28, vr: (Math.random() - .5) * 12, life: 1.8 + Math.random() * 1.4, t: 0
+                    });
+                }
+                if (!ccRunning) { ccRunning = true; ccLast = performance.now(); requestAnimationFrame(ccStep); }
+            }
+            function ccStep(t) {
+                const dt = Math.min((t - ccLast) / 1000, .033); ccLast = t;
+                cx.clearRect(0, 0, innerWidth, innerHeight);
+                parts = parts.filter(p => {
+                    p.t += dt; if (p.t > p.life) return false;
+                    p.vy += 540 * dt; p.vx *= .988; p.x += p.vx * dt; p.y += p.vy * dt; p.rot += p.vr * dt;
+                    const fade = Math.min(1, (p.life - p.t) / .55);
+                    cx.save(); cx.translate(p.x, p.y); cx.rotate(p.rot); cx.globalAlpha = fade; cx.fillStyle = p.color;
+                    if (p.shape === 'circle') { cx.beginPath(); cx.arc(0, 0, p.size * .55, 0, 6.283); cx.fill(); }
+                    else if (p.shape === 'rect') { cx.fillRect(-p.size * .5, -p.size * .35, p.size, p.size * .7); }
+                    else if (p.shape === 'star') { starPath(cx, p.size); cx.fill(); }
+                    else { heartPath(cx, p.size); cx.fill(); }
+                    cx.restore(); return true;
+                });
+                if (parts.length) requestAnimationFrame(ccStep);
+                else { ccRunning = false; cx.clearRect(0, 0, innerWidth, innerHeight); }
+            }
+
+            /* ================= audio: music-box lullaby ================= */
+            let AC = null, musicOn = false, schedTimer = null, nextT = 0, mi = 0;
+            const FREQ = { C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00, A4: 440.00, B4: 493.88 };
+            const MELODY = [
+                ['C4', 1], ['C4', 1], ['G4', 1], ['G4', 1], ['A4', 1], ['A4', 1], ['G4', 2],
+                ['F4', 1], ['F4', 1], ['E4', 1], ['E4', 1], ['D4', 1], ['D4', 1], ['C4', 2],
+                ['G4', 1], ['G4', 1], ['F4', 1], ['F4', 1], ['E4', 1], ['E4', 1], ['D4', 2],
+                ['G4', 1], ['G4', 1], ['F4', 1], ['F4', 1], ['E4', 1], ['E4', 1], ['D4', 2],
+                ['C4', 1], ['C4', 1], ['G4', 1], ['G4', 1], ['A4', 1], ['A4', 1], ['G4', 2],
+                ['F4', 1], ['F4', 1], ['E4', 1], ['E4', 1], ['D4', 1], ['D4', 1], ['C4', 2]
+            ];
+            const UNIT = .68;
+            function ensureAudio() {
+                if (!AC) {
+                    const Ctx = window.AudioContext || window.webkitAudioContext;
+                    AC = new Ctx();
+                    const filt = AC.createBiquadFilter(); filt.type = 'lowpass'; filt.frequency.value = 2600;
+                    const g = AC.createGain(); g.gain.value = .6;
+                    filt.connect(g); g.connect(AC.destination);
+                    AC._in = filt;
+                }
+                if (AC.state === 'suspended') AC.resume();
+                return AC;
+            }
+            function note(freq, when, dur) {
+                const o = AC.createOscillator(), g = AC.createGain();
+                o.type = 'sine'; o.frequency.value = freq;
+                g.gain.setValueAtTime(.0001, when);
+                g.gain.exponentialRampToValueAtTime(.28, when + .02);
+                g.gain.exponentialRampToValueAtTime(.0001, when + Math.max(dur * 1.5, 1.1));
+                o.connect(g); g.connect(AC._in); o.start(when); o.stop(when + 1.8);
+                const o2 = AC.createOscillator(), g2 = AC.createGain();
+                o2.type = 'sine'; o2.frequency.value = freq * 2;
+                g2.gain.setValueAtTime(.0001, when);
+                g2.gain.exponentialRampToValueAtTime(.05, when + .02);
+                g2.gain.exponentialRampToValueAtTime(.0001, when + 1.1);
+                o2.connect(g2); g2.connect(AC._in); o2.start(when); o2.stop(when + 1.2);
+            }
+            function scheduler() {
+                while (nextT < AC.currentTime + .8) {
+                    const st = MELODY[mi];
+                    if (st[0]) note(FREQ[st[0]], nextT, st[1] * UNIT);
+                    nextT += st[1] * UNIT;
+                    mi = (mi + 1) % MELODY.length;
+                    if (mi === 0) nextT += 2.4;
+                }
+            }
+            function startMusic() {
+                if (musicOn) return;
+                ensureAudio(); musicOn = true; mi = 0; nextT = AC.currentTime + .4;
+                schedTimer = setInterval(scheduler, 200); musicBtnState();
+            }
+            function stopMusic() {
+                if (!musicOn) return;
+                musicOn = false; clearInterval(schedTimer); musicBtnState();
+            }
+            function musicBtnState() {
+                const b = byId('musicBtn');
+                b.classList.toggle('playing', musicOn);
+                b.setAttribute('aria-pressed', musicOn ? 'true' : 'false');
+            }
+            byId('musicBtn').addEventListener('click', () => musicOn ? stopMusic() : startMusic());
+            function chime(freqs, vol) {
+                try {
+                    ensureAudio();
+                    const t = AC.currentTime;
+                    freqs.forEach((f, i) => {
+                        const o = AC.createOscillator(), g = AC.createGain();
+                        o.type = 'sine'; o.frequency.value = f;
+                        g.gain.setValueAtTime(.0001, t + i * .08);
+                        g.gain.exponentialRampToValueAtTime(vol, t + i * .08 + .015);
+                        g.gain.exponentialRampToValueAtTime(.0001, t + i * .08 + .5);
+                        o.connect(g); g.connect(AC._in); o.start(t + i * .08); o.stop(t + i * .08 + .6);
+                    });
+                } catch (e) { }
+            }
+
+            /* ================= 3D sky (Three.js) ================= */
+            let three = null;
+            function initThree() {
+                const canvas = byId('scene');
+                const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+                renderer.setPixelRatio(DPR);
+                renderer.setSize(innerWidth, innerHeight);
+                renderer.outputEncoding = THREE.sRGBEncoding;
+                renderer.setClearColor(0x000000, 0);
+
+                const scene = new THREE.Scene();
+                scene.fog = new THREE.Fog(0xf9e2ea, 13, 34);
+                const camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, .1, 100);
+                camera.position.set(0, 0, 15);
+
+                scene.add(new THREE.AmbientLight(0xfff1f4, .95));
+                const key = new THREE.DirectionalLight(0xfff6ec, .85); key.position.set(6, 9, 7); scene.add(key);
+                const fill = new THREE.DirectionalLight(0xf6d9ea, .45); fill.position.set(-7, -4, 5); scene.add(fill);
+
+                const world = new THREE.Group();
+                world.position.y = -24;
+                scene.add(world);
+
+                const balloons = []; let balloonHits = [];
+                const cloudList = [], starList = [], sparkList = [], heartList = [];
+
+                /* --- shapes --- */
+                function starShape(outer, inner) {
+                    const s = new THREE.Shape();
+                    for (let i = 0; i < 10; i++) {
+                        const r = i % 2 ? inner : outer, a = i / 10 * Math.PI * 2 - Math.PI / 2;
+                        i ? s.lineTo(Math.cos(a) * r, Math.sin(a) * r) : s.moveTo(Math.cos(a) * r, Math.sin(a) * r);
+                    }
+                    s.closePath(); return s;
+                }
+                const starGeo = new THREE.ExtrudeGeometry(starShape(1, .46), { depth: .32, bevelEnabled: true, bevelThickness: .1, bevelSize: .1, bevelSegments: 2 });
+                starGeo.center();
+                function heartShape() {
+                    const s = new THREE.Shape();
+                    s.moveTo(0, -.55);
+                    s.bezierCurveTo(-.06, -.3, -.4, -.12, -.55, .08);
+                    s.bezierCurveTo(-.72, .32, -.5, .62, -.22, .62);
+                    s.bezierCurveTo(-.08, .62, 0, .5, 0, .38);
+                    s.bezierCurveTo(0, .5, .08, .62, .22, .62);
+                    s.bezierCurveTo(.5, .62, .72, .32, .55, .08);
+                    s.bezierCurveTo(.4, -.12, .06, -.3, 0, -.55);
+                    return s;
+                }
+                const heartGeo = new THREE.ExtrudeGeometry(heartShape(), { depth: .3, bevelEnabled: true, bevelThickness: .08, bevelSize: .08, bevelSegments: 2, curveSegments: 10 });
+                heartGeo.center();
+
+                /* --- clouds --- */
+                const cloudMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1 });
+                function makeCloud(s) {
+                    const g = new THREE.Group();
+                    [[-1.15, 0, 0, .85], [-.35, .3, .1, 1.05], [.5, .18, -.05, .95], [1.2, -.02, 0, .75], [.1, -.32, .15, .8], [-.7, -.3, -.1, .72]]
+                        .forEach(p => { const m = new THREE.Mesh(new THREE.SphereGeometry(p[3], 18, 18), cloudMat); m.position.set(p[0], p[1], p[2]); g.add(m); });
+                    g.scale.setScalar(s); return g;
+                }
+                [[-8, 3.4, -7, 1.6, .16], [7.6, 4.6, -8, 2, .22], [-5.5, -1.6, -5, 1.25, .2], [6.3, -2.2, -6, 1.45, .18], [0, 5.3, -9, 2.3, .14], [-9.6, .8, -6, 1.15, .24], [9.2, 1.9, -5, 1.05, .2]]
+                    .forEach(c => {
+                        const m = makeCloud(c[3]); m.position.set(c[0], c[1], c[2]); world.add(m);
+                        cloudList.push({ m: m, x: c[0], y: c[1], sp: c[4], bob: rand(.05, .12), ph: rand(0, 6.28) });
+                    });
+
+                /* --- balloons --- */
+                const BAL = [0xf4a7c0, 0xffd9a8, 0xc9e4d4, 0xd9c6ee, 0xfde3ef, 0xf7c6a0, 0xe9b7d8];
+                function makeBalloon(color, y) {
+                    const mat = new THREE.MeshStandardMaterial({ color: color, roughness: .28 });
+                    const g = new THREE.Group();
+                    const body = new THREE.Mesh(new THREE.SphereGeometry(.5, 32, 32), mat); body.scale.set(1, 1.22, 1);
+                    const knot = new THREE.Mesh(new THREE.ConeGeometry(.09, .16, 10), mat); knot.position.y = -.6; knot.rotation.x = Math.PI;
+                    const sx = rand(-.22, .22);
+                    const curve = new THREE.QuadraticBezierCurve3(
+                        new THREE.Vector3(0, -.68, 0), new THREE.Vector3(sx, -1.5, 0), new THREE.Vector3(sx * 2.2, -2.3, 0));
+                    const string = new THREE.Mesh(new THREE.TubeGeometry(curve, 14, .01, 5),
+                        new THREE.MeshStandardMaterial({ color: 0xfff6ef, roughness: 1 }));
+                    g.add(body); g.add(knot); g.add(string);
+                    const e = {
+                        g: g, color: color, baseX: rand(-8.5, 8.5), y: (y !== undefined ? y : rand(-10, 7)), z: rand(-4, 2.5),
+                        sp: rand(.28, .55), amp: rand(.3, .65), sw: rand(.4, .9), ph: rand(0, 6.28), bob: rand(.08, .18)
+                    };
+                    body.userData.b = e; knot.userData.b = e;
+                    balloons.push(e); balloonHits.push(body); balloonHits.push(knot);
+                    world.add(g); return e;
+                }
+                for (let i = 0; i < 10; i++)makeBalloon(BAL[(Math.random() * BAL.length) | 0]);
+
+                /* --- sleeping moon --- */
+                const moon = new THREE.Group();
+                moon.add(new THREE.Mesh(new THREE.SphereGeometry(1.15, 48, 48), new THREE.MeshStandardMaterial({ color: 0xfff3d0, roughness: .95 })));
+                const craterMat = new THREE.MeshStandardMaterial({ color: 0xf0dda6, roughness: 1 });
+                [[-.55, .78, .5, .14], [-.95, .05, .55, .1], [-.6, -.62, .7, .12], [.25, .95, .4, .09], [.85, .55, .6, .11]].forEach(c => {
+                    const m = new THREE.Mesh(new THREE.SphereGeometry(c[3], 16, 16), craterMat);
+                    m.position.set(c[0], c[1], c[2]); m.lookAt(c[0] * 2, c[1] * 2, c[2] * 2); m.scale.z = .35; moon.add(m);
+                });
+                const faceMat = new THREE.MeshStandardMaterial({ color: 0x6b5560, roughness: .8 });
+                [-.34, .34].forEach(x => {
+                    const e = new THREE.Mesh(new THREE.TorusGeometry(.13, .024, 8, 20, Math.PI), faceMat);
+                    e.position.set(x, .14, 1.06); moon.add(e);
+                });
+                const mouth = new THREE.Mesh(new THREE.TorusGeometry(.07, .02, 8, 14, Math.PI), faceMat);
+                mouth.position.set(0, -.14, 1.1); mouth.rotation.z = Math.PI; moon.add(mouth);
+                const blushMat = new THREE.MeshStandardMaterial({ color: 0xf5a9bd, roughness: 1 });
+                [-.58, .58].forEach(x => {
+                    const b = new THREE.Mesh(new THREE.CircleGeometry(.1, 20), blushMat);
+                    b.position.set(x, -.12, 1.02); b.lookAt(x * 2, -.24, 2.04); moon.add(b);
+                });
+                const cap = new THREE.Mesh(new THREE.ConeGeometry(.52, .95, 24), new THREE.MeshStandardMaterial({ color: 0xcdb9e0, roughness: .9 }));
+                cap.position.set(.3, .98, .05); cap.rotation.z = -.55; moon.add(cap);
+                const pom = new THREE.Mesh(new THREE.SphereGeometry(.17, 20, 20), new THREE.MeshStandardMaterial({ color: 0xfffaf2, roughness: 1 }));
+                pom.position.set(.55, 1.38, .05); moon.add(pom);
+                moon.position.set(-6.8, 3.9, -5); moon.rotation.y = .3; moon.scale.setScalar(1.12);
+                world.add(moon);
+
+                /* --- gold stars & sparkles --- */
+                const goldMat = new THREE.MeshStandardMaterial({ color: 0xf2cd8a, roughness: .35, metalness: .35, emissive: 0x8a6a2a, emissiveIntensity: .25 });
+                for (let i = 0; i < 22; i++) {
+                    const m = new THREE.Mesh(starGeo, goldMat);
+                    m.position.set(rand(-10, 10), rand(-5.5, 6.5), rand(-9, -2));
+                    m.rotation.z = rand(0, 6.28); world.add(m);
+                    starList.push({ m: m, bs: rand(.16, .4), tw: rand(1.2, 2.6), ph: rand(0, 6.28), rs: rand(-.6, .6) });
+                }
+                for (let i = 0; i < 34; i++) {
+                    const m = new THREE.Mesh(new THREE.OctahedronGeometry(rand(.03, .06)),
+                        new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .9 }));
+                    m.position.set(rand(-10.5, 10.5), rand(-6, 7), rand(-9, -1)); world.add(m);
+                    sparkList.push({ m: m, ph: rand(0, 6.28), sp: rand(1.5, 3.5) });
+                }
+
+                /* --- floating hearts --- */
+                const heartMat = new THREE.MeshStandardMaterial({ color: 0xf29db8, roughness: .5 });
+                [[-7.5, .8, -3], [7.8, 1.6, -4], [-6.2, -2.6, -2.5], [6.8, -3, -3.5], [8.6, 4.8, -6]].forEach(p => {
+                    const m = new THREE.Mesh(heartGeo, heartMat);
+                    m.position.set(p[0], p[1], p[2]);
+                    const bs = rand(.24, .4); m.scale.setScalar(bs); world.add(m);
+                    heartList.push({ m: m, bs: bs, by: p[1], ph: rand(0, 6.28), rs: rand(.4, 1) });
+                });
+
+                /* --- tweens --- */
+                const tweens = [];
+                function tween(dur, upd, done) { tweens.push({ e: 0, dur: dur, upd: upd, done: done }); }
+
+                /* --- interaction: pop balloons --- */
+                const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+                addEventListener('pointerdown', function (e) {
+                    if (!document.body.classList.contains('ready')) return;
+                    if (e.target.closest('button,a,input,textarea,select,label,form,nav')) return;
+                    ndc.set(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+                    ray.setFromCamera(ndc, camera);
+                    const hit = ray.intersectObjects(balloonHits, false)[0];
+                    if (hit && hit.object.userData.b) pop(hit.object.userData.b, e.clientX, e.clientY);
+                });
+                function pop(b, px, py) {
+                    chime([1046.5, 1567.98], .11);
+                    burst(px, py, { count: 44, colors: ['#' + b.color.toString(16).padStart(6, '0'), '#ffffff', '#f2cf8d'] });
+                    const i = balloons.indexOf(b); if (i > -1) balloons.splice(i, 1);
+                    balloonHits = balloonHits.filter(h => h.userData.b !== b);
+                    tween(.3, k => { b.g.scale.setScalar(Math.max(.01, 1 - k)); }, () => { world.remove(b.g); });
+                    setTimeout(() => { makeBalloon(BAL[(Math.random() * BAL.length) | 0]); }, 2200);
+                }
+
+                /* --- camera parallax --- */
+                let mx = 0, my = 0, cx0 = 0, cy0 = 0;
+                addEventListener('pointermove', function (e) {
+                    mx = (e.clientX / innerWidth - .5) * 2; my = -(e.clientY / innerHeight - .5) * 2;
+                }, { passive: true });
+
+                /* --- main loop --- */
+                const clock = new THREE.Clock();
+                function frame() {
+                    requestAnimationFrame(frame);
+                    const dt = Math.min(clock.getDelta(), .05), t = clock.elapsedTime;
+                    for (let i = tweens.length - 1; i >= 0; i--) {
+                        const w = tweens[i]; w.e += dt;
+                        const k = Math.min(w.e / w.dur, 1), e = 1 - Math.pow(1 - k, 3);
+                        w.upd(e);
+                        if (k >= 1) { tweens.splice(i, 1); if (w.done) w.done(); }
+                    }
+                    cloudList.forEach(c => {
+                        c.x += c.sp * dt; if (c.x > 16.5) c.x = -16.5;
+                        c.m.position.x = c.x;
+                        c.m.position.y = c.y + Math.sin(t * c.bob + c.ph) * .3;
+                    });
+                    balloons.forEach(b => {
+                        b.y += b.sp * dt;
+                        if (b.y > 10.5) { b.y = -11; b.baseX = rand(-8.5, 8.5); }
+                        b.g.position.set(b.baseX + Math.sin(t * b.sw + b.ph) * b.amp, b.y + Math.sin(t * 1.1 + b.ph) * b.bob, b.z);
+                        b.g.rotation.z = Math.sin(t * b.sw + b.ph) * .09;
+                    });
+                    starList.forEach(s => {
+                        const k = .72 + .28 * Math.sin(t * s.tw + s.ph);
+                        s.m.scale.setScalar(s.bs * k);
+                        s.m.rotation.z += s.rs * dt;
+                    });
+                    sparkList.forEach(s => {
+                        s.m.material.opacity = .25 + .6 * (.5 + .5 * Math.sin(t * s.sp + s.ph));
+                        s.m.rotation.y += dt * .8; s.m.rotation.x += dt * .5;
+                    });
+                    heartList.forEach(h => {
+                        h.m.position.y = h.by + Math.sin(t * .7 + h.ph) * .35;
+                        h.m.rotation.y += h.rs * dt;
+                    });
+                    moon.position.y = 3.9 + Math.sin(t * .55) * .2;
+                    moon.rotation.z = Math.sin(t * .35) * .05;
+                    const tx = mx * 1.15 + Math.sin(t * .22) * .3, ty = my * .65 - window.scrollY * .0009;
+                    cx0 += (tx - cx0) * .045; cy0 += (ty - cy0) * .045;
+                    camera.position.set(cx0, cy0, 15);
+                    camera.lookAt(0, cy0 * .25, 0);
+                    renderer.render(scene, camera);
+                }
+                frame();
+                addEventListener('resize', function () {
+                    camera.aspect = innerWidth / innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(innerWidth, innerHeight);
+                });
+
+                return {
+                    rise: function () { tween(2.6, k => { world.position.y = -24 * (1 - k); }); },
+                    spawnGirlBalloons: function () {
+                        const cols = [0xf4a7c0, 0xf7c1d4, 0xe79fb5, 0xfde3ef, 0xf4a7c0];
+                        for (let i = 0; i < 7; i++) {
+                            setTimeout(() => {
+                                const b = makeBalloon(cols[i % cols.length], -11);
+                                b.sp = rand(.7, 1.05);
+                            }, i * 260);
+                        }
+                    }
+                };
+            }
+            try { if (window.THREE) three = initThree(); } catch (e) { console.warn('3D scene unavailable:', e); }
+
+            /* ================= intro starfield ================= */
+            const intro = byId('intro');
+            function makeLayer(n, delay) {
+                const d = document.createElement('div'); d.className = 'sf';
+                let s = '';
+                for (let i = 0; i < n; i++) {
+                    s += ',' + ((Math.random() * innerWidth) | 0) + 'px ' + ((Math.random() * innerHeight) | 0) + 'px 0 '
+                        + (Math.random() < .2 ? 1.5 : 0) + 'px rgba(255,242,235,' + (.25 + Math.random() * .55).toFixed(2) + ')';
+                }
+                d.style.boxShadow = s.slice(1);
+                d.style.animationDelay = delay + 's';
+                intro.appendChild(d);
+            }
+            makeLayer(46, 0); makeLayer(34, 1.7);
+
+            /* ================= envelope open ================= */
+            let opened = false;
+            byId('seal').addEventListener('click', function () {
+                if (opened) return; opened = true;
+                chime([783.99, 1046.5], .12);
+                byId('seal').classList.add('pop');
+                byId('envelope').classList.add('open');
+                setTimeout(() => { byId('letter').classList.add('up'); }, 620);
+                setTimeout(() => { startMusic(); }, 900);
+                setTimeout(function () {
+                    intro.classList.add('done');
+                    document.body.classList.remove('lock');
+                    document.body.classList.add('ready');
+                    if (three) three.rise();
+                    const r = byId('envelope').getBoundingClientRect();
+                    burst(r.left + r.width / 2, r.top + r.height / 2, { count: 80 });
+                }, 2050);
+                setTimeout(function () {
+                    intro.style.display = 'none';
+                    toast('Psst — tap the floating balloons to pop them.');
+                }, 3050);
             });
-            pops++; updatePops();
-            toast(popMsgs[Math.floor(Math.random() * popMsgs.length)]);
-            if (pops >= 10 && !secretShown) { secretShown = true; setTimeout(() => { document.getElementById('secretModal').classList.remove('hidden'); document.getElementById('secretModal').classList.add('flex'); burstConfetti(); }, 600); }
-        }
-        function updatePops() { document.getElementById('popCountLabel').textContent = pops + ' / 10 pops'; document.getElementById('popProgress').style.width = Math.min(100, pops * 10) + '%'; document.getElementById('popProgressLabel').textContent = Math.min(pops, 10) + ' / 10 popped' + (pops >= 10 ? ' — Unlocked! 💌' : ''); }
-        let t0 = 0;
-        function animate() {
-            requestAnimationFrame(animate); t0 += .016;
-            balloons.forEach(b => { const g = b.group, u = g.userData; g.position.y += Math.sin(t0 * u.speed + u.phase) * .008 + .004; g.rotation.y = Math.sin(t0 * .6 + u.phase) * .25; g.rotation.z = Math.sin(t0 * .5 + u.phase) * .12; if (g.position.y > 7.5) g.position.y = -6; });
-            clouds.forEach(c => { c.position.x += c.userData.speed; if (c.position.x > 12) c.position.x = -12; });
-            if (stars) stars.rotation.y = t0 * .02;
-            if (moon) { moon.rotation.y += .005; moon.position.y = 3.5 + Math.sin(t0 * .7) * .2; }
-            if (bearGroup) { bearGroup.position.y = -1.5 + Math.sin(t0 * 1.1) * .3; bearGroup.rotation.y = Math.sin(t0 * .5) * .35; const st = bearGroup.getObjectByName('star'); if (st) st.rotation.y += .03; }
-            camera.position.x += ((mouseX * 1.4) - camera.position.x) * .04;
-            camera.position.y += ((-mouseY * .9) - camera.position.y) * .04;
-            camera.lookAt(0, 0, 0);
-            renderer.render(scene, camera);
-        }
-        window.addEventListener('load', () => { setTimeout(init3D, 400); });
 
-        /* ============ 2D Decor balloons ============ */
-        (function () { const layer = document.getElementById('balloonLayer'); const em = ['🎈', '⭐', '🌙', '💕', '🧸']; for (let i = 0; i < 7; i++) { const d = document.createElement('div'); d.className = 'balloon2d pointer-events-auto'; d.textContent = em[i % em.length]; d.style.fontSize = (22 + Math.random() * 26) + 'px'; d.style.left = (3 + Math.random() * 90) + '%'; d.style.top = (10 + Math.random() * 75) + '%'; d.style.animation = `floaty ${3 + Math.random() * 3}s ease-in-out infinite`; d.style.animationDelay = (Math.random() * 2) + 's'; d.onclick = () => { popSound(); confetti({ particleCount: 20, spread: 60, origin: { x: parseFloat(d.style.left) / 100, y: parseFloat(d.style.top) / 100 }, scalar: .7 }); d.style.transform = 'scale(1.6)'; d.style.opacity = '0'; setTimeout(() => { d.style.left = (3 + Math.random() * 90) + '%'; d.style.top = (10 + Math.random() * 75) + '%'; d.style.opacity = '1'; d.style.transform = 'scale(1)'; }, 900); pops++; updatePops(); if (pops >= 10 && !secretShown) { secretShown = true; document.getElementById('secretModal').classList.remove('hidden'); document.getElementById('secretModal').classList.add('flex'); } }; layer.appendChild(d); } })();
+            /* ================= gender reveal ================= */
+            let revealed = false;
+            byId('revealBtn').addEventListener('click', function () {
+                if (revealed) return; revealed = true;
+                chime([523.25, 659.25, 783.99, 1046.5], .16);
+                const r = this.getBoundingClientRect();
+                const bx = r.left + r.width / 2, by = r.top + r.height / 2;
+                burst(bx, by, { count: 130, colors: GIRL });
+                setTimeout(() => burst(innerWidth * .22, Math.max(120, by * .7), { count: 60, colors: GIRL }), 280);
+                setTimeout(() => burst(innerWidth * .78, Math.max(120, by * .7), { count: 60, colors: GIRL }), 520);
+                if (three) three.spawnGirlBalloons();
+                byId('revealWrap').classList.add('revealed');
+                setTimeout(() => byId('revealResult').classList.add('show'), 350);
+            });
 
-        /* ============ THEME ============ */
-        function setTheme(t) { document.documentElement.dataset.theme = t; toast(t === 'girl' ? 'Pretty in pink! 🩷' : t === 'boy' ? 'Baby blue skies! 💙' : 'Sweet & neutral! 🌈'); if (scene) { scene.fog.color.set(t === 'girl' ? 0xFFF5F9 : t === 'boy' ? 0xF2FAFF : 0xFFF9F0); balloons.forEach(b => { const c = new THREE.Color(balloonColor()); b.mesh.material.color = c; b.mesh.material.emissive = c; }); } }
+            /* ================= rsvp ================= */
+            const form = byId('rsvpForm');
+            function mark(input, msg) {
+                const f = input.closest('.field');
+                f.classList.add('invalid');
+                const m = f.querySelector('.err-msg'); if (m) m.textContent = msg;
+            }
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                form.querySelectorAll('.field').forEach(f => f.classList.remove('invalid'));
+                const nameI = byId('fName'), emailI = byId('fEmail');
+                let ok = true;
+                if (!nameI.value.trim()) { mark(nameI, 'Please share your name'); ok = false; }
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailI.value.trim())) { mark(emailI, 'Please share a valid email'); ok = false; }
+                if (!ok) { toast('Please check the highlighted fields'); return; }
+                const btn = byId('rsvpBtn');
+                btn.classList.add('loading'); btn.disabled = true;
+                setTimeout(function () {
+                    const attending = form.querySelector('input[name="attend"]:checked').value === 'yes';
+                    const first = nameI.value.trim().split(' ')[0];
+                    byId('successTitle').textContent = 'Thank you, ' + first + '!';
+                    byId('successMsg').textContent = attending
+                        ? 'Your seat among the stars is saved. We can\u2019t wait to celebrate Baby Whitmore with you on ' + wd + ', ' + md + '.'
+                        : 'You\u2019ll be dearly missed, ' + first + '. We\u2019ll be sure to share plenty of photos of the big day.';
+                    form.hidden = true;
+                    const scs = byId('rsvpSuccess');
+                    scs.hidden = false;
+                    requestAnimationFrame(() => requestAnimationFrame(() => {
+                        scs.classList.add('on');
+                        const b = byId('rsvpCard').getBoundingClientRect();
+                        burst(b.left + b.width / 2, b.top + Math.min(220, b.height / 2), { count: 90 });
+                    }));
+                    chime([659.25, 880, 1174.66], .15);
+                }, 950);
+            });
+            form.querySelectorAll('input,textarea').forEach(function (i) {
+                i.addEventListener('input', function () {
+                    const f = i.closest('.field');
+                    if (f && f.classList.contains('invalid')) f.classList.remove('invalid');
+                });
+            });
+            byId('editReply').addEventListener('click', function () {
+                const scs = byId('rsvpSuccess');
+                scs.classList.remove('on'); scs.hidden = true;
+                form.hidden = false;
+                const btn = byId('rsvpBtn');
+                btn.classList.remove('loading'); btn.disabled = false;
+            });
 
-        /* ============ ENVELOPE & MODAL ============ */
-        let envOpened = false;
-        function openInvitation(force) { const env = document.getElementById('envelope'); if (!envOpened) { env.classList.add('open'); document.getElementById('envHint').textContent = '✨ Opening your invitation...'; burstConfetti(); popSound(); envOpened = true; setTimeout(showInviteModal, 1100); } else showInviteModal(); }
-        function showInviteModal() { const m = document.getElementById('inviteModal'); m.classList.remove('hidden'); m.classList.add('flex'); gsap.from('#inviteCard', { scale: .7, rotationY: 25, opacity: 0, duration: .8, ease: 'back.out(1.5)' }); }
-        function closeInvitation() { const m = document.getElementById('inviteModal'); m.classList.add('hidden'); m.classList.remove('flex'); }
-        // tilt
-        document.querySelectorAll('.tilt-card').forEach(card => { card.addEventListener('mousemove', e => { const r = card.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; card.style.transform = `perspective(900px) rotateY(${x * 14}deg) rotateX(${-y * 14}deg) translateY(-4px)`; }); card.addEventListener('mouseleave', () => card.style.transform = 'perspective(900px) rotateY(0) rotateX(0)'); });
+            /* ================= scroll reveal & nav ================= */
+            const io = new IntersectionObserver(function (es) {
+                es.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } });
+            }, { threshold: .15 });
+            document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+            addEventListener('scroll', function () {
+                byId('nav').classList.toggle('scrolled', scrollY > 40);
+            }, { passive: true });
 
-        /* ============ COUNTDOWN ============ */
-        const target = new Date('2026-10-18T14:00:00');
-        function tick() { const now = new Date(); let d = target - now; if (d < 0) d = 0; const dd = Math.floor(d / 864e5), hh = Math.floor(d / 36e5) % 24, mm = Math.floor(d / 6e4) % 60, ss = Math.floor(d / 1e3) % 60; document.getElementById('cdD').textContent = String(dd).padStart(2, '0'); document.getElementById('cdH').textContent = String(hh).padStart(2, '0'); document.getElementById('cdM').textContent = String(mm).padStart(2, '0'); document.getElementById('cdS').textContent = String(ss).padStart(2, '0'); }
-        setInterval(tick, 1000); tick();
-        setTimeout(() => document.getElementById('pregBar').style.width = '85%', 800);
-        document.getElementById('pregBar').style.transition = 'width 2s cubic-bezier(.34,1.3,.64,1)';
-        function addToCalendar() { const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VEVENT', 'DTSTART:20261018T140000', 'DTEND:20261018T170000', 'SUMMARY:Mia\'s Baby Shower', 'LOCATION:Willow Garden Hall, 123 Starlight Lane', 'DESCRIPTION:Twinkle twinkle little star - join us!', 'END:VEVENT', 'END:VCALENDAR'].join('\n'); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'baby-shower.ics'; a.click(); toast('Added to calendar! 📅'); }
-        function shareInvite() { const url = location.href; if (navigator.share) { navigator.share({ title: "Mia's Baby Shower", text: "You're invited! 🎈", url }).catch(() => { }); } else { navigator.clipboard?.writeText(url); toast('Invite link copied! 🔗'); burstConfetti(); } }
-
-        /* ============ RSVP & GUEST WALL ============ */
-        let guests = [
-            { n: 'Emma Wilson', a: 'yes', g: 2, m: 'So excited! Bringing the camera 📸', meal: 'Chicken' },
-            { n: 'Sophia Carter', a: 'yes', g: 1, m: 'Mia is already so loved! 💕', meal: 'Veggie' },
-            { n: 'Olivia Bennett', a: 'yes', g: 3, m: 'The Bennett crew can\'t wait!', meal: 'Chicken' },
-            { n: 'Ava Martinez', a: 'yes', g: 1, m: 'Onesie decorating champ here 🏆', meal: 'Vegan' },
-            { n: 'Liam Johnson', a: 'no', g: 1, m: 'Will miss it! Sending love from NYC 💌', meal: 'Chicken' },
-            { n: 'Mia Thompson', a: 'yes', g: 2, m: 'Twinkle twinkle! See you there ⭐', meal: 'Veggie' },
-        ];
-        let selectedMeal = 'Chicken';
-        try { const saved = JSON.parse(localStorage.getItem('miaGuests') || 'null'); if (saved && saved.length) guests = saved; } catch (e) { }
-        document.querySelectorAll('.meal-btn').forEach(b => b.onclick = () => { selectedMeal = b.dataset.meal; document.querySelectorAll('.meal-btn').forEach(x => x.style.borderColor = 'transparent'); b.style.borderColor = 'var(--accent)'; });
-        function avatarColor(n) { const c = ['#FF8FB1', '#7DD3FC', '#E9B44C', '#3AC6A5', '#C9A6FF', '#FF9E7D']; let h = 0; for (let ch of n) h += ch.charCodeAt(0); return c[h % c.length]; }
-        function renderGuests(filter = '') {
-            const wall = document.getElementById('guestWall'); wall.innerHTML = ''; const list = guests.filter(g => g.n.toLowerCase().includes(filter.toLowerCase())); document.getElementById('guestCount').textContent = `(${list.length})`;
-            list.forEach((g, i) => { const d = document.createElement('div'); d.className = 'bg-white/80 rounded-2xl p-4 shadow hover:shadow-lg hover:-translate-y-1 transition'; d.innerHTML = `<div class="flex items-center gap-3"><div class="w-11 h-11 rounded-full flex items-center justify-center text-white font-baloo font-extrabold text-lg shrink-0" style="background:${avatarColor(g.n)}">${g.n[0]}</div><div class="min-w-0"><div class="font-bold text-sm truncate">${g.n}</div><div class="text-[11px] font-bold ${g.a === 'yes' ? 'text-green-600' : 'text-rose-400'}">${g.a === 'yes' ? '✨ Attending • +' + g.g + ' • ' + g.meal : '💔 Can\'t make it'}</div></div></div><p class="text-sm font-medium opacity-70 mt-2 italic">"${g.m || 'Can\'t wait!'}"</p>`; wall.appendChild(d); });
-            const going = guests.filter(g => g.a === 'yes').reduce((s, g) => s + parseInt(g.g || 1), 0); document.getElementById('statGoing').textContent = going; document.getElementById('statSeats').textContent = Math.max(0, 50 - going);
-        }
-        document.getElementById('guestSearch').addEventListener('input', e => renderGuests(e.target.value));
-        function shuffleGuests() { guests.sort(() => Math.random() - .5); renderGuests(); toast('Guest wall shuffled! 🔀'); }
-        document.getElementById('rsvpForm').addEventListener('submit', e => { e.preventDefault(); const n = document.getElementById('fName').value.trim(); if (!n) { toast('Please enter your name 💕'); return; } const entry = { n, a: document.getElementById('fAttend').value, g: document.getElementById('fGuests').value, m: document.getElementById('fMsg').value, meal: selectedMeal }; guests.unshift(entry); localStorage.setItem('miaGuests', JSON.stringify(guests)); renderGuests(); document.getElementById('rsvpForm').reset(); if (entry.a === 'yes') { burstConfetti(); toast(`Yay ${n.split(' ')[0]}! You're on the list! 🎉`); } else toast('You\'ll be missed! 💔'); });
-        renderGuests();
-
-        /* ============ POLLS ============ */
-        let gv = { boy: 42, girl: 58 }; try { const s = JSON.parse(localStorage.getItem('miaGender') || 'null'); if (s) gv = s; } catch (e) { }
-        function renderGender() { const t = gv.boy + gv.girl, bp = Math.round(gv.boy / t * 100); document.getElementById('boyBar').style.width = (100 - bp) + '%'; document.getElementById('girlBar').style.width = bp + '%'; document.getElementById('boyVotesLabel').textContent = gv.boy + ' votes'; document.getElementById('girlVotesLabel').textContent = gv.girl + ' votes'; document.getElementById('genderMsg').textContent = gv.girl > gv.boy ? 'Pink is leading! Cast your vote ✨' : gv.boy > gv.girl ? 'Blue is leading! Cast your vote ✨' : 'It\'s a tie! Every vote counts! 💫'; }
-        function voteGender(v) { gv[v]++; localStorage.setItem('miaGender', JSON.stringify(gv)); renderGender(); popSound(); confetti({ particleCount: 40, spread: 60, origin: { y: .7 }, colors: v === 'girl' ? ['#FF5E8A', '#FF9EC6'] : ['#2AA8FF', '#7DD3FC'] }); toast(v === 'girl' ? 'Voted Pink Bloom! 🌸' : 'Voted Blue Bear! 🧸'); }
-        renderGender();
-        let names = [{ n: 'Mia Rose', v: 34, c: '#FF8FB1' }, { n: 'Mia Star', v: 28, c: '#E9B44C' }, { n: 'Mia Luna', v: 45, c: '#7DD3FC' }, { n: 'Mia Willow', v: 19, c: '#3AC6A5' }];
-        try { const s = JSON.parse(localStorage.getItem('miaNames') || 'null'); if (s) names = s; } catch (e) { }
-        function renderNames() { const box = document.getElementById('namePoll'); box.innerHTML = ''; const max = Math.max(...names.map(x => x.v)); names.forEach((x, i) => { const d = document.createElement('button'); d.onclick = () => { names[i].v++; localStorage.setItem('miaNames', JSON.stringify(names)); renderNames(); popSound(); toast(`Voted for ${x.n}! 💕`); }; d.className = 'w-full text-left bg-white/80 rounded-2xl p-3 hover:scale-[1.02] transition shadow'; d.innerHTML = `<div class="flex justify-between items-center"><span class="font-baloo font-bold">${x.n}</span><span class="text-xs font-bold opacity-60">${x.v} votes</span></div><div class="h-3 bg-gray-100 rounded-full mt-2 overflow-hidden"><div class="vote-bar h-full rounded-full" style="width:${Math.round(x.v / max * 100)}%; background:${x.c}"></div></div>`; box.appendChild(d); }); }
-        renderNames();
-
-        /* ============ GIFTS ============ */
-        const gifts = [
-            { t: 'Dreamy Stroller', p: '$299', img: 'https://images.unsplash.com/photo-1591348278863-9f4d23249a33?w=600&q=80&auto=format&fit=crop', tag: 'Most wished', icon: '🍼' },
-            { t: 'Moon Crib Mobile', p: '$59', img: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?w=600&q=80&auto=format&fit=crop', tag: 'Popular', icon: '🌙' },
-            { t: 'Cuddly Teddy Set', p: '$45', img: 'https://images.unsplash.com/photo-1559454403-b8fb88521f11?w=600&q=80&auto=format&fit=crop', tag: 'Adorable', icon: '🧸' },
-            { t: 'Starry Blanket', p: '$38', img: 'https://images.unsplash.com/photo-1522771930-78848d9293e8?w=600&q=80&auto=format&fit=crop', tag: 'Cozy', icon: '⭐' },
-            { t: 'Baby Care Kit', p: '$75', img: 'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=600&q=80&auto=format&fit=crop', tag: 'Essential', icon: '💛' },
-            { t: 'Story Book Bundle', p: '$52', img: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&q=80&auto=format&fit=crop', tag: 'Sweet', icon: '📚' },
-        ];
-        let claimed = {}; try { claimed = JSON.parse(localStorage.getItem('miaGifts') || '{}'); } catch (e) { }
-        function renderGifts() { const g = document.getElementById('giftGrid'); g.innerHTML = ''; gifts.forEach((x, i) => { const isC = !!claimed[i]; const d = document.createElement('div'); d.className = 'gift-card glass rounded-[28px] overflow-hidden' + (isC ? ' claimed' : ''); d.innerHTML = `<div class="relative h-52 overflow-hidden"><img src="${x.img}" onerror="this.src='https://picsum.photos/seed/gift${i}/600/500'" class="w-full h-full object-cover" alt="${x.t}"><span class="absolute top-3 left-3 bg-white/90 backdrop-blur text-[11px] font-extrabold px-3 py-1 rounded-full shadow">${x.icon} ${x.tag}</span><span class="absolute top-3 right-3 text-white text-sm font-extrabold px-3 py-1 rounded-full shadow" style="background:linear-gradient(135deg,var(--accent),var(--accent2))">${x.p}</span><div class="gift-overlay absolute inset-0 bg-black/45 opacity-0 transition flex items-center justify-center"><span class="bg-white rounded-full px-5 py-2 font-extrabold text-sm">💝 Reserved!</span></div></div><div class="p-5"><h4 class="font-baloo font-extrabold text-lg">${x.t}</h4><p class="text-xs font-semibold opacity-60">${isC ? 'Reserved by ' + claimed[i] : 'Available • Tap to reserve for Mia'}</p><button onclick="toggleGift(${i})" class="mt-3 w-full py-3 rounded-2xl font-extrabold text-sm transition ${isC ? 'bg-gray-100 hover:bg-gray-200' : 'btn-magical'}">${isC ? 'Release Gift' : 'Reserve Gift 🎁'}</button></div>`; g.appendChild(d); }); }
-        function toggleGift(i) { if (claimed[i]) { delete claimed[i]; toast('Gift released 💫'); } else { const name = prompt('Your name (to reserve this gift):', 'Guest'); if (!name) return; claimed[i] = name; burstConfetti(); toast(`Thank you ${name}! Gift reserved 🎁`); } localStorage.setItem('miaGifts', JSON.stringify(claimed)); renderGifts(); }
-        renderGifts();
-
-        /* ============ MUSIC BOX (Twinkle Twinkle) ============ */
-        let audioCtx = null, playing = false, musicTimer = null;
-        const NOTES = { C: 261.63, D: 293.66, E: 329.63, F: 349.23, G: 392.0, A: 440.0 };
-        const SONG = ['C', 'C', 'G', 'G', 'A', 'A', 'G', 'F', 'F', 'E', 'E', 'D', 'D', 'C'];
-        function playNote(f, time, dur = .5) { const o = audioCtx.createOscillator(), g = audioCtx.createGain(); o.type = 'triangle'; o.frequency.value = f; g.gain.setValueAtTime(.0001, time); g.gain.exponentialRampToValueAtTime(.35, time + .05); g.gain.exponentialRampToValueAtTime(.0001, time + dur); o.connect(g); g.connect(audioCtx.destination); o.start(time); o.stop(time + dur + .05); }
-        function playSong() { if (!playing) return; let t = audioCtx.currentTime + .1; SONG.forEach((n, i) => playNote(NOTES[n], t + i * .55, .55)); musicTimer = setTimeout(playSong, SONG.length * 550 + 800); }
-        function toggleMusic() {
-            const btn = document.getElementById('musicBtn'), icon = document.getElementById('musicIcon');
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            playing = !playing;
-            if (playing) { audioCtx.resume(); playSong(); btn.innerHTML = '<span class="music-bar" style="animation-delay:0s"></span><span class="music-bar" style="animation-delay:.2s"></span><span class="music-bar" style="animation-delay:.4s"></span>'; toast('Playing Twinkle Twinkle 🎶'); }
-            else { clearTimeout(musicTimer); btn.innerHTML = '<span id="musicIcon"><i class="fa-solid fa-music"></i></span>'; toast('Music paused 🌙'); }
-        }
-
-        /* welcome toast */
-        setTimeout(() => toast('Welcome, star guest! Open the envelope 💌'), 2500);
+            /* ================= icons ================= */
+            if (window.lucide) lucide.createIcons();
+        })();
     </script>
 </body>
 
