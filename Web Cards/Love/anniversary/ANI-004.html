@@ -1,0 +1,1747 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Anniversary, My Love — A Celebration of Us</title>
+    <meta name="description"
+        content="A romantic anniversary surprise — celebrating love, laughter and a lifetime of kisses with my handsome bava." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wine: '#2A0B14',
+                        plum: '#4B1226',
+                        rose: '#C4415C',
+                        blush: '#F5DCD8',
+                        cream: '#FFF7F2',
+                        gold: '#C89B4A',
+                        ink: '#1B0910'
+                    },
+                    fontFamily: {
+                        display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            background-color: #FFF7F2;
+            color: #1B0910;
+            overflow-x: hidden;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        ::selection {
+            background: #C4415C;
+            color: #fff;
+        }
+
+        /* ---------- Scroll progress ---------- */
+        #progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, #C89B4A, #C4415C, #7B1E33);
+            z-index: 90;
+            transition: width .12s linear;
+        }
+
+        /* ---------- Reveal system ---------- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);
+            will-change: transform, opacity;
+        }
+
+        .reveal.in {
+            opacity: 1;
+            transform: none;
+        }
+
+        .reveal-d1 {
+            transition-delay: .1s
+        }
+
+        .reveal-d2 {
+            transition-delay: .2s
+        }
+
+        .reveal-d3 {
+            transition-delay: .3s
+        }
+
+        .reveal-d4 {
+            transition-delay: .4s
+        }
+
+        .reveal-d5 {
+            transition-delay: .5s
+        }
+
+        .reveal-d6 {
+            transition-delay: .6s
+        }
+
+        /* masked image reveal */
+        .mask-reveal {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mask-reveal img {
+            transform: scale(1.18);
+            transition: transform 1.3s cubic-bezier(.22, 1, .36, 1), opacity 1s ease;
+            opacity: 0;
+        }
+
+        .mask-reveal.in img {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .mask-reveal::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #2A0B14;
+            transform: scaleY(1);
+            transform-origin: bottom;
+            transition: transform 1.05s cubic-bezier(.76, 0, .24, 1);
+        }
+
+        .mask-reveal.in::after {
+            transform: scaleY(0);
+        }
+
+        /* kinetic hero type */
+        .line-mask {
+            overflow: hidden;
+            display: block;
+            padding-bottom: .08em;
+        }
+
+        .line-inner {
+            display: block;
+            transform: translateY(110%) rotate(3deg);
+            opacity: 0;
+            animation: lineUp 1.15s cubic-bezier(.19, 1, .22, 1) forwards;
+        }
+
+        @keyframes lineUp {
+            to {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(22px);
+            animation: fadeUp .95s cubic-bezier(.22, 1, .36, 1) forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* ---------- Marquee ---------- */
+        .marquee {
+            display: flex;
+            width: max-content;
+            animation: slide 38s linear infinite;
+        }
+
+        .marquee:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes slide {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ---------- Buttons ---------- */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            background: linear-gradient(135deg, #C4415C, #8E2540);
+            color: #fff;
+            box-shadow: 0 18px 40px -18px rgba(142, 37, 64, .75);
+            transition: transform .35s cubic-bezier(.22, 1, .36, 1), box-shadow .35s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 26px 55px -18px rgba(142, 37, 64, .7);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, .38) 45%, transparent 70%);
+            transform: translateX(-120%);
+            transition: transform .8s cubic-bezier(.22, 1, .36, 1);
+        }
+
+        .btn-primary:hover::before {
+            transform: translateX(120%);
+        }
+
+        .btn-ghost {
+            border: 1px solid rgba(255, 255, 255, .45);
+            color: #fff;
+            transition: background .35s ease, transform .35s cubic-bezier(.22, 1, .36, 1), border-color .35s;
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, .13);
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, .8);
+        }
+
+        .btn-outline {
+            border: 1px solid rgba(42, 11, 20, .22);
+            color: #2A0B14;
+            transition: all .35s cubic-bezier(.22, 1, .36, 1);
+        }
+
+        .btn-outline:hover {
+            background: #2A0B14;
+            color: #FFF7F2;
+            transform: translateY(-3px);
+        }
+
+        /* magnetic cards */
+        .mag {
+            transition: transform .5s cubic-bezier(.22, 1, .36, 1), box-shadow .5s ease, border-color .5s ease;
+            will-change: transform;
+        }
+
+        .mag:hover {
+            box-shadow: 0 34px 70px -30px rgba(75, 18, 38, .4);
+        }
+
+        /* ---------- Hero art ---------- */
+        .grain::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: .35;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+        }
+
+        .hero-photo {
+            border-radius: 190px 190px 18px 18px;
+        }
+
+        .arch {
+            border-radius: 240px 240px 22px 22px;
+        }
+
+        /* ---------- Timeline ---------- */
+        .tl-dot {
+            box-shadow: 0 0 0 6px rgba(196, 65, 92, .14);
+        }
+
+        .tl-path {
+            stroke-dasharray: 1;
+            stroke-dashoffset: 1;
+        }
+
+        /* ---------- Gallery ---------- */
+        .g-item img {
+            transition: transform 1.1s cubic-bezier(.22, 1, .36, 1), filter .7s ease;
+        }
+
+        .g-item:hover img {
+            transform: scale(1.09);
+            filter: saturate(1.15);
+        }
+
+        .g-item .g-cap {
+            transform: translateY(14px);
+            opacity: 0;
+            transition: all .55s cubic-bezier(.22, 1, .36, 1);
+        }
+
+        .g-item:hover .g-cap {
+            transform: none;
+            opacity: 1;
+        }
+
+        /* ---------- Floating hearts / kisses ---------- */
+        .kiss-float {
+            position: fixed;
+            pointer-events: none;
+            z-index: 80;
+            font-family: 'Cormorant Garamond', serif;
+            animation: kissUp 2.6s cubic-bezier(.22, 1, .36, 1) forwards;
+            will-change: transform, opacity;
+        }
+
+        @keyframes kissUp {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 0) scale(.5) rotate(0deg);
+            }
+
+            12% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(calc(-50% + var(--dx)), -260px) scale(1.15) rotate(var(--rot));
+            }
+        }
+
+        .heart-pulse {
+            animation: pulse 2.6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            12% {
+                transform: scale(1.14);
+            }
+
+            24% {
+                transform: scale(1);
+            }
+
+            36% {
+                transform: scale(1.09);
+            }
+        }
+
+        .float-slow {
+            animation: floaty 9s ease-in-out infinite;
+        }
+
+        .float-slower {
+            animation: floaty 13s ease-in-out infinite reverse;
+        }
+
+        @keyframes floaty {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(1.4deg);
+            }
+        }
+
+        /* ---------- Nav ---------- */
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            height: 1.5px;
+            width: 100%;
+            background: currentColor;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform .45s cubic-bezier(.22, 1, .36, 1);
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        #navbar {
+            transition: background .5s ease, backdrop-filter .5s ease, box-shadow .5s ease, padding .5s ease;
+        }
+
+        #navbar.scrolled {
+            background: rgba(255, 247, 242, .88);
+            backdrop-filter: blur(14px) saturate(1.2);
+            box-shadow: 0 10px 40px -22px rgba(42, 11, 20, .35);
+        }
+
+        #navbar.scrolled .nav-text {
+            color: #2A0B14;
+        }
+
+        /* letter paper */
+        .letter {
+            background:
+                radial-gradient(120% 100% at 0% 0%, rgba(255, 255, 255, .9), rgba(255, 255, 255, 0) 55%),
+                linear-gradient(160deg, #FFFDFA, #FBEDE6);
+            box-shadow: 0 50px 90px -50px rgba(75, 18, 38, .55), 0 2px 0 rgba(255, 255, 255, .7) inset;
+        }
+
+        /* stat numbers */
+        .stat-num {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* signature path draw */
+        .sig path {
+            stroke-dasharray: 1200;
+            stroke-dashoffset: 1200;
+            transition: stroke-dashoffset 2.6s ease;
+        }
+
+        .sig.in path {
+            stroke-dashoffset: 0;
+        }
+
+        /* mobile menu */
+        #mobileMenu {
+            transition: opacity .45s ease, transform .5s cubic-bezier(.22, 1, .36, 1), visibility .45s;
+        }
+
+        #mobileMenu.hidden-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-12px);
+        }
+
+        /* lightbox */
+        #light\boxed {
+            transition: opacity .45s ease, visibility .45s;
+        }
+
+        #lightbox img {
+            transition: transform .55s cubic-bezier(.22, 1, .36, 1), opacity .4s ease;
+        }
+
+        .divider-orn {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(42, 11, 20, .18), transparent);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .15s !important;
+                scroll-behavior: auto !important;
+            }
+
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+
+            .mask-reveal::after {
+                display: none;
+            }
+
+            .mask-reveal img {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased">
+
+    <div id="progress"></div>
+
+    <!-- ================= NAV ================= -->
+    <header id="navbar" class="fixed top-0 inset-x-0 z-[70] py-4 md:py-6">
+        <nav class="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between">
+            <a href="#top" class="flex items-center gap-3 group">
+                <span
+                    class="w-9 h-9 rounded-full bg-rose/90 text-white grid place-items-center shadow-lg shadow-rose/30 heart-pulse">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 21s-7.2-4.6-9.4-8.3C.7 9.5 2.2 5.4 6 4.6c2.2-.5 4.2.4 5.3 2 .4.6.6.9.7.9s.3-.3.7-.9c1.1-1.6 3.1-2.5 5.3-2 3.8.8 5.3 4.9 3.4 8.1C19.2 16.4 12 21 12 21z" />
+                    </svg>
+                </span>
+                <span
+                    class="nav-text text-wine font-display text-xl md:text-2xl font-semibold tracking-wide transition-colors">Bava
+                    &amp; Me</span>
+            </a>
+
+            <div class="hidden lg:flex items-center gap-9 text-[13px] uppercase tracking-[0.18em] font-medium">
+                <a href="#story" class="nav-link nav-text text-wine/80 hover:text-rose transition-colors">Our Story</a>
+                <a href="#moments" class="nav-link nav-text text-wine/80 hover:text-rose transition-colors">Moments</a>
+                <a href="#reasons" class="nav-link nav-text text-wine/80 hover:text-rose transition-colors">Why You</a>
+                <a href="#letter" class="nav-link nav-text text-wine/80 hover:text-rose transition-colors">My Letter</a>
+                <a href="#kisses"
+                    class="btn-primary px-6 py-3 rounded-full text-white text-[12px] tracking-[0.18em] font-semibold">Blow
+                    a Kiss</a>
+            </div>
+
+            <button id="menuBtn" aria-label="Open menu"
+                class="lg:hidden w-11 h-11 rounded-full border border-wine/15 grid place-items-center text-wine">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round">
+                    <path d="M4 7h16M4 12h16M4 17h16" />
+                </svg>
+            </button>
+        </nav>
+
+        <div id="mobileMenu"
+            class="hidden-menu lg:hidden absolute top-full left-4 right-4 rounded-3xl bg-cream/95 backdrop-blur-xl border border-wine/10 shadow-2xl p-6">
+            <div class="flex flex-col gap-1">
+                <a href="#story"
+                    class="mobile-link py-3 px-2 rounded-xl hover:bg-wine/5 font-display text-2xl text-wine">Our
+                    Story</a>
+                <a href="#moments"
+                    class="mobile-link py-3 px-2 rounded-xl hover:bg-wine/5 font-display text-2xl text-wine">Moments</a>
+                <a href="#reasons"
+                    class="mobile-link py-3 px-2 rounded-xl hover:bg-wine/5 font-display text-2xl text-wine">Why You</a>
+                <a href="#letter"
+                    class="mobile-link py-3 px-2 rounded-xl hover:bg-wine/5 font-display text-2xl text-wine">My
+                    Letter</a>
+                <a href="#kisses"
+                    class="mobile-link mt-3 btn-primary text-center py-4 rounded-full text-white text-xs tracking-[0.2em] font-semibold">BLOW
+                    A KISS</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= HERO ================= -->
+    <section id="top" class="relative min-h-[100svh] flex items-center overflow-hidden grain">
+        <!-- background -->
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1920&q=80"
+                alt="Romantic couple silhouette at sunset"
+                class="w-full h-full object-cover object-center opacity-[.42]" id="heroBg" />
+            <div class="absolute inset-0"
+                style="background:linear-gradient(115deg, rgba(28,7,14,.92) 0%, rgba(64,15,32,.78) 42%, rgba(120,32,58,.55) 100%)">
+            </div>
+            <div class="absolute inset-0"
+                style="background:radial-gradient(75% 65% at 22% 30%, rgba(226,158,120,.28), transparent 62%)"></div>
+            <canvas id="petals" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+        </div>
+
+        <!-- floating ornament photos -->
+        <div class="hidden xl:block absolute right-[6%] top-[18%] w-44 h-56 rounded-[110px_110px_16px_16px] overflow-hidden shadow-2xl float-slow border border-white/15"
+            data-parallax="0.14">
+            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80"
+                alt="Couple holding hands" class="w-full h-full object-cover">
+        </div>
+        <div class="hidden xl:block absolute right-[17%] bottom-[13%] w-36 h-44 rounded-[100px_100px_14px_14px] overflow-hidden shadow-2xl float-slower border border-white/15"
+            data-parallax="0.22">
+            <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=600&q=80"
+                alt="Red roses bouquet" class="w-full h-full object-cover">
+        </div>
+
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 pt-32 pb-20 lg:py-32">
+            <div class="max-w-3xl">
+                <div class="fade-up flex items-center gap-4 mb-7" style="animation-delay:.15s">
+                    <span class="h-[1px] w-12 bg-gold"></span>
+                    <span class="text-gold text-[11px] sm:text-xs uppercase tracking-[0.42em] font-medium">Happy
+                        Anniversary, my love</span>
+                </div>
+
+                <h1 class="font-display text-white leading-[0.94] tracking-[-0.02em] text-[clamp(2.9rem,9vw,7.2rem)]">
+                    <span class="line-mask"><span class="line-inner" style="animation-delay:.15s">To My</span></span>
+                    <span class="line-mask"><span class="line-inner italic text-blush"
+                            style="animation-delay:.32s">Handsome</span></span>
+                    <span class="line-mask"><span class="line-inner" style="animation-delay:.49s">Bava<span
+                                class="text-gold">.</span></span></span>
+                </h1>
+
+                <p class="fade-up mt-8 text-white/82 text-lg sm:text-xl leading-relaxed max-w-xl font-light"
+                    style="animation-delay:.72s">
+                    Every love story is beautiful, but ours is my favourite. Here's to the man who makes my
+                    heart race, my soul smile, and my ordinary days feel like a celebration —
+                    wrapped in a thousand kisses.
+                </p>
+
+                <div class="fade-up mt-10 flex flex-wrap items-center gap-4" style="animation-delay:.88s">
+                    <a href="#kisses"
+                        class="btn-primary px-8 py-4 rounded-full text-xs sm:text-sm tracking-[0.22em] font-semibold uppercase">
+                        Send Him Kisses
+                    </a>
+                    <a href="#story"
+                        class="btn-ghost px-8 py-4 rounded-full text-xs sm:text-sm tracking-[0.22em] font-semibold uppercase">
+                        Our Journey
+                    </a>
+                </div>
+
+                <div class="fade-up mt-14 flex items-center gap-7 sm:gap-10" style="animation-delay:1.05s">
+                    <div>
+                        <div class="text-white font-display text-3xl sm:text-4xl font-semibold stat-num"
+                            data-count="365" data-suffix="+">0</div>
+                        <div class="text-white/55 text-[10px] sm:text-[11px] uppercase tracking-[0.28em] mt-1">Days of
+                            us</div>
+                    </div>
+                    <div class="w-px h-10 bg-white/20"></div>
+                    <div>
+                        <div class="text-white font-display text-3xl sm:text-4xl font-semibold stat-num"
+                            data-count="1000" data-suffix="+">0</div>
+                        <div class="text-white/55 text-[10px] sm:text-[11px] uppercase tracking-[0.28em] mt-1">Kisses
+                            saved</div>
+                    </div>
+                    <div class="w-px h-10 bg-white/20"></div>
+                    <div>
+                        <div class="text-white font-display text-3xl sm:text-4xl font-semibold">∞</div>
+                        <div class="text-white/55 text-[10px] sm:text-[11px] uppercase tracking-[0.28em] mt-1">Forever
+                            to go</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- scroll cue -->
+        <a href="#story"
+            class="absolute bottom-7 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3 group">
+            <span class="text-white/60 text-[10px] uppercase tracking-[0.35em]">Scroll</span>
+            <span class="w-[26px] h-[42px] rounded-full border border-white/35 flex justify-center pt-2">
+                <span class="w-[3px] h-[9px] rounded-full bg-white/80"
+                    style="animation: fadeUp 1.6s ease-in-out infinite alternate"></span>
+            </span>
+        </a>
+    </section>
+
+    <!-- ================= MARQUEE ================= -->
+    <div class="bg-wine text-blush py-5 overflow-hidden">
+        <div class="marquee items-center gap-10 whitespace-nowrap">
+            <span class="flex items-center gap-10">
+                <span class="font-display text-2xl sm:text-3xl italic">I love you</span><span class="text-gold">✦</span>
+                <span class="font-display text-2xl sm:text-3xl">Forever &amp; Always</span><span
+                    class="text-gold">✦</span>
+                <span class="font-display text-2xl sm:text-3xl italic">My handsome bava</span><span
+                    class="text-gold">✦</span>
+                <span class="font-display text-2xl sm:text-3xl">Endless Kisses</span><span class="text-gold">✦</span>
+                <span class="font-display text-2xl sm:text-3xl italic">You &amp; Me</span><span
+                    class="text-gold">✦</span>
+            </span>
+            <span class="flex items-center gap-10" aria-hidden="true">
+                <span class="font-display text-2xl sm:text-3xl italic">I love you</span><span class="text-gold">✦</span>
+                <span class="font-display text-2xl sm:text-3xl">Forever &amp; Always</span><span
+                    class="text-gold">✦</span>
+                <span class="font-display text-2xl sm:text-3xl italic">My handsome bava</span><span
+                    class="text-gold">✦</span>
+                <span class="font-display text-2xl sm:text-3xl">Endless Kisses</span><span class="text-gold">✦</span>
+                <span class="font-display text-2xl sm:text-3xl italic">You &amp; Me</span><span
+                    class="text-gold">✦</span>
+            </span>
+        </div>
+    </div>
+
+    <!-- ================= STORY / INTRO ================= -->
+    <section id="story" class="relative py-24 md:py-32 overflow-hidden">
+        <div class="absolute -left-24 top-24 w-[420px] h-[420px] rounded-full opacity-[.16]"
+            style="background:radial-gradient(circle, #E7B7A6, transparent 65%)"></div>
+        <div class="absolute right-[-120px] bottom-10 w-[520px] h-[520px] rounded-full opacity-[.13]"
+            style="background:radial-gradient(circle, #C4415C, transparent 65%)"></div>
+
+        <div class="max-w-7xl mx-auto px-5 sm:px-8 relative">
+            <div class="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+
+                <!-- Image cluster -->
+                <div class="relative">
+                    <div
+                        class="mask-reveal rounded-[28px] overflow-hidden shadow-[0_50px_100px_-45px_rgba(75,18,38,.65)]">
+                        <img src="https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=1100&q=80"
+                            alt="A couple sharing a joyful moment together"
+                            class="w-full h-[420px] sm:h-[560px] object-cover">
+                    </div>
+
+                    <div
+                        class="absolute -bottom-10 -right-2 sm:right-6 w-40 sm:w-56 mask-reveal rounded-[18px] overflow-hidden border-[6px] border-cream shadow-2xl float-slow">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=700&q=80"
+                            alt="Romantic celebration table setting" class="w-full h-40 sm:h-56 object-cover">
+                    </div>
+
+                    <div
+                        class="absolute -top-6 -left-4 sm:-left-8 bg-wine text-cream px-6 py-5 rounded-2xl shadow-2xl float-slower">
+                        <div class="text-gold text-[10px] uppercase tracking-[0.3em]">Since day one</div>
+                        <div class="font-display text-3xl mt-1 leading-none">Still choosing you</div>
+                    </div>
+                </div>
+
+                <!-- Copy -->
+                <div>
+                    <div class="reveal flex items-center gap-4">
+                        <span class="h-[1px] w-10 bg-gold"></span>
+                        <span class="text-rose text-[11px] uppercase tracking-[0.36em] font-semibold">Our Story</span>
+                    </div>
+
+                    <h2
+                        class="reveal reveal-d1 font-display text-wine text-[clamp(2.35rem,5.6vw,4.25rem)] leading-[1.04] tracking-[-0.015em] mt-6">
+                        You walked in, and suddenly
+                        <span class="italic text-rose">everything</span> made sense.
+                    </h2>
+
+                    <p class="reveal reveal-d2 text-wine/72 text-lg leading-[1.85] mt-7 font-light">
+                        I don't need grand gestures to know how lucky I am. I see it in the way you look at me
+                        when you think I'm not watching, in the way you remember the tiny things, in the way you
+                        make even a quiet evening feel like a celebration.
+                    </p>
+
+                    <p class="reveal reveal-d3 text-wine/72 text-lg leading-[1.85] mt-5 font-light">
+                        You are my calm and my adventure, my best friend and my greatest crush — my handsome bava,
+                        the one my heart picked and keeps picking, over and over again.
+                    </p>
+
+                    <!-- mini stats -->
+                    <div class="reveal reveal-d4 grid grid-cols-3 gap-4 sm:gap-6 mt-10">
+                        <div class="mag bg-white/70 border border-wine/8 rounded-2xl px-5 py-6 text-center">
+                            <div class="font-display text-4xl text-rose stat-num" data-count="12" data-suffix="+">0
+                            </div>
+                            <div class="text-wine/55 text-[10px] uppercase tracking-[0.22em] mt-2">Months of magic</div>
+                        </div>
+                        <div class="mag bg-white/70 border border-wine/8 rounded-2xl px-5 py-6 text-center">
+                            <div class="font-display text-4xl text-rose stat-num" data-count="8760" data-suffix="h">0
+                            </div>
+                            <div class="text-wine/55 text-[10px] uppercase tracking-[0.22em] mt-2">Hours of laughter
+                            </div>
+                        </div>
+                        <div class="mag bg-white/70 border border-wine/8 rounded-2xl px-5 py-6 text-center">
+                            <div class="font-display text-4xl text-rose stat-num" data-count="1" data-suffix="">0</div>
+                            <div class="text-wine/55 text-[10px] uppercase tracking-[0.22em] mt-2">Perfect man</div>
+                        </div>
+                    </div>
+
+                    <a href="#moments"
+                        class="reveal reveal-d5 inline-flex items-center gap-3 mt-10 text-wine font-medium group">
+                        <span
+                            class="w-12 h-12 rounded-full border border-wine/18 grid place-items-center group-hover:bg-rose group-hover:text-white group-hover:border-rose transition-all duration-500">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                            </svg>
+                        </span>
+                        <span class="text-[12px] uppercase tracking-[0.24em]">See our moments</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TIMELINE ================= -->
+    <section class="relative py-24 md:py-32 bg-wine text-cream overflow-hidden grain">
+        <div class="absolute inset-0 opacity-[.18]">
+            <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1800&q=80"
+                alt="Soft flowers background" class="w-full h-full object-cover">
+            <div class="absolute inset-0"
+                style="background:linear-gradient(180deg,#2A0B14 0%, rgba(42,11,20,.7) 40%, #2A0B14 100%)"></div>
+        </div>
+
+        <div class="relative max-w-6xl mx-auto px-5 sm:px-8">
+            <div class="text-center max-w-2xl mx-auto">
+                <div class="reveal flex items-center justify-center gap-4">
+                    <span class="h-[1px] w-10 bg-gold/70"></span>
+                    <span class="text-gold text-[11px] uppercase tracking-[0.36em] font-semibold">Chapters of Us</span>
+                    <span class="h-[1px] w-10 bg-gold/70"></span>
+                </div>
+                <h2 class="reveal reveal-d1 font-display text-[clamp(2.35rem,5.6vw,4.25rem)] leading-[1.06] mt-6">
+                    The moments that made us <span class="italic text-blush">forever</span>
+                </h2>
+                <p class="reveal reveal-d2 text-cream/70 text-lg leading-relaxed mt-6 font-light">
+                    A little timeline of the memories I replay when I miss your smile.
+                </p>
+            </div>
+
+            <div class="relative mt-20">
+                <!-- animated path -->
+                <svg class="absolute left-1/2 -translate-x-1/2 top-0 h-full w-[3px] hidden md:block"
+                    viewBox="0 0 3 1000" preserveAspectRatio="none" aria-hidden="true">
+                    <line x1="1.5" y1="0" x2="1.5" y2="1000" stroke="rgba(200,155,74,.22)" stroke-width="3" />
+                    <line id="tlLine" class="tl-path" x1="1.5" y1="0" x2="1.5" y2="1000" stroke="#C89B4A"
+                        stroke-width="3" pathLength="1" />
+                </svg>
+
+                <div class="space-y-12 md:space-y-20">
+                    <!-- item -->
+                    <div class="md:grid md:grid-cols-2 md:gap-14 items-center">
+                        <div class="reveal md:text-right">
+                            <div class="text-gold text-[11px] uppercase tracking-[0.32em] font-semibold">Chapter 01
+                            </div>
+                            <h3 class="font-display text-3xl sm:text-4xl mt-3 leading-tight">The day our eyes met</h3>
+                            <p class="text-cream/68 leading-[1.9] mt-4 font-light">
+                                I still remember the little details — your laugh, your eyes, the way time seemed to
+                                pause. Something in me quietly whispered: "it's him."
+                            </p>
+                        </div>
+                        <div class="reveal reveal-d2 mt-6 md:mt-0">
+                            <div class="mask-reveal rounded-[20px] overflow-hidden shadow-2xl">
+                                <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80"
+                                    alt="Couple enjoying a moment together" class="w-full h-[280px] object-cover">
+                            </div>
+                        </div>
+                        <div
+                            class="hidden md:block absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gold tl-dot">
+                        </div>
+                    </div>
+
+                    <!-- item -->
+                    <div class="md:grid md:grid-cols-2 md:gap-14 items-center">
+                        <div class="reveal md:order-2">
+                            <div class="text-gold text-[11px] uppercase tracking-[0.32em] font-semibold">Chapter 02
+                            </div>
+                            <h3 class="font-display text-3xl sm:text-4xl mt-3 leading-tight">Our first "I love you"</h3>
+                            <p class="text-cream/68 leading-[1.9] mt-4 font-light">
+                                Three words that changed the shape of my whole world. From that moment, every ordinary
+                                day became a page of a love story I never want to end.
+                            </p>
+                        </div>
+                        <div class="reveal reveal-d2 mt-6 md:mt-0 md:order-1">
+                            <div class="mask-reveal rounded-[20px] overflow-hidden shadow-2xl">
+                                <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=80"
+                                    alt="Couple holding hands affectionately" class="w-full h-[280px] object-cover">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- item -->
+                    <div class="md:grid md:grid-cols-2 md:gap-14 items-center">
+                        <div class="reveal md:text-right">
+                            <div class="text-gold text-[11px] uppercase tracking-[0.32em] font-semibold">Chapter 03
+                            </div>
+                            <h3 class="font-display text-3xl sm:text-4xl mt-3 leading-tight">Adventures &amp; tiny
+                                rituals</h3>
+                            <p class="text-cream/68 leading-[1.9] mt-4 font-light">
+                                Late-night drives, silly jokes, shared desserts, and the goodnight kiss that fixes
+                                everything. You turned the small things into my favourite memories.
+                            </p>
+                        </div>
+                        <div class="reveal reveal-d2 mt-6 md:mt-0">
+                            <div class="mask-reveal rounded-[20px] overflow-hidden shadow-2xl">
+                                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80"
+                                    alt="Celebration dinner setup with candles" class="w-full h-[280px] object-cover">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- item -->
+                    <div class="md:grid md:grid-cols-2 md:gap-14 items-center">
+                        <div class="reveal md:order-2">
+                            <div class="text-gold text-[11px] uppercase tracking-[0.32em] font-semibold">Chapter 04
+                            </div>
+                            <h3 class="font-display text-3xl sm:text-4xl mt-3 leading-tight">Today &amp; every tomorrow
+                            </h3>
+                            <p class="text-cream/68 leading-[1.9] mt-4 font-light">
+                                Happy anniversary, my love. Thank you for being my safe place, my biggest supporter and
+                                the most handsome man in every room. Here's to forever — with kisses.
+                            </p>
+                        </div>
+                        <div class="reveal reveal-d2 mt-6 md:mt-0 md:order-1">
+                            <div class="mask-reveal rounded-[20px] overflow-hidden shadow-2xl">
+                                <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=900&q=80"
+                                    alt="Couple celebrating their love" class="w-full h-[280px] object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= GALLERY ================= -->
+    <section id="moments" class="py-24 md:py-32 bg-cream relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+                <div class="max-w-2xl">
+                    <div class="reveal flex items-center gap-4">
+                        <span class="h-[1px] w-10 bg-gold"></span>
+                        <span class="text-rose text-[11px] uppercase tracking-[0.36em] font-semibold">Gallery</span>
+                    </div>
+                    <h2
+                        class="reveal reveal-d1 font-display text-wine text-[clamp(2.35rem,5.6vw,4.25rem)] leading-[1.05] mt-6">
+                        Frames filled with <span class="italic text-rose">you</span>
+                    </h2>
+                </div>
+                <p class="reveal reveal-d2 text-wine/65 text-lg leading-[1.85] font-light max-w-md">
+                    Every photo is a memory I hold close — a reminder of how beautifully we fit together.
+                    Tap any moment to view it.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-14">
+                <button
+                    class="g-item reveal group relative rounded-[20px] overflow-hidden h-[260px] sm:h-[340px] col-span-2 lg:col-span-2"
+                    data-full="https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=1600&q=80">
+                    <img src="https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=1100&q=80"
+                        alt="Couple laughing together" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wine/70 via-wine/5 to-transparent"></div>
+                    <div class="g-cap absolute bottom-6 left-6 text-left">
+                        <div class="text-white/70 text-[10px] uppercase tracking-[0.28em]">Golden hour</div>
+                        <div class="text-white font-display text-2xl mt-1">Where time stands still</div>
+                    </div>
+                </button>
+
+                <button
+                    class="g-item reveal reveal-d1 group relative rounded-[20px] overflow-hidden h-[260px] sm:h-[340px]"
+                    data-full="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=1600&q=80">
+                    <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=900&q=80"
+                        alt="Bouquet of red roses" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wine/70 via-wine/5 to-transparent"></div>
+                    <div class="g-cap absolute bottom-6 left-6 text-left">
+                        <div class="text-white/70 text-[10px] uppercase tracking-[0.28em]">For you</div>
+                        <div class="text-white font-display text-2xl mt-1">A thousand roses</div>
+                    </div>
+                </button>
+
+                <button
+                    class="g-item reveal reveal-d2 group relative rounded-[20px] overflow-hidden h-[260px] sm:h-[340px]"
+                    data-full="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1600&q=80">
+                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=80"
+                        alt="Hands held together" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wine/70 via-wine/5 to-transparent"></div>
+                    <div class="g-cap absolute bottom-6 left-6 text-left">
+                        <div class="text-white/70 text-[10px] uppercase tracking-[0.28em]">Always</div>
+                        <div class="text-white font-display text-2xl mt-1">Hand in hand</div>
+                    </div>
+                </button>
+
+                <button
+                    class="g-item reveal reveal-d1 group relative rounded-[20px] overflow-hidden h-[260px] sm:h-[340px]"
+                    data-full="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80">
+                    <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=900&q=80"
+                        alt="Romantic couple silhouette" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wine/70 via-wine/5 to-transparent"></div>
+                    <div class="g-cap absolute bottom-6 left-6 text-left">
+                        <div class="text-white/70 text-[10px] uppercase tracking-[0.28em]">Forever</div>
+                        <div class="text-white font-display text-2xl mt-1">Just us two</div>
+                    </div>
+                </button>
+
+                <button
+                    class="g-item reveal reveal-d2 group relative rounded-[20px] overflow-hidden h-[260px] sm:h-[340px] col-span-2 lg:col-span-2"
+                    data-full="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1100&q=80"
+                        alt="Elegant celebration table" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wine/70 via-wine/5 to-transparent"></div>
+                    <div class="g-cap absolute bottom-6 left-6 text-left">
+                        <div class="text-white/70 text-[10px] uppercase tracking-[0.28em]">Celebration</div>
+                        <div class="text-white font-display text-2xl mt-1">To another year of us</div>
+                    </div>
+                </button>
+
+                <button
+                    class="g-item reveal reveal-d3 group relative rounded-[20px] overflow-hidden h-[260px] sm:h-[340px]"
+                    data-full="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1600&q=80">
+                    <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=80"
+                        alt="Field of soft flowers" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wine/70 via-wine/5 to-transparent"></div>
+                    <div class="g-cap absolute bottom-6 left-6 text-left">
+                        <div class="text-white/70 text-[10px] uppercase tracking-[0.28em]">Softly</div>
+                        <div class="text-white font-display text-2xl mt-1">Love in bloom</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= REASONS ================= -->
+    <section id="reasons" class="py-24 md:py-32 relative overflow-hidden"
+        style="background:linear-gradient(180deg,#FFF7F2 0%,#F7E4DC 55%,#FFF7F2 100%)">
+        <div class="absolute inset-0 pointer-events-none opacity-[.09]">
+            <div class="absolute left-[8%] top-[12%] w-72 h-72 rounded-full bg-rose blur-3xl"></div>
+            <div class="absolute right-[6%] bottom-[10%] w-96 h-96 rounded-full bg-gold blur-3xl"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-5 sm:px-8 relative">
+            <div class="text-center max-w-3xl mx-auto">
+                <div class="reveal flex items-center justify-center gap-4">
+                    <span class="h-[1px] w-10 bg-gold"></span>
+                    <span class="text-rose text-[11px] uppercase tracking-[0.36em] font-semibold">Reasons</span>
+                    <span class="h-[1px] w-10 bg-gold"></span>
+                </div>
+                <h2
+                    class="reveal reveal-d1 font-display text-wine text-[clamp(2.35rem,5.8vw,4.5rem)] leading-[1.03] mt-6">
+                    Why I fall for you <span class="italic text-rose">again &amp; again</span>
+                </h2>
+                <p class="reveal reveal-d2 text-wine/68 text-lg leading-[1.9] mt-6 font-light">
+                    A short list of the endless reasons my heart belongs to you — my handsome, kind, wonderful bava.
+                </p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-16">
+                <!-- card -->
+                <div
+                    class="mag reveal group bg-white/80 backdrop-blur-sm border border-wine/8 rounded-[26px] p-8 sm:p-10 hover:border-rose/30">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-rose/12 text-rose grid place-items-center group-hover:bg-rose group-hover:text-white transition-colors duration-500">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M20.8 5.6a5.4 5.4 0 0 0-7.7 0L12 6.7l-1.1-1.1a5.4 5.4 0 1 0-7.7 7.7l8.8 8.8 8.8-8.8a5.4 5.4 0 0 0 0-7.7z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl text-wine mt-7">Your heart</h3>
+                    <p class="text-wine/65 leading-[1.85] mt-3 font-light">
+                        The way you care — quietly, consistently, without ever asking for anything back — is the
+                        most beautiful thing about you.
+                    </p>
+                </div>
+
+                <div
+                    class="mag reveal reveal-d1 group bg-white/80 backdrop-blur-sm border border-wine/8 rounded-[26px] p-8 sm:p-10 hover:border-rose/30">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-rose/12 text-rose grid place-items-center group-hover:bg-rose group-hover:text-white transition-colors duration-500">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" />
+                            <circle cx="12" cy="12" r="3.4" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl text-wine mt-7">Your smile</h3>
+                    <p class="text-wine/65 leading-[1.85] mt-3 font-light">
+                        One look from you and my whole day lights up. Honestly, that smile should come with a
+                        warning label.
+                    </p>
+                </div>
+
+                <div
+                    class="mag reveal reveal-d2 group bg-white/80 backdrop-blur-sm border border-wine/8 rounded-[26px] p-8 sm:p-10 hover:border-rose/30">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-rose/12 text-rose grid place-items-center group-hover:bg-rose group-hover:text-white transition-colors duration-500">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M12 22s8-4.4 8-10.6A5.4 5.4 0 0 0 12 6.5 5.4 5.4 0 0 0 4 11.4C4 17.6 12 22 12 22z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl text-wine mt-7">Your strength</h3>
+                    <p class="text-wine/65 leading-[1.85] mt-3 font-light">
+                        You handle everything with so much grace. Next to you, I feel protected, inspired and
+                        endlessly proud.
+                    </p>
+                </div>
+
+                <div
+                    class="mag reveal group bg-white/80 backdrop-blur-sm border border-wine/8 rounded-[26px] p-8 sm:p-10 hover:border-rose/30">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-rose/12 text-rose grid place-items-center group-hover:bg-rose group-hover:text-white transition-colors duration-500">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 10h.01M16 10h.01M9 15c1 1 2 1.5 3 1.5s2-.5 3-1.5" />
+                            <circle cx="12" cy="12" r="9" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl text-wine mt-7">Your laughter</h3>
+                    <p class="text-wine/65 leading-[1.85] mt-3 font-light">
+                        My favourite sound in the world. You make the hard days lighter and the good days
+                        absolutely unforgettable.
+                    </p>
+                </div>
+
+                <div
+                    class="mag reveal reveal-d1 group bg-white/80 backdrop-blur-sm border border-wine/8 rounded-[26px] p-8 sm:p-10 hover:border-rose/30">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-rose/12 text-rose grid place-items-center group-hover:bg-rose group-hover:text-white transition-colors duration-500">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M12 21C7 17.6 3 14.3 3 10.2A4.2 4.2 0 0 1 12 8a4.2 4.2 0 0 1 9 2.2c0 4.1-4 7.4-9 10.8z" />
+                            <path d="M9.5 12.2 11 13.7l3.6-3.6" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl text-wine mt-7">Your love</h3>
+                    <p class="text-wine/65 leading-[1.85] mt-3 font-light">
+                        Steady, warm and real. In your love I found my home — and I never want to leave.
+                    </p>
+                </div>
+
+                <div
+                    class="mag reveal reveal-d2 group bg-wine text-cream rounded-[26px] p-8 sm:p-10 relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-gold/20 blur-2xl"></div>
+                    <div class="w-14 h-14 rounded-2xl bg-gold/22 text-gold grid place-items-center">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2l2.5 6.2L21 9.2l-4.8 4.3 1.3 6.5L12 16.8 6.5 20l1.3-6.5L3 9.2l6.5-1z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl mt-7">And everything else</h3>
+                    <p class="text-cream/72 leading-[1.85] mt-3 font-light">
+                        A thousand tiny things you do without noticing. Every single one of them makes me love you
+                        more than yesterday.
+                    </p>
+                    <div class="mt-7 pt-6 border-t border-white/12">
+                        <div class="font-display text-4xl text-gold stat-num" data-count="100" data-suffix="%">0</div>
+                        <div class="text-cream/55 text-[10px] uppercase tracking-[0.26em] mt-1">Yours, always</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= LETTER ================= -->
+    <section id="letter" class="relative py-24 md:py-32 overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1800&q=80"
+                alt="Soft floral background" class="w-full h-full object-cover opacity-[.22]">
+            <div class="absolute inset-0"
+                style="background:linear-gradient(180deg, rgba(255,247,242,.9), rgba(247,222,213,.86))"></div>
+        </div>
+
+        <div class="relative max-w-4xl mx-auto px-5 sm:px-8">
+            <div class="text-center">
+                <div class="reveal flex items-center justify-center gap-4">
+                    <span class="h-[1px] w-10 bg-gold"></span>
+                    <span class="text-rose text-[11px] uppercase tracking-[0.36em] font-semibold">A Letter For
+                        You</span>
+                    <span class="h-[1px] w-10 bg-gold"></span>
+                </div>
+                <h2
+                    class="reveal reveal-d1 font-display text-wine text-[clamp(2.35rem,5.8vw,4.4rem)] leading-[1.05] mt-6">
+                    From my heart, <span class="italic text-rose">to yours</span>
+                </h2>
+            </div>
+
+            <div class="letter reveal reveal-d2 rounded-[28px] mt-12 p-8 sm:p-12 md:p-16 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-40 h-40 rounded-full bg-rose/8 blur-2xl"></div>
+
+                <div class="flex items-center justify-between gap-4 border-b border-wine/10 pb-7">
+                    <div>
+                        <div class="text-rose text-[10px] uppercase tracking-[0.32em] font-semibold">To</div>
+                        <div class="font-display text-2xl sm:text-3xl text-wine mt-1">My handsome Bava</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-rose text-[10px] uppercase tracking-[0.32em] font-semibold">With</div>
+                        <div class="font-display text-2xl sm:text-3xl text-wine mt-1">All my love</div>
+                    </div>
+                </div>
+
+                <div class="mt-9 space-y-6 text-wine/78 text-[17px] sm:text-[18px] leading-[2] font-light">
+                    <p class="reveal">
+                        Happy anniversary, my love. If I could give you one thing in life, I would give you the
+                        ability to see yourself through my eyes — only then would you realize how special,
+                        how handsome, and how deeply loved you truly are.
+                    </p>
+                    <p class="reveal reveal-d1">
+                        Thank you for your patience on my difficult days, for holding my hand through every storm,
+                        for making me laugh until I can't breathe, and for loving me in the quiet, ordinary moments
+                        that mean the most.
+                    </p>
+                    <p class="reveal reveal-d2">
+                        I promise to choose you — today, tomorrow, and in every lifetime after this one. I promise
+                        to kiss you good morning and good night, to dream bigger with you, and to never stop
+                        falling for that smile of yours.
+                    </p>
+                    <p class="reveal reveal-d3 italic text-wine text-[19px] sm:text-[21px] leading-[1.9]">
+                        You are my favourite hello, my hardest goodbye, and my sweetest forever.
+                        Here's to us — and to a thousand more anniversaries.
+                    </p>
+                </div>
+
+                <div class="mt-10 flex items-end justify-between gap-6 flex-wrap">
+                    <div>
+                        <div class="text-wine/45 text-[10px] uppercase tracking-[0.32em] font-semibold">Forever yours
+                        </div>
+                        <svg class="sig mt-2" width="190" height="66" viewBox="0 0 190 66" fill="none"
+                            aria-label="signature">
+                            <path
+                                d="M8 44c12-22 20-32 25-30s2 20-3 30-9 6-7-1 10-16 20-16 8 12 3 16-6 2-3-2 12-14 21-14 8 10 3 14-5 3-2 0 10-11 18-11 9 9 5 13-4 4-1 1 11-8 19-8 10 6 8 10"
+                                stroke="#8E2540" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="flex items-center gap-3 text-rose">
+                        <span class="w-11 h-11 rounded-full bg-rose/12 grid place-items-center heart-pulse">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 21s-7.2-4.6-9.4-8.3C.7 9.5 2.2 5.4 6 4.6c2.2-.5 4.2.4 5.3 2 .4.6.6.9.7.9s.3-.3.7-.9c1.1-1.6 3.1-2.5 5.3-2 3.8.8 5.3 4.9 3.4 8.1C19.2 16.4 12 21 12 21z" />
+                            </svg>
+                        </span>
+                        <span class="text-[11px] uppercase tracking-[0.28em] text-wine/55">Sealed with a kiss</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= KISSES INTERACTIVE ================= -->
+    <section id="kisses" class="relative py-24 md:py-32 overflow-hidden grain"
+        style="background:linear-gradient(150deg,#3B0C1B 0%, #6A1730 48%, #A62D4C 100%)">
+        <div class="absolute inset-0 opacity-25">
+            <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=1800&q=80"
+                alt="Roses texture" class="w-full h-full object-cover mix-blend-soft-light">
+        </div>
+        <div class="absolute inset-0"
+            style="background:radial-gradient(65% 55% at 50% 30%, rgba(255,190,170,.16), transparent 70%)"></div>
+
+        <div class="relative max-w-4xl mx-auto px-5 sm:px-8 text-center">
+            <div class="reveal flex items-center justify-center gap-4">
+                <span class="h-[1px] w-10 bg-gold/70"></span>
+                <span class="text-gold text-[11px] uppercase tracking-[0.36em] font-semibold">One more thing</span>
+                <span class="h-[1px] w-10 bg-gold/70"></span>
+            </div>
+
+            <h2 class="reveal reveal-d1 font-display text-white text-[clamp(2.5rem,7vw,5.25rem)] leading-[1.02] mt-6">
+                Happy Anniversary,<br>
+                <span class="italic text-blush">my handsome bava</span>
+            </h2>
+
+            <p
+                class="reveal reveal-d2 text-white/78 text-lg sm:text-xl leading-[1.9] mt-7 max-w-2xl mx-auto font-light">
+                I'm sending you all the kisses in the world — long, warm, and endless.
+                Tap the heart below and count them with me.
+            </p>
+
+            <div class="reveal reveal-d3 mt-12 flex flex-col items-center gap-7">
+                <button id="kissBtn"
+                    class="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full grid place-items-center text-white shadow-[0_35px_80px_-25px_rgba(255,120,140,.65)] transition-transform duration-300 hover:scale-[1.06] active:scale-95"
+                    style="background:radial-gradient(circle at 32% 28%, #F4A6AE, #D9465F 52%, #9B2038 100%)">
+                    <span class="absolute inset-0 rounded-full border border-white/30"></span>
+                    <span
+                        class="absolute inset-[-14px] rounded-full border border-white/18 animate-ping opacity-60"></span>
+                    <svg class="relative heart-pulse" width="52" height="52" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 21s-7.2-4.6-9.4-8.3C.7 9.5 2.2 5.4 6 4.6c2.2-.5 4.2.4 5.3 2 .4.6.6.9.7.9s.3-.3.7-.9c1.1-1.6 3.1-2.5 5.3-2 3.8.8 5.3 4.9 3.4 8.1C19.2 16.4 12 21 12 21z" />
+                    </svg>
+                </button>
+
+                <div
+                    class="flex items-center gap-5 bg-white/10 border border-white/16 rounded-full px-7 py-4 backdrop-blur-sm">
+                    <div class="text-left">
+                        <div class="text-white/55 text-[9px] uppercase tracking-[0.3em]">Kisses sent</div>
+                        <div class="text-white font-display text-3xl leading-none mt-1 stat-num" id="kissCount">0</div>
+                    </div>
+                    <div class="w-px h-9 bg-white/18"></div>
+                    <div class="text-left">
+                        <div class="text-white/55 text-[9px] uppercase tracking-[0.3em]">Love level</div>
+                        <div class="text-gold font-display text-3xl leading-none mt-1">∞</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- floating static hearts decor -->
+            <div class="absolute left-[6%] top-[18%] text-white/12 float-slow hidden sm:block">
+                <svg width="86" height="86" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 21s-7.2-4.6-9.4-8.3C.7 9.5 2.2 5.4 6 4.6c2.2-.5 4.2.4 5.3 2 .4.6.6.9.7.9s.3-.3.7-.9c1.1-1.6 3.1-2.5 5.3-2 3.8.8 5.3 4.9 3.4 8.1C19.2 16.4 12 21 12 21z" />
+                </svg>
+            </div>
+            <div class="absolute right-[8%] bottom-[14%] text-white/10 float-slower hidden sm:block">
+                <svg width="110" height="110" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 21s-7.2-4.6-9.4-8.3C.7 9.5 2.2 5.4 6 4.6c2.2-.5 4.2.4 5.3 2 .4.6.6.9.7.9s.3-.3.7-.9c1.1-1.6 3.1-2.5 5.3-2 3.8.8 5.3 4.9 3.4 8.1C19.2 16.4 12 21 12 21z" />
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= CTA / FOOTER ================= -->
+    <footer class="relative bg-cream pt-20 pb-10 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8">
+
+            <div class="relative rounded-[30px] overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=1800&q=80"
+                    alt="Couple celebrating together" class="w-full h-[380px] sm:h-[460px] object-cover">
+                <div class="absolute inset-0"
+                    style="background:linear-gradient(100deg, rgba(42,11,20,.88) 0%, rgba(75,18,38,.62) 45%, rgba(75,18,38,.15) 100%)">
+                </div>
+
+                <div class="absolute inset-0 flex items-center">
+                    <div class="px-8 sm:px-12 lg:px-16 max-w-2xl">
+                        <div class="reveal text-gold text-[11px] uppercase tracking-[0.36em] font-semibold">Until the
+                            next chapter</div>
+                        <h2
+                            class="reveal reveal-d1 font-display text-white text-[clamp(2.15rem,5vw,3.75rem)] leading-[1.06] mt-5">
+                            I love you more than words,<br>
+                            <span class="italic text-blush">more than yesterday.</span>
+                        </h2>
+                        <div class="reveal reveal-d2 mt-8 flex flex-wrap gap-4">
+                            <a href="#top"
+                                class="btn-primary px-8 py-4 rounded-full text-xs tracking-[0.22em] font-semibold uppercase">Back
+                                to the top</a>
+                            <a href="#kisses"
+                                class="btn-ghost px-8 py-4 rounded-full text-xs tracking-[0.22em] font-semibold uppercase">Send
+                                more kisses</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-orn my-14"></div>
+
+            <div class="grid gap-10 md:grid-cols-3 items-start">
+                <div>
+                    <a href="#top" class="flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-full bg-rose text-white grid place-items-center">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 21s-7.2-4.6-9.4-8.3C.7 9.5 2.2 5.4 6 4.6c2.2-.5 4.2.4 5.3 2 .4.6.6.9.7.9s.3-.3.7-.9c1.1-1.6 3.1-2.5 5.3-2 3.8.8 5.3 4.9 3.4 8.1C19.2 16.4 12 21 12 21z" />
+                            </svg>
+                        </span>
+                        <span class="font-display text-2xl text-wine">Bava &amp; Me</span>
+                    </a>
+                    <p class="text-wine/60 leading-[1.9] mt-5 font-light max-w-xs">
+                        A little corner of the internet made with love, just for you — today and every day after.
+                    </p>
+                </div>
+
+                <div class="md:justify-self-center">
+                    <div class="text-wine text-[11px] uppercase tracking-[0.3em] font-semibold">Explore</div>
+                    <ul class="mt-5 space-y-3">
+                        <li><a href="#story" class="nav-link text-wine/65 hover:text-rose transition-colors">Our
+                                Story</a></li>
+                        <li><a href="#moments"
+                                class="nav-link text-wine/65 hover:text-rose transition-colors">Moments</a></li>
+                        <li><a href="#reasons" class="nav-link text-wine/65 hover:text-rose transition-colors">Why
+                                You</a></li>
+                        <li><a href="#letter" class="nav-link text-wine/65 hover:text-rose transition-colors">My
+                                Letter</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:justify-self-end">
+                    <div class="text-wine text-[11px] uppercase tracking-[0.3em] font-semibold">Our promise</div>
+                    <p class="text-wine/60 leading-[1.9] mt-5 font-light max-w-xs">
+                        More sunsets, more laughter, more late-night talks, and an endless supply of kisses.
+                    </p>
+                    <div class="flex items-center gap-3 mt-6">
+                        <span
+                            class="w-10 h-10 rounded-full border border-wine/15 grid place-items-center text-rose heart-pulse">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 21s-7.2-4.6-9.4-8.3C.7 9.5 2.2 5.4 6 4.6c2.2-.5 4.2.4 5.3 2 .4.6.6.9.7.9s.3-.3.7-.9c1.1-1.6 3.1-2.5 5.3-2 3.8.8 5.3 4.9 3.4 8.1C19.2 16.4 12 21 12 21z" />
+                            </svg>
+                        </span>
+                        <span class="text-wine/55 text-[11px] uppercase tracking-[0.24em]">Always &amp; forever</span>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="mt-14 pt-8 border-t border-wine/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-wine/45 text-sm">© <span id="year">2024</span> — Made with love for my handsome bava.</p>
+                <p class="text-wine/45 text-sm flex items-center gap-2">
+                    Crafted with
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="#C4415C">
+                        <path
+                            d="M12 21s-7.2-4.6-9.4-8.3C.7 9.5 2.2 5.4 6 4.6c2.2-.5 4.2.4 5.3 2 .4.6.6.9.7.9s.3-.3.7-.9c1.1-1.6 3.1-2.5 5.3-2 3.8.8 5.3 4.9 3.4 8.1C19.2 16.4 12 21 12 21z" />
+                    </svg>
+                    and a thousand kisses.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= LIGHTBOX ================= -->
+    <div id="lightbox"
+        class="fixed inset-0 z-[95] bg-wine/92 backdrop-blur-md flex items-center justify-center p-5 opacity-0 invisible">
+        <button id="lbClose" aria-label="Close"
+            class="absolute top-6 right-6 w-12 h-12 rounded-full border border-white/25 text-white grid place-items-center hover:bg-white/12 transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round">
+                <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+        </button>
+        <img id="lbImg" src="" alt="Enlarged memory"
+            class="max-w-[92vw] max-h-[82vh] object-contain rounded-2xl shadow-2xl scale-95 opacity-0">
+        <div id="lbCap" class="absolute bottom-8 text-white/70 text-[11px] uppercase tracking-[0.3em]"></div>
+    </div>
+
+    <script>
+            (function () {
+                'use strict';
+
+                const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+                /* ---------- Year ---------- */
+                const yearEl = document.getElementById('year');
+                if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+                /* ---------- Scroll progress + navbar ---------- */
+                const progress = document.getElementById('progress');
+                const navbar = document.getElementById('navbar');
+                let ticking = false;
+
+                function onScroll() {
+                    const st = window.pageYOffset || document.documentElement.scrollTop;
+                    const h = document.documentElement.scrollHeight - window.innerHeight;
+                    if (progress) progress.style.width = (h > 0 ? (st / h) * 100 : 0) + '%';
+                    if (navbar) navbar.classList.toggle('scrolled', st > 60);
+                    updateParallax(st);
+                    updateTimeline();
+                    ticking = false;
+                }
+
+                window.addEventListener('scroll', function () {
+                    if (!ticking) { ticking = true; window.requestAnimationFrame(onScroll); }
+                }, { passive: true });
+
+                /* ---------- Reveal on scroll ---------- */
+                const revealEls = document.querySelectorAll('.reveal, .mask-reveal, .sig');
+                if ('IntersectionObserver' in window) {
+                    const io = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (e) {
+                            if (e.isIntersecting) {
+                                e.target.classList.add('in');
+                                io.unobserve(e.target);
+                            }
+                        });
+                    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+                    revealEls.forEach(function (el) { io.observe(el); });
+                } else {
+                    revealEls.forEach(function (el) { el.classList.add('in'); });
+                }
+
+                /* ---------- Animated counters ---------- */
+                const counters = document.querySelectorAll('.stat-num');
+                function animateCounter(el) {
+                    const target = parseFloat(el.getAttribute('data-count') || '0');
+                    const suffix = el.getAttribute('data-suffix') || '';
+                    const duration = 1700;
+                    const start = performance.now();
+                    function frame(now) {
+                        const p = Math.min((now - start) / duration, 1);
+                        const eased = 1 - Math.pow(1 - p, 3);
+                        const val = Math.round(target * eased);
+                        el.textContent = val.toLocaleString() + suffix;
+                        if (p < 1) requestAnimationFrame(frame);
+                        else el.textContent = target.toLocaleString() + suffix;
+                    }
+                    requestAnimationFrame(frame);
+                }
+
+                if ('IntersectionObserver' in window) {
+                    const cio = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (e) {
+                            if (e.isIntersecting) {
+                                animateCounter(e.target);
+                                cio.unobserve(e.target);
+                            }
+                        });
+                    }, { threshold: 0.4 });
+                    counters.forEach(function (c) { cio.observe(c); });
+                } else {
+                    counters.forEach(animateCounter);
+                }
+
+                /* ---------- Parallax elements ---------- */
+                const parallaxEls = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+                const heroBg = document.getElementById('heroBg');
+
+                function updateParallax(st) {
+                    if (reduceMotion) return;
+                    if (heroBg && st < window.innerHeight * 1.2) {
+                        heroBg.style.transform = 'translate3d(0,' + (st * 0.16) + 'px,0) scale(1.06)';
+                    }
+                    parallaxEls.forEach(function (el) {
+                        const speed = parseFloat(el.getAttribute('data-parallax')) || 0.1;
+                        const rect = el.getBoundingClientRect();
+                        const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * -speed;
+                        el.style.transform = 'translate3d(0,' + offset.toFixed(2) + 'px,0)';
+                    });
+                }
+
+                /* ---------- Timeline path drawing (scroll-linked) ---------- */
+                const tlLine = document.getElementById('tlLine');
+                function updateTimeline() {
+                    if (!tlLine) return;
+                    const parent = tlLine.closest('svg');
+                    if (!parent) return;
+                    const rect = parent.getBoundingClientRect();
+                    const total = rect.height + window.innerHeight * 0.4;
+                    const passed = window.innerHeight * 0.75 - rect.top;
+                    const p = Math.max(0, Math.min(1, passed / total));
+                    tlLine.style.strokeDashoffset = (1 - p).toFixed(4);
+                }
+
+                /* ---------- Magnetic hover cards / buttons ---------- */
+                if (!reduceMotion && window.matchMedia('(hover:hover)').matches) {
+                    document.querySelectorAll('.mag').forEach(function (card) {
+                        card.addEventListener('mousemove', function (e) {
+                            const r = card.getBoundingClientRect();
+                            const x = e.clientX - r.left - r.width / 2;
+                            const y = e.clientY - r.top - r.height / 2;
+                            card.style.transform = 'translate3d(' + (x * 0.055).toFixed(2) + 'px,' + (y * 0.075).toFixed(2) + 'px,0) translateY(-6px)';
+                        });
+                        card.addEventListener('mouseleave', function () {
+                            card.style.transform = 'translate3d(0,0,0)';
+                        });
+                    });
+                }
+
+                /* ---------- Petal / sparkle canvas ---------- */
+                const canvas = document.getElementById('petals');
+                if (canvas && !reduceMotion) {
+                    const ctx = canvas.getContext('2d');
+                    let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+                    let petals = [];
+                    let rafId = null;
+                    let visible = true;
+
+                    function resize() {
+                        const rect = canvas.getBoundingClientRect();
+                        w = rect.width; h = rect.height;
+                        canvas.width = w * dpr;
+                        canvas.height = h * dpr;
+                        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                        buildPetals();
+                    }
+
+                    function buildPetals() {
+                        const count = Math.max(16, Math.min(46, Math.round(w / 26)));
+                        petals = [];
+                        for (let i = 0; i < count; i++) {
+                            petals.push({
+                                x: Math.random() * w,
+                                y: Math.random() * h,
+                                r: 5 + Math.random() * 12,
+                                vy: 0.16 + Math.random() * 0.5,
+                                vx: -0.28 + Math.random() * 0.56,
+                                rot: Math.random() * Math.PI * 2,
+                                vr: (-0.006 + Math.random() * 0.012),
+                                alpha: 0.14 + Math.random() * 0.36,
+                                hue: Math.random() > 0.62 ? 'rgba(255,214,170,' : 'rgba(255,183,190,'
+                            });
+                        }
+                    }
+
+                    function drawPetal(p) {
+                        ctx.save();
+                        ctx.translate(p.x, p.y);
+                        ctx.rotate(p.rot);
+                        ctx.fillStyle = p.hue + p.alpha + ')';
+                        ctx.beginPath();
+                        ctx.moveTo(0, -p.r);
+                        ctx.bezierCurveTo(p.r * 0.85, -p.r * 0.55, p.r * 0.85, p.r * 0.55, 0, p.r);
+                        ctx.bezierCurveTo(-p.r * 0.85, p.r * 0.55, -p.r * 0.85, -p.r * 0.55, 0, -p.r);
+                        ctx.fill();
+                        ctx.restore();
+                    }
+
+                    function tick() {
+                        ctx.clearRect(0, 0, w, h);
+                        for (let i = 0; i < petals.length; i++) {
+                            const p = petals[i];
+                            p.y += p.vy;
+                            p.x += p.vx + Math.sin(p.y * 0.004) * 0.32;
+                            p.rot += p.vr;
+                            if (p.y - p.r > h) { p.y = -p.r * 2; p.x = Math.random() * w; }
+                            if (p.x < -40) p.x = w + 20;
+                            if (p.x > w + 40) p.x = -20;
+                            drawPetal(p);
+                        }
+                        if (visible) rafId = requestAnimationFrame(tick);
+                    }
+
+                    resize();
+                    window.addEventListener('resize', function () {
+                        clearTimeout(canvas._rt);
+                        canvas._rt = setTimeout(resize, 180);
+                    });
+
+                    document.addEventListener('visibilitychange', function () {
+                        visible = !document.hidden;
+                        if (visible) { cancelAnimationFrame(rafId); rafId = requestAnimationFrame(tick); }
+                    });
+
+                    rafId = requestAnimationFrame(tick);
+                }
+
+                /* ---------- Mobile menu ---------- */
+                const menuBtn = document.getElementById('menuBtn');
+                const mobileMenu = document.getElementById('mobileMenu');
+
+                function closeMenu() {
+                    if (!mobileMenu) return;
+                    mobileMenu.classList.add('hidden-menu');
+                }
+                function openMenu() {
+                    if (!mobileMenu) return;
+                    mobileMenu.classList.remove('hidden-menu');
+                }
+
+                if (menuBtn && mobileMenu) {
+                    menuBtn.addEventListener('click', function () {
+                        if (mobileMenu.classList.contains('hidden-menu')) openMenu();
+                        else closeMenu();
+                    });
+                    mobileMenu.querySelectorAll('a').forEach(function (a) {
+                        a.addEventListener('click', closeMenu);
+                    });
+                    document.addEventListener('click', function (e) {
+                        if (!mobileMenu.classList.contains('hidden-menu') &&
+                            !mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+                            closeMenu();
+                        }
+                    });
+                }
+
+                /* ---------- Smooth anchor scroll (offset for fixed nav) ---------- */
+                document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+                    link.addEventListener('click', function (e) {
+                        const id = link.getAttribute('href');
+                        if (!id || id === '#' || id.length < 2) return;
+                        const target = document.querySelector(id);
+                        if (!target) return;
+                        e.preventDefault();
+                        const navH = navbar ? navbar.offsetHeight : 0;
+                        const top = target.getBoundingClientRect().top + window.pageYOffset - navH - 8;
+                        window.scrollTo({ top: Math.max(0, top), behavior: reduceMotion ? 'auto' : 'smooth' });
+                    });
+                });
+
+                /* ---------- Kiss interaction ---------- */
+                const kissBtn = document.getElementById('kissBtn');
+                const kissCount = document.getElementById('kissCount');
+                let count = 0;
+                const kissSymbols = ['xoxo', 'mwah', 'kiss', '♥', 'xox', 'muah'];
+
+                function spawnKiss(x, y) {
+                    const el = document.createElement('div');
+                    el.className = 'kiss-float';
+                    const isHeart = Math.random() > 0.45;
+                    el.innerHTML = isHeart
+                        ? '<svg width="34" height="34" viewBox="0 0 24 24" fill="rgba(255,190,198,.92)"><path d="M12 21s-7.2-4.6-9.4-8.3C.7 9.5 2.2 5.4 6 4.6c2.2-.5 4.2.4 5.3 2 .4.6.6.9.7.9s.3-.3.7-.9c1.1-1.6 3.1-2.5 5.3-2 3.8.8 5.3 4.9 3.4 8.1C19.2 16.4 12 21 12 21z"/></svg>'
+                        : '<span style="font-size:22px;font-weight:600;letter-spacing:.06em;color:rgba(255,215,220,.92)">' +
+                        kissSymbols[Math.floor(Math.random() * kissSymbols.length)] + '</span>';
+                    el.style.left = x + 'px';
+                    el.style.top = y + 'px';
+                    el.style.setProperty('--dx', (Math.random() * 160 - 80).toFixed(0) + 'px');
+                    el.style.setProperty('--rot', (Math.random() * 40 - 20).toFixed(0) + 'deg');
+                    document.body.appendChild(el);
+                    setTimeout(function () {
+                        if (el.parentNode) el.parentNode.removeChild(el);
+                    }, 2700);
+                }
+
+                function doKiss(e) {
+                    count++;
+                    if (kissCount) {
+                        kissCount.textContent = count.toLocaleString();
+                        kissCount.animate(
+                            [{ transform: 'scale(1)' }, { transform: 'scale(1.28)' }, { transform: 'scale(1)' }],
+                            { duration: 420, easing: 'cubic-bezier(.22,1,.36,1)' }
+                        );
+                    }
+
+                    const rect = kissBtn.getBoundingClientRect();
+                    const cx = (e && e.clientX) ? e.clientX : rect.left + rect.width / 2;
+                    const cy = (e && e.clientY) ? e.clientY : rect.top + rect.height / 2;
+
+                    const burst = reduceMotion ? 3 : 9;
+                    for (let i = 0; i < burst; i++) {
+                        setTimeout(function () {
+                            spawnKiss(
+                                cx + (Math.random() * 90 - 45),
+                                cy + (Math.random() * 50 - 25)
+                            );
+                        }, i * 65);
+                    }
+                }
+
+                if (kissBtn) {
+                    kissBtn.addEventListener('click', doKiss);
+                }
+
+                /* ---------- Lightbox ---------- */
+                const lightbox = document.getElementById('lightbox');
+                const lbImg = document.getElementById('lbImg');
+                const lbCap = document.getElementById('lbCap');
+                const lbClose = document.getElementById('lbClose');
+
+                function openLightbox(src, caption) {
+                    if (!lightbox || !lbImg) return;
+                    lbImg.src = src;
+                    lbImg.alt = caption || 'Anniversary memory';
+                    if (lbCap) lbCap.textContent = caption || '';
+                    lightbox.classList.remove('opacity-0', 'invisible');
+                    lightbox.classList.add('opacity-100', 'visible');
+                    requestAnimationFrame(function () {
+                        lbImg.classList.remove('scale-95', 'opacity-0');
+                    });
+                    document.body.style.overflow = 'hidden';
+                }
+
+                function closeLightbox() {
+                    if (!lightbox || !lbImg) return;
+                    lbImg.classList.add('scale-95', 'opacity-0');
+                    lightbox.classList.add('opacity-0', 'invisible');
+                    lightbox.classList.remove('opacity-100', 'visible');
+                    document.body.style.overflow = '';
+                    setTimeout(function () {
+                        if (lbImg && lightbox.classList.contains('invisible')) lbImg.src = '';
+                    }, 420);
+                }
+
+                document.querySelectorAll('.g-item').forEach(function (item) {
+                    item.addEventListener('click', function () {
+                        const full = item.getAttribute('data-full');
+                        const img = item.querySelector('img');
+                        const capEl = item.querySelector('.g-cap > div:last-child');
+                        if (!full || !img) return;
+                        openLightbox(full, capEl ? capEl.textContent.trim() : img.alt);
+                    });
+                });
+
+                if (lbClose) lbClose.addEventListener('click', closeLightbox);
+                if (lightbox) {
+                    lightbox.addEventListener('click', function (e) {
+                        if (e.target === lightbox) closeLightbox();
+                    });
+                }
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') { closeLightbox(); closeMenu(); }
+                });
+
+                /* ---------- Image fallbacks ---------- */
+                document.querySelectorAll('img').forEach(function (img) {
+                    img.addEventListener('error', function () {
+                        img.style.background = 'linear-gradient(135deg,#7B1E33,#C4415C)';
+                        img.style.objectFit = 'cover';
+                        img.style.opacity = '1';
+                        img.removeAttribute('src');
+                    });
+                });
+
+                /* ---------- Init ---------- */
+                onScroll();
+                window.addEventListener('load', function () {
+                    onScroll();
+                    // ensure hero elements settle
+                    document.querySelectorAll('.line-inner, .fade-up').forEach(function (el) {
+                        el.style.opacity = '1';
+                    });
+                });
+
+            })();
+    </script>
+</body>
+
+</html>

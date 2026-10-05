@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Anniversary My Handsome Bava ❤ | Forever Love</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wine: '#2B0A12',
+                        wine2: '#4A0E1F',
+                        roseDeep: '#9D0B3B',
+                        blush: '#FF4D6D',
+                        blushLight: '#FF8FA3',
+                        cream: '#FFF0F3',
+                        gold: '#FFD166',
+                        goldDeep: '#E8B44A',
+                        champagne: '#FFE5B4'
+                    },
+                    fontFamily: {
+                        script: ['"Great Vibes"', 'cursive'],
+                        dancing: ['"Dancing Script"', 'cursive'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #18040B;
+            color: #FFF0F3;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        ::selection {
+            background: #FF4D6D;
+            color: white;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #2B0A12;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(#FF4D6D, #FFD166);
+            border-radius: 20px;
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: radial-gradient(ellipse at center, #4A0E1F 0%, #18040B 70%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity .8s, visibility .8s;
+        }
+
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .heartbeat {
+            animation: heartbeat 1.2s infinite;
+            filter: drop-shadow(0 0 20px #FF4D6D);
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1)
+            }
+
+            25% {
+                transform: scale(1.2)
+            }
+
+            40% {
+                transform: scale(1)
+            }
+
+            60% {
+                transform: scale(1.18)
+            }
+        }
+
+        .loader-bar {
+            width: 220px;
+            height: 4px;
+            background: rgba(255, 255, 255, .15);
+            border-radius: 99px;
+            overflow: hidden;
+            margin-top: 24px;
+        }
+
+        .loader-bar span {
+            display: block;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #FF4D6D, #FFD166);
+            animation: load 2.2s forwards;
+            border-radius: 99px;
+        }
+
+        @keyframes load {
+            to {
+                width: 100%
+            }
+        }
+
+        /* Gradient text */
+        .gold-gradient {
+            background: linear-gradient(135deg, #FFF3B0 0%, #FFD166 25%, #E8B44A 50%, #FFF3B0 75%, #FFD166 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center
+            }
+        }
+
+        .rose-gradient {
+            background: linear-gradient(135deg, #FF8FA3, #FF4D6D, #C9184A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, .07);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, .14);
+        }
+
+        .glass-strong {
+            background: rgba(43, 10, 18, .72);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 209, 102, .22);
+        }
+
+        .hero-bg {
+            background: radial-gradient(ellipse at 20% 20%, rgba(255, 77, 109, .25), transparent 50%), radial-gradient(ellipse at 80% 30%, rgba(255, 209, 102, .18), transparent 50%), radial-gradient(ellipse at 50% 90%, rgba(157, 11, 59, .6), transparent 60%), linear-gradient(#18040B, #2B0A12);
+        }
+
+        .float-slow {
+            animation: floaty 6s ease-in-out infinite;
+        }
+
+        .float-slower {
+            animation: floaty 9s ease-in-out infinite;
+        }
+
+        @keyframes floaty {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0)
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(3deg)
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #FFD166;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #FFD166;
+            animation: twinkle 2s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: .2;
+                transform: scale(.6)
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.3)
+            }
+        }
+
+        .btn-love {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #FF4D6D, #C9184A);
+            box-shadow: 0 10px 30px rgba(255, 77, 109, .4), inset 0 1px 0 rgba(255, 255, 255, .3);
+            transition: .3s;
+        }
+
+        .btn-love:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 18px 45px rgba(255, 77, 109, .55);
+        }
+
+        .btn-love::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -80%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .4), transparent);
+            transform: skewX(-20deg);
+            animation: btnShine 3s infinite;
+        }
+
+        @keyframes btnShine {
+            0% {
+                left: -80%
+            }
+
+            60%,
+            100% {
+                left: 130%
+            }
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #FFD166, #E8B44A, #FF8FA3);
+            color: #2B0A12 !important;
+            box-shadow: 0 10px 30px rgba(255, 209, 102, .35);
+            transition: .3s;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 18px 45px rgba(255, 209, 102, .5);
+        }
+
+        /* Marquee */
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 22s linear infinite;
+        }
+
+        @keyframes marquee {
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        /* Timeline */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            transform: translateX(-50%);
+            background: linear-gradient(#FFD166, #FF4D6D, #FFD166);
+            border-radius: 99px;
+            box-shadow: 0 0 20px rgba(255, 77, 109, .5);
+        }
+
+        @media(max-width:768px) {
+            .timeline-line {
+                left: 20px;
+            }
+        }
+
+        /* Flip cards */
+        .flip {
+            perspective: 1200px;
+            height: 340px;
+        }
+
+        .flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform .8s cubic-bezier(.4, 0, .2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip.flipped .flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-front,
+        .flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .flip-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Envelope */
+        .envelope-wrap {
+            perspective: 1200px;
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            height: 340px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .env-back {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #7A0C2E, #4A0E1F);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 209, 102, .3);
+        }
+
+        .env-letter {
+            position: absolute;
+            left: 5%;
+            right: 5%;
+            top: 10px;
+            bottom: 20px;
+            background: linear-gradient(#FFF8F0, #FFE5D9);
+            color: #4A0E1F;
+            border-radius: 14px;
+            padding: 26px;
+            transition: all .9s cubic-bezier(.34, 1.3, .64, 1);
+            z-index: 1;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .3);
+        }
+
+        .envelope.open .env-letter {
+            transform: translateY(-78%) scale(1.03);
+            height: 520px;
+            z-index: 5;
+        }
+
+        .env-front {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .env-pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 68%;
+            background: linear-gradient(135deg, #FF4D6D, #9D0B3B);
+            clip-path: polygon(0 0, 50% 38%, 100% 0, 100% 100%, 0 100%);
+            border-radius: 0 0 18px 18px;
+            border-top: 1px solid rgba(255, 255, 255, .2);
+        }
+
+        .env-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 55%;
+            background: linear-gradient(#C9184A, #7A0C2E);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top;
+            transition: .7s;
+            z-index: 3;
+            border-radius: 18px 18px 0 0;
+        }
+
+        .envelope.open .env-flap {
+            transform: rotateX(180deg);
+            z-index: 0;
+            opacity: .9;
+        }
+
+        .env-seal {
+            position: absolute;
+            top: 44%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 62px;
+            height: 62px;
+            background: radial-gradient(circle at 30% 30%, #FFD166, #E8B44A);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 4;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .4);
+            border: 3px solid #FFF0F3;
+            transition: .5s;
+        }
+
+        .envelope.open .env-seal {
+            opacity: 0;
+            scale: .5;
+        }
+
+        /* Kiss elements */
+        .kiss-fly {
+            position: fixed;
+            z-index: 9990;
+            pointer-events: none;
+            transition: all 1.2s cubic-bezier(.2, .8, .3, 1);
+        }
+
+        .kiss-mark {
+            position: absolute;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .3));
+            animation: kissPop .5s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        @keyframes kissPop {
+            0% {
+                transform: scale(0) rotate(-20deg);
+                opacity: 0
+            }
+
+            100% {
+                transform: scale(1) rotate(var(--r, 0deg));
+                opacity: 1
+            }
+        }
+
+        .trail-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 8888;
+            animation: trailFade 1s forwards;
+        }
+
+        @keyframes trailFade {
+            0% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-30px) scale(.2)
+            }
+        }
+
+        #kissCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        #gameArea {
+            background: radial-gradient(ellipse at center, rgba(255, 77, 109, .12), rgba(0, 0, 0, .25));
+        }
+
+        .falling-kiss {
+            position: absolute;
+            top: -70px;
+            cursor: pointer;
+            animation: fall linear forwards;
+            filter: drop-shadow(0 0 12px rgba(255, 77, 109, .6));
+            transition: transform .15s;
+        }
+
+        .falling-kiss:hover {
+            transform: scale(1.2) !important;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(520px) rotate(360deg)
+            }
+        }
+
+        .coupon {
+            background: linear-gradient(135deg, rgba(255, 209, 102, .15), rgba(255, 77, 109, .15));
+            border: 2px dashed rgba(255, 209, 102, .5);
+            transition: .4s;
+        }
+
+        .coupon:hover {
+            transform: translateY(-6px) rotate(-1deg);
+            border-color: #FFD166;
+            box-shadow: 0 20px 40px rgba(255, 209, 102, .2);
+        }
+
+        .coupon.claimed {
+            background: linear-gradient(135deg, #FF4D6D, #9D0B3B);
+            border-style: solid;
+            border-color: white;
+        }
+
+        .gallery-item {
+            break-inside: avoid;
+        }
+
+        .gallery-item img {
+            transition: .6s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+
+        .gallery-overlay {
+            opacity: 0;
+            transition: .4s;
+            background: linear-gradient(to top, rgba(43, 10, 18, .9), transparent);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .promise-check {
+            transition: .3s;
+        }
+
+        .promise-check.done {
+            background: linear-gradient(135deg, #FF4D6D, #FF8FA3) !important;
+            border-color: white !important;
+        }
+
+        .promise-check.done i {
+            opacity: 1 !important;
+            transform: scale(1) !important;
+        }
+
+        input,
+        textarea,
+        select {
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #FF4D6D !important;
+            box-shadow: 0 0 0 3px rgba(255, 77, 109, .2);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .type-cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0
+            }
+        }
+
+        #toast {
+            transition: .4s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        .shimmer-border {
+            position: relative;
+        }
+
+        .shimmer-border::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(135deg, #FFD166, #FF4D6D, #FF8FA3, #FFD166);
+            background-size: 300% 300%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderFlow 4s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes borderFlow {
+            to {
+                background-position: 300% 0
+            }
+        }
+
+        .big-lips-btn {
+            transition: .2s;
+            filter: drop-shadow(0 15px 35px rgba(255, 77, 109, .5));
+        }
+
+        .big-lips-btn:active {
+            transform: scale(.9);
+        }
+
+        .pulse-ring {
+            animation: pulseRing 2s infinite;
+        }
+
+        @keyframes pulseRing {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 77, 109, .6)
+            }
+
+            70% {
+                box-shadow: 0 0 0 30px rgba(255, 77, 109, 0)
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 77, 109, 0)
+            }
+        }
+
+        .music-bar {
+            width: 4px;
+            border-radius: 99px;
+            background: #FFD166;
+            animation: musicBounce 1s ease-in-out infinite;
+        }
+
+        @keyframes musicBounce {
+
+            0%,
+            100% {
+                height: 8px
+            }
+
+            50% {
+                height: 22px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SVG DEFS -->
+    <svg width="0" height="0" style="position:absolute">
+        <defs>
+            <linearGradient id="lipGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#FF5C7A" />
+                <stop offset=".5" stop-color="#E11D48" />
+                <stop offset="1" stop-color="#9D0B3B" />
+            </linearGradient>
+            <symbol id="lipsIcon" viewBox="0 0 100 64">
+                <path
+                    d="M3 32 C12 12 28 6 42 18 C46 14 54 14 58 18 C72 6 88 12 97 32 C88 52 72 60 58 46 C54 50 46 50 42 46 C28 60 12 52 3 32 Z M50 32 C40 28 20 28 10 32 C20 36 40 36 50 32 Z M50 32 C60 28 80 28 90 32 C80 36 60 36 50 32 Z"
+                    fill="url(#lipGrad)" stroke="#7A0C2E" stroke-width="2" />
+                <ellipse cx="32" cy="22" rx="8" ry="4" fill="white" opacity=".45" />
+                <ellipse cx="68" cy="22" rx="8" ry="4" fill="white" opacity=".45" />
+            </symbol>
+            <symbol id="heartIcon" viewBox="0 0 24 24">
+                <path
+                    d="M12 21s-7.5-4.9-10-9.2C.4 8.6 2.3 5 5.7 5c2 0 3.4 1.1 4.1 2.3h4.4C15 6.1 16.4 5 18.4 5c3.4 0 5.3 3.6 3.7 6.8C19.5 16.1 12 21 12 21z"
+                    fill="currentColor" />
+            </symbol>
+        </defs>
+    </svg>
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="heartbeat text-blush text-7xl"><i class="fa-solid fa-heart"></i></div>
+        <h2 class="font-script text-4xl mt-6 gold-gradient">Loading Our Love...</h2>
+        <p class="text-sm tracking-[.3em] uppercase text-white/50 mt-2">Naa Bava Kosam</p>
+        <div class="loader-bar"><span></span></div>
+    </div>
+
+    <canvas id="kissCanvas"></canvas>
+
+    <!-- NAV -->
+    <nav class="fixed top-0 left-0 right-0 z-[900] px-4 md:px-8 py-4">
+        <div class="max-w-7xl mx-auto glass rounded-2xl px-4 md:px-6 py-3 flex items-center justify-between shadow-2xl">
+            <a href="#home" class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 rounded-full bg-gradient-to-br from-blush to-roseDeep flex items-center justify-center text-white heartbeat">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <div class="leading-tight"><span class="font-script text-2xl gold-gradient">Bava & Bangaram</span>
+                    <p class="text-[10px] tracking-[.3em] uppercase text-white/60 -mt-1">Forever Anniversary</p>
+                </div>
+            </a>
+            <div class="hidden lg:flex items-center gap-7 text-sm font-medium text-white/80">
+                <a href="#home" class="hover:text-gold transition">Home</a>
+                <a href="#story" class="hover:text-gold transition">Our Story</a>
+                <a href="#reasons" class="hover:text-gold transition">Handsome</a>
+                <a href="#kisses" class="hover:text-gold transition">Kisses</a>
+                <a href="#letter" class="hover:text-gold transition">Love Letter</a>
+                <a href="#memories" class="hover:text-gold transition">Memories</a>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="openPersonalize()"
+                    class="hidden sm:flex btn-gold font-semibold text-sm px-5 py-2.5 rounded-full items-center gap-2"><i
+                        class="fa-solid fa-wand-magic-sparkles"></i> Personalize</button>
+                <button id="menuBtn" class="lg:hidden w-10 h-10 rounded-full glass flex items-center justify-center"><i
+                        class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+        <div id="mobileMenu"
+            class="lg:hidden hidden max-w-7xl mx-auto mt-2 glass-strong rounded-2xl p-4 flex flex-col gap-2 text-center font-medium">
+            <a href="#home" class="py-2 hover:text-gold">Home</a><a href="#story" class="py-2 hover:text-gold">Our
+                Story</a><a href="#reasons" class="py-2 hover:text-gold">Why Handsome</a><a href="#kisses"
+                class="py-2 hover:text-gold">Kisses</a><a href="#letter" class="py-2 hover:text-gold">Love Letter</a><a
+                href="#memories" class="py-2 hover:text-gold">Memories</a>
+            <button onclick="openPersonalize()"
+                class="btn-gold rounded-full py-2.5 mt-2 font-semibold">Personalize</button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="home"
+        class="relative min-h-screen hero-bg flex items-center justify-center overflow-hidden pt-28 pb-16 px-4">
+        <div class="absolute inset-0 opacity-30"><img
+                src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=1200&q=80"
+                class="w-full h-full object-cover" alt="" />
+            <div class="absolute inset-0 bg-gradient-to-b from-[#18040B] via-transparent to-[#18040B]"></div>
+        </div>
+        <div id="sparkles" class="absolute inset-0 overflow-hidden"></div>
+        <!-- floating deco -->
+        <div class="absolute top-24 left-[8%] float-slow opacity-60 hidden md:block"><svg class="w-16 h-16 text-blush">
+                <use href="#lipsIcon" />
+            </svg></div>
+        <div class="absolute bottom-32 right-[7%] float-slower opacity-60 hidden md:block"><svg
+                class="w-20 h-20 text-gold">
+                <use href="#lipsIcon" />
+            </svg></div>
+        <div class="absolute top-1/3 right-[12%] float-slow text-gold/40 text-4xl hidden md:block"><i
+                class="fa-solid fa-crown"></i></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto text-center">
+            <div
+                class="inline-flex items-center gap-2 glass rounded-full px-5 py-2 text-xs md:text-sm tracking-[.25em] uppercase text-gold mb-6">
+                <span class="w-2 h-2 rounded-full bg-blush animate-ping"></span> Happy Anniversary <span
+                    class="w-2 h-2 rounded-full bg-blush animate-ping"></span>
+            </div>
+            <p class="font-dancing text-2xl md:text-3xl text-blushLight mb-2">To my dearest, my cutest, my most</p>
+            <h1 class="font-serif font-black leading-[.95] text-5xl md:text-7xl lg:text-8xl">HAPPY<br><span
+                    class="font-script font-normal gold-gradient text-6xl md:text-8xl lg:text-9xl drop-shadow-2xl">Anniversary</span>
+            </h1>
+            <h2 class="mt-3 font-serif italic text-2xl md:text-4xl">My Handsome <span id="heroBavaName"
+                    class="gold-gradient font-black not-italic">BAVA</span> <span class="text-blush">♥</span></h2>
+            <p class="mt-5 text-white/80 max-w-2xl mx-auto text-sm md:text-lg leading-relaxed min-h-[56px]"><span
+                    id="typewriter"></span><span class="type-cursor text-gold">|</span></p>
+
+            <div class="mt-8 flex flex-wrap justify-center gap-4">
+                <button onclick="showerKisses(60); playKissSound()"
+                    class="btn-love px-8 py-4 rounded-full font-semibold flex items-center gap-3 text-white"><svg
+                        class="w-7 h-7">
+                        <use href="#lipsIcon" />
+                    </svg> Send 1000 Kisses</button>
+                <a href="#letter" class="btn-gold px-8 py-4 rounded-full font-semibold flex items-center gap-2"><i
+                        class="fa-solid fa-envelope-open-text"></i> Read My Letter</a>
+            </div>
+
+            <div class="mt-10 grid grid-cols-3 max-w-xl mx-auto gap-3">
+                <div class="glass rounded-2xl p-4">
+                    <p id="statKiss" class="font-serif font-black text-2xl md:text-3xl gold-gradient">0</p>
+                    <p class="text-[11px] uppercase tracking-widest text-white/60">Kisses Sent</p>
+                </div>
+                <div class="glass rounded-2xl p-4">
+                    <p id="statDays" class="font-serif font-black text-2xl md:text-3xl text-blush">365</p>
+                    <p class="text-[11px] uppercase tracking-widest text-white/60">Days Loved</p>
+                </div>
+                <div class="glass rounded-2xl p-4">
+                    <p class="font-serif font-black text-2xl md:text-3xl text-white">∞</p>
+                    <p class="text-[11px] uppercase tracking-widest text-white/60">Forever To Go</p>
+                </div>
+            </div>
+            <a href="#counter"
+                class="inline-flex flex-col items-center mt-10 text-white/50 hover:text-gold transition"><span
+                    class="text-xs tracking-[.3em] uppercase mb-2">Scroll For Love</span><span
+                    class="w-8 h-12 rounded-full border border-white/30 flex justify-center pt-2"><span
+                        class="w-1.5 h-1.5 rounded-full bg-blush animate-bounce"></span></span></a>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div
+        class="bg-gradient-to-r from-roseDeep via-blush to-roseDeep py-3 overflow-hidden border-y border-gold/30 relative z-20">
+        <div class="marquee-track gap-8 font-serif font-bold text-lg tracking-wide text-white">
+            <div class="flex gap-8 pr-8" id="marqueeContent">
+                <span>HANDSOME BAVA ♥</span><span>MY KING 👑</span><span>NAALO PRANAM ♥</span><span>UNLIMITED KISSES
+                    💋</span><span>FOREVER YOURS ♥</span><span>MY HERO ✨</span><span>CHINNI GUNDE ♥</span><span>MY
+                    EVERYTHING 💖</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- COUNTER -->
+    <section id="counter" class="relative py-16 px-4">
+        <div class="max-w-6xl mx-auto glass-strong shimmer-border rounded-[28px] p-8 md:p-12 text-center reveal">
+            <p class="text-gold tracking-[.3em] uppercase text-xs mb-3"><i class="fa-solid fa-calendar-heart mr-2"></i>
+                Counting Every Second With You</p>
+            <h2 class="font-script text-4xl md:text-6xl gold-gradient">Loving You Since</h2>
+            <p id="annivDateLabel" class="font-serif italic text-white/70 mt-2 text-lg">14th February 2023 • Our Forever
+                Date</p>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mt-8">
+                <div class="bg-white/5 rounded-2xl p-5 border border-white/10">
+                    <p id="cYears" class="font-serif font-black text-4xl md:text-5xl text-blush">0</p>
+                    <p class="text-xs tracking-widest uppercase text-white/50 mt-1">Years</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl p-5 border border-white/10">
+                    <p id="cDays" class="font-serif font-black text-4xl md:text-5xl text-white">0</p>
+                    <p class="text-xs tracking-widest uppercase text-white/50 mt-1">Days</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl p-5 border border-white/10">
+                    <p id="cHours" class="font-serif font-black text-4xl md:text-5xl gold-gradient">0</p>
+                    <p class="text-xs tracking-widest uppercase text-white/50 mt-1">Hours</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl p-5 border border-white/10">
+                    <p id="cMins" class="font-serif font-black text-4xl md:text-5xl text-blushLight">0</p>
+                    <p class="text-xs tracking-widest uppercase text-white/50 mt-1">Minutes</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl p-5 border border-white/10 col-span-2 md:col-span-1">
+                    <p id="cSecs" class="font-serif font-black text-4xl md:text-5xl text-white animate-pulse">0</p>
+                    <p class="text-xs tracking-widest uppercase text-white/50 mt-1">Seconds</p>
+                </div>
+            </div>
+            <p class="font-dancing text-xl md:text-2xl text-blushLight mt-6">"Every second with you feels like a
+                beautiful dream, Bava"</p>
+            <button onclick="openPersonalize()"
+                class="mt-5 text-sm text-gold hover:text-white underline underline-offset-4"><i
+                    class="fa-solid fa-pen mr-1"></i> Set our anniversary date</button>
+        </div>
+    </section>
+
+    <!-- STORY -->
+    <section id="story" class="py-16 px-4 relative">
+        <div class="max-w-4xl mx-auto text-center mb-12 reveal">
+            <p class="text-gold tracking-[.3em] uppercase text-xs">Chapter of Us</p>
+            <h2 class="font-script text-5xl md:text-7xl gold-gradient mt-2">Our Love Story</h2>
+            <p class="text-white/60 mt-3">From first sight to forever — every moment with my handsome Bava</p>
+        </div>
+        <div class="max-w-4xl mx-auto relative">
+            <div class="timeline-line"></div>
+            <div class="space-y-10">
+                <div class="reveal relative flex flex-col md:flex-row items-center gap-6 md:gap-0">
+                    <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 pl-12 md:pl-0">
+                        <div class="glass rounded-2xl p-6"><span
+                                class="text-gold text-xs tracking-widest uppercase">Chapter 01 • First Sight</span>
+                            <h3 class="font-serif font-bold text-2xl mt-1">Nuvvu Kanipinchavu</h3>
+                            <p class="text-white/70 text-sm mt-2 leading-relaxed">The moment I saw your handsome smile,
+                                my heart whispered — <i>he is the one</i>. Time stopped, world faded, only you remained.
+                            </p>
+                        </div>
+                    </div>
+                    <div
+                        class="absolute left-[20px] md:left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-gold to-blush flex items-center justify-center text-wine font-bold border-4 border-[#18040B] shadow-xl z-10 top-6 md:top-auto">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <div class="md:w-1/2 order-1 md:order-2"></div>
+                </div>
+                <div class="reveal relative flex flex-col md:flex-row items-center gap-6">
+                    <div class="md:w-1/2"></div>
+                    <div
+                        class="absolute left-[20px] md:left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-blush to-roseDeep flex items-center justify-center text-white border-4 border-[#18040B] shadow-xl z-10 top-6 md:top-auto">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 pl-12 md:pl-12">
+                        <div class="glass rounded-2xl p-6"><span
+                                class="text-gold text-xs tracking-widest uppercase">Chapter 02 • First Talk</span>
+                            <h3 class="font-serif font-bold text-2xl mt-1">Matalatho Magic</h3>
+                            <p class="text-white/70 text-sm mt-2 leading-relaxed">Your voice, your caring words, your
+                                teasing laugh — I fell deeper. Every conversation felt like festival in my heart.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal relative flex flex-col md:flex-row items-center gap-6">
+                    <div class="md:w-1/2 md:pr-12 md:text-right pl-12 md:pl-0 order-2 md:order-1">
+                        <div class="glass rounded-2xl p-6"><span
+                                class="text-gold text-xs tracking-widest uppercase">Chapter 03 • First Love</span>
+                            <h3 class="font-serif font-bold text-2xl mt-1">I Love You, Bava</h3>
+                            <p class="text-white/70 text-sm mt-2 leading-relaxed">When you held my hand and said those
+                                three words, I got my whole world. Your kiss on my forehead sealed our forever.</p>
+                        </div>
+                    </div>
+                    <div
+                        class="absolute left-[20px] md:left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-gold to-blush flex items-center justify-center text-wine border-4 border-[#18040B] shadow-xl z-10 top-6 md:top-auto">
+                        <svg class="w-6 h-6">
+                            <use href="#lipsIcon" />
+                        </svg>
+                    </div>
+                    <div class="md:w-1/2 order-1 md:order-2"></div>
+                </div>
+                <div class="reveal relative flex flex-col md:flex-row items-center gap-6">
+                    <div class="md:w-1/2"></div>
+                    <div
+                        class="absolute left-[20px] md:left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-blush to-gold flex items-center justify-center text-white border-4 border-[#18040B] shadow-xl z-10 top-6 md:top-auto heartbeat">
+                        <i class="fa-solid fa-infinity"></i>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 pl-12">
+                        <div class="glass rounded-2xl p-6 shimmer-border"><span
+                                class="text-gold text-xs tracking-widest uppercase">Today • Happy Anniversary</span>
+                            <h3 class="font-serif font-bold text-2xl mt-1 gold-gradient">Forever With My Handsome Bava
+                            </h3>
+                            <p class="text-white/70 text-sm mt-2 leading-relaxed">Another year of loving you, teasing
+                                you, and showering you with kisses. You are my home, my heart, my everything.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REASONS HANDSOME -->
+    <section id="reasons" class="py-16 px-4 bg-gradient-to-b from-transparent via-[#2B0A12] to-transparent">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-10 reveal">
+                <p class="text-gold tracking-[.3em] uppercase text-xs"><i class="fa-solid fa-crown mr-2"></i> Certified
+                    Handsome</p>
+                <h2 class="font-script text-5xl md:text-7xl gold-gradient mt-2">Why My Bava Is So Handsome</h2>
+                <p class="text-white/60 mt-3">Tap any card to reveal my heart • 6 reasons, but really infinite</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="reasonsGrid">
+                <!-- cards injected by JS for brevity? Hardcode -->
+                <div class="flip reveal cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-inner">
+                        <div class="flip-front glass p-0 flex flex-col"><img
+                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80"
+                                class="h-52 w-full object-cover" alt="" />
+                            <div class="p-6 flex-1"><span class="text-3xl">😍</span>
+                                <h3 class="font-serif font-bold text-xl mt-2">That Killer Smile</h3>
+                                <p class="text-white/50 text-sm mt-1">Tap to know my secret ♥</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flip-back bg-gradient-to-br from-blush to-roseDeep p-7 flex flex-col justify-center text-center">
+                            <svg class="w-12 h-12 mx-auto mb-3">
+                                <use href="#lipsIcon" />
+                            </svg>
+                            <h3 class="font-dancing text-2xl font-bold">Your Smile</h3>
+                            <p class="text-sm mt-2 leading-relaxed">One smile from you and my anger, stress, sadness —
+                                all melt like ice-cream. Nuvvu navvithe, naa gunde aagipoddi Bava!</p>
+                            <p class="mt-3 text-gold font-bold">★ ★ ★ ★ ★</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip reveal cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-inner">
+                        <div class="flip-front glass p-0 flex flex-col"><img
+                                src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80"
+                                class="h-52 w-full object-cover" alt="" />
+                            <div class="p-6 flex-1"><span class="text-3xl">👀</span>
+                                <h3 class="font-serif font-bold text-xl mt-2">Those Deep Eyes</h3>
+                                <p class="text-white/50 text-sm mt-1">Tap to know my secret ♥</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flip-back bg-gradient-to-br from-goldDeep to-blush p-7 flex flex-col justify-center text-center text-wine">
+                            <i class="fa-solid fa-eye text-4xl mb-3"></i>
+                            <h3 class="font-dancing text-2xl font-bold">Your Eyes</h3>
+                            <p class="text-sm mt-2 leading-relaxed font-medium">Your eyes hold galaxies. When you look
+                                at me with love, I forget the whole world. Handsome + loving eyes = deadly combo!</p>
+                            <p class="mt-3 font-bold">★ ★ ★ ★ ★</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip reveal cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-inner">
+                        <div class="flip-front glass p-0 flex flex-col"><img
+                                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80"
+                                class="h-52 w-full object-cover" alt="" />
+                            <div class="p-6 flex-1"><span class="text-3xl">🤴</span>
+                                <h3 class="font-serif font-bold text-xl mt-2">Your Royal Style</h3>
+                                <p class="text-white/50 text-sm mt-1">Tap to know my secret ♥</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flip-back bg-gradient-to-br from-wine2 to-roseDeep p-7 flex flex-col justify-center text-center border border-gold/40">
+                            <i class="fa-solid fa-crown text-4xl mb-3 text-gold"></i>
+                            <h3 class="font-dancing text-2xl font-bold text-gold">My King</h3>
+                            <p class="text-sm mt-2 leading-relaxed text-white/90">Shirt or traditional, bike or walk —
+                                everything looks perfect on you. My handsome Bava, you walk like a king!</p>
+                            <p class="mt-3 text-gold font-bold">★ ★ ★ ★ ★</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip reveal cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-inner">
+                        <div class="flip-front glass p-0 flex flex-col"><img
+                                src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&q=80"
+                                class="h-52 w-full object-cover" alt="" />
+                            <div class="p-6 flex-1"><span class="text-3xl">💪</span>
+                                <h3 class="font-serif font-bold text-xl mt-2">Your Caring Heart</h3>
+                                <p class="text-white/50 text-sm mt-1">Tap to know my secret ♥</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flip-back bg-gradient-to-br from-blushLight to-blush p-7 flex flex-col justify-center text-center text-wine">
+                            <i class="fa-solid fa-heart-pulse text-4xl mb-3"></i>
+                            <h3 class="font-dancing text-2xl font-bold">Golden Heart</h3>
+                            <p class="text-sm mt-2 leading-relaxed font-medium">Handsome face fades, but your caring
+                                heart? Forever. You protect me, pamper me, understand me without words.</p>
+                            <p class="mt-3 font-bold">★ ★ ★ ★ ★</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip reveal cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-inner">
+                        <div class="flip-front glass p-0 flex flex-col"><img
+                                src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&q=80"
+                                class="h-52 w-full object-cover" alt="" />
+                            <div class="p-6 flex-1"><span class="text-3xl">😂</span>
+                                <h3 class="font-serif font-bold text-xl mt-2">Your Cute Laugh</h3>
+                                <p class="text-white/50 text-sm mt-1">Tap to know my secret ♥</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flip-back bg-gradient-to-br from-roseDeep to-wine2 p-7 flex flex-col justify-center text-center border border-blush/40">
+                            <i class="fa-solid fa-face-laugh-beam text-4xl mb-3 text-blushLight"></i>
+                            <h3 class="font-dancing text-2xl font-bold">Your Laughter</h3>
+                            <p class="text-sm mt-2 leading-relaxed text-white/90">Your laugh is my favourite music. Even
+                                on my worst days, one joke from my Bava and I'm smiling like a baby.</p>
+                            <p class="mt-3 text-gold font-bold">★ ★ ★ ★ ★</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip reveal cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-inner">
+                        <div class="flip-front glass p-0 flex flex-col"><img
+                                src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&q=80"
+                                class="h-52 w-full object-cover" alt="" />
+                            <div class="p-6 flex-1"><span class="text-3xl">💋</span>
+                                <h3 class="font-serif font-bold text-xl mt-2">Your Sweet Kisses</h3>
+                                <p class="text-white/50 text-sm mt-1">Tap to know my secret ♥</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flip-back bg-gradient-to-br from-gold to-blush p-7 flex flex-col justify-center text-center text-wine">
+                            <svg class="w-14 h-14 mx-auto mb-2">
+                                <use href="#lipsIcon" />
+                            </svg>
+                            <h3 class="font-dancing text-2xl font-bold">Your Kisses</h3>
+                            <p class="text-sm mt-2 leading-relaxed font-medium">Forehead kiss when I'm sad, cheek kiss
+                                when I'm happy... your kisses are my magic medicine. Keep them coming!</p>
+                            <p class="mt-3 font-bold">★ ★ ★ ★ ★</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KISS ZONE -->
+    <section id="kisses" class="py-16 px-4 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-10 reveal">
+                <p class="text-gold tracking-[.3em] uppercase text-xs">💋 Kiss Zone 💋</p>
+                <h2 class="font-script text-5xl md:text-7xl gold-gradient mt-2">Shower of Kisses</h2>
+                <p class="text-white/60 mt-3">Tap the lips, catch the kisses, fill our kiss wall with love</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-6">
+                <!-- Big Kiss Button -->
+                <div class="glass-strong rounded-[28px] p-8 text-center reveal shimmer-border relative overflow-hidden">
+                    <div class="absolute inset-0 opacity-20 pointer-events-none"><img
+                            src="https://images.unsplash.com/photo-1494935362342-5667835a2d5a?w=800&q=80"
+                            class="w-full h-full object-cover" alt="" /></div>
+                    <div class="relative">
+                        <h3 class="font-dancing text-3xl text-blushLight">Tap To Kiss Your Bava</h3>
+                        <button id="bigKissBtn" onclick="sendKiss(event)"
+                            class="big-lips-btn pulse-ring my-6 w-44 h-44 mx-auto rounded-full bg-gradient-to-br from-blush via-roseDeep to-wine2 border-4 border-gold/50 flex items-center justify-center relative">
+                            <svg class="w-24 h-24">
+                                <use href="#lipsIcon" />
+                            </svg>
+                            <span
+                                class="absolute -bottom-2 bg-gold text-wine text-xs font-bold px-4 py-1 rounded-full">KISS
+                                ME</span>
+                        </button>
+                        <div class="flex justify-center gap-4 text-center">
+                            <div class="glass rounded-xl px-6 py-3">
+                                <p id="kissCount" class="font-black text-3xl gold-gradient">0</p>
+                                <p class="text-[11px] uppercase tracking-widest text-white/60">Kisses</p>
+                            </div>
+                            <div class="glass rounded-xl px-6 py-3">
+                                <p id="kissLevel" class="font-black text-3xl text-blush">New</p>
+                                <p class="text-[11px] uppercase tracking-widest text-white/60">Lover Level</p>
+                            </div>
+                        </div>
+                        <p id="kissMsg" class="font-dancing text-xl text-gold mt-4 min-h-[32px]">Give me your sweetest
+                            kiss, Bava... 💋</p>
+                        <div class="flex flex-wrap justify-center gap-3 mt-4">
+                            <button onclick="showerKisses(80)"
+                                class="btn-love text-white text-sm font-semibold px-6 py-3 rounded-full"><i
+                                    class="fa-solid fa-cloud-showers-heavy mr-2"></i>Kiss Shower</button>
+                            <button onclick="megaKiss()"
+                                class="btn-gold text-sm font-semibold px-6 py-3 rounded-full"><i
+                                    class="fa-solid fa-wand-magic-sparkles mr-2"></i>Mega 100 Kisses</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Catch Game -->
+                <div class="glass-strong rounded-[28px] p-6 md:p-8 reveal">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-dancing text-3xl text-blushLight"><i
+                                class="fa-solid fa-gamepad mr-2 text-gold"></i>Catch The Kiss</h3>
+                        <div class="flex gap-2"><span class="glass px-4 py-2 rounded-full text-sm font-bold">Score:
+                                <span id="gameScore" class="text-gold">0</span></span><span
+                                class="glass px-4 py-2 rounded-full text-sm font-bold">Time: <span id="gameTime"
+                                    class="text-blush">30</span>s</span></div>
+                    </div>
+                    <div id="gameArea"
+                        class="relative h-[380px] rounded-2xl overflow-hidden border border-white/10 cursor-crosshair">
+                        <div id="gameOverlay"
+                            class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm z-10">
+                            <svg class="w-20 h-20 mb-3 float-slow">
+                                <use href="#lipsIcon" />
+                            </svg>
+                            <p class="font-serif font-bold text-xl">Catch falling kisses for your Bava!</p>
+                            <p class="text-white/60 text-sm mt-1 mb-4">Tap as many 💋 as you can in 30 seconds</p>
+                            <button onclick="startGame()"
+                                class="btn-love text-white font-semibold px-8 py-3 rounded-full"><i
+                                    class="fa-solid fa-play mr-2"></i>Start Game</button>
+                        </div>
+                    </div>
+                    <p class="text-center text-xs text-white/50 mt-3">High Score: <span id="highScore"
+                            class="text-gold font-bold">0</span> • Catch 20+ to unlock a secret love note!</p>
+                    <div id="secretNote" class="hidden mt-3 bg-gradient-to-r from-blush to-gold p-[2px] rounded-xl">
+                        <div class="bg-wine rounded-xl p-4 text-center">
+                            <p class="font-dancing text-xl text-gold">Secret Unlocked! Bava, you caught my heart
+                                first... now keep all my kisses forever! 💋♥💋</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kiss Wall -->
+            <div class="mt-6 glass-strong rounded-[28px] p-8 reveal relative overflow-hidden">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                    <h3 class="font-dancing text-3xl text-blushLight"><i
+                            class="fa-solid fa-heart mr-2 text-blush"></i>Our Kiss Wall</h3>
+                    <div class="flex gap-2">
+                        <button onclick="addWallKiss()"
+                            class="text-sm glass px-5 py-2 rounded-full hover:bg-blush transition"><i
+                                class="fa-solid fa-plus mr-1"></i> Add Kiss</button>
+                        <button onclick="clearWall()"
+                            class="text-sm glass px-5 py-2 rounded-full hover:bg-white/20 transition"><i
+                                class="fa-solid fa-trash mr-1"></i> Clear</button>
+                    </div>
+                </div>
+                <div id="kissWall"
+                    class="relative min-h-[220px] rounded-2xl bg-gradient-to-br from-[#FFF0F3] to-[#FFE5D9] overflow-hidden border-4 border-gold/30 p-4">
+                    <p id="wallEmpty"
+                        class="absolute inset-0 flex items-center justify-center text-wine/40 font-dancing text-2xl">Our
+                        wall is waiting for your first kiss... 💋</p>
+                </div>
+                <p class="text-center text-white/50 text-sm mt-3">Every kiss you leave stays here — like your love stays
+                    in my heart</p>
+            </div>
+
+            <!-- Love Meter -->
+            <div class="mt-6 grid md:grid-cols-2 gap-6">
+                <div class="glass rounded-[28px] p-8 reveal">
+                    <h3 class="font-script text-4xl gold-gradient text-center">Love Meter</h3>
+                    <p class="text-center text-white/60 text-sm mt-1">Check our infinite love percentage</p>
+                    <div class="mt-5 space-y-3">
+                        <input id="lover1" placeholder="His handsome name... (Bava)"
+                            class="w-full bg-white/5 border border-white/15 rounded-xl px-5 py-3 text-white placeholder-white/30" />
+                        <input id="lover2" placeholder="Your beautiful name..."
+                            class="w-full bg-white/5 border border-white/15 rounded-xl px-5 py-3 text-white placeholder-white/30" />
+                        <button onclick="calcLove()" class="btn-love w-full text-white font-bold py-3.5 rounded-xl"><i
+                                class="fa-solid fa-heart-pulse mr-2"></i>Calculate Our Love</button>
+                    </div>
+                </div>
+                <div class="glass rounded-[28px] p-8 reveal flex flex-col items-center justify-center text-center">
+                    <div class="relative w-48 h-48">
+                        <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="9" />
+                            <circle id="loveRing" cx="50" cy="50" r="42" fill="none" stroke="url(#lipGrad)"
+                                stroke-width="9" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="264"
+                                style="transition:stroke-dashoffset 2s cubic-bezier(.2,.8,.3,1)" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center"><span id="lovePct"
+                                class="font-black text-5xl gold-gradient">0%</span><i
+                                class="fa-solid fa-heart text-blush heartbeat mt-1"></i></div>
+                    </div>
+                    <p id="loveMsg" class="font-dancing text-xl text-blushLight mt-4">Enter names and feel the magic...
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOVE LETTER -->
+    <section id="letter" class="py-20 px-4 bg-gradient-to-b from-transparent via-[#4A0E1F]/60 to-transparent">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="reveal">
+                <p class="text-gold tracking-[.3em] uppercase text-xs">Sealed With A Kiss</p>
+                <h2 class="font-script text-5xl md:text-7xl gold-gradient mt-2">A Letter For My Bava</h2>
+                <p class="text-white/60 mt-3">Tap the envelope to open my heart</p>
+            </div>
+            <div class="reveal mt-10 envelope-wrap pb-32">
+                <div class="envelope" id="envelope" onclick="toggleEnvelope()">
+                    <div class="env-back"></div>
+                    <div class="env-letter text-left">
+                        <p class="font-script text-3xl text-roseDeep">My Dearest Handsome Bava,</p>
+                        <div
+                            class="text-[13px] md:text-sm leading-relaxed mt-3 space-y-3 max-h-[380px] overflow-y-auto pr-1">
+                            <p>Happy Anniversary, my love! Today I just want you to know — you are the most <b>handsome,
+                                    caring and wonderful</b> man I have ever known.</p>
+                            <p>From your cute morning sleepy face to your killer smile at night, I fall for you <b>again
+                                    and again, every single day</b>. Nuvvu ante naaku pranam, Bava.</p>
+                            <p>Thank you for holding my hand in tough times, for wiping my tears, for laughing with me,
+                                and for loving me with your whole heart.</p>
+                            <p>On this special day, I promise — <b>laksha kisses, koti hugs, and janma janmala love</b>
+                                — only for you, my handsome Bava.</p>
+                            <p class="font-dancing text-xl text-roseDeep">Forever Yours, Only Yours,<br><span
+                                    id="letterFrom" class="text-2xl">Your Bangaram ♥</span></p>
+                            <div class="flex gap-2 pt-1"><svg class="w-10 h-10">
+                                    <use href="#lipsIcon" />
+                                </svg><svg class="w-8 h-8 rotate-12">
+                                    <use href="#lipsIcon" />
+                                </svg><svg class="w-10 h-10 -rotate-12">
+                                    <use href="#lipsIcon" />
+                                </svg></div>
+                        </div>
+                    </div>
+                    <div class="env-flap"></div>
+                    <div class="env-front">
+                        <div class="env-pocket"></div>
+                    </div>
+                    <div class="env-seal"><i class="fa-solid fa-heart text-white text-xl"></i></div>
+                </div>
+                <p id="envHint" class="text-gold text-sm mt-4 animate-pulse"><i
+                        class="fa-solid fa-hand-pointer mr-1"></i> Click envelope to open</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEMORIES -->
+    <section id="memories" class="py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-10 reveal">
+                <p class="text-gold tracking-[.3em] uppercase text-xs">Sweet Memories</p>
+                <h2 class="font-script text-5xl md:text-7xl gold-gradient mt-2">Moments of Love</h2>
+                <p class="text-white/60 mt-3">Every picture tells our story • Click to view</p>
+            </div>
+            <div class="columns-2 md:columns-3 gap-4 space-y-4">
+                <div class="gallery-item reveal relative rounded-2xl overflow-hidden cursor-pointer"
+                    onclick="openLightbox(this)"><img
+                        src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=600&q=80"
+                        class="w-full rounded-2xl" alt="" />
+                    <div class="gallery-overlay absolute inset-0 flex items-end p-5">
+                        <p class="font-dancing text-xl">Where our forever began ♥</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal relative rounded-2xl overflow-hidden cursor-pointer"
+                    onclick="openLightbox(this)"><img
+                        src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&q=80"
+                        class="w-full rounded-2xl" alt="" />
+                    <div class="gallery-overlay absolute inset-0 flex items-end p-5">
+                        <p class="font-dancing text-xl">Your arms = my home ♥</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal relative rounded-2xl overflow-hidden cursor-pointer"
+                    onclick="openLightbox(this)"><img
+                        src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&q=80"
+                        class="w-full rounded-2xl" alt="" />
+                    <div class="gallery-overlay absolute inset-0 flex items-end p-5">
+                        <p class="font-dancing text-xl">Hand in hand, always ♥</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal relative rounded-2xl overflow-hidden cursor-pointer"
+                    onclick="openLightbox(this)"><img
+                        src="https://images.unsplash.com/photo-1494935362342-5667835a2d5a?w=600&q=80"
+                        class="w-full rounded-2xl" alt="" />
+                    <div class="gallery-overlay absolute inset-0 flex items-end p-5">
+                        <p class="font-dancing text-xl">Kisses under stars 💋</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal relative rounded-2xl overflow-hidden cursor-pointer"
+                    onclick="openLightbox(this)"><img
+                        src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&q=80"
+                        class="w-full rounded-2xl" alt="" />
+                    <div class="gallery-overlay absolute inset-0 flex items-end p-5">
+                        <p class="font-dancing text-xl">You + Me = Perfect ♥</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal relative rounded-2xl overflow-hidden cursor-pointer"
+                    onclick="openLightbox(this)"><img
+                        src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=600&q=80"
+                        class="w-full rounded-2xl" alt="" />
+                    <div class="gallery-overlay absolute inset-0 flex items-end p-5">
+                        <p class="font-dancing text-xl">My handsome hero ♥</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COUPONS + PROMISES -->
+    <section class="py-16 px-4 bg-gradient-to-b from-transparent via-[#2B0A12] to-transparent">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-10 reveal">
+                <p class="text-gold tracking-[.3em] uppercase text-xs">Gifts For My Bava</p>
+                <h2 class="font-script text-5xl md:text-6xl gold-gradient mt-2">Love Coupons For You</h2>
+                <p class="text-white/60 mt-2">Tap to claim — valid for lifetime, redeemable with unlimited hugs</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="coupon reveal rounded-2xl p-6 text-center cursor-pointer"
+                    onclick="claimCoupon(this,'Tight Hug')"><i class="fa-solid fa-heart text-4xl text-blush"></i>
+                    <h3 class="font-serif font-bold text-lg mt-3">Free Tight Hug</h3>
+                    <p class="text-xs text-white/60 mt-1">5-minute non-stop hug + forehead kiss</p><button
+                        class="mt-4 text-xs font-bold bg-white/10 px-5 py-2 rounded-full">CLAIM</button>
+                </div>
+                <div class="coupon reveal rounded-2xl p-6 text-center cursor-pointer"
+                    onclick="claimCoupon(this,'Long Drive')"><i class="fa-solid fa-car-side text-4xl text-gold"></i>
+                    <h3 class="font-serif font-bold text-lg mt-3">Long Drive Date</h3>
+                    <p class="text-xs text-white/60 mt-1">Evening drive + your fav songs + ice cream</p><button
+                        class="mt-4 text-xs font-bold bg-white/10 px-5 py-2 rounded-full">CLAIM</button>
+                </div>
+                <div class="coupon reveal rounded-2xl p-6 text-center cursor-pointer"
+                    onclick="claimCoupon(this,'Movie Night')"><i
+                        class="fa-solid fa-clapperboard text-4xl text-blushLight"></i>
+                    <h3 class="font-serif font-bold text-lg mt-3">Cuddle Movie Night</h3>
+                    <p class="text-xs text-white/60 mt-1">Your choice movie + cuddles + popcorn</p><button
+                        class="mt-4 text-xs font-bold bg-white/10 px-5 py-2 rounded-full">CLAIM</button>
+                </div>
+                <div class="coupon reveal rounded-2xl p-6 text-center cursor-pointer"
+                    onclick="claimCoupon(this,'Unlimited Kisses')"><svg class="w-12 h-12 mx-auto">
+                        <use href="#lipsIcon" />
+                    </svg>
+                    <h3 class="font-serif font-bold text-lg mt-2">Unlimited Kisses</h3>
+                    <p class="text-xs text-white/60 mt-1">1000 kisses daily, no expiry, no limits</p><button
+                        class="mt-4 text-xs font-bold bg-white/10 px-5 py-2 rounded-full">CLAIM</button>
+                </div>
+            </div>
+
+            <div class="mt-10 glass-strong rounded-[28px] p-8 md:p-10 reveal">
+                <h3 class="font-script text-4xl md:text-5xl gold-gradient text-center">My Promises To My Handsome Bava
+                </h3>
+                <p class="text-center text-white/60 text-sm mt-2">Check each promise to seal it with a kiss</p>
+                <div class="grid md:grid-cols-2 gap-4 mt-6 max-w-4xl mx-auto" id="promiseList">
+                    <div class="flex items-center gap-4 glass rounded-xl p-4 cursor-pointer hover:bg-white/10 transition"
+                        onclick="togglePromise(this)">
+                        <div
+                            class="promise-check w-8 h-8 shrink-0 rounded-full border-2 border-blush flex items-center justify-center bg-white/5">
+                            <i class="fa-solid fa-check text-white opacity-0 scale-50 transition"></i>
+                        </div>
+                        <p class="text-sm">I promise to love you more every single day</p>
+                    </div>
+                    <div class="flex items-center gap-4 glass rounded-xl p-4 cursor-pointer hover:bg-white/10 transition"
+                        onclick="togglePromise(this)">
+                        <div
+                            class="promise-check w-8 h-8 shrink-0 rounded-full border-2 border-blush flex items-center justify-center bg-white/5">
+                            <i class="fa-solid fa-check text-white opacity-0 scale-50 transition"></i>
+                        </div>
+                        <p class="text-sm">I promise to support your dreams like my own</p>
+                    </div>
+                    <div class="flex items-center gap-4 glass rounded-xl p-4 cursor-pointer hover:bg-white/10 transition"
+                        onclick="togglePromise(this)">
+                        <div
+                            class="promise-check w-8 h-8 shrink-0 rounded-full border-2 border-blush flex items-center justify-center bg-white/5">
+                            <i class="fa-solid fa-check text-white opacity-0 scale-50 transition"></i>
+                        </div>
+                        <p class="text-sm">I promise to give good-morning & good-night kisses daily</p>
+                    </div>
+                    <div class="flex items-center gap-4 glass rounded-xl p-4 cursor-pointer hover:bg-white/10 transition"
+                        onclick="togglePromise(this)">
+                        <div
+                            class="promise-check w-8 h-8 shrink-0 rounded-full border-2 border-blush flex items-center justify-center bg-white/5">
+                            <i class="fa-solid fa-check text-white opacity-0 scale-50 transition"></i>
+                        </div>
+                        <p class="text-sm">I promise to never let you sleep angry with me</p>
+                    </div>
+                    <div class="flex items-center gap-4 glass rounded-xl p-4 cursor-pointer hover:bg-white/10 transition"
+                        onclick="togglePromise(this)">
+                        <div
+                            class="promise-check w-8 h-8 shrink-0 rounded-full border-2 border-blush flex items-center justify-center bg-white/5">
+                            <i class="fa-solid fa-check text-white opacity-0 scale-50 transition"></i>
+                        </div>
+                        <p class="text-sm">I promise to tease you, pamper you & annoy you lovingly</p>
+                    </div>
+                    <div class="flex items-center gap-4 glass rounded-xl p-4 cursor-pointer hover:bg-white/10 transition"
+                        onclick="togglePromise(this)">
+                        <div
+                            class="promise-check w-8 h-8 shrink-0 rounded-full border-2 border-blush flex items-center justify-center bg-white/5">
+                            <i class="fa-solid fa-check text-white opacity-0 scale-50 transition"></i>
+                        </div>
+                        <p class="text-sm">I promise to be yours — in this life & all next lives</p>
+                    </div>
+                </div>
+                <div class="text-center mt-6">
+                    <div class="inline-flex items-center gap-2 glass rounded-full px-6 py-2"><span
+                            class="text-sm text-white/70">Promises sealed:</span><span id="promiseCount"
+                            class="font-bold text-gold">0 / 6</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINALE -->
+    <section class="py-20 px-4 text-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-25"><img
+                src="https://images.unsplash.com/photo-1518623480241-7e49cabe49c6?w=1200&q=80"
+                class="w-full h-full object-cover" alt="" />
+            <div class="absolute inset-0 bg-gradient-to-b from-[#18040B] via-[#18040B]/60 to-[#18040B]"></div>
+        </div>
+        <div class="relative max-w-3xl mx-auto reveal">
+            <svg class="w-24 h-24 mx-auto float-slow">
+                <use href="#lipsIcon" />
+            </svg>
+            <h2 class="font-script text-6xl md:text-8xl gold-gradient mt-4 leading-tight">I Love You<br>My Handsome Bava
+            </h2>
+            <p class="font-dancing text-2xl text-blushLight mt-4">Nuvvu naa gunde, naa pranama, naa sarvam... Happy
+                Anniversary!</p>
+            <p class="text-white/60 mt-3 text-sm md:text-base">From today, tomorrow, forever — <span id="finalFrom">your
+                    Bangaram</span> will shower you with kisses every day.</p>
+            <div class="flex flex-wrap justify-center gap-4 mt-8">
+                <button onclick="celebrate()" class="btn-love text-white font-bold px-10 py-4 rounded-full text-lg"><i
+                        class="fa-solid fa-champagne-glasses mr-2"></i>Celebrate Our Love</button>
+                <button onclick="showerKisses(120)" class="btn-gold font-bold px-10 py-4 rounded-full text-lg"><svg
+                        class="w-6 h-6 inline -mt-1">
+                        <use href="#lipsIcon" />
+                    </svg> Kiss Blast</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/10 py-8 px-4 text-center text-white/50 text-sm bg-[#12030A]">
+        <p class="font-script text-3xl gold-gradient">Bava ♥ Bangaram</p>
+        <p class="mt-2">Made with infinite love, unlimited kisses & lifetime promises</p>
+        <p class="mt-1 text-xs">Happy Anniversary to the most handsome man in the world • <span id="yearNow"></span></p>
+    </footer>
+
+    <!-- FLOATING BUTTONS -->
+    <div class="fixed bottom-5 right-5 z-[900] flex flex-col gap-3">
+        <button id="musicBtn" onclick="toggleMusic()"
+            class="w-13 h-13 p-3.5 rounded-full glass-strong border border-gold/40 shadow-xl hover:scale-110 transition flex items-center gap-2"><span
+                id="musicIcon"><i class="fa-solid fa-music text-gold"></i></span><span id="musicBars"
+                class="hidden items-end gap-[3px] h-5"><span class="music-bar" style="animation-delay:0s"></span><span
+                    class="music-bar" style="animation-delay:.2s"></span><span class="music-bar"
+                    style="animation-delay:.4s"></span></span></button>
+        <button onclick="showerKisses(40)"
+            class="p-3.5 rounded-full bg-gradient-to-br from-blush to-roseDeep shadow-xl hover:scale-110 transition border border-white/30"><svg
+                class="w-6 h-6">
+                <use href="#lipsIcon" />
+            </svg></button>
+        <button onclick="window.scrollTo({top:0,behavior:'smooth'})"
+            class="p-3.5 rounded-full glass-strong border border-white/20 shadow-xl hover:scale-110 transition"><i
+                class="fa-solid fa-arrow-up text-gold"></i></button>
+    </div>
+
+    <!-- PERSONALIZE MODAL -->
+    <div id="personalizeModal"
+        class="fixed inset-0 z-[950] hidden items-center justify-center p-4 bg-black/70 backdrop-blur-md">
+        <div class="glass-strong rounded-[24px] p-8 max-w-md w-full shimmer-border relative">
+            <button onclick="closePersonalize()"
+                class="absolute top-4 right-4 w-9 h-9 rounded-full glass flex items-center justify-center hover:bg-blush transition"><i
+                    class="fa-solid fa-xmark"></i></button>
+            <h3 class="font-script text-4xl gold-gradient text-center">Make It Ours</h3>
+            <p class="text-center text-white/60 text-sm mb-5">Personalize this surprise for your Bava</p>
+            <div class="space-y-3">
+                <label class="block"><span class="text-xs uppercase tracking-widest text-gold">His Handsome
+                        Name</span><input id="pHis" value="BAVA"
+                        class="mt-1 w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white" /></label>
+                <label class="block"><span class="text-xs uppercase tracking-widest text-gold">Your Lovely
+                        Name</span><input id="pMine" value="Your Bangaram"
+                        class="mt-1 w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white" /></label>
+                <label class="block"><span class="text-xs uppercase tracking-widest text-gold">Anniversary
+                        Date</span><input id="pDate" type="date" value="2023-02-14"
+                        class="mt-1 w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white [color-scheme:dark]" /></label>
+            </div>
+            <button onclick="savePersonalize()" class="btn-love w-full mt-5 text-white font-bold py-3.5 rounded-xl"><i
+                    class="fa-solid fa-heart mr-2"></i>Save Our Love</button>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="fixed inset-0 z-[950] hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+        onclick="this.classList.add('hidden');this.classList.remove('flex')">
+        <img id="lightboxImg" src="" class="max-w-full max-h-[85vh] rounded-2xl border-4 border-gold/50 shadow-2xl"
+            alt="" />
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast"
+        class="fixed top-24 left-1/2 -translate-x-1/2 z-[960] glass-strong border border-gold/40 rounded-full px-6 py-3 font-semibold text-sm opacity-0 -translate-y-6 pointer-events-none flex items-center gap-2">
+        <i class="fa-solid fa-heart text-blush"></i><span id="toastMsg">Love!</span>
+    </div>
+
+    <script>
+        /* ============ STATE ============ */
+        let kisses = parseInt(localStorage.getItem('bavaKisses') || '0');
+        let annivDate = new Date(localStorage.getItem('bavaDate') || '2023-02-14T00:00:00');
+        let gameScore = 0, gameActive = false, gameTimer = null, gameSpawn = null;
+        let highScore = parseInt(localStorage.getItem('bavaHigh') || '0');
+        let audioCtx = null, musicPlaying = false, musicNodes = [], musicTimer = null;
+
+        document.getElementById('yearNow').textContent = new Date().getFullYear();
+        document.getElementById('highScore').textContent = highScore;
+        if (localStorage.getItem('bavaHis')) { document.getElementById('heroBavaName').textContent = localStorage.getItem('bavaHis').toUpperCase(); document.getElementById('pHis').value = localStorage.getItem('bavaHis'); }
+        if (localStorage.getItem('bavaMine')) { document.getElementById('letterFrom').textContent = localStorage.getItem('bavaMine') + ' ♥'; document.getElementById('finalFrom').textContent = localStorage.getItem('bavaMine'); document.getElementById('pMine').value = localStorage.getItem('bavaMine'); }
+
+        /* ============ PRELOADER ============ */
+        window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('hidden'), 2200));
+        setTimeout(() => document.getElementById('preloader').classList.add('hidden'), 4500);
+
+        /* ============ NAV ============ */
+        document.getElementById('menuBtn').onclick = () => document.getElementById('mobileMenu').classList.toggle('hidden');
+        document.querySelectorAll('#mobileMenu a').forEach(a => a.onclick = () => document.getElementById('mobileMenu').classList.add('hidden'));
+
+        /* duplicate marquee */
+        const mq = document.getElementById('marqueeContent');
+        mq.parentElement.appendChild(mq.cloneNode(true));
+
+        /* ============ TYPEWRITER ============ */
+        const lines = ["To the most handsome Bava in the whole universe...", "You are my heartbeat, my smile, my forever home...", "Today I celebrate YOU — my love, my king, my everything...", "Get ready for laksha kisses coming your way... 💋"];
+        let li = 0, ci = 0, del = false;
+        function typeLoop() {
+            const el = document.getElementById('typewriter');
+            const cur = lines[li];
+            el.textContent = cur.slice(0, ci);
+            if (!del) { ci++; if (ci > cur.length) { del = true; setTimeout(typeLoop, 1800); return; } }
+            else { ci--; if (ci === 0) { del = false; li = (li + 1) % lines.length; } }
+            setTimeout(typeLoop, del ? 28 : 55);
+        }
+        typeLoop();
+
+        /* ============ SPARKLES ============ */
+        const spk = document.getElementById('sparkles');
+        for (let i = 0; i < 40; i++) { const s = document.createElement('div'); s.className = 'sparkle'; s.style.left = Math.random() * 100 + '%'; s.style.top = Math.random() * 100 + '%'; s.style.animationDelay = (Math.random() * 2) + 's'; s.style.background = Math.random() > .5 ? '#FFD166' : '#FF8FA3'; s.style.boxShadow = `0 0 12px ${s.style.background}`; spk.appendChild(s); }
+
+        /* ============ BACKGROUND HEART CANVAS ============ */
+        const cv = document.getElementById('kissCanvas'), ctx = cv.getContext('2d');
+        let parts = [];
+        function resize() { cv.width = innerWidth; cv.height = innerHeight; }
+        resize(); addEventListener('resize', resize);
+        function drawHeart(x, y, s, color, alpha, rot) { ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.globalAlpha = alpha; ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(0, s * 0.3); ctx.bezierCurveTo(s * 0.5, -s * 0.25, s * 1.1, s * 0.35, 0, s); ctx.bezierCurveTo(-s * 1.1, s * 0.35, -s * 0.5, -s * 0.25, 0, s * 0.3); ctx.fill(); ctx.restore(); }
+        for (let i = 0; i < 35; i++) parts.push({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, s: 6 + Math.random() * 14, c: Math.random() > .5 ? '#FF4D6D' : '#FFD166', a: .08 + Math.random() * .15, vy: .3 + Math.random() * .8, vx: (Math.random() - .5) * .4, r: Math.random() * Math.PI, vr: (Math.random() - .5) * .02 });
+        (function anim() { ctx.clearRect(0, 0, cv.width, cv.height); parts.forEach(p => { p.y -= p.vy; p.x += p.vx + Math.sin(p.y * .01) * .3; p.r += p.vr; if (p.y < -20) { p.y = cv.height + 20; p.x = Math.random() * cv.width; } drawHeart(p.x, p.y, p.s, p.c, p.a, p.r); }); requestAnimationFrame(anim); })();
+
+        /* ============ MOUSE TRAIL ============ */
+        let lastTrail = 0;
+        document.addEventListener('mousemove', e => {
+            const now = Date.now(); if (now - lastTrail < 90) return; lastTrail = now;
+            if (Math.random() > .55) return;
+            const h = document.createElement('div'); h.className = 'trail-heart';
+            h.innerHTML = Math.random() > .5 ? '<i class="fa-solid fa-heart" style="color:#FF4D6D;font-size:' + (8 + Math.random() * 10) + 'px"></i>' : '<svg style="width:' + (14 + Math.random() * 10) + 'px;height:' + (14 + Math.random() * 10) + 'px"><use href="#lipsIcon"/></svg>';
+            h.style.left = e.clientX + 'px'; h.style.top = e.clientY + 'px'; document.body.appendChild(h);
+            setTimeout(() => h.remove(), 1000);
+        });
+
+        /* ============ COUNTER ============ */
+        function updateCounter() {
+            const now = new Date(); let diff = now - annivDate; if (diff < 0) diff = 0;
+            const yrs = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hrs = Math.floor(diff / (1000 * 60 * 60) % 24), mins = Math.floor(diff / (1000 * 60) % 60), secs = Math.floor(diff / 1000 % 60);
+            document.getElementById('cYears').textContent = yrs; document.getElementById('cDays').textContent = days;
+            document.getElementById('cHours').textContent = hrs; document.getElementById('cMins').textContent = mins; document.getElementById('cSecs').textContent = secs;
+            document.getElementById('statDays').textContent = days;
+            const d = annivDate; document.getElementById('annivDateLabel').textContent = d.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) + ' • Our Forever Date';
+        }
+        setInterval(updateCounter, 1000); updateCounter();
+
+        /* ============ KISS SYSTEM ============ */
+        const kissMessages = ["Mmmuahh! For my handsome Bava! 💋", "That one was extra sweet! ♥", "Your lips are calling me, Bava!", "One more... and one more... and infinite!", "Nuvvu naa muddu Bava! 💋♥", "Kiss no. {n} — 999,999 to go!", "Sweet like your smile!", "Sealed with love, delivered with hug!"];
+        function updateKissUI() {
+            document.getElementById('kissCount').textContent = kisses;
+            document.getElementById('statKiss').textContent = kisses;
+            const lvl = kisses >= 500 ? 'Eternal' : kisses >= 200 ? 'Obsessed' : kisses >= 100 ? 'Addicted' : kisses >= 50 ? 'Lover' : kisses >= 10 ? 'Sweet' : 'New';
+            document.getElementById('kissLevel').textContent = lvl;
+            localStorage.setItem('bavaKisses', kisses);
+        }
+        updateKissUI();
+        function playKissSound() {
+            try {
+                audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+                o.connect(g); g.connect(audioCtx.destination);
+                o.frequency.setValueAtTime(900, audioCtx.currentTime);
+                o.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + .18);
+                g.gain.setValueAtTime(.25, audioCtx.currentTime);
+                g.gain.exponentialRampToValueAtTime(.01, audioCtx.currentTime + .22);
+                o.start(); o.stop(audioCtx.currentTime + .25);
+            } catch (e) { }
+        }
+        function spawnFlyKiss(x, y, big = false) {
+            const k = document.createElement('div'); k.className = 'kiss-fly';
+            const size = big ? 50 + Math.random() * 40 : 26 + Math.random() * 28;
+            k.innerHTML = `<svg width="${size}" height="${size}"><use href="#lipsIcon"/></svg>`;
+            k.style.left = x + 'px'; k.style.top = y + 'px'; document.body.appendChild(k);
+            requestAnimationFrame(() => { k.style.transform = `translate(${(Math.random() - .5) * 300}px, ${-150 - Math.random() * 250}px) rotate(${(Math.random() - .5) * 120}deg) scale(1.4)`; k.style.opacity = '0'; });
+            setTimeout(() => k.remove(), 1300);
+        }
+        function sendKiss(e) {
+            kisses++; updateKissUI(); playKissSound();
+            const x = e && e.clientX ? e.clientX : innerWidth / 2, y = e && e.clientY ? e.clientY : innerHeight / 2;
+            for (let i = 0; i < 6; i++) setTimeout(() => spawnFlyKiss(x + (Math.random() - .5) * 60, y + (Math.random() - .5) * 40), i * 60);
+            const msg = kissMessages[Math.floor(Math.random() * kissMessages.length)].replace('{n}', kisses);
+            const km = document.getElementById('kissMsg'); km.style.opacity = 0;
+            setTimeout(() => { km.textContent = msg; km.style.opacity = 1; }, 150);
+            if (kisses % 25 === 0) { showerKisses(40); toast(`Wow! ${kisses} kisses! Bava is blushing!`); }
+            if (kisses % 10 === 0) addWallKiss();
+        }
+        function showerKisses(n) {
+            playKissSound();
+            for (let i = 0; i < n; i++) setTimeout(() => spawnFlyKiss(Math.random() * innerWidth, innerHeight * 0.3 + Math.random() * innerHeight * 0.5), i * 30);
+            kisses += Math.floor(n / 4); updateKissUI();
+            confetti({ particleCount: Math.min(n, 150), spread: 100, origin: { y: .6 }, colors: ['#FF4D6D', '#FF8FA3', '#FFD166', '#ffffff'] });
+        }
+        function megaKiss() {
+            showerKisses(100); addWallKiss(); addWallKiss(); addWallKiss();
+            toast('100 kisses blasted to your Bava!');
+        }
+        /* Kiss wall */
+        function addWallKiss() {
+            const wall = document.getElementById('kissWall');
+            document.getElementById('wallEmpty')?.remove();
+            const k = document.createElement('div'); k.className = 'kiss-mark';
+            const s = 36 + Math.random() * 46, r = (Math.random() - .5) * 50;
+            k.style.setProperty('--r', r + 'deg');
+            k.style.left = (Math.random() * 85) + '%'; k.style.top = (Math.random() * 65) + '%'; k.style.transform = `rotate(${r}deg)`;
+            const shade = ['#E11D48', '#C9184A', '#FF4D6D', '#9D0B3B'][Math.floor(Math.random() * 4)];
+            k.innerHTML = `<svg width="${s}" height="${s * 0.64}" viewBox="0 0 100 64" style="filter:drop-shadow(0 3px 6px rgba(0,0,0,.25))"><path d="M3 32 C12 12 28 6 42 18 C46 14 54 14 58 18 C72 6 88 12 97 32 C88 52 72 60 58 46 C54 50 46 50 42 46 C28 60 12 52 3 32 Z" fill="${shade}" opacity=".92"/></svg>`;
+            wall.appendChild(k);
+            kisses++; updateKissUI();
+        }
+        function clearWall() { document.getElementById('kissWall').innerHTML = '<p id="wallEmpty" class="absolute inset-0 flex items-center justify-center text-wine/40 font-dancing text-2xl">Wall cleared... start kissing again! 💋</p>'; toast('Kiss wall cleared'); }
+
+        /* ============ CATCH GAME ============ */
+        function startGame() {
+            gameScore = 0; gameActive = true;
+            document.getElementById('gameScore').textContent = '0';
+            document.getElementById('gameTime').textContent = '30';
+            document.getElementById('gameOverlay').style.display = 'none';
+            document.getElementById('secretNote').classList.add('hidden');
+            const area = document.getElementById('gameArea');
+            area.querySelectorAll('.falling-kiss').forEach(e => e.remove());
+            let t = 30;
+            gameTimer = setInterval(() => { t--; document.getElementById('gameTime').textContent = t; if (t <= 0) endGame(); }, 1000);
+            gameSpawn = setInterval(() => {
+                if (!gameActive) return;
+                const k = document.createElement('div'); k.className = 'falling-kiss';
+                const s = 34 + Math.random() * 26;
+                k.style.left = (Math.random() * 85) + '%'; k.style.animationDuration = (1.8 + Math.random() * 1.8) + 's';
+                k.innerHTML = `<svg width="${s}" height="${s}"><use href="#lipsIcon"/></svg>`;
+                k.onclick = (e) => { e.stopPropagation(); gameScore++; document.getElementById('gameScore').textContent = gameScore; playKissSound(); kisses++; updateKissUI(); confetti({ particleCount: 8, spread: 60, startVelocity: 25, origin: { x: e.clientX / innerWidth, y: e.clientY / innerHeight }, colors: ['#FF4D6D', '#FFD166'] }); k.remove(); };
+                area.appendChild(k);
+                setTimeout(() => k.remove(), 4500);
+            }, 450);
+        }
+        function endGame() {
+            gameActive = false; clearInterval(gameTimer); clearInterval(gameSpawn);
+            const area = document.getElementById('gameArea');
+            area.querySelectorAll('.falling-kiss').forEach(e => e.remove());
+            if (gameScore > highScore) { highScore = gameScore; localStorage.setItem('bavaHigh', highScore); }
+            document.getElementById('highScore').textContent = highScore;
+            const ov = document.getElementById('gameOverlay'); ov.style.display = 'flex';
+            ov.innerHTML = `<div class="text-center p-6"><svg class="w-16 h-16 mx-auto mb-2"><use href="#lipsIcon"/></svg><p class="font-serif font-bold text-2xl">You caught ${gameScore} kisses!</p><p class="text-white/60 text-sm mt-1 mb-4">${gameScore >= 20 ? 'Amazing! Bava is showered in love!' : gameScore >= 10 ? 'Sweet! Bava wants more kisses!' : 'Cute try! Kiss again, my love!'}</p><button onclick="startGame()" class="btn-love text-white font-semibold px-8 py-3 rounded-full"><i class="fa-solid fa-rotate-right mr-2"></i>Play Again</button></div>`;
+            if (gameScore >= 20) { document.getElementById('secretNote').classList.remove('hidden'); showerKisses(50); }
+            toast(`Game over! ${gameScore} kisses caught!`);
+        }
+
+        /* ============ LOVE METER ============ */
+        function calcLove() {
+            const a = (document.getElementById('lover1').value || 'Bava').trim(), b = (document.getElementById('lover2').value || 'Bangaram').trim();
+            if (!a || !b) { toast('Enter both names first!'); return; }
+            let hash = 0; const s = (a + b).toLowerCase();
+            for (let c of s) hash = (hash * 31 + c.charCodeAt(0)) % 1000;
+            const pct = 92 + (hash % 8) + (Math.random() > .5 ? 0 : .5); // always 92-100
+            const final = Math.min(100, Math.round(pct));
+            const ring = document.getElementById('loveRing'), num = document.getElementById('lovePct');
+            ring.style.strokeDashoffset = 264;
+            let cur = 0; const step = () => { cur += 2; if (cur >= final) cur = final; num.textContent = cur + '%'; ring.style.strokeDashoffset = 264 - (264 * cur / 100); if (cur < final) setTimeout(step, 40); else { playKissSound(); confetti({ particleCount: 80, spread: 90, origin: { y: .6 }, colors: ['#FF4D6D', '#FFD166'] }); } };
+            step();
+            const msgs = [`${a} ♥ ${b} = MADE IN HEAVEN!`, `Soulmates confirmed! Bava + ${b} forever!`, `Even stars are jealous of this love!`, `100% pure, 0% doubt — true love!`];
+            document.getElementById('loveMsg').textContent = msgs[Math.floor(Math.random() * msgs.length)];
+        }
+
+        /* ============ ENVELOPE ============ */
+        function toggleEnvelope() {
+            const e = document.getElementById('envelope'); e.classList.toggle('open');
+            document.getElementById('envHint').textContent = e.classList.contains('open') ? 'With all my love, sealed with kisses 💋' : 'Click envelope to open';
+            if (e.classList.contains('open')) { playKissSound(); setTimeout(() => showerKisses(30), 600); }
+        }
+
+        /* ============ COUPONS & PROMISES ============ */
+        function claimCoupon(el, name) {
+            if (el.classList.contains('claimed')) { toast('Already claimed — redeem with a hug!'); return; }
+            el.classList.add('claimed'); el.querySelector('button').textContent = 'CLAIMED ♥';
+            playKissSound(); showerKisses(25); toast(`"${name}" claimed! Show this to Bava!`);
+        }
+        let promises = 0;
+        function togglePromise(el) {
+            const c = el.querySelector('.promise-check'); c.classList.toggle('done');
+            promises = document.querySelectorAll('.promise-check.done').length;
+            document.getElementById('promiseCount').textContent = `${promises} / 6`;
+            if (c.classList.contains('done')) { playKissSound(); spawnFlyKiss(el.getBoundingClientRect().left + 30, el.getBoundingClientRect().top); }
+            if (promises === 6) { toast('All promises sealed! Forever bound in love!'); celebrate(); }
+        }
+
+        /* ============ GALLERY LIGHTBOX ============ */
+        function openLightbox(el) { const img = el.querySelector('img'); document.getElementById('lightboxImg').src = img.src; const l = document.getElementById('lightbox'); l.classList.remove('hidden'); l.classList.add('flex'); }
+
+        /* ============ PERSONALIZE ============ */
+        function openPersonalize() { const m = document.getElementById('personalizeModal'); m.classList.remove('hidden'); m.classList.add('flex'); }
+        function closePersonalize() { const m = document.getElementById('personalizeModal'); m.classList.add('hidden'); m.classList.remove('flex'); }
+        function savePersonalize() {
+            const his = document.getElementById('pHis').value || 'BAVA', mine = document.getElementById('pMine').value || 'Your Bangaram', dt = document.getElementById('pDate').value;
+            document.getElementById('heroBavaName').textContent = his.toUpperCase();
+            document.getElementById('letterFrom').textContent = mine + ' ♥';
+            document.getElementById('finalFrom').textContent = mine;
+            if (dt) annivDate = new Date(dt + 'T00:00:00');
+            localStorage.setItem('bavaHis', his); localStorage.setItem('bavaMine', mine); localStorage.setItem('bavaDate', annivDate.toISOString());
+            updateCounter(); closePersonalize(); showerKisses(50); toast('Saved! This page is now truly ours!');
+        }
+
+        /* ============ CELEBRATE ============ */
+        function celebrate() {
+            const end = Date.now() + 2500;
+            (function frame() {
+                confetti({ particleCount: 6, angle: 60, spread: 60, origin: { x: 0, y: .7 }, colors: ['#FF4D6D', '#FFD166', '#fff'] });
+                confetti({ particleCount: 6, angle: 120, spread: 60, origin: { x: 1, y: .7 }, colors: ['#FF4D6D', '#FFD166', '#fff'] });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            })();
+            showerKisses(60); toast('Happy Anniversary My Handsome Bava!');
+        }
+
+        /* ============ TOAST ============ */
+        let toastT = null;
+        function toast(msg) {
+            const t = document.getElementById('toast'); document.getElementById('toastMsg').textContent = msg;
+            t.style.opacity = 1; t.style.transform = 'translate(-50%,0)';
+            clearTimeout(toastT); toastT = setTimeout(() => { t.style.opacity = 0; t.style.transform = 'translate(-50%,-24px)'; }, 2600);
+        }
+
+        /* ============ MUSIC (WebAudio lullaby) ============ */
+        const melody = [523, 659, 784, 880, 784, 659, 523, 587, 659, 523, 440, 523, 659, 784, 659, 523]; // C E G A...
+        function toggleMusic() {
+            audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            musicPlaying = !musicPlaying;
+            document.getElementById('musicBars').classList.toggle('hidden', !musicPlaying);
+            document.getElementById('musicBars').classList.toggle('flex', musicPlaying);
+            document.getElementById('musicIcon').style.display = musicPlaying ? 'none' : 'block';
+            if (musicPlaying) { let i = 0; const play = () => { if (!musicPlaying) return; const f = melody[i % melody.length]; const o = audioCtx.createOscillator(), g = audioCtx.createGain(); o.type = 'sine'; o.frequency.value = f; g.gain.setValueAtTime(0.0001, audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(.18, audioCtx.currentTime + .1); g.gain.exponentialRampToValueAtTime(.0001, audioCtx.currentTime + .9); o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime + 1); i++; musicTimer = setTimeout(play, 480); }; play(); toast('Playing our love melody...'); }
+            else { clearTimeout(musicTimer); toast('Music paused'); }
+        }
+
+        /* ============ SCROLL REVEAL ============ */
+        const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { gsap.to(e.target, { opacity: 1, y: 0, duration: .9, ease: 'power3.out' }); io.unobserve(e.target); } }), { threshold: .12 });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        /* welcome */
+        setTimeout(() => { toast('Welcome! Tap anywhere for kisses 💋'); }, 3000);
+        document.addEventListener('dblclick', e => { spawnFlyKiss(e.clientX, e.clientY, true); playKissSound(); kisses++; updateKissUI(); });
+        // seed wall
+        setTimeout(() => { addWallKiss(); addWallKiss(); }, 3500);
+    </script>
+</body>
+
+</html>

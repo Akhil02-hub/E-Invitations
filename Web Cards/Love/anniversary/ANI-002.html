@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 1st Anniversary My Handsome Bava ❤</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { wine: '#2b0a12', deep: '#120409', rose: '#ff4d6d', blush: '#ff8fa3', gold: '#d4af37', goldlight: '#f6e27a', cream: '#fff5ec' },
+                    fontFamily: { script: ['"Great Vibes"', 'cursive'], serif: ['"Playfair Display"', 'serif'], sans: ['Jost', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=Jost:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #120409;
+            color: #fff5ec;
+            font-family: 'Jost', sans-serif;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a060d;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(#d4af37, #ff4d6d);
+            border-radius: 10px;
+        }
+
+        .font-script {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .gold-text {
+            background: linear-gradient(110deg, #f6e27a 0%, #d4af37 20%, #fff8d6 40%, #d4af37 60%, #f6e27a 80%, #d4af37 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .rose-glow {
+            text-shadow: 0 0 20px rgba(255, 77, 109, .6), 0 0 60px rgba(255, 77, 109, .3);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, .06);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(212, 175, 55, .25);
+        }
+
+        .gold-border {
+            position: relative;
+        }
+
+        .gold-border::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(135deg, #f6e27a, #d4af37, #ff4d6d, #f6e27a);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .bokeh {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: .35;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #petals,
+        #fireworks {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        #petals {
+            z-index: 1;
+            opacity: .9;
+        }
+
+        #fireworks {
+            z-index: 60;
+        }
+
+        .heart-trail {
+            position: fixed;
+            pointer-events: none;
+            z-index: 70;
+            font-size: 18px;
+            animation: trailFloat 1s ease-out forwards;
+        }
+
+        @keyframes trailFloat {
+            0% {
+                transform: translate(-50%, -50%) scale(.5) rotate(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -120px) scale(1.3) rotate(20deg);
+                opacity: 0;
+            }
+        }
+
+        .float-slow {
+            animation: floaty 5s ease-in-out infinite;
+        }
+
+        .float-slower {
+            animation: floaty 7s ease-in-out infinite;
+        }
+
+        @keyframes floaty {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-2deg);
+            }
+
+            50% {
+                transform: translateY(-18px) rotate(2deg);
+            }
+        }
+
+        .spin-slow {
+            animation: spin 18s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .beat {
+            animation: beat 1.3s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes beat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.15);
+            }
+
+            45% {
+                transform: scale(.95);
+            }
+
+            60% {
+                transform: scale(1.1);
+            }
+        }
+
+        .polaroid {
+            background: #fffdf7;
+            padding: 12px 12px 48px 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .5), 0 0 0 1px rgba(212, 175, 55, .4);
+            transform: rotate(-6deg);
+            transition: .5s;
+            position: relative;
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.04);
+            z-index: 10;
+        }
+
+        .tape {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-3deg);
+            width: 110px;
+            height: 28px;
+            background: rgba(246, 226, 122, .85);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            transform: translateX(-50%);
+            background: linear-gradient(to bottom, #d4af37, #ff4d6d, #d4af37);
+            box-shadow: 0 0 15px rgba(212, 175, 55, .6);
+        }
+
+        @media(max-width:768px) {
+            .timeline-line {
+                left: 18px;
+            }
+        }
+
+        .t-dot {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 30% 30%, #ff8fa3, #ff4d6d 60%, #9d0208);
+            border: 3px solid #f6e27a;
+            box-shadow: 0 0 25px rgba(255, 77, 109, .7);
+            z-index: 2;
+            flex-shrink: 0;
+        }
+
+        .flip {
+            perspective: 1200px;
+            height: 240px;
+            cursor: pointer;
+        }
+
+        .flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform .8s cubic-bezier(.2, .8, .2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip.flipped .flip-inner,
+        .flip:hover .flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-front,
+        .flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .flip-back {
+            transform: rotateY(180deg);
+        }
+
+        .envelope {
+            width: min(420px, 88vw);
+            height: 280px;
+            position: relative;
+        }
+
+        .env-back {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #7f1d2d, #3d0a14);
+            border-radius: 18px;
+            border: 1px solid rgba(212, 175, 55, .5);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .6);
+        }
+
+        .env-letter {
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            top: 18px;
+            bottom: 18px;
+            background: #fff8ec;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #4a0a18;
+            transition: transform 1s ease, opacity .6s;
+            z-index: 2;
+        }
+
+        .env-front {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .env-pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 62%;
+            background: linear-gradient(180deg, #a4133c, #5c0a1a);
+            clip-path: polygon(0 0, 50% 38%, 100% 0, 100% 100%, 0 100%);
+            border-radius: 0 0 18px 18px;
+            border-top: 1px solid rgba(246, 226, 122, .5);
+        }
+
+        .env-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 55%;
+            background: linear-gradient(180deg, #c9184a, #7a0f28);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top;
+            transition: transform .8s ease, z-index .2s;
+            z-index: 4;
+            border-radius: 18px 18px 0 0;
+            border: 1px solid rgba(246, 226, 122, .5);
+        }
+
+        .envelope.open .env-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope.open .env-letter {
+            transform: translateY(-110px) scale(1.05);
+        }
+
+        .seal {
+            position: absolute;
+            top: 48%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ff6b8a, #c9184a 70%);
+            border: 3px solid #f6e27a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            z-index: 5;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .5);
+            transition: .4s;
+            cursor: pointer;
+        }
+
+        .envelope.open .seal {
+            opacity: 0;
+            scale: .5;
+            pointer-events: none;
+        }
+
+        .gift {
+            width: 220px;
+            height: 220px;
+            position: relative;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .gift-box {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 130px;
+            background: linear-gradient(135deg, #c9184a, #590d22);
+            border-radius: 12px;
+            border: 2px solid #f6e27a;
+        }
+
+        .gift-ribbon-v {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 28px;
+            transform: translateX(-50%);
+            background: linear-gradient(#f6e27a, #d4af37);
+        }
+
+        .gift-lid {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 46px;
+            background: linear-gradient(135deg, #ff4d6d, #800f2f);
+            border-radius: 10px;
+            border: 2px solid #f6e27a;
+            transition: .7s cubic-bezier(.2, .9, .3, 1.3);
+            z-index: 3;
+        }
+
+        .gift.open .gift-lid {
+            transform: translateX(-50%) translateY(-70px) rotate(-18deg);
+        }
+
+        .gift-light {
+            position: absolute;
+            bottom: 110px;
+            left: 50%;
+            transform: translateX(-50%) scaleY(0);
+            width: 120px;
+            height: 160px;
+            background: linear-gradient(to top, rgba(246, 226, 122, .9), transparent);
+            clip-path: polygon(20% 100%, 80% 100%, 100% 0, 0 0);
+            transform-origin: bottom;
+            transition: .7s;
+            filter: blur(2px);
+        }
+
+        .gift.open .gift-light {
+            transform: translateX(-50%) scaleY(1);
+            animation: lightPulse 1s infinite alternate;
+        }
+
+        @keyframes lightPulse {
+            to {
+                opacity: .7;
+            }
+        }
+
+        .cake-plate {
+            width: 300px;
+            height: 22px;
+            background: linear-gradient(#e9ecef, #adb5bd);
+            border-radius: 50%;
+            margin: 0 auto;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, .5);
+        }
+
+        .cake-tier {
+            margin: 0 auto;
+            border-radius: 14px;
+            position: relative;
+            border: 2px solid rgba(246, 226, 122, .6);
+        }
+
+        .cake-icing {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            height: 28px;
+            background: #fff5ec;
+            border-radius: 14px 14px 0 0;
+        }
+
+        .drip {
+            position: absolute;
+            top: 24px;
+            width: 18px;
+            background: #fff5ec;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .flame {
+            width: 22px;
+            height: 38px;
+            background: radial-gradient(circle at 50% 80%, #fff 0%, #ffe66d 25%, #ff9f1c 55%, #ff4d6d 80%, transparent 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            transform-origin: 50% 100%;
+            animation: flick .18s infinite alternate;
+            filter: drop-shadow(0 0 18px #ffb703);
+        }
+
+        @keyframes flick {
+            0% {
+                transform: scale(1) rotate(-3deg);
+            }
+
+            100% {
+                transform: scale(1.12, 1.2) rotate(3deg);
+            }
+        }
+
+        .smoke {
+            width: 6px;
+            height: 40px;
+            background: linear-gradient(to top, rgba(200, 200, 200, .7), transparent);
+            border-radius: 10px;
+            filter: blur(3px);
+            opacity: 0;
+            animation: smokeUp 2s ease-out;
+        }
+
+        @keyframes smokeUp {
+            0% {
+                opacity: .9;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+        }
+
+        .wax-seal-btn {
+            width: 92px;
+            height: 92px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ff758f, #800f2f 75%);
+            border: 4px double #f6e27a;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .5), inset 0 2px 8px rgba(255, 255, 255, .3);
+        }
+
+        .gallery-img {
+            transition: .6s cubic-bezier(.2, .8, .2, 1);
+        }
+
+        .gallery-card:hover .gallery-img {
+            transform: scale(1.12) rotate(1deg);
+        }
+
+        .btn-love {
+            background: linear-gradient(135deg, #ff4d6d, #800f2f);
+            border: 1px solid #f6e27a;
+            box-shadow: 0 8px 25px rgba(255, 77, 109, .4), inset 0 1px 0 rgba(255, 255, 255, .3);
+            transition: .3s;
+        }
+
+        .btn-love:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(255, 77, 109, .6);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #f6e27a, #d4af37 50%, #9c7c1a);
+            color: #2b0a12;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, .4);
+            transition: .3s;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, .6);
+        }
+
+        .falling-heart {
+            position: absolute;
+            top: -60px;
+            font-size: 28px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform .2s;
+            filter: drop-shadow(0 4px 8px rgba(255, 77, 109, .6));
+        }
+
+        .falling-heart:hover {
+            transform: scale(1.3);
+        }
+
+        #typeLetter {
+            white-space: pre-line;
+        }
+
+        .shine-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -80%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .5), transparent);
+            transform: skewX(-20deg);
+            animation: btnShine 3s infinite;
+        }
+
+        @keyframes btnShine {
+            0% {
+                left: -80%;
+            }
+
+            60%,
+            100% {
+                left: 130%;
+            }
+        }
+
+        .marquee {
+            display: flex;
+            gap: 2rem;
+            animation: marq 22s linear infinite;
+            width: max-content;
+        }
+
+        @keyframes marq {
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        .ring-spin {
+            background: conic-gradient(from 0deg, #f6e27a, #ff4d6d, #f6e27a, #fff, #f6e27a);
+            animation: spin 4s linear infinite;
+        }
+
+        input {
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #d4af37 !important;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, .25);
+        }
+
+        #toast {
+            transition: .4s;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+    </style>
+</head>
+
+<body class="relative">
+
+    <div class="bokeh w-[500px] h-[500px] bg-[#ff4d6d] -top-40 -left-40"></div>
+    <div class="bokeh w-[600px] h-[600px] bg-[#d4af37] top-[40%] -right-60"></div>
+    <div class="bokeh w-[400px] h-[400px] bg-[#800f2f] bottom-0 left-1/3"></div>
+    <canvas id="petals"></canvas>
+    <canvas id="fireworks"></canvas>
+    <div class="fixed top-0 left-0 h-1 bg-gradient-to-r from-goldlight via-rose to-gold z-[80]" id="progress"
+        style="width:0%"></div>
+
+    <!-- LOADER -->
+    <div id="loader"
+        class="fixed inset-0 z-[100] bg-[#120409] flex flex-col items-center justify-center gap-6 transition-opacity duration-700">
+        <div class="text-7xl beat">❤️</div>
+        <div class="font-script text-4xl md:text-5xl gold-text">Loading Our Love Story...</div>
+        <div class="w-56 h-1.5 bg-white/10 rounded-full overflow-hidden">
+            <div id="loadBar" class="h-full w-0 bg-gradient-to-r from-goldlight to-rose rounded-full transition-all">
+            </div>
+        </div>
+    </div>
+
+    <!-- ENVELOPE OVERLAY -->
+    <div id="envelopeOverlay"
+        class="fixed inset-0 z-[90] hidden items-center justify-center p-6 bg-[#120409]/95 backdrop-blur-xl overflow-y-auto">
+        <div class="text-center max-w-2xl w-full py-8">
+            <div
+                class="inline-flex items-center gap-2 glass px-5 py-2 rounded-full text-xs tracking-[.3em] uppercase text-goldlight mb-4">
+                💌 &nbsp; A Surprise For You &nbsp; 💌</div>
+            <h1 class="font-script text-5xl md:text-7xl gold-text leading-tight">My Handsome Bava</h1>
+            <p class="mt-3 text-cream/70 tracking-wide">Someone who loves you endlessly has left you a
+                surprise...<br>Tap the seal to open your 1st Anniversary gift</p>
+            <div class="flex justify-center mt-8">
+                <div class="envelope" id="envelope">
+                    <div class="env-back"></div>
+                    <div class="env-letter px-6 text-center">
+                        <div class="font-script text-3xl text-[#800f2f]">Happy 1st Anniversary!</div>
+                        <div class="text-sm mt-1 font-medium tracking-widest uppercase text-[#a4133c]">To My Handsome
+                            Bava ❤</div>
+                        <div class="mt-3 text-5xl">💏</div>
+                        <div class="mt-2 text-xs text-[#800f2f]/70">365 days • 1 beautiful us</div>
+                    </div>
+                    <div class="env-front">
+                        <div class="env-pocket"></div>
+                    </div>
+                    <div class="env-flap"></div>
+                    <div class="seal" id="sealBtn">💖</div>
+                </div>
+            </div>
+            <p class="mt-8 text-cream/50 text-sm animate-pulse">👆 Click the heart seal to open 👆</p>
+            <p class="mt-2 text-cream/40 text-xs">🔊 Best experienced with sound ON</p>
+        </div>
+    </div>
+
+    <!-- NAV -->
+    <nav class="fixed top-0 left-0 right-0 z-[70] glass border-x-0 border-t-0">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
+            <a href="#home" class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-full ring-spin p-[2px]">
+                    <div class="w-full h-full rounded-full bg-[#1a060d] flex items-center justify-center text-xl">💍
+                    </div>
+                </div>
+                <div class="leading-tight">
+                    <div class="font-script text-2xl gold-text">Bava ❤ Love</div>
+                    <div class="text-[10px] tracking-[.3em] uppercase text-cream/60">1st Anniversary</div>
+                </div>
+            </a>
+            <div class="hidden md:flex items-center gap-7 text-sm tracking-widest uppercase text-cream/80">
+                <a href="#story" class="hover:text-goldlight transition">Story</a>
+                <a href="#gallery" class="hover:text-goldlight transition">Moments</a>
+                <a href="#reasons" class="hover:text-goldlight transition">Reasons</a>
+                <a href="#letter" class="hover:text-goldlight transition">Letter</a>
+                <a href="#surprise" class="hover:text-goldlight transition">Surprise</a>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="musicBtn"
+                    class="w-10 h-10 rounded-full glass flex items-center justify-center hover:scale-110 transition"
+                    title="Music"><i id="musicIcon" class="fa-solid fa-music text-goldlight"></i></button>
+                <button id="celebrateNav"
+                    class="btn-gold shine-btn hidden sm:block px-5 py-2 rounded-full text-sm font-semibold">🎉
+                    Celebrate</button>
+                <button id="menuBtn" class="md:hidden w-10 h-10 rounded-full glass flex items-center justify-center"><i
+                        class="fa-solid fa-heart text-rose"></i></button>
+            </div>
+        </div>
+        <div id="mobileMenu"
+            class="md:hidden hidden px-6 pb-4 flex flex-col gap-3 text-sm tracking-widest uppercase text-center">
+            <a href="#story" class="glass rounded-full py-2">Story</a><a href="#gallery"
+                class="glass rounded-full py-2">Moments</a><a href="#reasons"
+                class="glass rounded-full py-2">Reasons</a><a href="#letter"
+                class="glass rounded-full py-2">Letter</a><a href="#surprise"
+                class="glass rounded-full py-2">Surprise</a>
+        </div>
+    </nav>
+
+    <main class="relative z-10">
+
+        <!-- HERO -->
+        <header id="home" class="min-h-screen flex items-center pt-28 pb-16 px-4 md:px-8 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center w-full">
+                <div>
+                    <div
+                        class="reveal inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-xs tracking-[.25em] uppercase text-goldlight">
+                        <span class="w-2 h-2 rounded-full bg-rose beat inline-block"></span> 28 • September • 2026 — Our
+                        Day
+                    </div>
+                    <h2 class="reveal font-script text-4xl md:text-5xl mt-5 text-blush">Happy Anniversary Love...</h2>
+                    <h1 class="reveal font-serif font-black text-5xl md:text-7xl leading-[1.05] mt-2">Happy 1st<br><span
+                            class="gold-text rose-glow">Anniversary</span><br><span
+                            class="font-script font-normal text-4xl md:text-6xl text-cream">My Handsome Bava ❤</span>
+                    </h1>
+                    <p class="reveal mt-5 text-cream/70 text-lg leading-relaxed max-w-xl">One year ago you walked into
+                        my life — and every day since, your handsome smile has been my sunrise, your love my home. This
+                        little world is built only for <span class="text-goldlight font-semibold bava-name">My
+                            Bava</span>, with all my heart.</p>
+                    <div class="reveal flex flex-wrap gap-2 mt-5">
+                        <span class="glass px-4 py-1.5 rounded-full text-sm">😍 Handsome</span><span
+                            class="glass px-4 py-1.5 rounded-full text-sm">💪 Caring</span><span
+                            class="glass px-4 py-1.5 rounded-full text-sm">🤴 Mine Forever</span>
+                        <button id="editNames"
+                            class="glass px-4 py-1.5 rounded-full text-sm text-goldlight hover:bg-white/10">✏️
+                            Personalize</button>
+                    </div>
+                    <div class="reveal grid grid-cols-4 gap-3 mt-8 max-w-lg">
+                        <div class="glass rounded-2xl p-3 text-center gold-border">
+                            <div id="tD" class="font-serif text-3xl font-bold gold-text">365</div>
+                            <div class="text-[11px] tracking-widest uppercase text-cream/60">Days</div>
+                        </div>
+                        <div class="glass rounded-2xl p-3 text-center gold-border">
+                            <div id="tH" class="font-serif text-3xl font-bold gold-text">00</div>
+                            <div class="text-[11px] tracking-widest uppercase text-cream/60">Hours</div>
+                        </div>
+                        <div class="glass rounded-2xl p-3 text-center gold-border">
+                            <div id="tM" class="font-serif text-3xl font-bold gold-text">00</div>
+                            <div class="text-[11px] tracking-widest uppercase text-cream/60">Mins</div>
+                        </div>
+                        <div class="glass rounded-2xl p-3 text-center gold-border">
+                            <div id="tS" class="font-serif text-3xl font-bold text-rose beat">00</div>
+                            <div class="text-[11px] tracking-widest uppercase text-cream/60">Secs</div>
+                        </div>
+                    </div>
+                    <div class="reveal flex flex-wrap gap-4 mt-8">
+                        <a href="#letter" class="btn-love shine-btn px-8 py-3.5 rounded-full font-semibold">💌 Read My
+                            Love Letter</a>
+                        <button onclick="bigCelebration()"
+                            class="btn-gold shine-btn px-8 py-3.5 rounded-full font-semibold">✨ Shower Love</button>
+                    </div>
+                    <div class="reveal mt-6 flex items-center gap-4 text-sm text-cream/60">
+                        <div class="flex -space-x-3"><img src="https://i.pravatar.cc/80?img=12"
+                                class="w-9 h-9 rounded-full border-2 border-gold" alt=""><img
+                                src="https://i.pravatar.cc/80?img=47" class="w-9 h-9 rounded-full border-2 border-gold"
+                                alt="">
+                            <div
+                                class="w-9 h-9 rounded-full bg-rose border-2 border-gold flex items-center justify-center text-xs font-bold">
+                                1yr</div>
+                        </div>
+                        <span>Loved fiercely for <b class="text-goldlight">365 days</b> & counting...</span>
+                    </div>
+                </div>
+
+                <div class="relative flex justify-center items-center reveal">
+                    <div
+                        class="absolute w-[420px] h-[420px] rounded-full bg-gradient-to-tr from-rose/30 to-gold/30 blur-3xl">
+                    </div>
+                    <div
+                        class="absolute spin-slow w-[380px] h-[380px] md:w-[460px] md:h-[460px] rounded-full border-2 border-dashed border-gold/40">
+                    </div>
+                    <div class="relative">
+                        <div class="polaroid w-[260px] md:w-[300px] float-slow">
+                            <div class="tape"></div>
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&q=80&auto=format&fit=crop"
+                                class="w-full h-[300px] md:h-[340px] object-cover rounded" alt="My Handsome Bava">
+                            <div class="text-center pt-3 text-[#4a0a18]">
+                                <div class="font-script text-3xl">My Handsome Bava</div>
+                                <div class="text-xs tracking-widest uppercase opacity-60">Handsome since forever 🤴❤️
+                                </div>
+                            </div>
+                            <div
+                                class="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-gradient-to-br from-goldlight to-gold flex flex-col items-center justify-center text-[#4a0a18] font-serif font-black shadow-xl rotate-12 border-4 border-white">
+                                <span class="text-2xl leading-none">1st</span><span
+                                    class="text-[9px] tracking-widest">YEAR</span>
+                            </div>
+                        </div>
+                        <div class="polaroid w-[190px] md:w-[210px] absolute -bottom-10 -left-16 md:-left-24 float-slower"
+                            style="transform:rotate(7deg)">
+                            <div class="tape"></div>
+                            <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=500&q=80&auto=format&fit=crop"
+                                class="w-full h-[170px] object-cover rounded" alt="Us">
+                            <div class="text-center pt-2 text-[#4a0a18] font-script text-2xl">You + Me = Us</div>
+                        </div>
+                        <div class="absolute -top-6 -left-8 glass rounded-2xl px-4 py-2 text-sm float-slow">😘 10,000+
+                            kisses</div>
+                        <div
+                            class="absolute top-1/2 -right-6 md:-right-12 glass rounded-2xl px-4 py-2 text-sm float-slower">
+                            ♾️ Infinite Love</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#stats"
+                class="absolute bottom-6 left-1/2 -translate-x-1/2 text-cream/50 animate-bounce text-2xl">⬇</a>
+        </header>
+
+        <!-- MARQUEE -->
+        <div class="border-y border-gold/20 bg-black/30 py-3 overflow-hidden relative z-10">
+            <div class="marquee font-script text-2xl md:text-3xl text-goldlight/90">
+                <span>Happy 1st Anniversary My Handsome Bava ❤ &nbsp; • &nbsp; 365 Days of Love &nbsp; • &nbsp; You Are
+                    My Forever &nbsp; • &nbsp; Handsome • Caring • Mine &nbsp; • &nbsp;</span>
+                <span>Happy 1st Anniversary My Handsome Bava ❤ &nbsp; • &nbsp; 365 Days of Love &nbsp; • &nbsp; You Are
+                    My Forever &nbsp; • &nbsp; Handsome • Caring • Mine &nbsp; • &nbsp;</span>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <section id="stats" class="max-w-7xl mx-auto px-4 md:px-8 py-16">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                <div class="glass gold-border rounded-3xl p-6 text-center reveal">
+                    <div class="text-4xl mb-2">📅</div>
+                    <div class="font-serif text-4xl font-black gold-text"><span class="counter"
+                            data-target="365">0</span></div>
+                    <div class="text-xs tracking-[.25em] uppercase mt-1 text-cream/60">Days Together</div>
+                </div>
+                <div class="glass gold-border rounded-3xl p-6 text-center reveal">
+                    <div class="text-4xl mb-2">💋</div>
+                    <div class="font-serif text-4xl font-black gold-text"><span class="counter"
+                            data-target="8760">0</span></div>
+                    <div class="text-xs tracking-[.25em] uppercase mt-1 text-cream/60">Hours of Love</div>
+                </div>
+                <div class="glass gold-border rounded-3xl p-6 text-center reveal">
+                    <div class="text-4xl mb-2">😍</div>
+                    <div class="font-serif text-4xl font-black gold-text"><span class="counter"
+                            data-target="10000">0</span>+</div>
+                    <div class="text-xs tracking-[.25em] uppercase mt-1 text-cream/60">Handsome Smiles</div>
+                </div>
+                <div class="glass gold-border rounded-3xl p-6 text-center reveal">
+                    <div class="text-4xl mb-2">♾️</div>
+                    <div class="font-serif text-4xl font-black text-rose">∞</div>
+                    <div class="text-xs tracking-[.25em] uppercase mt-1 text-cream/60">Reasons I Love You</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STORY -->
+        <section id="story" class="max-w-5xl mx-auto px-4 md:px-8 py-16">
+            <div class="text-center reveal">
+                <div class="text-xs tracking-[.35em] uppercase text-goldlight">Chapter 01 — Our Journey</div>
+                <h2 class="font-script text-5xl md:text-6xl gold-text mt-2">Our Love Story</h2>
+                <p class="text-cream/60 mt-2">From the first hello to 365 days of forever...</p>
+            </div>
+            <div class="relative mt-12">
+                <div class="timeline-line"></div>
+                <div class="space-y-8">
+                    <div class="reveal flex gap-5 md:gap-0 md:grid md:grid-cols-2 md:gap-12 items-center">
+                        <div
+                            class="t-dot md:order-2 md:mx-auto md:col-start-1 md:col-end-3 md:-mb-2 relative md:left-auto">
+                            👀</div>
+                        <div class="glass rounded-3xl p-6 md:text-right md:mr-6 flex-1">
+                            <div class="text-goldlight text-xs tracking-widest uppercase">Day 1 • First Meet</div>
+                            <h3 class="font-serif text-2xl font-bold mt-1">The Day My Eyes Found You</h3>
+                            <p class="text-cream/70 mt-2 text-sm leading-relaxed">The world stopped. There you were — so
+                                handsome, so charming — and my heart whispered, <i>"he's the one, Bava..."</i></p><img
+                                src="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=600&q=80&auto=format&fit=crop"
+                                class="mt-4 rounded-2xl h-44 w-full object-cover border border-gold/30" alt="">
+                        </div>
+                        <div class="hidden md:block"></div>
+                    </div>
+                    <div class="reveal flex gap-5 md:grid md:grid-cols-2 md:gap-12 items-center">
+                        <div class="hidden md:block"></div>
+                        <div class="t-dot md:mx-auto md:col-start-1 md:col-end-3">☕</div>
+                        <div class="glass rounded-3xl p-6 flex-1 md:ml-6">
+                            <div class="text-goldlight text-xs tracking-widest uppercase">First Date • Butterflies</div>
+                            <h3 class="font-serif text-2xl font-bold mt-1">Your Smile Stole Everything</h3>
+                            <p class="text-cream/70 mt-2 text-sm leading-relaxed">One coffee, one long laugh, one
+                                handsome look — and I forgot the whole world. I went home smiling like crazy.</p><img
+                                src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&q=80&auto=format&fit=crop"
+                                class="mt-4 rounded-2xl h-44 w-full object-cover border border-gold/30" alt="">
+                        </div>
+                    </div>
+                    <div class="reveal flex gap-5 md:grid md:grid-cols-2 md:gap-12 items-center">
+                        <div class="t-dot md:mx-auto md:col-start-1 md:col-end-3">🌙</div>
+                        <div class="glass rounded-3xl p-6 md:text-right md:mr-6 flex-1">
+                            <div class="text-goldlight text-xs tracking-widest uppercase">100 Days • Late Night Talks
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold mt-1">Falling Deeper Every Night</h3>
+                            <p class="text-cream/70 mt-2 text-sm leading-relaxed">Good-morning texts, midnight calls,
+                                your caring voice saying "eat properly, sleep well" — I fell harder, Bava.</p>
+                        </div>
+                        <div class="hidden md:block"><img
+                                src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&q=80&auto=format&fit=crop"
+                                class="rounded-3xl h-56 w-full object-cover border border-gold/30 rotate-2" alt="">
+                        </div>
+                    </div>
+                    <div class="reveal flex gap-5 md:grid md:grid-cols-2 md:gap-12 items-center">
+                        <div class="hidden md:block"><img
+                                src="https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=600&q=80&auto=format&fit=crop"
+                                class="rounded-3xl h-56 w-full object-cover border border-gold/30 -rotate-2" alt="">
+                        </div>
+                        <div class="t-dot md:mx-auto md:col-start-1 md:col-end-3">💍</div>
+                        <div class="glass rounded-3xl p-6 flex-1 md:ml-6">
+                            <div class="text-goldlight text-xs tracking-widest uppercase">Today • 365 Days</div>
+                            <h3 class="font-serif text-2xl font-bold mt-1 gold-text">Happy 1st Anniversary Handsome!
+                            </h3>
+                            <p class="text-cream/70 mt-2 text-sm leading-relaxed">One year of us. Of fights and
+                                patch-ups, laughter and tears. And I'd choose you — my handsome Bava — in every
+                                lifetime.</p><button onclick="bigCelebration()"
+                                class="mt-4 btn-love px-6 py-2 rounded-full text-sm">Celebrate Us 🎉</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALLERY -->
+        <section id="gallery" class="max-w-7xl mx-auto px-4 md:px-8 py-16">
+            <div class="text-center reveal">
+                <div class="text-xs tracking-[.35em] uppercase text-goldlight">Chapter 02 — Beautiful Us</div>
+                <h2 class="font-script text-5xl md:text-6xl gold-text mt-2">Moments To Treasure</h2>
+                <p class="text-cream/60">Click any photo to view it big — just like my love for you.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
+                <div class="gallery-card reveal relative rounded-3xl overflow-hidden h-64 md:h-80 cursor-pointer group border border-gold/20"
+                    onclick="openLightbox(this.querySelector('img').src)"><img
+                        src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&q=80&auto=format&fit=crop"
+                        class="gallery-img w-full h-full object-cover" alt="">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                        <div>
+                            <div class="font-script text-2xl">Handsome & Mine</div>
+                            <div class="text-xs text-cream/70">My favourite view ❤</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card reveal relative rounded-3xl overflow-hidden h-64 md:h-80 cursor-pointer mt-0 md:mt-10 border border-gold/20"
+                    onclick="openLightbox(this.querySelector('img').src)"><img
+                        src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=600&q=80&auto=format&fit=crop"
+                        class="gallery-img w-full h-full object-cover" alt="">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                        <div>
+                            <div class="font-script text-2xl">Holding Forever</div>
+                            <div class="text-xs text-cream/70">Never let go 🤝</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card reveal relative rounded-3xl overflow-hidden h-64 md:h-80 cursor-pointer border border-gold/20"
+                    onclick="openLightbox(this.querySelector('img').src)"><img
+                        src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=600&q=80&auto=format&fit=crop"
+                        class="gallery-img w-full h-full object-cover" alt="">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                        <div>
+                            <div class="font-script text-2xl">Blooming Love</div>
+                            <div class="text-xs text-cream/70">You make me bloom 🌹</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card reveal relative rounded-3xl overflow-hidden h-64 md:h-80 cursor-pointer mt-0 md:mt-10 border border-gold/20"
+                    onclick="openLightbox(this.querySelector('img').src)"><img
+                        src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=600&q=80&auto=format&fit=crop"
+                        class="gallery-img w-full h-full object-cover" alt="">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                        <div>
+                            <div class="font-script text-2xl">Dreamy Nights</div>
+                            <div class="text-xs text-cream/70">Dreaming of you ✨</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card reveal relative rounded-3xl overflow-hidden h-64 md:h-72 cursor-pointer border border-gold/20"
+                    onclick="openLightbox(this.querySelector('img').src)"><img
+                        src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=600&q=80&auto=format&fit=crop"
+                        class="gallery-img w-full h-full object-cover" alt="">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                        <div>
+                            <div class="font-script text-2xl">Golden Us</div>
+                            <div class="text-xs text-cream/70">Shining together ✨</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card reveal relative rounded-3xl overflow-hidden h-64 md:h-72 cursor-pointer border border-gold/20"
+                    onclick="openLightbox(this.querySelector('img').src)"><img
+                        src="https://images.unsplash.com/photo-1518623480241-7e0c2d0c0d2c?w=600&q=80&auto=format&fit=crop"
+                        onerror="this.src='https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&q=80'"
+                        class="gallery-img w-full h-full object-cover" alt="">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                        <div>
+                            <div class="font-script text-2xl">Sweet Kisses</div>
+                            <div class="text-xs text-cream/70">Sugar & love 💋</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card reveal relative rounded-3xl overflow-hidden h-64 md:h-72 cursor-pointer border border-gold/20 col-span-2"
+                    onclick="openLightbox(this.querySelector('img').src)"><img
+                        src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1000&q=80&auto=format&fit=crop"
+                        class="gallery-img w-full h-full object-cover" alt="">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                        <div>
+                            <div class="font-script text-3xl gold-text">365 Days • 1 Promise — Forever Yours, Bava</div>
+                            <div class="text-xs text-cream/70">Our hands, our future 🤍</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- REASONS -->
+        <section id="reasons" class="max-w-7xl mx-auto px-4 md:px-8 py-16">
+            <div class="text-center reveal">
+                <div class="text-xs tracking-[.35em] uppercase text-goldlight">Chapter 03 — Why You?</div>
+                <h2 class="font-script text-5xl md:text-6xl gold-text mt-2">Why My Bava Is The Best</h2>
+                <p class="text-cream/60">Tap a card to reveal a reason — especially how handsome you are!</p>
+                <div class="mt-4 flex justify-center gap-3"><button onclick="shuffleReasons()"
+                        class="glass px-5 py-2 rounded-full text-sm hover:bg-white/10">🔀 Shuffle
+                        Reasons</button><button onclick="revealAllReasons()"
+                        class="btn-gold px-5 py-2 rounded-full text-sm font-semibold">💖 Reveal All</button></div>
+            </div>
+            <div id="reasonsGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-10"></div>
+        </section>
+
+        <!-- LETTER -->
+        <section id="letter" class="max-w-3xl mx-auto px-4 md:px-8 py-16">
+            <div class="text-center reveal">
+                <div class="text-xs tracking-[.35em] uppercase text-goldlight">Chapter 04 — From My Heart</div>
+                <h2 class="font-script text-5xl md:text-6xl gold-text mt-2">A Letter For My Bava</h2>
+            </div>
+            <div class="reveal glass gold-border rounded-[28px] mt-10 p-6 md:p-10 text-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-goldlight via-rose to-goldlight">
+                </div>
+                <div id="sealWrap">
+                    <div class="mx-auto wax-seal-btn flex items-center justify-center text-4xl beat">❤</div>
+                    <h3 class="font-script text-4xl mt-4 text-goldlight">Sealed With A Kiss</h3>
+                    <p class="text-cream/60 text-sm mt-1">To: <span class="bava-name font-semibold text-cream">My
+                            Handsome Bava</span> • From: <span class="lover-name">Your Love</span></p><button
+                        id="openLetterBtn" class="btn-love shine-btn mt-6 px-8 py-3 rounded-full font-semibold">💋 Break
+                        The Seal & Read</button>
+                </div>
+                <div id="letterContent" class="hidden text-left">
+                    <div class="flex items-center justify-between">
+                        <div class="font-script text-3xl text-goldlight">My Dearest Bava,</div>
+                        <div class="text-2xl">💌</div>
+                    </div>
+                    <div class="mt-2 text-xs tracking-widest uppercase text-cream/50">28th September 2026 • Our 1st
+                        Anniversary</div>
+                    <div class="h-px bg-gradient-to-r from-transparent via-gold to-transparent my-5"></div>
+                    <p id="typeLetter" class="text-cream/85 leading-[1.9] text-[15px] md:text-base min-h-[280px]"></p>
+                    <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
+                        <div>
+                            <div class="font-script text-4xl text-rose">Forever Yours,</div>
+                            <div class="font-serif font-bold text-goldlight lover-name">Your Love</div>
+                        </div>
+                        <button onclick="kissBurst(this)" class="btn-love px-6 py-2.5 rounded-full text-sm">💋 Send A
+                            Kiss Back</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PLAYGROUND -->
+        <section id="play" class="max-w-7xl mx-auto px-4 md:px-8 py-16">
+            <div class="text-center reveal">
+                <div class="text-xs tracking-[.35em] uppercase text-goldlight">Chapter 05 — Play With Love</div>
+                <h2 class="font-script text-5xl md:text-6xl gold-text mt-2">Our Love Playground</h2>
+            </div>
+            <div class="grid lg:grid-cols-3 gap-6 mt-10">
+                <div class="reveal glass gold-border rounded-3xl p-6 text-center">
+                    <div class="text-4xl">💘</div>
+                    <h3 class="font-serif text-2xl font-bold mt-2 gold-text">Love Meter</h3>
+                    <p class="text-cream/60 text-sm">Check how strong we are</p>
+                    <input id="name1" value="My Love"
+                        class="mt-4 w-full bg-black/40 border border-white/15 rounded-full px-4 py-2.5 text-sm text-center"
+                        placeholder="Your name">
+                    <div class="my-1 text-rose font-bold">❤ + ❤</div>
+                    <input id="name2" value="My Handsome Bava"
+                        class="w-full bg-black/40 border border-white/15 rounded-full px-4 py-2.5 text-sm text-center"
+                        placeholder="Bava's name">
+                    <button onclick="checkLove()"
+                        class="btn-love w-full mt-4 py-3 rounded-full font-semibold shine-btn">Calculate Our Love
+                        ✨</button>
+                    <div class="mt-4 hidden" id="loveResult">
+                        <div class="font-serif text-5xl font-black gold-text"><span id="lovePct">0</span>%</div>
+                        <div class="h-3 bg-white/10 rounded-full mt-2 overflow-hidden">
+                            <div id="loveBar"
+                                class="h-full w-0 bg-gradient-to-r from-rose to-goldlight rounded-full transition-all duration-[2s]">
+                            </div>
+                        </div>
+                        <div id="loveMsg" class="font-script text-2xl mt-2 text-blush"></div>
+                    </div>
+                </div>
+                <div class="reveal glass gold-border rounded-3xl p-6 text-center flex flex-col">
+                    <div class="text-4xl">😘</div>
+                    <h3 class="font-serif text-2xl font-bold mt-2 gold-text">Kiss & Hug Counter</h3>
+                    <p class="text-cream/60 text-sm">Every click = one more love for Bava</p>
+                    <div class="grid grid-cols-2 gap-4 mt-5 flex-1">
+                        <div class="bg-black/30 rounded-2xl p-4 border border-rose/30">
+                            <div class="text-4xl">💋</div>
+                            <div id="kissCount" class="font-serif text-3xl font-black text-rose">0</div>
+                            <div class="text-xs uppercase tracking-widest text-cream/50">Kisses</div><button
+                                onclick="addKiss(event)"
+                                class="btn-love mt-3 w-full py-2 rounded-full text-sm font-semibold">Kiss 😘</button>
+                        </div>
+                        <div class="bg-black/30 rounded-2xl p-4 border border-gold/30">
+                            <div class="text-4xl">🤗</div>
+                            <div id="hugCount" class="font-serif text-3xl font-black gold-text">0</div>
+                            <div class="text-xs uppercase tracking-widest text-cream/50">Hugs</div><button
+                                onclick="addHug(event)"
+                                class="btn-gold mt-3 w-full py-2 rounded-full text-sm font-semibold">Hug 🤗</button>
+                        </div>
+                    </div>
+                    <div id="kissMilestone" class="mt-3 text-sm font-script text-2xl text-blush min-h-[28px]"></div>
+                </div>
+                <div class="reveal glass gold-border rounded-3xl p-6 text-center">
+                    <div class="text-4xl">🎁</div>
+                    <h3 class="font-serif text-2xl font-bold mt-2 gold-text">Love Coupons</h3>
+                    <p class="text-cream/60 text-sm">Tap to redeem your promise</p>
+                    <div class="space-y-2.5 mt-4 text-left">
+                        <button onclick="redeem(this,'One long tight hug + forehead kiss for my handsome Bava! 🤗💋')"
+                            class="w-full bg-black/30 border border-white/10 hover:border-gold rounded-2xl px-4 py-3 text-sm flex justify-between items-center transition">🤗
+                            Free Hug <span class="text-goldlight">Redeem →</span></button>
+                        <button onclick="redeem(this,'Movie night + cuddles + your favourite snacks, handsome! 🍿❤️')"
+                            class="w-full bg-black/30 border border-white/10 hover:border-gold rounded-2xl px-4 py-3 text-sm flex justify-between items-center transition">🍿
+                            Movie Date <span class="text-goldlight">Redeem →</span></button>
+                        <button onclick="redeem(this,'I will cook your favourite food with extra love, Bava! 🍲💖')"
+                            class="w-full bg-black/30 border border-white/10 hover:border-gold rounded-2xl px-4 py-3 text-sm flex justify-between items-center transition">🍲
+                            Special Dinner <span class="text-goldlight">Redeem →</span></button>
+                        <button onclick="redeem(this,'One full day — your wish is my command, my king! 🤴✨')"
+                            class="w-full bg-black/30 border border-white/10 hover:border-gold rounded-2xl px-4 py-3 text-sm flex justify-between items-center transition">🤴
+                            King For A Day <span class="text-goldlight">Redeem →</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal glass gold-border rounded-3xl mt-6 p-6 md:p-8">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <h3 class="font-serif text-2xl md:text-3xl font-bold">💖 Catch My Kisses — Mini Game</h3>
+                        <p class="text-cream/60 text-sm">Catch falling hearts for Bava! You have 30 seconds. Tap them
+                            before they fall!</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="glass px-5 py-2 rounded-full">Score: <b id="gameScore" class="text-goldlight">0</b>
+                        </div>
+                        <div class="glass px-5 py-2 rounded-full">Time: <b id="gameTime" class="text-rose">30</b>s</div>
+                        <button id="gameBtn" onclick="startGame()"
+                            class="btn-gold px-6 py-2 rounded-full text-sm font-bold shine-btn">▶ Start</button>
+                    </div>
+                </div>
+                <div id="gameArea"
+                    class="relative mt-5 h-[360px] rounded-2xl overflow-hidden bg-gradient-to-b from-[#2b0a12] to-black border border-gold/20 cursor-crosshair">
+                    <div id="gameHint"
+                        class="absolute inset-0 flex flex-col items-center justify-center text-cream/50 gap-2">
+                        <div class="text-6xl">💝</div>
+                        <div class="font-script text-3xl">Press Start to catch my love...</div>
+                    </div>
+                </div>
+                <div id="gameOver" class="hidden mt-4 text-center font-script text-3xl text-goldlight"></div>
+            </div>
+        </section>
+
+        <!-- CAKE -->
+        <section id="cake" class="max-w-4xl mx-auto px-4 md:px-8 py-16 text-center">
+            <div class="reveal">
+                <div class="text-xs tracking-[.35em] uppercase text-goldlight">Make A Wish</div>
+                <h2 class="font-script text-5xl md:text-6xl gold-text mt-2">Our 1st Anniversary Cake</h2>
+                <p class="text-cream/60">Close your eyes, handsome... make a wish for us, then blow the candle!</p>
+            </div>
+            <div class="reveal glass gold-border rounded-[30px] mt-10 p-8 md:p-12 relative overflow-hidden">
+                <div class="flex justify-center">
+                    <div class="relative">
+                        <div class="flex flex-col items-center">
+                            <div id="smokeWrap" class="h-10 flex items-end"></div>
+                            <div id="flame" class="flame -mb-1"></div>
+                            <div class="w-3 h-14 bg-gradient-to-b from-goldlight to-gold rounded mx-auto"></div>
+                        </div>
+                        <div class="cake-tier w-[170px] h-[70px] bg-gradient-to-b from-[#ff8fa3] to-[#c9184a] mt-1">
+                            <div class="cake-icing"></div>
+                            <div class="drip" style="left:20px;height:22px"></div>
+                            <div class="drip" style="left:60px;height:30px"></div>
+                            <div class="drip" style="left:110px;height:20px"></div>
+                            <div
+                                class="absolute inset-0 flex items-center justify-center font-script text-2xl text-white drop-shadow">
+                                1st Love</div>
+                        </div>
+                        <div
+                            class="cake-tier w-[240px] h-[85px] bg-gradient-to-b from-[#590d22] to-[#2b0a12] mt-[-6px]">
+                            <div class="cake-icing"></div>
+                            <div class="drip" style="left:30px;height:26px"></div>
+                            <div class="drip" style="left:90px;height:34px"></div>
+                            <div class="drip" style="left:150px;height:24px"></div>
+                            <div class="drip" style="left:190px;height:30px"></div>
+                            <div class="absolute inset-0 flex items-center justify-center gap-2 text-lg pt-3">❤️ 🤴 ❤️
+                            </div>
+                        </div>
+                        <div class="cake-plate mt-1"></div>
+                    </div>
+                </div>
+                <div id="wishMsg" class="hidden mt-6 font-script text-3xl md:text-4xl text-goldlight leading-snug">"May
+                    my handsome Bava & I celebrate 100 more anniversaries, hand in hand, heart to heart... ✨"</div>
+                <div class="mt-7 flex flex-wrap justify-center gap-3">
+                    <button id="blowBtn" onclick="blowCandle()"
+                        class="btn-love shine-btn px-8 py-3 rounded-full font-semibold">🌬️ Make A Wish & Blow</button>
+                    <button onclick="relight()" class="glass px-6 py-3 rounded-full hover:bg-white/10">🔥
+                        Relight</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SURPRISE GIFT -->
+        <section id="surprise" class="max-w-4xl mx-auto px-4 md:px-8 py-16 text-center">
+            <div class="reveal">
+                <div class="text-xs tracking-[.35em] uppercase text-goldlight">Final Surprise</div>
+                <h2 class="font-script text-5xl md:text-6xl gold-text mt-2">A Gift For My Handsome</h2>
+                <p class="text-cream/60">Tap the gift box, Bava... something shiny is inside 💍</p>
+            </div>
+            <div class="reveal glass gold-border rounded-[30px] mt-10 p-8 md:p-12">
+                <div class="gift" id="giftBox" onclick="openGift()">
+                    <div class="gift-light"></div>
+                    <div class="gift-lid">
+                        <div
+                            class="absolute left-1/2 top-0 bottom-0 w-7 -translate-x-1/2 bg-gradient-to-b from-goldlight to-gold">
+                        </div>
+                    </div>
+                    <div class="gift-box">
+                        <div class="gift-ribbon-v"></div>
+                        <div class="absolute inset-0 flex items-center justify-center text-4xl">❤️</div>
+                    </div>
+                    <div
+                        class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-[240px] h-6 bg-black/50 blur-xl rounded-full">
+                    </div>
+                </div>
+                <p id="giftHint" class="mt-4 text-cream/50 text-sm animate-pulse">👆 Tap to open your gift 👆</p>
+                <div id="giftInside" class="hidden mt-2">
+                    <div class="text-7xl beat">💍</div>
+                    <h3 class="font-script text-4xl md:text-5xl gold-text mt-3 leading-tight">Will You Be
+                        Mine...<br>Forever & Always?</h3>
+                    <p class="text-cream/70 mt-3 max-w-lg mx-auto">One year down, handsome... a lifetime to go. You are
+                        my today, my tomorrow, my always. I love you endlessly, my Bava.</p>
+                    <div class="flex flex-wrap justify-center gap-4 mt-6">
+                        <button onclick="sayYes()"
+                            class="btn-love shine-btn px-10 py-3.5 rounded-full font-bold text-lg">💖 YES, FOREVER!
+                            💖</button>
+                        <button onclick="sayYes()" class="btn-gold px-8 py-3.5 rounded-full font-semibold">Obviously Yes
+                            😍</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINALE -->
+        <section class="max-w-5xl mx-auto px-4 md:px-8 py-16 text-center">
+            <div class="reveal glass gold-border rounded-[32px] p-8 md:p-14 relative overflow-hidden">
+                <div class="absolute inset-0 opacity-20"><img
+                        src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=1000&q=80&auto=format&fit=crop"
+                        class="w-full h-full object-cover" alt=""></div>
+                <div class="relative">
+                    <div class="text-6xl beat">❤️</div>
+                    <h2 class="font-script text-5xl md:text-7xl gold-text mt-3 leading-tight">Happy 1st
+                        Anniversary<br>My Handsome Bava!</h2>
+                    <p class="text-cream/70 mt-4 max-w-xl mx-auto">Thank you for 365 days of laughter, care, late-night
+                        talks and that killer handsome smile. Here's to us — to 2nd, 10th, 50th... forever.</p>
+                    <div class="font-serif tracking-[.3em] uppercase text-xs mt-5 text-goldlight">28 . 09 . 2025 — 28 .
+                        09 . 2026 — ∞</div>
+                    <div class="flex flex-wrap justify-center gap-4 mt-8">
+                        <button onclick="bigCelebration()"
+                            class="btn-love shine-btn px-9 py-3.5 rounded-full font-semibold">🎆 Big
+                            Celebration</button>
+                        <button onclick="infiniteKisses()"
+                            class="btn-gold shine-btn px-9 py-3.5 rounded-full font-semibold">💋 Infinite
+                            Kisses</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="relative z-10 border-t border-gold/20 bg-black/40 py-10 text-center px-4">
+        <div class="font-script text-4xl gold-text">Bava ❤ Love — Forever & Always</div>
+        <p class="text-cream/50 text-sm mt-2">Crafted with endless love for the most handsome man in my world • 1st
+            Anniversary • 28 Sept 2026</p>
+        <div class="mt-4 flex justify-center gap-3 text-2xl">
+            <span>🌹</span><span>💍</span><span>❤️</span><span>🤴</span><span>🌹</span>
+        </div>
+    </footer>
+
+    <!-- FLOATING BUTTONS -->
+    <div class="fixed bottom-5 right-5 z-[75] flex flex-col gap-3">
+        <button onclick="bigCelebration()"
+            class="w-14 h-14 rounded-full btn-love text-2xl shadow-2xl hover:scale-110 transition"
+            title="Celebrate">🎉</button>
+        <button onclick="window.scrollTo({top:0,behavior:'smooth'})" id="topBtn"
+            class="w-14 h-14 rounded-full btn-gold text-xl opacity-0 pointer-events-none transition-all hover:scale-110"
+            title="Top">⬆</button>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="fixed inset-0 z-[95] hidden items-center justify-center bg-black/90 backdrop-blur p-6"
+        onclick="this.style.display='none'">
+        <img id="lightboxImg" src="" class="max-w-full max-h-[85vh] rounded-3xl border-2 border-gold shadow-2xl" alt="">
+        <div class="absolute top-5 right-6 text-3xl cursor-pointer">✖</div>
+        <div class="absolute bottom-6 font-script text-3xl text-goldlight">My Handsome Bava ❤</div>
+    </div>
+
+    <div id="toast"
+        class="fixed bottom-8 left-1/2 -translate-x-1/2 translate-y-24 opacity-0 z-[96] glass gold-border rounded-full px-6 py-3 text-sm font-medium max-w-[90vw] text-center">
+    </div>
+
+    <script>
+        /* ---------- LOADER + ENVELOPE ---------- */
+        let loadP = 0; const loadInt = setInterval(() => { loadP += Math.random() * 28; if (loadP >= 100) { loadP = 100; clearInterval(loadInt); setTimeout(() => { document.getElementById('loader').style.opacity = '0'; setTimeout(() => { document.getElementById('loader').style.display = 'none'; showEnvelope(); }, 600); }, 300); } document.getElementById('loadBar').style.width = loadP + '%'; }, 220);
+        function showEnvelope() { const o = document.getElementById('envelopeOverlay'); o.classList.remove('hidden'); o.classList.add('flex'); }
+        const envelope = document.getElementById('envelope');
+        document.getElementById('sealBtn').addEventListener('click', e => { e.stopPropagation(); envelope.classList.add('open'); heartBurst(innerWidth / 2, innerHeight / 2, 30); setTimeout(() => { document.getElementById('envelopeOverlay').style.transition = 'opacity .8s'; document.getElementById('envelopeOverlay').style.opacity = '0'; setTimeout(() => { document.getElementById('envelopeOverlay').style.display = 'none'; bigCelebration(); toast('Welcome to your surprise, handsome Bava ❤️'); startMusic(); }, 800); }, 1400); });
+
+        /* ---------- NAV / PROGRESS ---------- */
+        document.getElementById('menuBtn').onclick = () => document.getElementById('mobileMenu').classList.toggle('hidden');
+        document.querySelectorAll('#mobileMenu a').forEach(a => a.onclick = () => document.getElementById('mobileMenu').classList.add('hidden'));
+        document.getElementById('celebrateNav').onclick = () => bigCelebration();
+        window.addEventListener('scroll', () => { const h = document.documentElement; const p = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100; document.getElementById('progress').style.width = p + '%'; const tb = document.getElementById('topBtn'); if (h.scrollTop > 600) { tb.style.opacity = '1'; tb.style.pointerEvents = 'auto'; } else { tb.style.opacity = '0'; tb.style.pointerEvents = 'none'; } });
+
+        /* ---------- TOAST ---------- */
+        let toastT; function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.style.transform = 'translate(-50%,0)'; t.style.opacity = '1'; clearTimeout(toastT); toastT = setTimeout(() => { t.style.transform = 'translate(-50%,6rem)'; t.style.opacity = '0'; }, 3200); }
+
+        /* ---------- TIMER (1st anniversary: Sep 28 2025 -> Sep 28 2026) ---------- */
+        const startDate = new Date('2025-09-28T00:00:00');
+        function tick() { const now = new Date(); let d = Math.max(0, now - startDate); const days = Math.floor(d / 86400000); const hrs = Math.floor(d % 86400000 / 3600000); const min = Math.floor(d % 3600000 / 60000); const sec = Math.floor(d % 60000 / 1000); set('tD', days); set('tH', hrs); set('tM', min); set('tS', sec); }
+        function set(id, v) { document.getElementById(id).textContent = String(v).padStart(2, '0'); if (id === 'tD') document.getElementById(id).textContent = v; }
+        setInterval(tick, 1000); tick();
+
+        /* ---------- COUNTERS ---------- */
+        const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const el = e.target, target = +el.dataset.target; let c = 0; const step = Math.max(1, Math.ceil(target / 120)); const iv = setInterval(() => { c += step; if (c >= target) { c = target; clearInterval(iv); } el.textContent = c.toLocaleString(); }, 20); obs.unobserve(el); } }), { threshold: .5 });
+        document.querySelectorAll('.counter').forEach(el => obs.observe(el));
+
+        /* ---------- GSAP REVEALS ---------- */
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('.reveal').forEach(el => { gsap.to(el, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } }); });
+
+        /* ---------- PETALS CANVAS ---------- */
+        const pc = document.getElementById('petals'), pctx = pc.getContext('2d'); let PW, PH, parts = [];
+        function sizeP() { PW = pc.width = innerWidth; PH = pc.height = innerHeight; } sizeP(); addEventListener('resize', sizeP);
+        function mkP(init) { return { x: Math.random() * PW, y: init ? Math.random() * PH : -20, s: 6 + Math.random() * 14, vy: .4 + Math.random() * 1.2, vx: -.5 + Math.random() * 1, r: Math.random() * Math.PI * 2, vr: -.02 + Math.random() * .04, type: Math.random() < .45 ? 'heart' : (Math.random() < .5 ? 'petal' : 'dust'), c: ['#ff4d6d', '#ff8fa3', '#f6e27a', '#d4af37', '#ffb3c1'][Math.floor(Math.random() * 5)], o: .35 + Math.random() * .5 }; }
+        for (let i = 0; i < 70; i++)parts.push(mkP(true));
+        function drawHeart(ctx, x, y, s, rot, color, alpha) { ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(s / 20, s / 20); ctx.globalAlpha = alpha; ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(0, 6); ctx.bezierCurveTo(-12, -6, -4, -16, 0, -7); ctx.bezierCurveTo(4, -16, 12, -6, 0, 6); ctx.fill(); ctx.restore(); }
+        (function loopP() { pctx.clearRect(0, 0, PW, PH); parts.forEach(p => { p.y += p.vy; p.x += p.vx + Math.sin(p.y / 60); p.r += p.vr; if (p.y > PH + 30) { Object.assign(p, mkP(false)); } if (p.type === 'heart') drawHeart(pctx, p.x, p.y, p.s, p.r, p.c, p.o); else if (p.type === 'petal') { pctx.save(); pctx.translate(p.x, p.y); pctx.rotate(p.r); pctx.globalAlpha = p.o; pctx.fillStyle = p.c; pctx.beginPath(); pctx.ellipse(0, 0, p.s / 2, p.s / 3.4, 0, 0, Math.PI * 2); pctx.fill(); pctx.restore(); } else { pctx.save(); pctx.globalAlpha = p.o * .7; pctx.fillStyle = p.c; pctx.beginPath(); pctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2); pctx.fill(); pctx.restore(); } }); requestAnimationFrame(loopP); })();
+
+        /* ---------- FIREWORKS ---------- */
+        const fc = document.getElementById('fireworks'), fctx = fc.getContext('2d'); let FW, FH, rockets = [], sparks = [];
+        function sizeF() { FW = fc.width = innerWidth; FH = fc.height = innerHeight; } sizeF(); addEventListener('resize', sizeF);
+        function launch(x, y) { const cols = ['#ff4d6d', '#f6e27a', '#ff8fa3', '#ffffff', '#d4af37', '#ff758f']; const c = cols[Math.floor(Math.random() * cols.length)]; for (let i = 0; i < 70; i++) { const a = Math.random() * Math.PI * 2, sp = 2 + Math.random() * 5; sparks.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 1, life: 1, decay: .008 + Math.random() * .012, c, heart: Math.random() < .25 }); } }
+        function loopF() { fctx.clearRect(0, 0, FW, FH); sparks = sparks.filter(s => s.life > 0); sparks.forEach(s => { s.x += s.vx; s.y += s.vy; s.vy += .06; s.vx *= .985; s.life -= s.decay; fctx.globalAlpha = Math.max(0, s.life); fctx.fillStyle = s.c; if (s.heart) { drawHeart(fctx, s.x, s.y, 10, 0, s.c, Math.max(0, s.life)); } else { fctx.beginPath(); fctx.arc(s.x, s.y, 2.4, 0, Math.PI * 2); fctx.fill(); } }); fctx.globalAlpha = 1; requestAnimationFrame(loopF); } loopF();
+        function fireworkShow(n = 5) { for (let i = 0; i < n; i++) setTimeout(() => launch(Math.random() * FW * .85 + FW * .075, Math.random() * FH * .45 + FH * .08), i * 350); }
+        function heartBurst(x, y, n = 20) { for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, sp = 1 + Math.random() * 4; sparks.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 2, life: 1, decay: .015, c: ['#ff4d6d', '#ff8fa3', '#f6e27a'][Math.floor(Math.random() * 3)], heart: true }); } }
+
+        /* ---------- CONFETTI CELEBRATIONS ---------- */
+        function bigCelebration() { fireworkShow(6); confetti({ particleCount: 160, spread: 100, origin: { y: .6 }, colors: ['#ff4d6d', '#f6e27a', '#ffffff', '#ff8fa3'] }); setTimeout(() => confetti({ particleCount: 120, angle: 60, spread: 60, origin: { x: 0 } }), 300); setTimeout(() => confetti({ particleCount: 120, angle: 120, spread: 60, origin: { x: 1 } }), 600); heartBurst(innerWidth / 2, innerHeight / 3, 40); }
+        function infiniteKisses() { let i = 0; const iv = setInterval(() => { heartBurst(Math.random() * innerWidth, Math.random() * innerHeight * .7, 12); confetti({ particleCount: 30, spread: 80, origin: { x: Math.random(), y: .5 }, colors: ['#ff4d6d', '#ff8fa3'] }); if (++i > 8) clearInterval(iv); }, 400); toast('Infinite kisses showered on my handsome Bava! 💋'); }
+
+        /* ---------- HEART TRAIL ---------- */
+        let lastT = 0; addEventListener('mousemove', e => { const now = Date.now(); if (now - lastT < 70) return; lastT = now; const s = document.createElement('div'); s.className = 'heart-trail'; s.textContent = ['❤️', '💖', '💕', '✨', '🌹'][Math.floor(Math.random() * 5)]; s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px'; s.style.fontSize = (12 + Math.random() * 16) + 'px'; document.body.appendChild(s); setTimeout(() => s.remove(), 1000); });
+        addEventListener('touchmove', e => { const t = e.touches[0]; if (!t) return; heartBurst(t.clientX, t.clientY, 1); }, { passive: true });
+
+        /* ---------- REASONS ---------- */
+        const reasons = [
+            { e: '😍', t: 'Your Handsome Smile', d: 'That killer smile that melts my heart every single time. You are the most handsome man I have ever seen, Bava!' },
+            { e: '💪', t: 'Your Caring Heart', d: 'You care for me like no one else — my food, my sleep, my mood. Your love feels like home.' },
+            { e: '🤗', t: 'Your Protective Arms', d: 'In your arms I feel the safest. Like nothing in the world can ever hurt me.' },
+            { e: '😂', t: 'Your Cute Laugh', d: 'Your laugh is my favourite sound. Even on my worst days, you make me giggle.' },
+            { e: '👀', t: 'Your Honest Eyes', d: 'Those deep honest eyes — I get lost in them. They say "I love you" without words.' },
+            { e: '🤴', t: 'My Handsome King', d: 'Tall, charming, stylish — my Bava walks like a king and owns my heart like one too!' },
+            { e: '💌', t: 'Your Sweet Texts', d: '"Did you eat?" "Reach home safe" "Miss you" — your little texts are my big happiness.' },
+            { e: '♾️', t: 'Your Forever Promise', d: 'Through fights and smiles, you never left. You chose us, every day. That is true love.' }
+        ];
+        function renderReasons(list) { const g = document.getElementById('reasonsGrid'); g.innerHTML = ''; list.forEach(r => { const d = document.createElement('div'); d.className = 'flip reveal'; d.style.opacity = '1'; d.style.transform = 'none'; d.innerHTML = `<div class="flip-inner"><div class="flip-front glass gold-border p-6 flex flex-col items-center justify-center text-center"><div class="text-5xl mb-3">${r.e}</div><div class="font-serif font-bold text-lg">${r.t}</div><div class="text-xs mt-2 text-goldlight tracking-widest uppercase">Tap to reveal 💖</div></div><div class="flip-back p-6 flex flex-col items-center justify-center text-center" style="background:linear-gradient(135deg,#800f2f,#2b0a12);border:1px solid rgba(246,226,122,.5)"><div class="text-3xl mb-2">${r.e}</div><div class="font-serif font-bold text-goldlight">${r.t}</div><p class="text-sm text-cream/80 mt-2 leading-relaxed">${r.d}</p></div></div>`; d.onclick = () => d.classList.toggle('flipped'); g.appendChild(d); }); }
+        renderReasons(reasons);
+        function shuffleReasons() { const a = [...reasons].sort(() => Math.random() - .5); renderReasons(a); toast('Reasons shuffled with love 🔀❤️'); }
+        function revealAllReasons() { document.querySelectorAll('.flip').forEach(f => f.classList.add('flipped')); bigCelebration(); }
+
+        /* ---------- LETTER TYPEWRITER ---------- */
+        const letterText = `My Dearest, Most Handsome Bava,
+
+Happy 1st Anniversary, my love!
+
+365 days ago, you held my hand — and you never let go. In this one year you gave me a thousand memories: your handsome smile in the morning, your caring voice at night, your shoulder on my sad days, and your laughter on my happy ones.
+
+Do you know what I love most? Everything. The way you care without showing off. The way you tease me and then pamper me. The way you look — so handsome — that my heart still skips a beat when you smile at me.
+
+We fought, we cried, we laughed, we patched up... and every time, our love only grew stronger. You are not just my boyfriend, Bava — you are my best friend, my family, my home, my forever.
+
+I promise you today — I will love you louder, care for you deeper, and stand by you in every storm and sunshine. One year down... and a whole beautiful lifetime to go.
+
+Thank you for being mine. Thank you for being YOU — my handsome, caring, wonderful Bava.
+
+I love you. Today. Tomorrow. Always. ♾️❤️`;
+        let typing = false;
+        document.getElementById('openLetterBtn').onclick = function () { document.getElementById('sealWrap').style.display = 'none'; const c = document.getElementById('letterContent'); c.classList.remove('hidden'); heartBurst(innerWidth / 2, innerHeight / 2, 25); confetti({ particleCount: 90, spread: 80, origin: { y: .6 }, colors: ['#ff4d6d', '#f6e27a'] }); if (!typing) { typing = true; const el = document.getElementById('typeLetter'); el.textContent = ''; let i = 0; const iv = setInterval(() => { el.textContent += letterText[i++]; if (i >= letterText.length) clearInterval(iv); }, 18); } };
+
+        /* ---------- LIGHTBOX ---------- */
+        function openLightbox(src) { const l = document.getElementById('lightbox'); document.getElementById('lightboxImg').src = src; l.style.display = 'flex'; }
+
+        /* ---------- LOVE METER ---------- */
+        function checkLove() { const a = (document.getElementById('name1').value || 'Love').toLowerCase(), b = (document.getElementById('name2').value || 'Bava').toLowerCase(); let h = 0; const s = a + '❤' + b; for (let i = 0; i < s.length; i++)h = (h * 31 + s.charCodeAt(i)) % 1000; let pct = 88 + (h % 12); if (a.includes('bava') || b.includes('bava')) pct = Math.max(pct, 97); const r = document.getElementById('loveResult'); r.classList.remove('hidden'); document.getElementById('loveBar').style.width = '0%'; document.getElementById('lovePct').textContent = '0'; setTimeout(() => { document.getElementById('loveBar').style.width = pct + '%'; let c = 0; const iv = setInterval(() => { c += 2; if (c >= pct) { c = pct; clearInterval(iv); heartBurst(innerWidth / 2, innerHeight / 2, 20); } document.getElementById('lovePct').textContent = c; }, 30); document.getElementById('loveMsg').textContent = pct >= 97 ? 'Soulmates! Made for forever! 💍❤️' : pct >= 93 ? 'True love! Bava is obsessed with you! 😍' : 'Beautiful bond, growing stronger! 💖'; }, 100); }
+
+        /* ---------- KISS / HUG ---------- */
+        let kisses = 0, hugs = 0;
+        function addKiss(e) { kisses++; document.getElementById('kissCount').textContent = kisses; const r = e.target.getBoundingClientRect(); heartBurst(r.left + r.width / 2, r.top, 10); confetti({ particleCount: 15, spread: 60, startVelocity: 25, origin: { x: (r.left + r.width / 2) / innerWidth, y: r.top / innerHeight }, colors: ['#ff4d6d'] }); mile(); }
+        function addHug(e) { hugs++; document.getElementById('hugCount').textContent = hugs; const r = e.target.getBoundingClientRect(); heartBurst(r.left + r.width / 2, r.top, 10); mile(); }
+        function mile() { const m = document.getElementById('kissMilestone'); const t = kisses + hugs; if (t === 10) m.textContent = '10 loves! Bava is blushing! 😳❤️'; else if (t === 25) m.textContent = '25 loves! He is smiling so handsomely! 😍'; else if (t === 50) m.textContent = '50 loves! Unlimited cuddles unlocked! 🥰'; else if (t === 100) m.textContent = '100 LOVES! You two are goals! 💍✨'; else if (t > 100) m.textContent = `${t} loves and counting... forever! ♾️`; }
+        function kissBurst(el) { const r = el.getBoundingClientRect(); heartBurst(r.left + r.width / 2, r.top, 25); toast('Kiss sent straight to Bava\'s heart! 💋❤️'); }
+        function redeem(btn, msg) { btn.style.borderColor = '#d4af37'; btn.style.background = 'rgba(212,175,55,.15)'; btn.querySelector('span').textContent = 'Redeemed ✓'; toast('Coupon redeemed: ' + msg); heartBurst(innerWidth / 2, innerHeight / 2, 18); }
+
+        /* ---------- GAME ---------- */
+        let gScore = 0, gTime = 30, gInt = null, gSpawn = null, gActive = false;
+        const hearts = ['❤️', '💖', '💕', '😘', '🌹', '💋'];
+        function startGame() {
+            const area = document.getElementById('gameArea'); area.innerHTML = ''; gScore = 0; gTime = 30; gActive = true; document.getElementById('gameScore').textContent = '0'; document.getElementById('gameTime').textContent = '30'; document.getElementById('gameOver').classList.add('hidden'); document.getElementById('gameBtn').textContent = '⏸ Playing...'; document.getElementById('gameBtn').disabled = true; document.getElementById('gameBtn').style.opacity = '.6';
+            gInt = setInterval(() => { gTime--; document.getElementById('gameTime').textContent = gTime; if (gTime <= 0) endGame(); }, 1000);
+            gSpawn = setInterval(spawnF, 550);
+        }
+        function spawnF() {
+            if (!gActive) return; const area = document.getElementById('gameArea'); const h = document.createElement('div'); h.className = 'falling-heart'; h.textContent = hearts[Math.floor(Math.random() * hearts.length)]; h.style.left = Math.random() * (area.clientWidth - 50) + 'px'; h.style.fontSize = (24 + Math.random() * 20) + 'px'; area.appendChild(h); let top = -60; const speed = 1.5 + Math.random() * 2 + gScore * .03; const fall = setInterval(() => { if (!gActive) { clearInterval(fall); return; } top += speed; h.style.top = top + 'px'; h.style.transform = `rotate(${top}deg)`; if (top > area.clientHeight) { clearInterval(fall); h.remove(); } }, 16);
+            h.onclick = (e) => { e.stopPropagation(); gScore++; document.getElementById('gameScore').textContent = gScore; h.style.transform = 'scale(1.8)'; h.style.opacity = '0'; heartBurst(e.clientX, e.clientY, 5); setTimeout(() => h.remove(), 150); clearInterval(fall); };
+        }
+        function endGame() { gActive = false; clearInterval(gInt); clearInterval(gSpawn); document.getElementById('gameBtn').disabled = false; document.getElementById('gameBtn').style.opacity = '1'; document.getElementById('gameBtn').textContent = '↻ Play Again'; const o = document.getElementById('gameOver'); o.classList.remove('hidden'); let msg = gScore >= 20 ? `WOW! ${gScore} kisses caught! Bava is yours forever! 💍❤️` : gScore >= 10 ? `Lovely! ${gScore} hearts! Bava is blushing! 😍` : `${gScore} hearts caught! Try again, my love! 💪❤️`; o.textContent = msg; if (gScore >= 10) bigCelebration(); else heartBurst(innerWidth / 2, innerHeight / 2, 15); }
+
+        /* ---------- CAKE ---------- */
+        let blown = false;
+        function blowCandle() { if (blown) return; blown = true; const f = document.getElementById('flame'); f.style.transition = 'opacity .5s, transform .5s'; f.style.opacity = '0'; f.style.transform = 'scale(0)'; const sm = document.createElement('div'); sm.className = 'smoke'; document.getElementById('smokeWrap').appendChild(sm); setTimeout(() => sm.remove(), 2000); document.getElementById('wishMsg').classList.remove('hidden'); document.getElementById('blowBtn').textContent = '🌟 Wish Made!'; fireworkShow(4); confetti({ particleCount: 130, spread: 90, origin: { y: .6 } }); toast('Your wish for Bava is sealed by the stars! ✨❤️'); }
+        function relight() { blown = false; const f = document.getElementById('flame'); f.style.opacity = '1'; f.style.transform = 'scale(1)'; document.getElementById('wishMsg').classList.add('hidden'); document.getElementById('blowBtn').innerHTML = '🌬️ Make A Wish & Blow'; }
+
+        /* ---------- GIFT ---------- */
+        let giftOpened = false;
+        function openGift() { if (giftOpened) return; giftOpened = true; document.getElementById('giftBox').classList.add('open'); document.getElementById('giftHint').style.display = 'none'; setTimeout(() => { document.getElementById('giftInside').classList.remove('hidden'); fireworkShow(5); confetti({ particleCount: 180, spread: 110, origin: { y: .5 } }); }, 700); }
+        function sayYes() { infiniteKisses(); toast('Yayyy! Bava said YES to forever! 💍❤️♾️'); fireworkShow(8); }
+
+        /* ---------- PERSONALIZE ---------- */
+        document.getElementById('editNames').onclick = () => { const b = prompt('Your handsome Bava\'s name (e.g. My Handsome Bava):', 'My Handsome Bava'); const l = prompt('Your name (with love):', 'Your Love'); if (b) document.querySelectorAll('.bava-name').forEach(e => e.textContent = b); if (l) document.querySelectorAll('.lover-name').forEach(e => e.textContent = l); if (b || l) { toast('Beautiful! Updated with love for ' + (b || 'Bava') + ' ❤️'); bigCelebration(); } };
+
+        /* ---------- MUSIC (WebAudio romantic music-box) ---------- */
+        let actx = null, musicOn = false, musicTimer = null, melodyStep = 0;
+        const melody = [523.25, 587.33, 659.25, 783.99, 880, 783.99, 659.25, 587.33, 523.25, 659.25, 783.99, 1046.5, 880, 783.99, 659.25, 523.25];
+        function note(f, t, dur) { const o = actx.createOscillator(), g = actx.createGain(); o.type = 'sine'; o.frequency.value = f; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.18, t + .05); g.gain.exponentialRampToValueAtTime(.0001, t + dur); o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t + dur + .1); const o2 = actx.createOscillator(), g2 = actx.createGain(); o2.type = 'triangle'; o2.frequency.value = f / 2; g2.gain.setValueAtTime(0, t); g2.gain.linearRampToValueAtTime(.06, t + .05); g2.gain.exponentialRampToValueAtTime(.0001, t + dur); o2.connect(g2); g2.connect(actx.destination); o2.start(t); o2.stop(t + dur + .1); }
+        function scheduleMusic() { if (!musicOn) return; const t = actx.currentTime + .1; note(melody[melodyStep % melody.length], t, 1.2); note(melody[(melodyStep + 4) % melody.length] / 2, t, .9); melodyStep++; }
+        function startMusic() { if (musicOn) return; try { if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)(); actx.resume(); musicOn = true; document.getElementById('musicIcon').className = 'fa-solid fa-pause text-rose'; musicTimer = setInterval(scheduleMusic, 650); scheduleMusic(); toast('Playing our love melody... 🎶❤️'); } catch (e) { } }
+        function stopMusic() { musicOn = false; clearInterval(musicTimer); document.getElementById('musicIcon').className = 'fa-solid fa-music text-goldlight'; }
+        document.getElementById('musicBtn').onclick = () => { musicOn ? stopMusic() : startMusic(); };
+    </script>
+</body>
+
+</html>

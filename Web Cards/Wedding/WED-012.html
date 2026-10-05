@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Arjun &amp; Meera — 18.12.2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --ivory: #F7F5F0;
+            --ink: #171614;
+            --stone: #77736C;
+            --champagne: #C9A86A;
+            --line: rgba(23, 22, 20, 0.12);
+            --hair: rgba(23, 22, 20, 0.06);
+            --serif: 'Cormorant Garamond', Georgia, serif;
+            --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            background: var(--ivory);
+            color: var(--ink);
+            font-family: var(--sans);
+            font-size: 14px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        body {
+            min-height: 100vh
+        }
+
+        ::selection {
+            background: var(--champagne);
+            color: var(--ivory)
+        }
+
+        .sr {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0
+        }
+
+        #gl {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            display: block;
+        }
+
+        #grain {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            opacity: .035;
+            mix-blend-mode: multiply;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        #nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 26px 46px;
+            transition:
+                padding .7s var(--ease),
+                background .7s var(--ease),
+                border-color .7s var(--ease),
+                backdrop-filter .7s var(--ease);
+            border-bottom: 1px solid transparent;
+        }
+
+        #nav.scrolled {
+            padding: 15px 46px;
+            background: rgba(247, 245, 240, .82);
+            -webkit-backdrop-filter: blur(14px) saturate(120%);
+            backdrop-filter: blur(14px) saturate(120%);
+            border-bottom-color: var(--hair);
+        }
+
+        .brand {
+            font-family: var(--serif);
+            font-size: 17px;
+            letter-spacing: .02em;
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 400;
+        }
+
+        .brand em {
+            font-style: italic;
+            color: var(--champagne);
+            font-weight: 300;
+            padding: 0 .1em
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none
+        }
+
+        .nav-links a {
+            font-size: 9.5px;
+            letter-spacing: .26em;
+            text-transform: uppercase;
+            color: var(--stone);
+            text-decoration: none;
+            transition: color .4s var(--ease);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 1px;
+            background: var(--champagne);
+            transition: width .5s var(--ease);
+        }
+
+        .nav-links a:hover {
+            color: var(--ink)
+        }
+
+        .nav-links a:hover::after {
+            width: 100%
+        }
+
+        #content {
+            position: relative;
+            z-index: 3;
+            pointer-events: none
+        }
+
+        #content a,
+        #content button,
+        #content input {
+            pointer-events: auto
+        }
+
+        .scene {
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            padding: 120px 46px 60px;
+            position: relative;
+        }
+
+        .scene-hero {
+            justify-content: flex-end;
+            text-align: center
+        }
+
+        .hero-text {
+            padding-bottom: 8vh
+        }
+
+        .hero-text .eyebrow {
+            margin-bottom: 24px
+        }
+
+        .display {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(2.6rem, 6.8vw, 5.4rem);
+            line-height: 1.02;
+            letter-spacing: -.015em;
+        }
+
+        .display em {
+            font-style: italic;
+            color: var(--champagne);
+            font-weight: 300;
+            padding: 0 .08em;
+        }
+
+        .hero-date {
+            font-size: 9.5px;
+            letter-spacing: .42em;
+            text-transform: uppercase;
+            color: var(--stone);
+            margin-top: 30px;
+        }
+
+        .scroll-cue {
+            position: absolute;
+            bottom: 34px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8.5px;
+            letter-spacing: .4em;
+            text-transform: uppercase;
+            color: var(--stone);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .scroll-cue i {
+            display: block;
+            width: 1px;
+            height: 44px;
+            background: linear-gradient(180deg, var(--stone), transparent);
+            transform-origin: top center;
+            animation: cueDrop 2.6s var(--ease) infinite;
+        }
+
+        @keyframes cueDrop {
+
+            0%,
+            100% {
+                transform: scaleY(.35);
+                opacity: .35
+            }
+
+            50% {
+                transform: scaleY(1);
+                opacity: 1
+            }
+        }
+
+        .scene-reveal {
+            justify-content: flex-end
+        }
+
+        .reveal-caption {
+            font-size: 9.5px;
+            letter-spacing: .36em;
+            text-transform: uppercase;
+            color: var(--ivory);
+            mix-blend-mode: difference;
+        }
+
+        .scene-venue {
+            justify-content: center;
+            align-items: flex-start
+        }
+
+        .venue-text {
+            max-width: 340px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .venue-text h2 {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+            line-height: 1.08;
+            letter-spacing: -.015em;
+            margin-bottom: 22px;
+        }
+
+        .venue-text p {
+            font-size: .9rem;
+            font-weight: 300;
+            color: var(--stone);
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .venue-meta {
+            display: flex;
+            gap: 38px;
+            margin-top: 34px;
+            border-top: 1px solid var(--line);
+            padding-top: 24px;
+        }
+
+        .venue-meta div {
+            flex: 1
+        }
+
+        .venue-meta dt {
+            font-size: 8.5px;
+            letter-spacing: .34em;
+            text-transform: uppercase;
+            color: var(--stone);
+            margin-bottom: 8px;
+        }
+
+        .venue-meta dd {
+            font-family: var(--serif);
+            font-size: 1.05rem;
+            font-weight: 400;
+            letter-spacing: .01em;
+        }
+
+        .scene-story {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .story-inner {
+            max-width: 640px;
+            width: 100%
+        }
+
+        .story-inner h2 {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(2rem, 3.6vw, 3.1rem);
+            line-height: 1.08;
+            letter-spacing: -.015em;
+            margin-bottom: 64px;
+        }
+
+        .story-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 44px;
+        }
+
+        .story-list li {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 28px;
+            align-items: baseline;
+            text-align: left;
+            border-top: 1px solid var(--line);
+            padding-top: 28px;
+        }
+
+        .story-list .yr {
+            font-family: var(--serif);
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: var(--champagne);
+            letter-spacing: .02em;
+        }
+
+        .story-list .txt {
+            font-family: var(--serif);
+            font-size: 1.15rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--ink);
+            letter-spacing: .01em;
+            line-height: 1.5;
+        }
+
+        .scene-gallery {
+            justify-content: flex-start;
+            padding-top: 16vh
+        }
+
+        .gallery-caption {
+            max-width: 320px
+        }
+
+        .gallery-caption h2 {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+            line-height: 1.08;
+            letter-spacing: -.015em;
+            margin-bottom: 18px;
+        }
+
+        .gallery-caption p {
+            font-size: .88rem;
+            font-weight: 300;
+            color: var(--stone);
+            line-height: 1.9;
+        }
+
+        .scene-invite {
+            justify-content: center;
+            align-items: center;
+            text-align: center
+        }
+
+        .invite-inner {
+            max-width: 420px;
+            width: 100%
+        }
+
+        .invite-inner .eyebrow {
+            margin-bottom: 26px
+        }
+
+        .invite-inner h2 {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+            line-height: 1.1;
+            letter-spacing: -.015em;
+            margin-bottom: 20px;
+        }
+
+        .invite-inner p {
+            font-size: .88rem;
+            font-weight: 300;
+            color: var(--stone);
+            line-height: 1.9;
+            margin-bottom: 38px;
+        }
+
+        .btn-open {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid var(--line);
+            padding: 17px 38px;
+            font-family: var(--sans);
+            font-size: 9.5px;
+            font-weight: 500;
+            letter-spacing: .32em;
+            text-transform: uppercase;
+            color: var(--ink);
+            cursor: pointer;
+            transition: all .6s var(--ease);
+            border-radius: 0;
+        }
+
+        .btn-open:hover {
+            border-color: var(--champagne);
+            color: var(--champagne);
+            letter-spacing: .36em;
+        }
+
+        .btn-open:disabled {
+            opacity: .5;
+            cursor: default;
+            letter-spacing: .32em;
+            border-color: var(--line);
+            color: var(--stone);
+        }
+
+        .invite-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 1.4s var(--ease), opacity 1s var(--ease) .3s;
+            opacity: 0;
+            margin-top: 0;
+        }
+
+        .invite-details.show {
+            max-height: 320px;
+            opacity: 1;
+            margin-top: 40px
+        }
+
+        .invite-details dl {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 26px 34px;
+            text-align: left;
+            border-top: 1px solid var(--line);
+            padding-top: 32px;
+        }
+
+        .invite-details dt {
+            font-size: 8.5px;
+            letter-spacing: .34em;
+            text-transform: uppercase;
+            color: var(--stone);
+            margin-bottom: 7px;
+        }
+
+        .invite-details dd {
+            font-family: var(--serif);
+            font-size: 1.05rem;
+            font-weight: 400;
+            letter-spacing: .01em;
+        }
+
+        .scene-rsvp {
+            justify-content: center;
+            align-items: center;
+            text-align: center
+        }
+
+        .rsvp-inner {
+            max-width: 460px;
+            width: 100%
+        }
+
+        .rsvp-inner h2 {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+            line-height: 1.1;
+            letter-spacing: -.015em;
+            margin-bottom: 16px;
+        }
+
+        .rsvp-inner .sub {
+            font-size: .88rem;
+            font-weight: 300;
+            color: var(--stone);
+            line-height: 1.9;
+            margin-bottom: 44px;
+        }
+
+        .rsvp-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            align-items: stretch;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .btn-rsvp {
+            background: transparent;
+            border: 1px solid var(--line);
+            padding: 17px 28px;
+            font-family: var(--sans);
+            font-size: 9.5px;
+            font-weight: 500;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--ink);
+            cursor: pointer;
+            transition: all .55s var(--ease);
+            border-radius: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-rsvp::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--champagne);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .7s var(--ease);
+        }
+
+        .btn-rsvp:hover {
+            border-color: var(--champagne);
+            color: var(--champagne);
+            letter-spacing: .34em;
+        }
+
+        .btn-rsvp:hover::after {
+            transform: scaleX(1)
+        }
+
+        .btn-rsvp:disabled {
+            opacity: .32;
+            cursor: default
+        }
+
+        .btn-rsvp:disabled:hover {
+            border-color: var(--line);
+            color: var(--ink);
+            letter-spacing: .3em;
+        }
+
+        .rsvp-answer {
+            margin-top: 34px;
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.15rem;
+            color: var(--champagne);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity .9s var(--ease), transform .9s var(--ease);
+        }
+
+        .rsvp-answer.show {
+            opacity: 1;
+            transform: none
+        }
+
+        .scene-finale {
+            justify-content: center;
+            align-items: center;
+            text-align: center
+        }
+
+        .finale-inner {
+            max-width: 640px;
+            width: 100%
+        }
+
+        .finale-inner .names {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(2.2rem, 5.6vw, 4.4rem);
+            line-height: 1.05;
+            letter-spacing: -.02em;
+        }
+
+        .finale-inner .names em {
+            font-style: italic;
+            color: var(--champagne);
+            font-weight: 300;
+            padding: 0 .1em;
+        }
+
+        .finale-meta {
+            margin-top: 34px;
+            font-size: 9.5px;
+            letter-spacing: .42em;
+            text-transform: uppercase;
+            color: var(--stone);
+        }
+
+        .finale-line {
+            margin-top: 54px;
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.05rem;
+            color: var(--stone);
+            letter-spacing: .02em;
+        }
+
+        footer {
+            position: relative;
+            z-index: 3;
+            padding: 38px 46px 46px;
+            border-top: 1px solid var(--hair);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 9px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--stone);
+            background: var(--ivory);
+        }
+
+        footer a {
+            color: var(--stone);
+            text-decoration: none;
+            transition: color .4s var(--ease)
+        }
+
+        footer a:hover {
+            color: var(--champagne)
+        }
+
+        .rv {
+            opacity: 0;
+            transform: translateY(24px);
+            transition:
+                opacity 1.2s var(--ease),
+                transform 1.2s var(--ease);
+        }
+
+        .rv.in {
+            opacity: 1;
+            transform: none
+        }
+
+        @media (max-width:820px) {
+            #nav {
+                padding: 20px 26px
+            }
+
+            #nav.scrolled {
+                padding: 13px 26px
+            }
+
+            .scene {
+                padding: 100px 26px 60px
+            }
+
+            .nav-links {
+                gap: 20px
+            }
+
+            .nav-links a {
+                font-size: 8.5px;
+                letter-spacing: .2em
+            }
+
+            .brand {
+                font-size: 15px
+            }
+
+            .venue-text {
+                max-width: 100%
+            }
+
+            .venue-meta {
+                flex-direction: column;
+                gap: 22px
+            }
+
+            .story-list li {
+                grid-template-columns: 70px 1fr;
+                gap: 18px
+            }
+
+            .invite-details dl {
+                grid-template-columns: 1fr;
+                gap: 20px
+            }
+
+            .gallery-caption {
+                max-width: 100%
+            }
+
+            .scroll-cue {
+                display: none
+            }
+        }
+
+        @media (max-width:520px) {
+            .nav-links {
+                display: none
+            }
+
+            .display {
+                font-size: clamp(2.2rem, 9vw, 3rem)
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .001ms !important;
+            }
+
+            .rv {
+                opacity: 1;
+                transform: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="gl"></canvas>
+    <div id="grain" aria-hidden="true"></div>
+
+    <nav id="nav">
+        <a href="#hero" class="brand">Arjun <em>&amp;</em> Meera</a>
+        <ul class="nav-links">
+            <li><a href="#story">Story</a></li>
+            <li><a href="#venue">Venue</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#rsvp">R.S.V.P.</a></li>
+        </ul>
+    </nav>
+
+    <main id="content">
+
+        <section class="scene scene-hero" id="hero">
+            <div class="hero-text">
+                <p class="eyebrow rv">The Wedding Of</p>
+                <h1 class="display rv">Arjun <em>&amp;</em> Meera</h1>
+                <p class="hero-date rv">18 December 2026 &nbsp;·&nbsp; Udaipur, India</p>
+            </div>
+            <div class="scroll-cue"><span>Scroll</span><i></i></div>
+        </section>
+
+        <section class="scene scene-reveal" id="reveal">
+            <p class="reveal-caption rv">Udaipur, India &nbsp;—&nbsp; Where it began</p>
+        </section>
+
+        <section class="scene scene-venue" id="venue">
+            <div class="venue-text">
+                <p class="eyebrow rv">The Mandap</p>
+                <h2 class="rv">A sacred canopy<br>on the water's edge.</h2>
+                <p class="rv">
+                    Four pillars of ivory stone, crowned with jasmine and champagne silk.
+                    The ceremony begins at the moment the lamps are lit.
+                </p>
+                <dl class="venue-meta rv">
+                    <div>
+                        <dt>Ceremony</dt>
+                        <dd>18 · 12 · 2026</dd>
+                    </div>
+                    <div>
+                        <dt>Arrival</dt>
+                        <dd>5:30 PM</dd>
+                    </div>
+                    <div>
+                        <dt>Dress</dt>
+                        <dd>Formal · Indian</dd>
+                    </div>
+                </dl>
+            </div>
+        </section>
+
+        <section class="scene scene-story" id="story">
+            <div class="story-inner">
+                <p class="eyebrow rv" style="text-align:center">Our Story</p>
+                <h2 class="rv">Four years,<br>one decision.</h2>
+
+                <ul class="story-list">
+                    <li class="rv">
+                        <span class="yr">2019</span>
+                        <span class="txt">We met. A borrowed umbrella in a Mumbai downpour.</span>
+                    </li>
+                    <li class="rv">
+                        <span class="yr">2021</span>
+                        <span class="txt">We fell in love. Nine cities and one shared map.</span>
+                    </li>
+                    <li class="rv">
+                        <span class="yr">2025</span>
+                        <span class="txt">We said yes. A rooftop in Udaipur, at the moment the lamps came on.</span>
+                    </li>
+                    <li class="rv">
+                        <span class="yr">2026</span>
+                        <span class="txt">We begin forever.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="scene scene-gallery" id="gallery">
+            <div class="gallery-caption">
+                <p class="eyebrow rv">Gallery</p>
+                <h2 class="rv">Frames we keep<br>returning to.</h2>
+                <p class="rv">Scroll slowly. The photographs drift as you pass through them.</p>
+            </div>
+        </section>
+
+        <section class="scene scene-invite" id="invitation">
+            <div class="invite-inner">
+                <p class="eyebrow rv">The Invitation</p>
+                <h2 class="rv">A card,<br>and a place at the table.</h2>
+                <p class="rv">Open the invitation to reveal the details of the evening.</p>
+
+                <button class="btn-open rv" id="openInvite" type="button">Open Invitation</button>
+
+                <div class="invite-details" id="inviteDetails">
+                    <dl>
+                        <div>
+                            <dt>Ceremony</dt>
+                            <dd>18 December 2026</dd>
+                        </div>
+                        <div>
+                            <dt>Time</dt>
+                            <dd>6:00 PM</dd>
+                        </div>
+                        <div>
+                            <dt>Venue</dt>
+                            <dd>Lakeside Pavilion</dd>
+                        </div>
+                        <div>
+                            <dt>Dress</dt>
+                            <dd>Formal · Indian</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene scene-rsvp" id="rsvp">
+            <div class="rsvp-inner">
+                <p class="eyebrow rv">R.S.V.P.</p>
+                <h2 class="rv">Will you join us?</h2>
+                <p class="sub rv">Kindly respond by 30 November 2026.</p>
+
+                <div class="rsvp-actions rv">
+                    <button class="btn-rsvp" type="button" data-answer="yes">Yes, I'll be there</button>
+                    <button class="btn-rsvp" type="button" data-answer="no">I'm sorry, I can't</button>
+                </div>
+
+                <p class="rsvp-answer" id="rsvpAnswer"></p>
+            </div>
+        </section>
+
+        <section class="scene scene-finale" id="finale">
+            <div class="finale-inner">
+                <h2 class="names rv">Arjun <em>&amp;</em> Meera</h2>
+                <p class="finale-meta rv">18 · 12 · 2026</p>
+                <p class="finale-line rv">Forever begins here.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <span>© <span id="yr"></span> Arjun &amp; Meera</span>
+        <span>By invitation only</span>
+        <a href="#rsvp">R.S.V.P.</a>
+    </footer>
+
+    <script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+
+    <script type="module">
+        import * as THREE from 'three';
+
+        const $ = (id) => document.getElementById(id);
+        const IS_MOBILE = matchMedia('(max-width: 820px)').matches;
+
+        function smoothstep(a, b, x) {
+            const t = Math.max(0, Math.min(1, (x - a) / (b - a)));
+            return t * t * (3 - 2 * t);
+        }
+        function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+        /* ── Renderer ── */
+        const canvas = $('gl');
+        const renderer = new THREE.WebGLRenderer({
+            canvas,
+            antialias: !IS_MOBILE,
+            alpha: false,
+            powerPreference: 'high-performance'
+        });
+
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, IS_MOBILE ? 1.75 : 2));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.08;
+        if ('outputColorSpace' in renderer) renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+        /* ── Scene + Camera ── */
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xF7F5F0);
+
+        const camera = new THREE.PerspectiveCamera(
+            38, window.innerWidth / window.innerHeight, 0.1, 600
+        );
+        camera.position.set(0, 0, 14);
+
+        /* ── Environment ── */
+        try {
+            const c = document.createElement('canvas');
+            c.width = 512; c.height = 256;
+            const ctx = c.getContext('2d');
+
+            const grad = ctx.createLinearGradient(0, 0, 0, 256);
+            grad.addColorStop(0.00, '#ffffff');
+            grad.addColorStop(0.35, '#f7f5f0');
+            grad.addColorStop(0.62, '#ded8cc');
+            grad.addColorStop(1.00, '#8a857a');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 512, 256);
+
+            const warm = ctx.createRadialGradient(160, 70, 0, 160, 70, 180);
+            warm.addColorStop(0, 'rgba(255,244,220,0.95)');
+            warm.addColorStop(0.5, 'rgba(255,235,200,0.35)');
+            warm.addColorStop(1, 'rgba(255,235,200,0)');
+            ctx.fillStyle = warm;
+            ctx.fillRect(0, 0, 512, 256);
+
+            const rim = ctx.createRadialGradient(400, 130, 0, 400, 130, 140);
+            rim.addColorStop(0, 'rgba(200,210,225,0.5)');
+            rim.addColorStop(1, 'rgba(200,210,225,0)');
+            ctx.fillStyle = rim;
+            ctx.fillRect(0, 0, 512, 256);
+
+            const tex = new THREE.CanvasTexture(c);
+            tex.mapping = THREE.EquirectangularReflectionMapping;
+            if ('colorSpace' in tex) tex.colorSpace = THREE.SRGBColorSpace;
+
+            const pmrem = new THREE.PMREMGenerator(renderer);
+            pmrem.compileEquirectangularShader();
+            const rt = pmrem.fromEquirectangular(tex);
+            scene.environment = rt.texture;
+
+            pmrem.dispose();
+            tex.dispose();
+        } catch (e) { console.warn('Env skipped:', e); }
+
+        /* ── Lights ── */
+        const keyLight = new THREE.DirectionalLight(0xfff4e2, 2.4);
+        keyLight.position.set(6, 9, 7);
+        scene.add(keyLight);
+
+        const rimLight = new THREE.DirectionalLight(0xe0c088, 1.4);
+        rimLight.position.set(-7, 5, -6);
+        scene.add(rimLight);
+
+        scene.add(new THREE.HemisphereLight(0xfaf6ee, 0x9a9488, 0.85));
+
+        /* ── Materials ── */
+        function champagneMetal() {
+            return new THREE.MeshStandardMaterial({
+                color: 0xC9A86A,
+                metalness: 0.88,
+                roughness: 0.25,
+                envMapIntensity: 1.7,
+                transparent: true,
+                opacity: 0
+            });
+        }
+
+        function ivoryStone() {
+            return new THREE.MeshStandardMaterial({
+                color: 0xf0ece4,
+                metalness: 0.05,
+                roughness: 0.65,
+                envMapIntensity: 0.7,
+                transparent: true,
+                opacity: 0
+            });
+        }
+
+        function paperMaterial() {
+            return new THREE.MeshStandardMaterial({
+                color: 0xfaf8f4,
+                metalness: 0.0,
+                roughness: 0.72,
+                envMapIntensity: 0.4,
+                transparent: true,
+                opacity: 0
+            });
+        }
+
+        /* ══════════════════════════════════════════════════════════
+           LETTER SHAPES — A & M (upright, correct apex)
+           ══════════════════════════════════════════════════════════ */
+
+        /* Letter A — two legs leaning inward to form a proper apex */
+        function createA() {
+            const g = new THREE.Group();
+            const mat = champagneMetal();
+
+            const barGeo = new THREE.BoxGeometry(0.11, 1.55, 0.11);
+            const crossGeo = new THREE.BoxGeometry(0.55, 0.085, 0.11);
+
+            // LEFT leg — top tilts right (toward apex)
+            const left = new THREE.Mesh(barGeo, mat);
+            left.rotation.z = -0.30;
+            left.position.set(-0.24, 0, 0);
+            g.add(left);
+
+            // RIGHT leg — top tilts left (toward apex)
+            const right = new THREE.Mesh(barGeo, mat);
+            right.rotation.z = 0.30;
+            right.position.set(0.24, 0, 0);
+            g.add(right);
+
+            // Crossbar below apex
+            const cross = new THREE.Mesh(crossGeo, mat);
+            cross.position.set(0, -0.24, 0);
+            g.add(cross);
+
+            return g;
+        }
+
+        /* Letter M — two vertical legs + V of diagonals */
+        function createM() {
+            const g = new THREE.Group();
+            const mat = champagneMetal();
+
+            const barGeo = new THREE.BoxGeometry(0.11, 1.55, 0.11);
+            const diagGeo = new THREE.BoxGeometry(0.11, 0.87, 0.11);
+
+            const left = new THREE.Mesh(barGeo, mat);
+            left.position.set(-0.30, 0, 0);
+            g.add(left);
+
+            const right = new THREE.Mesh(barGeo, mat);
+            right.position.set(0.30, 0, 0);
+            g.add(right);
+
+            const diagL = new THREE.Mesh(diagGeo, mat);
+            diagL.position.set(-0.15, 0.36, 0);
+            diagL.rotation.z = 0.30;
+            g.add(diagL);
+
+            const diagR = new THREE.Mesh(diagGeo, mat);
+            diagR.position.set(0.15, 0.36, 0);
+            diagR.rotation.z = -0.30;
+            g.add(diagR);
+
+            return g;
+        }
+
+        /* Monogram A & M */
+        function createMonogram(scale = 1) {
+            const g = new THREE.Group();
+
+            const a = createA();
+            a.position.x = -1.02;
+            g.add(a);
+
+            const m = createM();
+            m.position.x = 1.02;
+            g.add(m);
+
+            const amp = new THREE.Mesh(
+                new THREE.TorusGeometry(0.20, 0.045, 16, 48),
+                champagneMetal()
+            );
+            amp.position.set(0, 0.04, 0);
+            g.add(amp);
+
+            g.scale.setScalar(scale);
+            return g;
+        }
+
+        /* ══════════════════════════════════════════════════════════
+           VENUE — Premium wedding mandap
+           ══════════════════════════════════════════════════════════ */
+        function createVenue() {
+            const g = new THREE.Group();
+
+            const stone = ivoryStone();
+            const gold = champagneMetal();
+
+            const silk = new THREE.MeshStandardMaterial({
+                color: 0xead9b6,
+                metalness: 0.15,
+                roughness: 0.55,
+                envMapIntensity: 0.9,
+                transparent: true,
+                opacity: 0
+            });
+
+            /* Plinth */
+            const plinth1 = new THREE.Mesh(new THREE.BoxGeometry(6.4, 0.28, 4.4), stone);
+            plinth1.position.y = -2.15;
+            g.add(plinth1);
+
+            const plinth2 = new THREE.Mesh(new THREE.BoxGeometry(7.0, 0.14, 5.0), stone);
+            plinth2.position.y = -2.36;
+            g.add(plinth2);
+
+            /* Four pillars */
+            const pillarPos = [
+                [-2.3, -1.4],
+                [-2.3, 1.4],
+                [2.3, -1.4],
+                [2.3, 1.4]
+            ];
+
+            pillarPos.forEach(([x, z]) => {
+                const pBase = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.22, 0.26, 0.28, 14), gold
+                );
+                pBase.position.set(x, -1.86, z);
+                g.add(pBase);
+
+                const shaft = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.13, 0.13, 2.6, 14), stone
+                );
+                shaft.position.set(x, -0.42, z);
+                g.add(shaft);
+
+                const ring = new THREE.Mesh(
+                    new THREE.TorusGeometry(0.16, 0.018, 8, 24), gold
+                );
+                ring.position.set(x, 0.05, z);
+                ring.rotation.x = Math.PI / 2;
+                g.add(ring);
+
+                const cap = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.24, 0.14, 0.30, 14), gold
+                );
+                cap.position.set(x, 1.05, z);
+                g.add(cap);
+
+                const capOrn = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.06, 12, 12), gold
+                );
+                capOrn.position.set(x, 1.22, z);
+                g.add(capOrn);
+            });
+
+            /* Arched openings */
+            const archRadius = 2.30;
+            const archTube = 0.075;
+
+            const archF = new THREE.Mesh(
+                new THREE.TorusGeometry(archRadius, archTube, 12, 48, Math.PI), stone
+            );
+            archF.position.set(0, 0.95, -1.4);
+            g.add(archF);
+
+            const archB = new THREE.Mesh(
+                new THREE.TorusGeometry(archRadius, archTube, 12, 48, Math.PI), stone
+            );
+            archB.position.set(0, 0.95, 1.4);
+            g.add(archB);
+
+            const archL = new THREE.Mesh(
+                new THREE.TorusGeometry(1.40, archTube, 12, 40, Math.PI), stone
+            );
+            archL.position.set(-2.3, 0.95, 0);
+            archL.rotation.y = Math.PI / 2;
+            g.add(archL);
+
+            const archR = new THREE.Mesh(
+                new THREE.TorusGeometry(1.40, archTube, 12, 40, Math.PI), stone
+            );
+            archR.position.set(2.3, 0.95, 0);
+            archR.rotation.y = Math.PI / 2;
+            g.add(archR);
+
+            /* Canopy */
+            const canopy = new THREE.Mesh(new THREE.BoxGeometry(5.6, 0.22, 3.8), silk);
+            canopy.position.y = 1.24;
+            g.add(canopy);
+
+            const canopyTrim = new THREE.Mesh(
+                new THREE.BoxGeometry(5.75, 0.045, 3.95), gold
+            );
+            canopyTrim.position.y = 1.12;
+            g.add(canopyTrim);
+
+            /* Dome finial */
+            const dome = new THREE.Mesh(
+                new THREE.SphereGeometry(0.85, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2), gold
+            );
+            dome.position.y = 1.35;
+            g.add(dome);
+
+            const domeRing = new THREE.Mesh(
+                new THREE.TorusGeometry(0.85, 0.03, 10, 40), gold
+            );
+            domeRing.position.y = 1.35;
+            domeRing.rotation.x = Math.PI / 2;
+            g.add(domeRing);
+
+            const neck = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.09, 0.14, 0.35, 12), gold
+            );
+            neck.position.y = 2.20;
+            g.add(neck);
+
+            const finial = new THREE.Mesh(
+                new THREE.ConeGeometry(0.10, 0.42, 12), gold
+            );
+            finial.position.y = 2.58;
+            g.add(finial);
+
+            const topSphere = new THREE.Mesh(
+                new THREE.SphereGeometry(0.075, 14, 14), gold
+            );
+            topSphere.position.y = 2.84;
+            g.add(topSphere);
+
+            /* Hanging drops */
+            const drops = [
+                [-1.5, -1.4], [1.5, -1.4],
+                [-1.5, 1.4], [1.5, 1.4],
+                [0.0, -1.4], [0.0, 1.4],
+                [-2.3, 0.0], [2.3, 0.0]
+            ];
+
+            drops.forEach(([x, z]) => {
+                const chain = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.010, 0.010, 0.30, 6), gold
+                );
+                chain.position.set(x, 0.98, z);
+                g.add(chain);
+
+                const bead = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.055, 10, 10), gold
+                );
+                bead.position.set(x, 0.78, z);
+                g.add(bead);
+            });
+
+            /* Petals */
+            for (let i = 0; i < 14; i++) {
+                const petal = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.045, 8, 8), gold
+                );
+                petal.position.set(
+                    (Math.random() - 0.5) * 6,
+                    -2.02 + Math.random() * 0.02,
+                    (Math.random() - 0.5) * 4
+                );
+                petal.scale.y = 0.4;
+                g.add(petal);
+            }
+
+            return g;
+        }
+
+        /* ══════════════════════════════════════════════════════════
+           PHOTOGRAPHY
+           ══════════════════════════════════════════════════════════ */
+        const PHOTO_URLS = {
+            /* Real photo behind the hero monogram */
+            heroPhoto: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=85',
+
+            /* Real photo of wedding venue / mandapam */
+            venue: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=85',
+
+            reveal: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1600&q=85',
+
+            story: [
+                'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=82',
+                'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=82',
+                'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=82'
+            ],
+
+            gallery: [
+                'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=82',
+                'https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1000&q=82',
+                'https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=82',
+                'https://images.unsplash.com/photo-1460978812857-470ed1c77af0?auto=format&fit=crop&w=1000&q=82',
+                'https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1000&q=82',
+                'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=82'
+            ]
+        };
+
+        const texLoader = new THREE.TextureLoader();
+        texLoader.setCrossOrigin('anonymous');
+
+        function coverFit(texture, planeAspect) {
+            const img = texture.image;
+            if (!img || !img.width) return;
+
+            const imgAspect = img.width / img.height;
+
+            if (imgAspect > planeAspect) {
+                const s = planeAspect / imgAspect;
+                texture.repeat.set(s, 1);
+                texture.offset.set((1 - s) / 2, 0);
+            } else {
+                const s = imgAspect / planeAspect;
+                texture.repeat.set(1, s);
+                texture.offset.set(0, (1 - s) / 2);
+            }
+            texture.needsUpdate = true;
+        }
+
+        function createRealPhoto(w, h, url, opts = {}) {
+            const planeAspect = w / h;
+
+            const mat = new THREE.MeshBasicMaterial({
+                color: opts.tint || 0xe8dfd0,
+                transparent: true,
+                opacity: 0,
+                side: THREE.DoubleSide
+            });
+
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat);
+
+            texLoader.load(
+                url,
+                (texture) => {
+                    if ('colorSpace' in texture) texture.colorSpace = THREE.SRGBColorSpace;
+                    texture.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
+                    texture.wrapS = THREE.ClampToEdgeWrapping;
+                    texture.wrapT = THREE.ClampToEdgeWrapping;
+                    coverFit(texture, planeAspect);
+
+                    mat.map = texture;
+                    mat.color.set(0xffffff);
+                    mat.needsUpdate = true;
+                },
+                undefined,
+                (err) => { console.warn('Photo failed:', url, err); }
+            );
+
+            return mesh;
+        }
+
+        /* Invitation card */
+        function createInvitationCard() {
+            const g = new THREE.Group();
+            const W = 2.4, H = 1.6, D = 0.035;
+
+            const backMat = paperMaterial();
+            const back = new THREE.Mesh(new THREE.BoxGeometry(W, H, D), backMat);
+            g.add(back);
+
+            const pivot = new THREE.Group();
+            pivot.position.set(-W / 2, 0, D / 2 + 0.008);
+            g.add(pivot);
+
+            const frontMat = paperMaterial();
+            const front = new THREE.Mesh(new THREE.BoxGeometry(W, H, D), frontMat);
+            front.position.set(W / 2, 0, 0);
+            pivot.add(front);
+
+            const stripeMat = champagneMetal();
+            const stripe = new THREE.Mesh(
+                new THREE.BoxGeometry(W * 0.44, 0.02, D * 1.15), stripeMat
+            );
+            stripe.position.set(W / 2, -H * 0.18, 0);
+            pivot.add(stripe);
+
+            const ringMat = champagneMetal();
+            const ring = new THREE.Mesh(
+                new THREE.TorusGeometry(0.14, 0.012, 12, 40), ringMat
+            );
+            ring.position.set(0, 0.2, D / 2 + 0.005);
+            g.add(ring);
+
+            return { group: g, pivot };
+        }
+
+        /* ══════════════════════════════════════════════════════════
+           PLACE OBJECTS
+           ══════════════════════════════════════════════════════════ */
+
+        /* ── HERO ──
+           Real photo behind, 3D monogram in front */
+        const heroPhoto = createRealPhoto(15, 8.5, PHOTO_URLS.heroPhoto);
+        heroPhoto.position.set(0, 0.3, -12);
+        scene.add(heroPhoto);
+
+        const heroMonogram = createMonogram(1.65);
+        heroMonogram.position.set(0, 1.0, -4);
+        scene.add(heroMonogram);
+
+        /* ── REVEAL ── */
+        const revealPhoto = createRealPhoto(11, 6.2, PHOTO_URLS.reveal);
+        revealPhoto.position.set(0, 0, -20);
+        scene.add(revealPhoto);
+
+        /* ── VENUE ──
+           Real mandapam photo behind, 3D mandap in front */
+        const venuePhoto = createRealPhoto(16, 9, PHOTO_URLS.venue);
+        venuePhoto.position.set(1.5, -0.2, -52);
+        scene.add(venuePhoto);
+
+        const venue = createVenue();
+        venue.position.set(2.2, -0.4, -46);
+        scene.add(venue);
+
+        /* ── STORY photos ── */
+        const storyPhotos = PHOTO_URLS.story.map((url) =>
+            createRealPhoto(1.6, 2.0, url)
+        );
+
+        const STORY_LAYOUT = [
+            { x: -2.8, y: 1.0, z: -70, ry: 0.28 },
+            { x: 2.6, y: -0.4, z: -72, ry: -0.22 },
+            { x: -2.2, y: -1.6, z: -74, ry: 0.16 }
+        ];
+
+        storyPhotos.forEach((p, i) => {
+            const L = STORY_LAYOUT[i];
+            p.position.set(L.x, L.y, L.z);
+            p.rotation.y = L.ry;
+            scene.add(p);
+        });
+
+        /* ── GALLERY photos ── */
+        const GALLERY_LAYOUT = [
+            { x: -2.6, y: 1.3, z: -94, ry: 0.30, w: 2.1, h: 2.7 },
+            { x: 2.1, y: 0.6, z: -98, ry: -0.24, w: 2.0, h: 2.5 },
+            { x: -1.2, y: -1.5, z: -102, ry: 0.15, w: 2.4, h: 1.8 },
+            { x: 2.9, y: -1.3, z: -104, ry: -0.34, w: 2.2, h: 2.8 },
+            { x: -3.1, y: 1.6, z: -106, ry: 0.20, w: 2.0, h: 2.5 },
+            { x: 0.6, y: 1.8, z: -108, ry: -0.10, w: 2.4, h: 1.8 }
+        ];
+
+        const galleryPhotos = GALLERY_LAYOUT.map((L, i) => {
+            const p = createRealPhoto(L.w, L.h, PHOTO_URLS.gallery[i]);
+            p.position.set(L.x, L.y, L.z);
+            p.rotation.y = L.ry;
+            p.rotation.z = (Math.random() - 0.5) * 0.05;
+            p.userData.base = { ...L };
+            p.userData.phase = Math.random() * Math.PI * 2;
+            scene.add(p);
+            return p;
+        });
+
+        /* ── INVITATION ── */
+        const inviteObj = createInvitationCard();
+        inviteObj.group.position.set(0, 0, -128);
+        scene.add(inviteObj.group);
+
+        /* ── FINALE ── */
+        const finaleMonogram = createMonogram(1.35);
+        finaleMonogram.position.set(0, 0, -192);
+        scene.add(finaleMonogram);
+
+        const finaleRing = new THREE.Mesh(
+            new THREE.TorusGeometry(3.4, 0.035, 16, 160),
+            champagneMetal()
+        );
+        finaleRing.position.set(0, 0, -192);
+        scene.add(finaleRing);
+
+        /* ══════════════════════════════════════════════════════════
+           OPACITY HELPERS
+           ══════════════════════════════════════════════════════════ */
+        function setOpacity(obj, op) {
+            op = clamp(op, 0, 1);
+            obj.visible = op > 0.005;
+            obj.traverse((child) => {
+                if (child.material) {
+                    if (Array.isArray(child.material)) {
+                        child.material.forEach((m) => { m.opacity = op; });
+                    } else {
+                        child.material.opacity = op;
+                    }
+                }
+            });
+        }
+
+        function approachOpacity(camZ, objZ, fadeInStart = 46, fadeInEnd = 28, fadeOutStart = 4, fadeOutEnd = 1) {
+            const d = camZ - objZ;
+            const fadeIn = 1 - smoothstep(fadeInEnd, fadeInStart, d);
+            const fadeOut = smoothstep(fadeOutEnd, fadeOutStart, d);
+            return fadeIn * fadeOut;
+        }
+
+        /* ══════════════════════════════════════════════════════════
+           CAMERA ANCHORS
+           ══════════════════════════════════════════════════════════ */
+        const CAM_ANCHORS = [
+            { p: 0.00, z: 14 },
+            { p: 0.08, z: 6 },
+            { p: 0.16, z: -1 },
+            { p: 0.24, z: -14 },
+            { p: 0.32, z: -30 },
+            { p: 0.40, z: -44 },
+            { p: 0.50, z: -62 },
+            { p: 0.60, z: -84 },
+            { p: 0.70, z: -104 },
+            { p: 0.80, z: -126 },
+            { p: 0.88, z: -148 },
+            { p: 0.96, z: -176 },
+            { p: 1.00, z: -196 }
+        ];
+
+        function cameraZAt(p) {
+            p = clamp(p, 0, 1);
+            for (let i = 0; i < CAM_ANCHORS.length - 1; i++) {
+                const a = CAM_ANCHORS[i];
+                const b = CAM_ANCHORS[i + 1];
+                if (p >= a.p && p <= b.p) {
+                    const k = (p - a.p) / (b.p - a.p);
+                    const s = k * k * (3 - 2 * k);
+                    return a.z + (b.z - a.z) * s;
+                }
+            }
+            return CAM_ANCHORS[CAM_ANCHORS.length - 1].z;
+        }
+
+        /* ══════════════════════════════════════════════════════════
+           SCROLL + POINTER
+           ══════════════════════════════════════════════════════════ */
+        let scrollProgress = 0;
+        let scrollProgressSmooth = 0;
+
+        function readScroll() {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            scrollProgress = max > 0 ? clamp(window.scrollY / max, 0, 1) : 0;
+        }
+        window.addEventListener('scroll', readScroll, { passive: true });
+
+        const pointer = { x: 0, y: 0 };
+        const pointerSmooth = { x: 0, y: 0 };
+
+        window.addEventListener('pointermove', (e) => {
+            pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+            pointer.y = (e.clientY / window.innerHeight) * 2 - 1;
+        }, { passive: true });
+
+        window.addEventListener('pointerleave', () => {
+            pointer.x = 0; pointer.y = 0;
+        });
+
+        /* ══════════════════════════════════════════════════════════
+           INVITATION INTERACTION
+           ══════════════════════════════════════════════════════════ */
+        let inviteOpenTarget = 0;
+        let inviteOpenValue = 0;
+
+        const inviteButton = $('openInvite');
+        const inviteDetails = $('inviteDetails');
+
+        if (inviteButton) {
+            inviteButton.addEventListener('click', () => {
+                inviteOpenTarget = 1;
+                inviteButton.disabled = true;
+                inviteButton.textContent = 'Invitation Opened';
+                if (inviteDetails) inviteDetails.classList.add('show');
+            });
+        }
+
+        /* ══════════════════════════════════════════════════════════
+           RSVP
+           ══════════════════════════════════════════════════════════ */
+        const rsvpAnswer = $('rsvpAnswer');
+
+        document.querySelectorAll('[data-answer]').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const yes = btn.dataset.answer === 'yes';
+                if (rsvpAnswer) {
+                    rsvpAnswer.textContent = yes
+                        ? 'We\u2019ll see you there.'
+                        : 'We\u2019ll miss you.';
+                    rsvpAnswer.classList.add('show');
+                }
+                document.querySelectorAll('[data-answer]').forEach((b) => {
+                    b.disabled = true;
+                    b.style.opacity = b === btn ? '1' : '0.32';
+                });
+            });
+        });
+
+        /* ══════════════════════════════════════════════════════════
+           REVEAL ON SCROLL
+           ══════════════════════════════════════════════════════════ */
+        const revealEls = document.querySelectorAll('.rv');
+
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in');
+                        io.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.14, rootMargin: '0px 0px -50px 0px' });
+
+            revealEls.forEach((el) => {
+                const siblings = Array.from(el.parentElement.children)
+                    .filter((c) => c.classList.contains('rv'));
+                const idx = siblings.indexOf(el);
+                el.style.transitionDelay = (Math.max(0, idx) * 110) + 'ms';
+                io.observe(el);
+            });
+        } else {
+            revealEls.forEach((el) => el.classList.add('in'));
+        }
+
+        /* ══════════════════════════════════════════════════════════
+           NAV
+           ══════════════════════════════════════════════════════════ */
+        const navEl = $('nav');
+        let navTicking = false;
+
+        function navScroll() {
+            if (!navTicking) {
+                window.requestAnimationFrame(() => {
+                    if (navEl) navEl.classList.toggle('scrolled', window.scrollY > 60);
+                    navTicking = false;
+                });
+                navTicking = true;
+            }
+        }
+        window.addEventListener('scroll', navScroll, { passive: true });
+
+        const yrEl = $('yr');
+        if (yrEl) yrEl.textContent = new Date().getFullYear();
+
+        document.querySelectorAll('a[href^="#"]').forEach((link) => {
+            link.addEventListener('click', (e) => {
+                const id = link.getAttribute('href');
+                if (!id || id.length < 2) return;
+                const target = document.querySelector(id);
+                if (!target) return;
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        /* ══════════════════════════════════════════════════════════
+           MAIN LOOP
+           ══════════════════════════════════════════════════════════ */
+        const clock = new THREE.Clock();
+        let elapsed = 0;
+
+        let camZSm = 14, camXSm = 0, camYSm = 0;
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const dt = Math.min(clock.getDelta(), 0.05);
+            elapsed += dt;
+
+            scrollProgressSmooth += (scrollProgress - scrollProgressSmooth) * 0.08;
+
+            pointerSmooth.x += (pointer.x - pointerSmooth.x) * 0.06;
+            pointerSmooth.y += (pointer.y - pointerSmooth.y) * 0.06;
+
+            const targetZ = cameraZAt(scrollProgressSmooth);
+            const targetX = Math.sin(scrollProgressSmooth * Math.PI * 2.1) * 1.4;
+            const targetY = Math.sin(scrollProgressSmooth * Math.PI * 3.0) * 0.55;
+
+            camZSm += (targetZ - camZSm) * 0.085;
+            camXSm += (targetX - camXSm) * 0.06;
+            camYSm += (targetY - camYSm) * 0.06;
+
+            camera.position.set(camXSm, camYSm, camZSm);
+
+            const lookX = camXSm * 0.35 + pointerSmooth.x * 0.9;
+            const lookY = camYSm * 0.35 - pointerSmooth.y * 0.7;
+            const lookZ = camZSm - 16;
+
+            camera.lookAt(lookX, lookY, lookZ);
+
+            /* ── Hero photo (behind monogram) ── */
+            const heroPhotoOp = approachOpacity(camZSm, -12, 52, 32, 6, 1.5);
+            setOpacity(heroPhoto, heroPhotoOp * 0.92);
+
+            if (heroPhotoOp > 0.005) {
+                heroPhoto.position.x = pointerSmooth.x * 0.35;
+                heroPhoto.position.y = 0.3 - pointerSmooth.y * 0.28;
+            }
+
+            /* ── Hero monogram ── */
+            const monOp = approachOpacity(camZSm, -4, 50, 30, 4, 1);
+            setOpacity(heroMonogram, monOp);
+
+            if (monOp > 0.005) {
+                const baseRotY = Math.sin(elapsed * 0.22) * 0.12 - 0.15;
+                heroMonogram.rotation.y = baseRotY + pointerSmooth.x * 0.05;
+                heroMonogram.rotation.x = pointerSmooth.y * 0.03 + Math.sin(elapsed * 0.18) * 0.04;
+                heroMonogram.rotation.z = Math.sin(elapsed * 0.14) * 0.02;
+                heroMonogram.position.y = 1.0 + Math.sin(elapsed * 0.35) * 0.05;
+            }
+
+            /* ── Reveal photo ── */
+            setOpacity(revealPhoto, approachOpacity(camZSm, -20, 46, 28, 4, 1));
+
+            /* ── Venue photo (behind 3D mandap) ── */
+            const venuePhotoOp = approachOpacity(camZSm, -52, 54, 32, 8, 2);
+            setOpacity(venuePhoto, venuePhotoOp * 0.94);
+
+            if (venuePhotoOp > 0.005) {
+                venuePhoto.position.x = 1.5 + pointerSmooth.x * 0.35;
+                venuePhoto.position.y = -0.2 - pointerSmooth.y * 0.25;
+            }
+
+            /* ── 3D mandap ── */
+            const venueOp = approachOpacity(camZSm, -46, 46, 28, 4, 1);
+            setOpacity(venue, venueOp);
+
+            if (venueOp > 0.005) {
+                venue.rotation.y = -0.05 + pointerSmooth.x * 0.06 + Math.sin(elapsed * 0.15) * 0.04;
+                venue.position.y = -0.4 + Math.sin(elapsed * 0.28) * 0.04;
+            }
+
+            /* ── Story photos ── */
+            storyPhotos.forEach((p, i) => {
+                const L = STORY_LAYOUT[i];
+                const op = approachOpacity(camZSm, L.z, 42, 26, 4, 1);
+                setOpacity(p, op);
+
+                if (op > 0.005) {
+                    const ph = i * 1.3;
+                    p.position.y = L.y + Math.sin(elapsed * 0.3 + ph) * 0.12;
+                    p.position.x = L.x + pointerSmooth.x * 0.22;
+                    p.rotation.y = L.ry + Math.sin(elapsed * 0.22 + ph) * 0.04 + pointerSmooth.x * 0.08;
+                }
+            });
+
+            /* ── Gallery ── */
+            galleryPhotos.forEach((p) => {
+                const base = p.userData.base;
+                const op = approachOpacity(camZSm, base.z, 44, 26, 4, 1);
+                setOpacity(p, op);
+
+                if (op > 0.005) {
+                    const ph = p.userData.phase;
+                    p.position.x = base.x + Math.sin(elapsed * 0.22 + ph) * 0.14 + pointerSmooth.x * 0.4;
+                    p.position.y = base.y + Math.cos(elapsed * 0.26 + ph) * 0.12 - pointerSmooth.y * 0.28;
+                    p.rotation.y = base.ry + Math.sin(elapsed * 0.2 + ph) * 0.05 + pointerSmooth.x * 0.12;
+                    p.rotation.z = Math.sin(elapsed * 0.18 + ph * 1.4) * 0.03;
+                }
+            });
+
+            /* ── Invitation card ── */
+            const inviteOp = approachOpacity(camZSm, -128, 44, 26, 4.5, 1.5);
+            setOpacity(inviteObj.group, inviteOp);
+
+            if (inviteOp > 0.005) {
+                inviteOpenValue += (inviteOpenTarget - inviteOpenValue) * 0.055;
+                inviteObj.pivot.rotation.y = -Math.PI * inviteOpenValue;
+
+                inviteObj.group.position.y = Math.sin(elapsed * 0.28) * 0.05;
+                inviteObj.group.rotation.y = pointerSmooth.x * 0.06 - 0.04;
+                inviteObj.group.rotation.x = -0.06 + pointerSmooth.y * 0.04;
+            }
+
+            /* ── Finale monogram ── */
+            const finaleOp = approachOpacity(camZSm, -192, 46, 28, 4, 1);
+            setOpacity(finaleMonogram, finaleOp);
+
+            if (finaleOp > 0.005) {
+                finaleMonogram.rotation.y = Math.sin(elapsed * 0.2) * 0.14 + pointerSmooth.x * 0.05;
+                finaleMonogram.rotation.x = Math.sin(elapsed * 0.16) * 0.05 + pointerSmooth.y * 0.03;
+                finaleMonogram.position.y = Math.sin(elapsed * 0.3) * 0.05;
+            }
+
+            /* ── Finale ring ── */
+            const ringOp = clamp(smoothstep(-184, -196, camZSm) * finaleOp, 0, 1);
+            setOpacity(finaleRing, ringOp);
+
+            if (ringOp > 0.005) {
+                finaleRing.rotation.z = elapsed * 0.18;
+                finaleRing.scale.setScalar(0.85 + smoothstep(-184, -196, camZSm) * 0.15);
+                finaleRing.position.y = Math.sin(elapsed * 0.3) * 0.05;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        /* ── Resize ── */
+        function onResize() {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, IS_MOBILE ? 1.75 : 2));
+            renderer.setSize(w, h);
+
+            readScroll();
+        }
+
+        window.addEventListener('resize', onResize);
+        window.addEventListener('orientationchange', () => setTimeout(onResize, 120));
+
+        /* ── Context loss ── */
+        canvas.addEventListener('webglcontextlost', (e) => {
+            e.preventDefault();
+            console.warn('WebGL context lost');
+        }, false);
+
+        canvas.addEventListener('webglcontextrestored', () => {
+            console.info('WebGL context restored');
+        }, false);
+
+        /* ── Boot ── */
+        function boot() {
+            readScroll();
+            navScroll();
+            renderer.render(scene, camera);
+            animate();
+        }
+
+        boot();
+    </script>
+</body>
+
+</html>
