@@ -54,6 +54,12 @@
             color: #FFF8E7;
             font-family: 'Jost', sans-serif;
             overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        #home {
+            min-height: 100vh;
+            min-height: 100svh;
         }
 
         ::selection {
@@ -211,6 +217,32 @@
             box-shadow: 0 30px 80px rgba(0, 0, 0, .7), inset 0 0 40px rgba(0, 0, 0, .5);
             border: 1px solid rgba(212, 175, 55, .4);
             transform-style: preserve-3d;
+        }
+
+        @media (max-height: 700px) {
+            #envelopeOverlay {
+                align-items: flex-start;
+                padding-top: 24px;
+                padding-bottom: 24px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .envelope {
+                height: 240px;
+            }
+
+            .envelope-letter {
+                padding: 14px;
+            }
+
+            .envelope-letter .font-script.text-4xl {
+                font-size: 1.75rem;
+            }
+
+            .envelope-letter .font-hindi.text-lg {
+                font-size: 1rem;
+            }
         }
 
         .envelope-flap {
@@ -373,6 +405,22 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .1);
         }
 
+        @media (max-width: 480px) {
+            .count-card {
+                padding: 18px 8px !important;
+                border-radius: 16px;
+            }
+
+            .count-card .text-5xl {
+                font-size: 2rem !important;
+            }
+
+            .count-card .tracking-\[0\.3em\] {
+                letter-spacing: .18em !important;
+                font-size: 10px !important;
+            }
+        }
+
         /* Tilt */
         [data-tilt] {
             transform-style: preserve-3d;
@@ -382,6 +430,59 @@
 
         .tilt-inner {
             transform: translateZ(40px);
+        }
+
+        @media (max-width: 640px) {
+            #heroCard h1.font-script {
+                font-size: 4rem !important;
+                line-height: 1;
+            }
+
+            #heroCard .ornate-frame {
+                padding-left: 18px !important;
+                padding-right: 18px !important;
+                outline-offset: 4px;
+            }
+
+            #heroCard .ornate-frame .font-serif.text-3xl,
+            #heroCard .ornate-frame .font-serif.text-4xl {
+                font-size: 1.35rem !important;
+            }
+
+            #heroCard .ornate-frame .font-script.text-4xl,
+            #heroCard .ornate-frame .font-script.text-5xl {
+                font-size: 1.85rem !important;
+            }
+
+            .tracking-\[0\.4em\],
+            .tracking-\[0\.45em\],
+            .tracking-\[0\.5em\] {
+                letter-spacing: .22em !important;
+            }
+        }
+
+        @media (max-width: 380px) {
+            #heroCard h1.font-script {
+                font-size: 3.25rem !important;
+            }
+
+            #heroCard .font-hindi.text-cream\/60 {
+                font-size: 12px !important;
+            }
+
+            /* tighten hero ornament dividers too */
+            #heroCard .gap-6 {
+                gap: 12px !important;
+            }
+
+            #heroCard .w-16,
+            #heroCard .md\:w-32 {
+                width: 48px !important;
+            }
+
+            #heroCard .w-20 {
+                width: 60px !important;
+            }
         }
 
         /* Timeline */
@@ -398,6 +499,44 @@
         @media(max-width:768px) {
             .timeline-line {
                 left: 20px;
+            }
+
+            /* stack dots next to each card instead of spreading them */
+            .timeline-dot-col {
+                display: none !important;
+            }
+
+            /* give each story card its own dot */
+            #story .space-y-10>.reveal {
+                position: relative;
+            }
+
+            #story .space-y-10>.reveal::before {
+                content: '';
+                position: absolute;
+                left: 20px;
+                top: 16px;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: #D4AF37;
+                box-shadow: 0 0 15px #D4AF37;
+                transform: translateX(-50%);
+                z-index: 2;
+            }
+
+            #story .space-y-10>.reveal:last-child::before {
+                background: #9D2B3D;
+                box-shadow: 0 0 15px #9D2B3D;
+            }
+
+            /* push card content so it doesn't sit under the dot */
+            #story .space-y-10>.reveal>div:first-child {
+                padding-left: 46px !important;
+            }
+
+            #story .space-y-10>.reveal>div:last-child {
+                padding-left: 46px !important;
             }
         }
 
@@ -569,6 +708,60 @@
             border-color: #D4AF37;
         }
 
+        @media (max-width: 640px) {
+            #galleryFilters {
+                flex-wrap: wrap;
+                gap: 8px !important;
+            }
+
+            #galleryFilters .filter-btn {
+                padding-left: 14px !important;
+                padding-right: 14px !important;
+                font-size: 10px !important;
+                letter-spacing: .14em !important;
+            }
+
+            #guestNameInput {
+                font-size: 16px;
+            }
+
+            #rsvpForm input,
+            #rsvpForm select,
+            #rsvpForm textarea,
+            #wishName,
+            #wishMsg {
+                font-size: 16px;
+            }
+
+            .font-script.text-5xl,
+            .font-script.text-6xl {
+                font-size: 2.35rem !important;
+                line-height: 1.1;
+            }
+
+            .font-script.text-7xl {
+                font-size: 2.75rem !important;
+                line-height: 1.05;
+            }
+
+            #story h3.font-serif.text-3xl,
+            #events h3.font-serif.text-3xl {
+                font-size: 1.5rem !important;
+            }
+        }
+
+        @media (max-width: 380px) {
+
+            .font-script.text-5xl,
+            .font-script.text-6xl {
+                font-size: 2rem !important;
+            }
+
+            .font-script.text-7xl {
+                font-size: 2.35rem !important;
+            }
+        }
+
         #toast {
             position: fixed;
             bottom: 24px;
@@ -576,6 +769,16 @@
             transform: translateX(-50%) translateY(100px);
             z-index: 120;
             transition: .5s cubic-bezier(.2, .8, .3, 1);
+            max-width: calc(100vw - 32px);
+        }
+
+        @media (max-width: 640px) {
+            #toast {
+                bottom: 170px;
+                font-size: 13px;
+                padding-left: 16px;
+                padding-right: 16px;
+            }
         }
 
         #toast.show {

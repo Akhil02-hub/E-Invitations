@@ -402,6 +402,7 @@
         /* ---------- Hero ---------- */
         .hero {
             position: relative;
+            min-height: 100vh;
             min-height: 100svh;
             display: flex;
             align-items: center;
@@ -964,7 +965,7 @@
             flex-wrap: wrap
         }
 
-        .cd-\boxed {
+        .cd-box {
             min-width: 104px;
             text-align: center;
             padding: 1.15rem .95rem 1.02rem;
@@ -1712,6 +1713,21 @@
 
         @media (max-width:620px) {
 
+            .hero-tag {
+                font-size: .62rem;
+                letter-spacing: .14em;
+                padding: .45rem .85rem .45rem .5rem;
+                gap: .55rem;
+                max-width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .hero h1 {
+                font-size: clamp(2.2rem, 11vw, 3rem);
+            }
+
             .detail-grid,
             .reg-grid,
             .faq-grid {
@@ -1742,7 +1758,7 @@
                 right: -3%
             }
 
-            .cd-\boxed {
+            .cd-box {
                 min-width: calc(50% - .45rem);
                 flex: 1
             }

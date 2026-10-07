@@ -169,7 +169,10 @@
 
         #content a,
         #content button,
-        #content input {
+        #content input,
+        #content select,
+        #content textarea,
+        #content label {
             pointer-events: auto
         }
 
@@ -744,13 +747,102 @@
             }
         }
 
-        @media (max-width:520px) {
+
+
+        @media (max-width:640px) {
+            #nav {
+                padding: 18px 22px;
+            }
+
+            #nav.scrolled {
+                padding: 12px 22px;
+            }
+
+            .brand {
+                font-size: 15px;
+            }
+
             .nav-links {
-                display: none
+                gap: 14px;
+            }
+
+            .nav-links a {
+                font-size: 8px;
+                letter-spacing: .16em;
+            }
+
+            .scene {
+                padding: 96px 22px 48px;
+            }
+
+            .hero-date {
+                font-size: 9px;
+                letter-spacing: .26em;
+                line-height: 1.9;
+            }
+
+            .eyebrow,
+            .reveal-caption {
+                font-size: 8.5px;
+                letter-spacing: .28em;
+            }
+
+            .venue-meta {
+                gap: 22px;
+            }
+
+            .story-list li {
+                grid-template-columns: 56px 1fr;
+                gap: 14px;
+            }
+
+            .story-list .yr {
+                font-size: 1.1rem;
+            }
+
+            .story-list .txt {
+                font-size: 1.02rem;
+            }
+
+            .invite-details dl {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            footer {
+                padding: 32px 22px 38px;
+                font-size: 8px;
+                letter-spacing: .24em;
+            }
+        }
+
+        @media (max-width:460px) {
+            .nav-links {
+                display: none;
             }
 
             .display {
-                font-size: clamp(2.2rem, 9vw, 3rem)
+                font-size: clamp(2rem, 10vw, 2.6rem);
+            }
+
+            .finale-inner .names {
+                font-size: 2rem;
+            }
+
+            .story-inner h2 {
+                margin-bottom: 44px;
+            }
+
+            .venue-text h2 {
+                font-size: 1.65rem;
+            }
+
+            .venue-text p {
+                font-size: .85rem;
+            }
+
+            .rsvp-inner .sub {
+                margin-bottom: 32px;
             }
         }
 
@@ -1556,8 +1648,8 @@
             { p: 0.70, z: -104 },
             { p: 0.80, z: -126 },
             { p: 0.88, z: -148 },
-            { p: 0.96, z: -176 },
-            { p: 1.00, z: -196 }
+            { p: 0.96, z: -172 },
+            { p: 1.00, z: -182 }
         ];
 
         function cameraZAt(p) {
@@ -1594,7 +1686,10 @@
             pointer.y = (e.clientY / window.innerHeight) * 2 - 1;
         }, { passive: true });
 
-        window.addEventListener('pointerleave', () => {
+        document.addEventListener('mouseleave', () => {
+            pointer.x = 0; pointer.y = 0;
+        });
+        window.addEventListener('blur', () => {
             pointer.x = 0; pointer.y = 0;
         });
 
@@ -1824,12 +1919,12 @@
             }
 
             /* ── Finale ring ── */
-            const ringOp = clamp(smoothstep(-184, -196, camZSm) * finaleOp, 0, 1);
+            const ringOp = clamp(smoothstep(-176, -182, camZSm) * finaleOp, 0, 1);
             setOpacity(finaleRing, ringOp);
 
             if (ringOp > 0.005) {
                 finaleRing.rotation.z = elapsed * 0.18;
-                finaleRing.scale.setScalar(0.85 + smoothstep(-184, -196, camZSm) * 0.15);
+                finaleRing.scale.setScalar(0.85 + smoothstep(-176, -182, camZSm) * 0.15);
                 finaleRing.position.y = Math.sin(elapsed * 0.3) * 0.05;
             }
 

@@ -94,6 +94,7 @@
             padding: 2px;
             background: linear-gradient(135deg, #f6e27a, #d4af37, #ff4d6d, #f6e27a);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             pointer-events: none;
@@ -239,7 +240,22 @@
 
         @media(max-width:768px) {
             .timeline-line {
-                left: 18px;
+                left: 42px;
+            }
+
+            #tD,
+            #tH,
+            #tM,
+            #tS {
+                font-size: 1.4rem;
+            }
+
+            #home h1.font-serif {
+                font-size: 2.1rem;
+            }
+
+            .grid.grid-cols-4.gap-3 {
+                gap: 6px;
             }
         }
 
@@ -687,7 +703,7 @@
 
     <!-- ENVELOPE OVERLAY -->
     <div id="envelopeOverlay"
-        class="fixed inset-0 z-[90] hidden items-center justify-center p-6 bg-[#120409]/95 backdrop-blur-xl overflow-y-auto">
+        class="fixed inset-0 z-[90] hidden items-start justify-center p-6 py-16 bg-[#120409]/95 backdrop-blur-xl overflow-y-auto">
         <div class="text-center max-w-2xl w-full py-8">
             <div
                 class="inline-flex items-center gap-2 glass px-5 py-2 rounded-full text-xs tracking-[.3em] uppercase text-goldlight mb-4">
@@ -770,9 +786,10 @@
                         Day
                     </div>
                     <h2 class="reveal font-script text-4xl md:text-5xl mt-5 text-blush">Happy Anniversary Love...</h2>
-                    <h1 class="reveal font-serif font-black text-5xl md:text-7xl leading-[1.05] mt-2">Happy 1st<br><span
-                            class="gold-text rose-glow">Anniversary</span><br><span
-                            class="font-script font-normal text-4xl md:text-6xl text-cream">My Handsome Bava ❤</span>
+                    <h1 class="reveal font-serif font-black text-[2.1rem] sm:text-5xl md:text-7xl leading-[1.05] mt-2">
+                        Happy 1st<br><span class="gold-text rose-glow">Anniversary</span><br><span
+                            class="font-script font-normal text-2xl sm:text-4xl md:text-6xl text-cream">My Handsome Bava
+                            ❤</span>
                     </h1>
                     <p class="reveal mt-5 text-cream/70 text-lg leading-relaxed max-w-xl">One year ago you walked into
                         my life — and every day since, your handsome smile has been my sunrise, your love my home. This
@@ -1403,7 +1420,13 @@
 
         /* ---------- PETALS CANVAS ---------- */
         const pc = document.getElementById('petals'), pctx = pc.getContext('2d'); let PW, PH, parts = [];
-        function sizeP() { PW = pc.width = innerWidth; PH = pc.height = innerHeight; } sizeP(); addEventListener('resize', sizeP);
+        const DPR = Math.min(window.devicePixelRatio || 1, 2);
+        function sizeP() {
+            PW = innerWidth; PH = innerHeight;
+            pc.width = PW * DPR; pc.height = PH * DPR;
+            pc.style.width = PW + 'px'; pc.style.height = PH + 'px';
+            pctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        } sizeP(); addEventListener('resize', sizeP);
         function mkP(init) { return { x: Math.random() * PW, y: init ? Math.random() * PH : -20, s: 6 + Math.random() * 14, vy: .4 + Math.random() * 1.2, vx: -.5 + Math.random() * 1, r: Math.random() * Math.PI * 2, vr: -.02 + Math.random() * .04, type: Math.random() < .45 ? 'heart' : (Math.random() < .5 ? 'petal' : 'dust'), c: ['#ff4d6d', '#ff8fa3', '#f6e27a', '#d4af37', '#ffb3c1'][Math.floor(Math.random() * 5)], o: .35 + Math.random() * .5 }; }
         for (let i = 0; i < 70; i++)parts.push(mkP(true));
         function drawHeart(ctx, x, y, s, rot, color, alpha) { ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(s / 20, s / 20); ctx.globalAlpha = alpha; ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(0, 6); ctx.bezierCurveTo(-12, -6, -4, -16, 0, -7); ctx.bezierCurveTo(4, -16, 12, -6, 0, 6); ctx.fill(); ctx.restore(); }
@@ -1411,7 +1434,12 @@
 
         /* ---------- FIREWORKS ---------- */
         const fc = document.getElementById('fireworks'), fctx = fc.getContext('2d'); let FW, FH, rockets = [], sparks = [];
-        function sizeF() { FW = fc.width = innerWidth; FH = fc.height = innerHeight; } sizeF(); addEventListener('resize', sizeF);
+        function sizeF() {
+            FW = innerWidth; FH = innerHeight;
+            fc.width = FW * DPR; fc.height = FH * DPR;
+            fc.style.width = FW + 'px'; fc.style.height = FH + 'px';
+            fctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        } sizeF(); addEventListener('resize', sizeF);
         function launch(x, y) { const cols = ['#ff4d6d', '#f6e27a', '#ff8fa3', '#ffffff', '#d4af37', '#ff758f']; const c = cols[Math.floor(Math.random() * cols.length)]; for (let i = 0; i < 70; i++) { const a = Math.random() * Math.PI * 2, sp = 2 + Math.random() * 5; sparks.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 1, life: 1, decay: .008 + Math.random() * .012, c, heart: Math.random() < .25 }); } }
         function loopF() { fctx.clearRect(0, 0, FW, FH); sparks = sparks.filter(s => s.life > 0); sparks.forEach(s => { s.x += s.vx; s.y += s.vy; s.vy += .06; s.vx *= .985; s.life -= s.decay; fctx.globalAlpha = Math.max(0, s.life); fctx.fillStyle = s.c; if (s.heart) { drawHeart(fctx, s.x, s.y, 10, 0, s.c, Math.max(0, s.life)); } else { fctx.beginPath(); fctx.arc(s.x, s.y, 2.4, 0, Math.PI * 2); fctx.fill(); } }); fctx.globalAlpha = 1; requestAnimationFrame(loopF); } loopF();
         function fireworkShow(n = 5) { for (let i = 0; i < n; i++) setTimeout(() => launch(Math.random() * FW * .85 + FW * .075, Math.random() * FH * .45 + FH * .08), i * 350); }
@@ -1436,8 +1464,14 @@
             { e: '💌', t: 'Your Sweet Texts', d: '"Did you eat?" "Reach home safe" "Miss you" — your little texts are my big happiness.' },
             { e: '♾️', t: 'Your Forever Promise', d: 'Through fights and smiles, you never left. You chose us, every day. That is true love.' }
         ];
-        function renderReasons(list) { const g = document.getElementById('reasonsGrid'); g.innerHTML = ''; list.forEach(r => { const d = document.createElement('div'); d.className = 'flip reveal'; d.style.opacity = '1'; d.style.transform = 'none'; d.innerHTML = `<div class="flip-inner"><div class="flip-front glass gold-border p-6 flex flex-col items-center justify-center text-center"><div class="text-5xl mb-3">${r.e}</div><div class="font-serif font-bold text-lg">${r.t}</div><div class="text-xs mt-2 text-goldlight tracking-widest uppercase">Tap to reveal 💖</div></div><div class="flip-back p-6 flex flex-col items-center justify-center text-center" style="background:linear-gradient(135deg,#800f2f,#2b0a12);border:1px solid rgba(246,226,122,.5)"><div class="text-3xl mb-2">${r.e}</div><div class="font-serif font-bold text-goldlight">${r.t}</div><p class="text-sm text-cream/80 mt-2 leading-relaxed">${r.d}</p></div></div>`; d.onclick = () => d.classList.toggle('flipped'); g.appendChild(d); }); }
+        function renderReasons(list) { const g = document.getElementById('reasonsGrid'); g.innerHTML = ''; list.forEach(r => { const d = document.createElement('div'); d.className = 'flip reveal'; d.innerHTML = `<div class="flip-inner"><div class="flip-front glass gold-border p-6 flex flex-col items-center justify-center text-center"><div class="text-5xl mb-3">${r.e}</div><div class="font-serif font-bold text-lg">${r.t}</div><div class="text-xs mt-2 text-goldlight tracking-widest uppercase">Tap to reveal 💖</div></div><div class="flip-back p-6 flex flex-col items-center justify-center text-center" style="background:linear-gradient(135deg,#800f2f,#2b0a12);border:1px solid rgba(246,226,122,.5)"><div class="text-3xl mb-2">${r.e}</div><div class="font-serif font-bold text-goldlight">${r.t}</div><p class="text-sm text-cream/80 mt-2 leading-relaxed">${r.d}</p></div></div>`; d.onclick = () => d.classList.toggle('flipped'); g.appendChild(d); }); }
         renderReasons(reasons);
+        gsap.utils.toArray('#reasonsGrid .reveal').forEach(el => {
+            gsap.to(el, {
+                opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+                scrollTrigger: { trigger: el, start: 'top 88%' }
+            });
+        });
         function shuffleReasons() { const a = [...reasons].sort(() => Math.random() - .5); renderReasons(a); toast('Reasons shuffled with love 🔀❤️'); }
         function revealAllReasons() { document.querySelectorAll('.flip').forEach(f => f.classList.add('flipped')); bigCelebration(); }
 

@@ -169,6 +169,75 @@
             list-style: none;
         }
 
+        .nav-burger {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(212, 175, 55, .5);
+            background: rgba(212, 175, 55, .08);
+            border-radius: 8px;
+            cursor: pointer;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 0;
+        }
+
+        .nav-burger span {
+            display: block;
+            width: 20px;
+            height: 1.5px;
+            background: var(--gold);
+            transition: .3s;
+        }
+
+        .nav-mobile {
+            position: fixed;
+            top: 68px;
+            left: 12px;
+            right: 12px;
+            background: rgba(15, 3, 6, .96);
+            border: 1px solid rgba(212, 175, 55, .35);
+            border-radius: 14px;
+            padding: 18px;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            backdrop-filter: blur(10px);
+            z-index: 79;
+        }
+
+        .nav-mobile.open {
+            display: flex;
+        }
+
+        .nav-mobile a {
+            color: var(--cream-dk);
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            padding: 12px 14px;
+            border-radius: 8px;
+            transition: background .3s, color .3s;
+        }
+
+        .nav-mobile a:hover {
+            background: rgba(212, 175, 55, .14);
+            color: var(--gold-lt);
+        }
+
+        @media(max-width:820px) {
+            .nav-links {
+                display: none;
+            }
+
+            .nav-burger {
+                display: flex;
+            }
+        }
+
         .nav-links a {
             color: var(--cream-dk);
             text-decoration: none;
@@ -199,15 +268,10 @@
             width: 100%;
         }
 
-        @media(max-width:820px) {
-            .nav-links {
-                display: none;
-            }
-        }
-
         #hero {
             position: relative;
             min-height: 100vh;
+            min-height: 100svh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -264,10 +328,23 @@
 
         .hero-names {
             font-family: 'Great Vibes', cursive;
-            font-size: clamp(48px, 9vw, 110px);
+            font-size: clamp(38px, 9vw, 110px);
             color: var(--cream);
             line-height: 1.1;
             text-shadow: 0 0 50px rgba(212, 175, 55, .55), 0 4px 18px rgba(0, 0, 0, .7);
+            word-break: keep-all;
+            overflow-wrap: normal;
+        }
+
+        @media(max-width: 380px) {
+            .hero-names {
+                font-size: 36px;
+            }
+
+            .hero-names .amp {
+                font-size: .6em;
+                margin: 0 3px;
+            }
         }
 
         .hero-names .amp {
@@ -318,6 +395,18 @@
             color: var(--gold-lt);
             text-transform: uppercase;
             margin-bottom: 10px;
+        }
+
+        @media(max-width: 400px) {
+            .hero-date {
+                font-size: 12.5px;
+                letter-spacing: .28em;
+            }
+
+            .hero-venue {
+                font-size: 14px;
+                letter-spacing: .04em;
+            }
         }
 
         .hero-venue {
@@ -405,6 +494,14 @@
             color: var(--gold-dk);
             text-transform: uppercase;
             margin-bottom: 16px;
+        }
+
+        @media(max-width: 640px) {
+            .section-eyebrow {
+                font-size: 9.5px;
+                letter-spacing: .3em;
+                padding: 0 8px;
+            }
         }
 
         .section-dark .section-eyebrow,
@@ -1026,6 +1123,19 @@
             transition: all .35s ease;
             box-shadow: 0 14px 34px rgba(212, 175, 55, .3);
             justify-self: center;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media(max-width: 480px) {
+            .submit-btn {
+                width: 100%;
+                padding: 15px 20px;
+                font-size: 11px;
+                letter-spacing: .22em;
+            }
         }
 
         .submit-btn:hover {
@@ -1174,6 +1284,17 @@
             <li><a href="#venue">Venue</a></li>
             <li><a href="#rsvp">RSVP</a></li>
         </ul>
+        <button class="nav-burger" id="navBurger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-mobile" id="navMobile">
+            <a href="#ganesh">Invocation</a>
+            <a href="#couple">The Couple</a>
+            <a href="#family">Families</a>
+            <a href="#events">Celebrations</a>
+            <a href="#venue">Venue</a>
+            <a href="#rsvp">RSVP</a>
+        </div>
     </nav>
 
     <!-- ================= HERO with full 3D mandap scene ================= -->
@@ -1376,7 +1497,7 @@
                 <div class="section-eyebrow">Your Presence is Our Blessing</div>
                 <h2 class="section-title">RSVP</h2>
             </div>
-            <form class="rsvp-form reveal d1" id="rsvpForm" onsubmit="return false;">
+            <form class="rsvp-form reveal d1" id="rsvpForm">
                 <div class="form-row">
                     <div class="field"><label>Full Name</label><input type="text" placeholder="Your good name" required>
                     </div>
@@ -1449,7 +1570,8 @@
             alpha: true,
             powerPreference: 'high-performance'
         });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        const DPR_CAP = /Mobi|Android/i.test(navigator.userAgent) ? 1.25 : 2;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, DPR_CAP));
         renderer.setSize(heroSection.clientWidth, heroSection.clientHeight);
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.15;
@@ -1847,10 +1969,10 @@
 
         // petal ring 1 — 36 gold spheres
         const petalGroup1 = new THREE.Group();
-        const petalGeo = new THREE.SphereGeometry(0.045, 10, 10);
+        const mandalaPetalGeo = new THREE.SphereGeometry(0.045, 10, 10);
         for (let i = 0; i < 36; i++) {
             const a = (i / 36) * Math.PI * 2;
-            const p = new THREE.Mesh(petalGeo, goldMat);
+            const p = new THREE.Mesh(mandalaPetalGeo, goldMat);
             p.position.set(Math.cos(a) * 1.94, Math.sin(a) * 1.94, 0);
             petalGroup1.add(p);
         }
@@ -1861,7 +1983,7 @@
         const petalGroup2 = new THREE.Group();
         for (let i = 0; i < 24; i++) {
             const a = (i / 24) * Math.PI * 2 + Math.PI / 24;
-            const p = new THREE.Mesh(petalGeo, goldSoft);
+            const p = new THREE.Mesh(mandalaPetalGeo, goldSoft);
             p.scale.setScalar(0.7);
             p.position.set(Math.cos(a) * 1.42, Math.sin(a) * 1.42, 0);
             petalGroup2.add(p);
@@ -2257,6 +2379,11 @@
         const dummy = new THREE.Object3D();
 
         function spawnPetal(state, fromTop) {
+            if (!state.pos) {
+                state.pos = new THREE.Vector3();
+                state.rot = new THREE.Euler();
+                state.spin = new THREE.Vector3();
+            }
             state.pos.set(
                 (Math.random() - 0.5) * 10,
                 fromTop ? 4.5 + Math.random() * 2 : -3.5 + Math.random() * 8,
@@ -2279,10 +2406,17 @@
             state.scale = 0.7 + Math.random() * 0.7;
         }
 
+        function makePetalState() {
+            return {
+                pos: new THREE.Vector3(),
+                rot: new THREE.Euler(),
+                spin: new THREE.Vector3()
+            };
+        }
         for (let i = 0; i < PETAL_COUNT / 2; i++) {
-            const s = {}; spawnPetal(s, false);
+            const s = makePetalState(); spawnPetal(s, false);
             petalStatesR.push(s);
-            const s2 = {}; spawnPetal(s2, false);
+            const s2 = makePetalState(); spawnPetal(s2, false);
             petalStatesM.push(s2);
         }
 
@@ -2777,6 +2911,25 @@
             reveals.forEach((r) => io.observe(r));
 
             const nav = document.getElementById('nav');
+
+            const navBurger = document.getElementById('navBurger');
+            const navMobile = document.getElementById('navMobile');
+            if (navBurger && navMobile) {
+                const closeMobile = () => navMobile.classList.remove('open');
+                navBurger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    navMobile.classList.toggle('open');
+                });
+                navMobile.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobile));
+
+                document.addEventListener('click', (e) => {
+                    if (!navMobile.classList.contains('open')) return;
+                    if (!navMobile.contains(e.target) && !navBurger.contains(e.target)) closeMobile();
+                });
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') closeMobile();
+                });
+            }
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 60) nav.classList.add('solid');
                 else nav.classList.remove('solid');

@@ -244,7 +244,7 @@
         /* timeline */
         .t-line {
             position: absolute;
-            left: 19px;
+            left: 76px;
             top: 0;
             bottom: 0;
             width: 3px;
@@ -647,6 +647,11 @@
         .reveal {
             opacity: 0;
             transform: translateY(40px);
+        }
+
+        #top {
+            min-height: 100vh;
+            min-height: 100svh;
         }
 
         /* bouquet flower pop */
@@ -1300,31 +1305,27 @@
             document.getElementById('yearNum').textContent = ord(Math.max(1, yrs + ((new Date().getMonth() == new Date(SINCE).getMonth()) ? 1 : 1)));
             buildLetter(); updateCounts();
         }
+        let _cdInterval = null;
         function updateCounts() {
             const since = new Date(SINCE).getTime(); const now = Date.now(); const diff = Math.max(0, now - since);
             const days = Math.floor(diff / 86400000), hrs = Math.floor(diff / 3600000);
             animateNum('statDays', days); animateNum('statHours', hrs);
             document.getElementById('miniCount').textContent = days.toLocaleString() + ' days of us';
-            // next anniversary
             let s = new Date(SINCE); let n = new Date(); let next = new Date(n.getFullYear(), s.getMonth(), s.getDate());
             if (next < n) next = new Date(n.getFullYear() + 1, s.getMonth(), s.getDate());
             document.getElementById('nextAnn').textContent = next.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             document.getElementById('daysToGo').textContent = Math.ceil((next - n) / 86400000);
-            // live cd = time since
-            setIntervalTick();
-        }
-        function animateNum(id, val) { const el = document.getElementById(id); let cur = 0; const step = Math.max(1, Math.floor(val / 80)); const iv = setInterval(() => { cur += step; if (cur >= val) { cur = val; clearInterval(iv); } el.textContent = cur.toLocaleString(); }, 20); }
-        function setIntervalTick() {
-            const since = new Date(SINCE).getTime();
-            setInterval(() => {
-                const diff = Date.now() - since;
-                const d = Math.floor(diff / 86400000), h = Math.floor(diff % 86400000 / 3600000), m = Math.floor(diff % 3600000 / 60000), s = Math.floor(diff % 60000 / 1000);
+            if (_cdInterval) clearInterval(_cdInterval);
+            _cdInterval = setInterval(() => {
+                const d2 = Date.now() - new Date(SINCE).getTime();
+                const d = Math.floor(d2 / 86400000), h = Math.floor(d2 % 86400000 / 3600000), m = Math.floor(d2 % 3600000 / 60000), sc = Math.floor(d2 % 60000 / 1000);
                 document.getElementById('cd-d').textContent = String(d).padStart(2, '0');
                 document.getElementById('cd-h').textContent = String(h).padStart(2, '0');
                 document.getElementById('cd-m').textContent = String(m).padStart(2, '0');
-                document.getElementById('cd-s').textContent = String(s).padStart(2, '0');
+                document.getElementById('cd-s').textContent = String(sc).padStart(2, '0');
             }, 1000);
         }
+        function animateNum(id, val) { const el = document.getElementById(id); let cur = 0; const step = Math.max(1, Math.floor(val / 80)); const iv = setInterval(() => { cur += step; if (cur >= val) { cur = val; clearInterval(iv); } el.textContent = cur.toLocaleString(); }, 20); }
 
         /* ============ TYPEWRITER ============ */
         const phrases = ["You are my favourite hello and hardest goodbye.", "3 years down, forever to go, my girl.", "Home isn't a place — it's you.", "Every love song finally makes sense."];
@@ -1518,14 +1519,14 @@
         renderCandles();
 
         /* ============ QUIZ ============ */
-        const quiz = [
+        const getQuiz = () => [
             { q: `Where was our first date?`, o: ['Marine Drive Sunset', 'Mall Food Court', 'College Canteen', 'Video Call'], a: 0 },
             { q: `What does ${HIS} steal most?`, o: ['Her hoodies', 'Her fries', 'Her eyeliner', 'All of the above'], a: 3 },
             { q: `Her perfect evening is?`, o: ['Long drive + playlist', 'Gym + protein', 'Sleep by 9pm alone', 'Exam prep'], a: 0 },
             { q: `What fixes her bad mood instantly?`, o: ['Hug + maggi', 'New phone', 'Scolding', 'Ignoring her'], a: 0 },
             { q: `How long is “5 more minutes” when she sleeps?`, o: ['Actually 5 mins', '45 mins minimum', '2 hours', 'Eternity'], a: 1 },
         ];
-        let qi = 0, qs = 0;
+        let qi = 0, qs = 0; let quiz = getQuiz();
         function renderQuiz() {
             const box = document.getElementById('quizBox');
             document.getElementById('quizBar').style.width = (qi / quiz.length * 100) + '%';
@@ -1592,7 +1593,7 @@
         function closeCustomize() { const m = document.getElementById('customModal'); m.classList.add('hidden'); m.classList.remove('flex'); }
         function saveCustomize() {
             HIS = document.getElementById('inHis').value || HIS; HER = document.getElementById('inHer').value || HER; SINCE = document.getElementById('inDate').value || SINCE; NICK = document.getElementById('inNick').value || NICK;
-            localStorage.setItem('pinkAnniv', JSON.stringify({ his: HIS, her: HER, since: SINCE, nick: NICK })); buildMq(); applyNames(); renderQuiz(); closeCustomize(); celebrateBurst(); toast(`This page is now officially ${HIS} ♥ ${HER}`);
+            localStorage.setItem('pinkAnniv', JSON.stringify({ his: HIS, her: HER, since: SINCE, nick: NICK })); buildMq(); applyNames(); quiz = getQuiz(); renderQuiz(); closeCustomize(); celebrateBurst(); toast(`This page is now officially ${HIS} ♥ ${HER}`);
         }
         document.getElementById('customModal').addEventListener('click', e => { if (e.target.id === 'customModal') closeCustomize(); });
 

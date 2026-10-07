@@ -41,6 +41,7 @@
             font-family: 'Jost', system-ui, sans-serif;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
         }
 
         h1,
@@ -211,6 +212,7 @@
         .hero {
             position: relative;
             min-height: 100vh;
+            min-height: 100svh;
             display: flex;
             align-items: center;
             padding: 150px 0 90px;
@@ -273,6 +275,8 @@
 
         .tilt {
             position: relative;
+            width: min(360px, 86vw);
+            height: min(540px, 124vw);
             transform-style: preserve-3d;
             transition: transform .9s cubic-bezier(.19, 1, .22, 1);
             animation: floaty 9s ease-in-out infinite;
@@ -1034,7 +1038,7 @@
 
         @media (max-width:767px) {
             .hero {
-                padding: 128px 0 70px;
+                padding: 118px 0 70px;
             }
 
             .timeline-line,
@@ -1044,6 +1048,36 @@
 
             .tl-dot {
                 left: 16px;
+            }
+
+            .tilt,
+            .card-shell {
+                height: min(560px, 168vw);
+            }
+
+            .card-inner {
+                padding: 20px 18px !important;
+            }
+
+            .eyebrow {
+                font-size: .6rem;
+                letter-spacing: .2em;
+            }
+
+            .eyebrow::before {
+                width: 22px;
+            }
+
+            .field {
+                font-size: 16px;
+            }
+
+            #mobileMenu {
+                gap: 1.15rem;
+            }
+
+            .mm-link {
+                font-size: 1.75rem;
             }
         }
 
@@ -1180,7 +1214,7 @@
                                         <div class="glare" id="glare"></div>
 
                                         <div
-                                            class="relative h-full flex flex-col items-center justify-between text-center px-8 py-11">
+                                            class="card-inner relative h-full flex flex-col items-center justify-between text-center px-8 py-11">
                                             <div>
                                                 <div class="monogram-ring mx-auto">
                                                     <div class="serif text-[1.28rem] text-[#8A6234] tracking-[.06em]">
@@ -1224,73 +1258,74 @@
                                         <div class="corner bl"></div>
                                         <div class="corner br"></div>
 
-                                        <div class="relative h-full flex flex-col px-9 py-10 text-[#6B4B2C]">
-                                            <div class="text-center">
-                                                <div class="text-[.55rem] tracking-[.42em] uppercase text-[#96704A]">
-                                                    Order of the Day</div>
-                                                <div class="serif text-[1.62rem] mt-2 leading-tight">The Celebration
-                                                </div>
-                                                <div class="hairline w-[130px] mx-auto mt-4"></div>
+                                        <div class="card-inner relative h-full flex flex-col px-9 py-10 text-[#6B4B2C]">
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="text-[.55rem] tracking-[.42em] uppercase text-[#96704A]">
+                                                Order of the Day</div>
+                                            <div class="serif text-[1.62rem] mt-2 leading-tight">The Celebration
                                             </div>
+                                            <div class="hairline w-[130px] mx-auto mt-4"></div>
+                                        </div>
 
-                                            <div class="flex-1 flex flex-col justify-center gap-[18px] mt-5">
-                                                <div class="flex items-baseline gap-4">
-                                                    <div
-                                                        class="text-[.62rem] tracking-[.28em] uppercase text-[#9A7448] w-[74px] shrink-0">
-                                                        4:00 PM</div>
-                                                    <div class="flex-1">
-                                                        <div class="serif text-[1.06rem] leading-snug">The Ceremony
-                                                        </div>
-                                                        <div
-                                                            class="text-[.72rem] tracking-[.13em] uppercase text-[#A2825D] mt-[3px]">
-                                                            Willow Chapel</div>
+                                        <div class="flex-1 flex flex-col justify-center gap-[18px] mt-5">
+                                            <div class="flex items-baseline gap-4">
+                                                <div
+                                                    class="text-[.62rem] tracking-[.28em] uppercase text-[#9A7448] w-[74px] shrink-0">
+                                                    4:00 PM</div>
+                                                <div class="flex-1">
+                                                    <div class="serif text-[1.06rem] leading-snug">The Ceremony
                                                     </div>
-                                                </div>
-                                                <div class="h-px bg-[rgba(176,141,87,.32)]"></div>
-                                                <div class="flex items-baseline gap-4">
                                                     <div
-                                                        class="text-[.62rem] tracking-[.28em] uppercase text-[#9A7448] w-[74px] shrink-0">
-                                                        5:30 PM</div>
-                                                    <div class="flex-1">
-                                                        <div class="serif text-[1.06rem] leading-snug">Cocktails &amp;
-                                                            Canapés</div>
-                                                        <div
-                                                            class="text-[.72rem] tracking-[.13em] uppercase text-[#A2825D] mt-[3px]">
-                                                            The Rose Garden</div>
-                                                    </div>
-                                                </div>
-                                                <div class="h-px bg-[rgba(176,141,87,.32)]"></div>
-                                                <div class="flex items-baseline gap-4">
-                                                    <div
-                                                        class="text-[.62rem] tracking-[.28em] uppercase text-[#9A7448] w-[74px] shrink-0">
-                                                        7:00 PM</div>
-                                                    <div class="flex-1">
-                                                        <div class="serif text-[1.06rem] leading-snug">Dinner &amp;
-                                                            Dancing</div>
-                                                        <div
-                                                            class="text-[.72rem] tracking-[.13em] uppercase text-[#A2825D] mt-[3px]">
-                                                            The Grand Marquee</div>
-                                                    </div>
+                                                        class="text-[.72rem] tracking-[.13em] uppercase text-[#A2825D] mt-[3px]">
+                                                        Willow Chapel</div>
                                                 </div>
                                             </div>
+                                            <div class="h-px bg-[rgba(176,141,87,.32)]"></div>
+                                            <div class="flex items-baseline gap-4">
+                                                <div
+                                                    class="text-[.62rem] tracking-[.28em] uppercase text-[#9A7448] w-[74px] shrink-0">
+                                                    5:30 PM</div>
+                                                <div class="flex-1">
+                                                    <div class="serif text-[1.06rem] leading-snug">Cocktails &amp;
+                                                        Canapés</div>
+                                                    <div
+                                                        class="text-[.72rem] tracking-[.13em] uppercase text-[#A2825D] mt-[3px]">
+                                                        The Rose Garden</div>
+                                                </div>
+                                            </div>
+                                            <div class="h-px bg-[rgba(176,141,87,.32)]"></div>
+                                            <div class="flex items-baseline gap-4">
+                                                <div
+                                                    class="text-[.62rem] tracking-[.28em] uppercase text-[#9A7448] w-[74px] shrink-0">
+                                                    7:00 PM</div>
+                                                <div class="flex-1">
+                                                    <div class="serif text-[1.06rem] leading-snug">Dinner &amp;
+                                                        Dancing</div>
+                                                    <div
+                                                        class="text-[.72rem] tracking-[.13em] uppercase text-[#A2825D] mt-[3px]">
+                                                        The Grand Marquee</div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                            <div class="text-center">
-                                                <div class="hairline w-[130px] mx-auto mb-4"></div>
-                                                <div class="text-[.58rem] tracking-[.32em] uppercase text-[#96704A]">
-                                                    Dress Code</div>
-                                                <div class="serif italic text-[1.02rem] mt-1.5">Black Tie &amp; Garden
-                                                    Florals</div>
-                                                <button class="card-btn mt-5" id="closeCard">Back to Cover</button>
-                                            </div>
+                                        <div class="text-center">
+                                            <div class="hairline w-[130px] mx-auto mb-4"></div>
+                                            <div class="text-[.58rem] tracking-[.32em] uppercase text-[#96704A]">
+                                                Dress Code</div>
+                                            <div class="serif italic text-[1.02rem] mt-1.5">Black Tie &amp; Garden
+                                                Florals</div>
+                                            <button class="card-btn mt-5" id="closeCard">Back to Cover</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
+
             </div>
+        </div>
         </div>
     </section>
 
@@ -1843,7 +1878,7 @@
                 <div class="text-[.72rem] tracking-[.18em] uppercase" style="color:rgba(237,225,210,.52)">
                     © 2026 Amelia &amp; Oliver · Made with love
                 </div>
-                <div class="flex items-center gap-8">
+                <div class="flex flex-wrap items-center justify-center gap-5 sm:gap-8">
                     <a href="#story" class="nav-link" style="color:#EDE1D2">Story</a>
                     <a href="#details" class="nav-link" style="color:#EDE1D2">Details</a>
                     <a href="#gallery" class="nav-link" style="color:#EDE1D2">Gallery</a>
@@ -2127,7 +2162,7 @@
                 // keep card height sane on very small screens
                 if (card) {
                     const w = card.getBoundingClientRect().width;
-                    if (w > 0) card.style.height = Math.min(Math.round(w * 1.5), window.innerHeight * 0.82) + 'px';
+                    if (w > 0) card.style.height = Math.min(Math.round(w * 1.68), 560, window.innerHeight * 0.9) + 'px';
                 }
                 onScroll();
             });

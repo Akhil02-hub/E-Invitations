@@ -443,7 +443,7 @@
         }
 
         /* lightbox */
-        #light\boxed {
+        #lightbox {
             transition: opacity .45s ease, visibility .45s;
         }
 
@@ -544,99 +544,99 @@
     </header>
 
     <!-- ================= HERO ================= -->
-    <section id="top" class="relative min-h-[100svh] flex items-center overflow-hidden grain">
-        <!-- background -->
-        <div class="absolute inset-0">
-            <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1920&q=80"
-                alt="Romantic couple silhouette at sunset"
-                class="w-full h-full object-cover object-center opacity-[.42]" id="heroBg" />
-            <div class="absolute inset-0"
-                style="background:linear-gradient(115deg, rgba(28,7,14,.92) 0%, rgba(64,15,32,.78) 42%, rgba(120,32,58,.55) 100%)">
+    <section id="top" class="relative flex items-center overflow-hidden grain"
+        style="min-height:100vh;min-height:100svh"></section>
+    <!-- background -->
+    <div class="absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1920&q=80"
+            alt="Romantic couple silhouette at sunset" class="w-full h-full object-cover object-center opacity-[.42]"
+            id="heroBg" />
+        <div class="absolute inset-0"
+            style="background:linear-gradient(115deg, rgba(28,7,14,.92) 0%, rgba(64,15,32,.78) 42%, rgba(120,32,58,.55) 100%)">
+        </div>
+        <div class="absolute inset-0"
+            style="background:radial-gradient(75% 65% at 22% 30%, rgba(226,158,120,.28), transparent 62%)"></div>
+        <canvas id="petals" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+    </div>
+
+    <!-- floating ornament photos -->
+    <div class="hidden xl:block absolute right-[6%] top-[18%] w-44 h-56 rounded-[110px_110px_16px_16px] overflow-hidden shadow-2xl float-slow border border-white/15"
+        data-parallax="0.14">
+        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80"
+            alt="Couple holding hands" class="w-full h-full object-cover">
+    </div>
+    <div class="hidden xl:block absolute right-[17%] bottom-[13%] w-36 h-44 rounded-[100px_100px_14px_14px] overflow-hidden shadow-2xl float-slower border border-white/15"
+        data-parallax="0.22">
+        <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=600&q=80"
+            alt="Red roses bouquet" class="w-full h-full object-cover">
+    </div>
+
+    <div class="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 pt-32 pb-20 lg:py-32">
+        <div class="max-w-3xl">
+            <div class="fade-up flex items-center gap-4 mb-7" style="animation-delay:.15s">
+                <span class="h-[1px] w-12 bg-gold"></span>
+                <span class="text-gold text-[11px] sm:text-xs uppercase tracking-[0.42em] font-medium">Happy
+                    Anniversary, my love</span>
             </div>
-            <div class="absolute inset-0"
-                style="background:radial-gradient(75% 65% at 22% 30%, rgba(226,158,120,.28), transparent 62%)"></div>
-            <canvas id="petals" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
-        </div>
 
-        <!-- floating ornament photos -->
-        <div class="hidden xl:block absolute right-[6%] top-[18%] w-44 h-56 rounded-[110px_110px_16px_16px] overflow-hidden shadow-2xl float-slow border border-white/15"
-            data-parallax="0.14">
-            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80"
-                alt="Couple holding hands" class="w-full h-full object-cover">
-        </div>
-        <div class="hidden xl:block absolute right-[17%] bottom-[13%] w-36 h-44 rounded-[100px_100px_14px_14px] overflow-hidden shadow-2xl float-slower border border-white/15"
-            data-parallax="0.22">
-            <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=600&q=80"
-                alt="Red roses bouquet" class="w-full h-full object-cover">
-        </div>
+            <h1 class="font-display text-white leading-[0.94] tracking-[-0.02em] text-[clamp(2.9rem,9vw,7.2rem)]">
+                <span class="line-mask"><span class="line-inner" style="animation-delay:.15s">To My</span></span>
+                <span class="line-mask"><span class="line-inner italic text-blush"
+                        style="animation-delay:.32s">Handsome</span></span>
+                <span class="line-mask"><span class="line-inner" style="animation-delay:.49s">Bava<span
+                            class="text-gold">.</span></span></span>
+            </h1>
 
-        <div class="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 pt-32 pb-20 lg:py-32">
-            <div class="max-w-3xl">
-                <div class="fade-up flex items-center gap-4 mb-7" style="animation-delay:.15s">
-                    <span class="h-[1px] w-12 bg-gold"></span>
-                    <span class="text-gold text-[11px] sm:text-xs uppercase tracking-[0.42em] font-medium">Happy
-                        Anniversary, my love</span>
+            <p class="fade-up mt-8 text-white/82 text-lg sm:text-xl leading-relaxed max-w-xl font-light"
+                style="animation-delay:.72s">
+                Every love story is beautiful, but ours is my favourite. Here's to the man who makes my
+                heart race, my soul smile, and my ordinary days feel like a celebration —
+                wrapped in a thousand kisses.
+            </p>
+
+            <div class="fade-up mt-10 flex flex-wrap items-center gap-4" style="animation-delay:.88s">
+                <a href="#kisses"
+                    class="btn-primary px-8 py-4 rounded-full text-xs sm:text-sm tracking-[0.22em] font-semibold uppercase">
+                    Send Him Kisses
+                </a>
+                <a href="#story"
+                    class="btn-ghost px-8 py-4 rounded-full text-xs sm:text-sm tracking-[0.22em] font-semibold uppercase">
+                    Our Journey
+                </a>
+            </div>
+
+            <div class="fade-up mt-14 flex items-center gap-7 sm:gap-10" style="animation-delay:1.05s">
+                <div>
+                    <div class="text-white font-display text-3xl sm:text-4xl font-semibold stat-num" data-count="365"
+                        data-suffix="+">0</div>
+                    <div class="text-white/55 text-[10px] sm:text-[11px] uppercase tracking-[0.28em] mt-1">Days of
+                        us</div>
                 </div>
-
-                <h1 class="font-display text-white leading-[0.94] tracking-[-0.02em] text-[clamp(2.9rem,9vw,7.2rem)]">
-                    <span class="line-mask"><span class="line-inner" style="animation-delay:.15s">To My</span></span>
-                    <span class="line-mask"><span class="line-inner italic text-blush"
-                            style="animation-delay:.32s">Handsome</span></span>
-                    <span class="line-mask"><span class="line-inner" style="animation-delay:.49s">Bava<span
-                                class="text-gold">.</span></span></span>
-                </h1>
-
-                <p class="fade-up mt-8 text-white/82 text-lg sm:text-xl leading-relaxed max-w-xl font-light"
-                    style="animation-delay:.72s">
-                    Every love story is beautiful, but ours is my favourite. Here's to the man who makes my
-                    heart race, my soul smile, and my ordinary days feel like a celebration —
-                    wrapped in a thousand kisses.
-                </p>
-
-                <div class="fade-up mt-10 flex flex-wrap items-center gap-4" style="animation-delay:.88s">
-                    <a href="#kisses"
-                        class="btn-primary px-8 py-4 rounded-full text-xs sm:text-sm tracking-[0.22em] font-semibold uppercase">
-                        Send Him Kisses
-                    </a>
-                    <a href="#story"
-                        class="btn-ghost px-8 py-4 rounded-full text-xs sm:text-sm tracking-[0.22em] font-semibold uppercase">
-                        Our Journey
-                    </a>
+                <div class="w-px h-10 bg-white/20"></div>
+                <div>
+                    <div class="text-white font-display text-3xl sm:text-4xl font-semibold stat-num" data-count="1000"
+                        data-suffix="+">0</div>
+                    <div class="text-white/55 text-[10px] sm:text-[11px] uppercase tracking-[0.28em] mt-1">Kisses
+                        saved</div>
                 </div>
-
-                <div class="fade-up mt-14 flex items-center gap-7 sm:gap-10" style="animation-delay:1.05s">
-                    <div>
-                        <div class="text-white font-display text-3xl sm:text-4xl font-semibold stat-num"
-                            data-count="365" data-suffix="+">0</div>
-                        <div class="text-white/55 text-[10px] sm:text-[11px] uppercase tracking-[0.28em] mt-1">Days of
-                            us</div>
-                    </div>
-                    <div class="w-px h-10 bg-white/20"></div>
-                    <div>
-                        <div class="text-white font-display text-3xl sm:text-4xl font-semibold stat-num"
-                            data-count="1000" data-suffix="+">0</div>
-                        <div class="text-white/55 text-[10px] sm:text-[11px] uppercase tracking-[0.28em] mt-1">Kisses
-                            saved</div>
-                    </div>
-                    <div class="w-px h-10 bg-white/20"></div>
-                    <div>
-                        <div class="text-white font-display text-3xl sm:text-4xl font-semibold">∞</div>
-                        <div class="text-white/55 text-[10px] sm:text-[11px] uppercase tracking-[0.28em] mt-1">Forever
-                            to go</div>
-                    </div>
+                <div class="w-px h-10 bg-white/20"></div>
+                <div>
+                    <div class="text-white font-display text-3xl sm:text-4xl font-semibold">∞</div>
+                    <div class="text-white/55 text-[10px] sm:text-[11px] uppercase tracking-[0.28em] mt-1">Forever
+                        to go</div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- scroll cue -->
-        <a href="#story"
-            class="absolute bottom-7 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3 group">
-            <span class="text-white/60 text-[10px] uppercase tracking-[0.35em]">Scroll</span>
-            <span class="w-[26px] h-[42px] rounded-full border border-white/35 flex justify-center pt-2">
-                <span class="w-[3px] h-[9px] rounded-full bg-white/80"
-                    style="animation: fadeUp 1.6s ease-in-out infinite alternate"></span>
-            </span>
-        </a>
+    <!-- scroll cue -->
+    <a href="#story" class="absolute bottom-7 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3 group">
+        <span class="text-white/60 text-[10px] uppercase tracking-[0.35em]">Scroll</span>
+        <span class="w-[26px] h-[42px] rounded-full border border-white/35 flex justify-center pt-2">
+            <span class="w-[3px] h-[9px] rounded-full bg-white/80"
+                style="animation: fadeUp 1.6s ease-in-out infinite alternate"></span>
+        </span>
+    </a>
     </section>
 
     <!-- ================= MARQUEE ================= -->
@@ -809,70 +809,70 @@
                             </div>
                         </div>
                         <div
-                            class="hidden md:block absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gold tl-dot">
+                            class="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-gold tl-dot">
                         </div>
                     </div>
 
                     <!-- item -->
-                    <div class="md:grid md:grid-cols-2 md:gap-14 items-center">
-                        <div class="reveal md:order-2">
-                            <div class="text-gold text-[11px] uppercase tracking-[0.32em] font-semibold">Chapter 02
-                            </div>
-                            <h3 class="font-display text-3xl sm:text-4xl mt-3 leading-tight">Our first "I love you"</h3>
-                            <p class="text-cream/68 leading-[1.9] mt-4 font-light">
-                                Three words that changed the shape of my whole world. From that moment, every ordinary
-                                day became a page of a love story I never want to end.
-                            </p>
+                    <div class="md:grid md:grid-cols-2 md:gap-14 items-center relative"></div>
+                    <div class="reveal md:order-2">
+                        <div class="text-gold text-[11px] uppercase tracking-[0.32em] font-semibold">Chapter 02
                         </div>
-                        <div class="reveal reveal-d2 mt-6 md:mt-0 md:order-1">
-                            <div class="mask-reveal rounded-[20px] overflow-hidden shadow-2xl">
-                                <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=80"
-                                    alt="Couple holding hands affectionately" class="w-full h-[280px] object-cover">
-                            </div>
+                        <h3 class="font-display text-3xl sm:text-4xl mt-3 leading-tight">Our first "I love you"</h3>
+                        <p class="text-cream/68 leading-[1.9] mt-4 font-light">
+                            Three words that changed the shape of my whole world. From that moment, every ordinary
+                            day became a page of a love story I never want to end.
+                        </p>
+                    </div>
+                    <div class="reveal reveal-d2 mt-6 md:mt-0 md:order-1">
+                        <div class="mask-reveal rounded-[20px] overflow-hidden shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=80"
+                                alt="Couple holding hands affectionately" class="w-full h-[280px] object-cover">
                         </div>
                     </div>
+                </div>
 
-                    <!-- item -->
-                    <div class="md:grid md:grid-cols-2 md:gap-14 items-center">
-                        <div class="reveal md:text-right">
-                            <div class="text-gold text-[11px] uppercase tracking-[0.32em] font-semibold">Chapter 03
-                            </div>
-                            <h3 class="font-display text-3xl sm:text-4xl mt-3 leading-tight">Adventures &amp; tiny
-                                rituals</h3>
-                            <p class="text-cream/68 leading-[1.9] mt-4 font-light">
-                                Late-night drives, silly jokes, shared desserts, and the goodnight kiss that fixes
-                                everything. You turned the small things into my favourite memories.
-                            </p>
+                <!-- item -->
+                <div class="md:grid md:grid-cols-2 md:gap-14 items-center">
+                    <div class="reveal md:text-right">
+                        <div class="text-gold text-[11px] uppercase tracking-[0.32em] font-semibold">Chapter 03
                         </div>
-                        <div class="reveal reveal-d2 mt-6 md:mt-0">
-                            <div class="mask-reveal rounded-[20px] overflow-hidden shadow-2xl">
-                                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80"
-                                    alt="Celebration dinner setup with candles" class="w-full h-[280px] object-cover">
-                            </div>
+                        <h3 class="font-display text-3xl sm:text-4xl mt-3 leading-tight">Adventures &amp; tiny
+                            rituals</h3>
+                        <p class="text-cream/68 leading-[1.9] mt-4 font-light">
+                            Late-night drives, silly jokes, shared desserts, and the goodnight kiss that fixes
+                            everything. You turned the small things into my favourite memories.
+                        </p>
+                    </div>
+                    <div class="reveal reveal-d2 mt-6 md:mt-0">
+                        <div class="mask-reveal rounded-[20px] overflow-hidden shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80"
+                                alt="Celebration dinner setup with candles" class="w-full h-[280px] object-cover">
                         </div>
                     </div>
+                </div>
 
-                    <!-- item -->
-                    <div class="md:grid md:grid-cols-2 md:gap-14 items-center">
-                        <div class="reveal md:order-2">
-                            <div class="text-gold text-[11px] uppercase tracking-[0.32em] font-semibold">Chapter 04
-                            </div>
-                            <h3 class="font-display text-3xl sm:text-4xl mt-3 leading-tight">Today &amp; every tomorrow
-                            </h3>
-                            <p class="text-cream/68 leading-[1.9] mt-4 font-light">
-                                Happy anniversary, my love. Thank you for being my safe place, my biggest supporter and
-                                the most handsome man in every room. Here's to forever — with kisses.
-                            </p>
+                <!-- item -->
+                <div class="md:grid md:grid-cols-2 md:gap-14 items-center">
+                    <div class="reveal md:order-2">
+                        <div class="text-gold text-[11px] uppercase tracking-[0.32em] font-semibold">Chapter 04
                         </div>
-                        <div class="reveal reveal-d2 mt-6 md:mt-0 md:order-1">
-                            <div class="mask-reveal rounded-[20px] overflow-hidden shadow-2xl">
-                                <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=900&q=80"
-                                    alt="Couple celebrating their love" class="w-full h-[280px] object-cover">
-                            </div>
+                        <h3 class="font-display text-3xl sm:text-4xl mt-3 leading-tight">Today &amp; every tomorrow
+                        </h3>
+                        <p class="text-cream/68 leading-[1.9] mt-4 font-light">
+                            Happy anniversary, my love. Thank you for being my safe place, my biggest supporter and
+                            the most handsome man in every room. Here's to forever — with kisses.
+                        </p>
+                    </div>
+                    <div class="reveal reveal-d2 mt-6 md:mt-0 md:order-1">
+                        <div class="mask-reveal rounded-[20px] overflow-hidden shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=900&q=80"
+                                alt="Couple celebrating their love" class="w-full h-[280px] object-cover">
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 
@@ -1726,8 +1726,8 @@
                         img.style.background = 'linear-gradient(135deg,#7B1E33,#C4415C)';
                         img.style.objectFit = 'cover';
                         img.style.opacity = '1';
-                        img.removeAttribute('src');
-                    });
+                        img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3C/svg%3E";
+                    }, { once: true });
                 });
 
                 /* ---------- Init ---------- */

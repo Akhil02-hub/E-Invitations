@@ -319,6 +319,12 @@
             transform: scale(.97)
         }
 
+        .btn:disabled {
+            opacity: .65;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
         .nav-toggle {
             display: none;
             width: 46px;
@@ -366,11 +372,14 @@
             gap: 6px;
             padding: 0 8vw;
             clip-path: circle(0% at calc(100% - 46px) 46px);
-            transition: clip-path .8s var(--ease);
+            visibility: hidden;
+            transition: clip-path .8s var(--ease), visibility 0s .8s;
         }
 
         .mobile-menu.open {
-            clip-path: circle(150% at calc(100% - 46px) 46px)
+            clip-path: circle(150% at calc(100% - 46px) 46px);
+            visibility: visible;
+            transition: clip-path .8s var(--ease), visibility 0s 0s;
         }
 
         .mobile-menu a {
@@ -399,6 +408,7 @@
         /* ---------- Hero ---------- */
         .hero {
             position: relative;
+            min-height: 100vh;
             min-height: 100svh;
             display: flex;
             align-items: center;
@@ -1178,9 +1188,17 @@
             transition: all .55s var(--ease)
         }
 
-        .gal-item:hover .cap {
+        .gal-item:hover .cap,
+        .gal-item:focus-within .cap {
             transform: none;
             opacity: 1
+        }
+
+        @media (hover: none) {
+            .gal-item .cap {
+                transform: none;
+                opacity: 1;
+            }
         }
 
         .cap .t {
@@ -1452,7 +1470,7 @@
             border-radius: 13px;
             border: 1.5px solid rgba(46, 64, 52, .16);
             background: #fff;
-            font-size: .965rem;
+            font-size: 16px;
             transition: border-color .35s var(--ease), box-shadow .35s var(--ease);
             outline: none;
             appearance: none
@@ -3135,7 +3153,11 @@
                         if (rect.bottom < -200 || rect.top > vh + 200) return;
                         var speed = parseFloat(el.getAttribute('data-speed')) || 0.1;
                         var offset = (rect.top + rect.height / 2 - vh / 2) * speed * -1;
-                        el.style.transform = 'translate3d(0,' + offset.toFixed(2) + 'px,0)';
+                        if ('translate' in el.style) {
+                            el.style.translate = '0 ' + offset.toFixed(2) + 'px';
+                        } else {
+                            el.style.transform = 'translate3d(0,' + offset.toFixed(2) + 'px,0)';
+                        }
                     });
                 }
 

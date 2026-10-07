@@ -44,6 +44,116 @@
         }
 
         html {
+            -webkit-text-size-adjust: 100%;
+        }
+
+        @media(max-width:640px) {
+            body {
+                font-size: 15px;
+            }
+
+            .font-dancing {
+                letter-spacing: 0;
+            }
+
+            #preloader .text-7xl {
+                font-size: 4rem;
+            }
+
+            .timeline-line {
+                left: 18px;
+                width: 2px;
+            }
+
+            .flip {
+                height: 320px;
+            }
+
+            #gameArea {
+                height: 320px;
+            }
+
+            #kissWall {
+                min-height: 180px;
+            }
+
+            .big-lips-btn {
+                width: 9rem;
+                height: 9rem;
+            }
+
+            .big-lips-btn svg {
+                width: 4rem;
+                height: 4rem;
+            }
+
+            #kisses h3.font-dancing {
+                font-size: 1.6rem;
+            }
+
+            .coupon {
+                padding: 18px;
+            }
+
+            .btn-love,
+            .btn-gold {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+
+        @media(max-width:380px) {
+            .font-script.text-7xl {
+                font-size: 3.25rem;
+            }
+
+            .font-script.text-6xl {
+                font-size: 2.75rem;
+            }
+
+            .font-script.text-5xl {
+                font-size: 2.25rem;
+            }
+
+            .grid-cols-3>.glass {
+                padding: 10px;
+            }
+
+            .grid-cols-3 .font-serif {
+                font-size: 1.4rem;
+            }
+
+            h2.font-script {
+                line-height: 1.05;
+            }
+
+            #reasons h2 {
+                font-size: 2rem;
+            }
+
+            #kisses h2 {
+                font-size: 2rem;
+            }
+
+            .envelope {
+                height: 280px;
+            }
+
+            .envelope.open .env-letter {
+                height: 400px;
+                padding: 14px;
+            }
+
+            .env-letter .text-\[13px\] {
+                font-size: 12px;
+            }
+
+            .env-letter .font-script.text-3xl {
+                font-size: 1.5rem;
+            }
+        }
+
+        html {
             scroll-behavior: smooth;
         }
 
@@ -146,6 +256,7 @@
             background: linear-gradient(135deg, #FFF3B0 0%, #FFD166 25%, #E8B44A 50%, #FFF3B0 75%, #FFD166 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: shine 4s linear infinite;
         }
@@ -159,6 +270,7 @@
         .rose-gradient {
             background: linear-gradient(135deg, #FF8FA3, #FF4D6D, #C9184A);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -374,9 +486,24 @@
         }
 
         .envelope.open .env-letter {
-            transform: translateY(-78%) scale(1.03);
-            height: 520px;
+            transform: translateY(-46%) scale(1.02);
+            height: 480px;
             z-index: 5;
+        }
+
+        @media(max-width:640px) {
+            .envelope {
+                height: 300px;
+            }
+
+            .envelope.open .env-letter {
+                height: 440px;
+                transform: translateY(-42%) scale(1.02);
+            }
+
+            .env-letter {
+                padding: 18px;
+            }
         }
 
         .env-front {
@@ -614,6 +741,7 @@
             background: linear-gradient(135deg, #FFD166, #FF4D6D, #FF8FA3, #FFD166);
             background-size: 300% 300%;
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             animation: borderFlow 4s linear infinite;
@@ -717,8 +845,11 @@
                     class="w-10 h-10 rounded-full bg-gradient-to-br from-blush to-roseDeep flex items-center justify-center text-white heartbeat">
                     <i class="fa-solid fa-heart"></i>
                 </div>
-                <div class="leading-tight"><span class="font-script text-2xl gold-gradient">Bava & Bangaram</span>
-                    <p class="text-[10px] tracking-[.3em] uppercase text-white/60 -mt-1">Forever Anniversary</p>
+                <div class="leading-tight hidden sm:block"><span
+                        class="font-script text-xl md:text-2xl gold-gradient">Bava & Bangaram</span>
+                    <p
+                        class="text-[9px] md:text-[10px] tracking-[.15em] md:tracking-[.3em] uppercase text-white/60 -mt-1">
+                        Forever Anniversary</p>
                 </div>
             </a>
             <div class="hidden lg:flex items-center gap-7 text-sm font-medium text-white/80">
@@ -775,8 +906,9 @@
                     class="w-2 h-2 rounded-full bg-blush animate-ping"></span>
             </div>
             <p class="font-dancing text-2xl md:text-3xl text-blushLight mb-2">To my dearest, my cutest, my most</p>
-            <h1 class="font-serif font-black leading-[.95] text-5xl md:text-7xl lg:text-8xl">HAPPY<br><span
-                    class="font-script font-normal gold-gradient text-6xl md:text-8xl lg:text-9xl drop-shadow-2xl">Anniversary</span>
+            <h1 class="font-serif font-black leading-[.95] text-[2rem] sm:text-5xl md:text-7xl lg:text-8xl">
+                HAPPY<br><span
+                    class="font-script font-normal gold-gradient text-[2.4rem] sm:text-6xl md:text-8xl lg:text-9xl drop-shadow-2xl">Anniversary</span>
             </h1>
             <h2 class="mt-3 font-serif italic text-2xl md:text-4xl">My Handsome <span id="heroBavaName"
                     class="gold-gradient font-black not-italic">BAVA</span> <span class="text-blush">♥</span></h2>
@@ -876,8 +1008,8 @@
             <div class="timeline-line"></div>
             <div class="space-y-10">
                 <div class="reveal relative flex flex-col md:flex-row items-center gap-6 md:gap-0">
-                    <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 pl-12 md:pl-0">
-                        <div class="glass rounded-2xl p-6"><span
+                    <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 pl-16 md:pl-0">
+                        <div class="glass rounded-2xl p-5 md:p-6"><span
                                 class="text-gold text-xs tracking-widest uppercase">Chapter 01 • First Sight</span>
                             <h3 class="font-serif font-bold text-2xl mt-1">Nuvvu Kanipinchavu</h3>
                             <p class="text-white/70 text-sm mt-2 leading-relaxed">The moment I saw your handsome smile,
@@ -897,8 +1029,8 @@
                         class="absolute left-[20px] md:left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-blush to-roseDeep flex items-center justify-center text-white border-4 border-[#18040B] shadow-xl z-10 top-6 md:top-auto">
                         <i class="fa-solid fa-comments"></i>
                     </div>
-                    <div class="md:w-1/2 md:pl-12 pl-12 md:pl-12">
-                        <div class="glass rounded-2xl p-6"><span
+                    <div class="md:w-1/2 pl-16 md:pl-12">
+                        <div class="glass rounded-2xl p-5 md:p-6"><span
                                 class="text-gold text-xs tracking-widest uppercase">Chapter 02 • First Talk</span>
                             <h3 class="font-serif font-bold text-2xl mt-1">Matalatho Magic</h3>
                             <p class="text-white/70 text-sm mt-2 leading-relaxed">Your voice, your caring words, your
@@ -907,9 +1039,9 @@
                     </div>
                 </div>
                 <div class="reveal relative flex flex-col md:flex-row items-center gap-6">
-                    <div class="md:w-1/2 md:pr-12 md:text-right pl-12 md:pl-0 order-2 md:order-1">
-                        <div class="glass rounded-2xl p-6"><span
-                                class="text-gold text-xs tracking-widest uppercase">Chapter 03 • First Love</span>
+                    <div class="md:w-1/2 pl-16 md:pl-0 md:pr-12 md:text-right order-2 md:order-1">
+                        <div class="glass rounded-2xl p-5 md:p-6 shimmer-border">
+                            <span class="text-gold text-xs tracking-widest uppercase">Chapter 03 • First Love</span>
                             <h3 class="font-serif font-bold text-2xl mt-1">I Love You, Bava</h3>
                             <p class="text-white/70 text-sm mt-2 leading-relaxed">When you held my hand and said those
                                 three words, I got my whole world. Your kiss on my forehead sealed our forever.</p>
@@ -1231,7 +1363,7 @@
                 <h2 class="font-script text-5xl md:text-7xl gold-gradient mt-2">A Letter For My Bava</h2>
                 <p class="text-white/60 mt-3">Tap the envelope to open my heart</p>
             </div>
-            <div class="reveal mt-10 envelope-wrap pb-32">
+            <div class="reveal mt-10 envelope-wrap pb-32 pt-[180px] md:pt-[260px]">
                 <div class="envelope" id="envelope" onclick="toggleEnvelope()">
                     <div class="env-back"></div>
                     <div class="env-letter text-left">
@@ -1468,7 +1600,7 @@
     <!-- FLOATING BUTTONS -->
     <div class="fixed bottom-5 right-5 z-[900] flex flex-col gap-3">
         <button id="musicBtn" onclick="toggleMusic()"
-            class="w-13 h-13 p-3.5 rounded-full glass-strong border border-gold/40 shadow-xl hover:scale-110 transition flex items-center gap-2"><span
+            class="w-12 h-12 md:w-14 md:h-14 p-3 rounded-full glass-strong border border-gold/40 shadow-xl hover:scale-110 transition flex items-center justify-center gap-2"><span
                 id="musicIcon"><i class="fa-solid fa-music text-gold"></i></span><span id="musicBars"
                 class="hidden items-end gap-[3px] h-5"><span class="music-bar" style="animation-delay:0s"></span><span
                     class="music-bar" style="animation-delay:.2s"></span><span class="music-bar"
@@ -1566,7 +1698,14 @@
         /* ============ BACKGROUND HEART CANVAS ============ */
         const cv = document.getElementById('kissCanvas'), ctx = cv.getContext('2d');
         let parts = [];
-        function resize() { cv.width = innerWidth; cv.height = innerHeight; }
+        const DPR = Math.min(window.devicePixelRatio || 1, 2);
+        function resize() {
+            cv.width = innerWidth * DPR;
+            cv.height = innerHeight * DPR;
+            cv.style.width = innerWidth + 'px';
+            cv.style.height = innerHeight + 'px';
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        }
         resize(); addEventListener('resize', resize);
         function drawHeart(x, y, s, color, alpha, rot) { ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.globalAlpha = alpha; ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(0, s * 0.3); ctx.bezierCurveTo(s * 0.5, -s * 0.25, s * 1.1, s * 0.35, 0, s); ctx.bezierCurveTo(-s * 1.1, s * 0.35, -s * 0.5, -s * 0.25, 0, s * 0.3); ctx.fill(); ctx.restore(); }
         for (let i = 0; i < 35; i++) parts.push({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, s: 6 + Math.random() * 14, c: Math.random() > .5 ? '#FF4D6D' : '#FFD166', a: .08 + Math.random() * .15, vy: .3 + Math.random() * .8, vx: (Math.random() - .5) * .4, r: Math.random() * Math.PI, vr: (Math.random() - .5) * .02 });
@@ -1787,7 +1926,9 @@
 
         /* welcome */
         setTimeout(() => { toast('Welcome! Tap anywhere for kisses 💋'); }, 3000);
-        document.addEventListener('dblclick', e => { spawnFlyKiss(e.clientX, e.clientY, true); playKissSound(); kisses++; updateKissUI(); });
+        if (window.matchMedia('(hover:hover)').matches) {
+            document.addEventListener('dblclick', e => { spawnFlyKiss(e.clientX, e.clientY, true); playKissSound(); kisses++; updateKissUI(); });
+        }
         // seed wall
         setTimeout(() => { addWallKiss(); addWallKiss(); }, 3500);
     </script>

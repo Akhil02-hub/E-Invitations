@@ -120,11 +120,34 @@
             z-index: 0;
             width: 100%;
             height: 100%;
+            /* let vertical scroll pass through, keep horizontal drag for orbit */
+            touch-action: pan-y;
+        }
+
+        @media (pointer: coarse) {
+
+            /* on touch devices, don't capture pointer unless the user is clearly dragging */
+            #webgl {
+                pointer-events: auto;
+            }
         }
 
         .content-layer {
             position: relative;
             z-index: 2;
+        }
+
+        /* hero viewport height — svh fallback for iOS */
+        #home {
+            min-height: 100vh;
+            min-height: 100svh;
+            min-height: 105svh;
+        }
+
+        @media (max-width: 640px) {
+            #home {
+                min-height: 100svh;
+            }
         }
 
         #preloader {
@@ -241,8 +264,37 @@
             animation: spin 60s linear infinite;
         }
 
+        /* hero title cap for small phones */
+        #home h1.font-script {
+            font-size: clamp(2.6rem, 11vw, 7.5rem);
+            line-height: .98;
+            word-break: break-word;
+            padding: 0 .25rem;
+        }
+
+        @media (max-width: 400px) {
+            #home h1.font-script {
+                font-size: 2.4rem;
+            }
+        }
+
         .float-slow {
             animation: floaty 6s ease-in-out infinite;
+        }
+
+        /* stop the hero meta strip from overflowing */
+        #home .mt-8.flex.items-center.justify-center.gap-6 {
+            flex-wrap: wrap;
+            gap: 10px 20px !important;
+            text-align: center;
+            padding: 0 12px;
+        }
+
+        @media (max-width: 480px) {
+            #home .mt-8.flex.items-center.justify-center.gap-6 {
+                font-size: 10px;
+                letter-spacing: .18em;
+            }
         }
 
         @keyframes floaty {
@@ -463,6 +515,19 @@
 
         .section-title {
             font-family: "Cormorant Garamond";
+            font-size: clamp(2rem, 6vw, 3.75rem);
+            line-height: 1.1;
+            letter-spacing: -.01em;
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 1.85rem;
+            }
+
+            .section-title br {
+                display: none;
+            }
         }
 
         .divider-orn {
@@ -1312,7 +1377,12 @@
         /* ============ CURSOR / NAV / PROGRESS ============ */
         const cur = document.getElementById('cursor'), cdot = document.getElementById('cursorDot');
         document.addEventListener('mousemove', e => { cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px'; cdot.style.left = e.clientX + 'px'; cdot.style.top = e.clientY + 'px'; });
-        document.querySelectorAll('a,button,.gallery-item,.tilt').forEach(el => { el.addEventListener('mouseenter', () => cur.classList.add('hovering')); el.addEventListener('mouseleave', () => cur.classList.remove('hovering')); });
+        document.addEventListener('mouseover', e => {
+            if (e.target.closest('a,button,.gallery-item,.tilt')) cur.classList.add('hovering');
+        });
+        document.addEventListener('mouseout', e => {
+            if (e.target.closest('a,button,.gallery-item,.tilt')) cur.classList.remove('hovering');
+        });
         document.getElementById('menuBtn').onclick = () => document.getElementById('mobileMenu').classList.toggle('hidden');
         document.querySelectorAll('#mobileMenu a').forEach(a => a.onclick = () => document.getElementById('mobileMenu').classList.add('hidden'));
         window.addEventListener('scroll', () => { const h = document.documentElement; const p = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100; document.getElementById('scrollProgress').style.width = p + '%'; document.getElementById('topBtn').style.display = h.scrollTop > 600 ? 'flex' : 'none'; }, { passive: true });
@@ -1548,7 +1618,18 @@
             canvas.style.pointerEvents = 'auto';
             canvas.addEventListener('pointerdown', e => { dragging = true; px = e.clientX; py = e.clientY; });
             window.addEventListener('pointerup', () => dragging = false);
-            window.addEventListener('pointermove', e => { mouseX = (e.clientX / innerWidth - .5); mouseY = (e.clientY / innerHeight - .5); if (dragging) { targetTheta -= (e.clientX - px) * .005; targetPhi = Math.min(1.45, Math.max(.35, targetPhi - (e.clientY - py) * .003)); px = e.clientX; py = e.clientY; } });
+
+            /* only let mouse drags rotate the camera; touch is reserved for page scroll */
+            window.addEventListener('pointercancel', () => dragging = false);
+            window.addEventListener('pointermove', e => {
+                mouseX = (e.clientX / innerWidth - .5);
+                mouseY = (e.clientY / innerHeight - .5);
+                if (dragging && e.pointerType === 'mouse') {
+                    targetTheta -= (e.clientX - px) * .005;
+                    targetPhi = Math.min(1.45, Math.max(.35, targetPhi - (e.clientY - py) * .003));
+                    px = e.clientX; py = e.clientY;
+                }
+            });
             window.addEventListener('wheel', e => { if (window.scrollY < innerHeight * .6) { targetRadius = Math.min(46, Math.max(10, targetRadius + e.deltaY * .02)); } }, { passive: true });
             // touch pinch-ish: two finger? keep simple
             const views = { front: { th: 0, ph: 1.08, r: 27 }, top: { th: .6, ph: .35, r: 34 }, fire: { th: .4, ph: 1.25, r: 11 }, wide: { th: -.7, ph: 1.0, r: 42 } };

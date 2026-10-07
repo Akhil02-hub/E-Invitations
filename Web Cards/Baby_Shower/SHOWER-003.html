@@ -310,6 +310,7 @@
         /* ============ hero ============ */
         .hero {
             min-height: 100vh;
+            min-height: 100svh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -780,13 +781,13 @@
             font-family: var(--serif);
             font-style: italic;
             font-weight: 500;
-            font-size: 30px;
+            font-size: clamp(22px, 7vw, 30px);
             line-height: 1.05
         }
 
         .rb-or {
             font-family: var(--script);
-            font-size: 21px;
+            font-size: clamp(16px, 5vw, 21px);
             color: var(--rose-deep);
             line-height: 1
         }
@@ -950,7 +951,7 @@
         .field textarea {
             width: 100%;
             font-family: var(--sans);
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 500;
             color: var(--ink);
             background: rgba(255, 255, 255, .78);
@@ -1056,6 +1057,17 @@
             cursor: pointer;
             transition: .3s;
             color: var(--ink-soft)
+        }
+
+        @media (max-width:400px) {
+            .pill span {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+
+            .pill-group {
+                gap: 8px;
+            }
         }
 
         .pill:hover span {
@@ -1322,6 +1334,8 @@
             align-items: center;
             justify-content: center;
             gap: 44px;
+            padding: 24px 16px;
+            overflow-y: auto;
             background: radial-gradient(ellipse at 50% 36%, #4a3a52 0%, #2e2334 55%, #241b2b 100%);
             transition: opacity .95s ease
         }
@@ -1581,6 +1595,46 @@
 
             .hero-actions .btn {
                 width: min(300px, 100%)
+            }
+
+            .hero-date {
+                font-size: 10px;
+                letter-spacing: .5px;
+                line-height: 1.9;
+                padding: 0 12px;
+            }
+
+            .hero h1 {
+                font-size: clamp(2.4rem, 11vw, 3.4rem);
+            }
+
+            .hero-script {
+                font-size: clamp(1.85rem, 7vw, 2.6rem);
+            }
+
+            .hero-honor {
+                font-size: 1.1rem;
+            }
+
+            .hero-honor em {
+                font-size: 1.55rem;
+            }
+
+            .stationery {
+                padding: 44px 20px 38px;
+            }
+
+            .stat-date {
+                font-size: 13px;
+                letter-spacing: 2.5px;
+            }
+
+            .stat-venue {
+                font-size: 1.35rem;
+            }
+
+            .rsvp-card {
+                padding: 24px 18px;
             }
         }
 

@@ -217,8 +217,26 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
             padding: 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media(max-height:640px) {
+            #envelope-overlay {
+                justify-content: flex-start;
+                padding-top: 24px;
+                padding-bottom: 24px;
+            }
+
+            .envelope-stage {
+                margin-top: 6px;
+            }
+
+            #overlayBottom {
+                margin-top: 14px !important;
+            }
         }
 
         .stars {
@@ -757,6 +775,20 @@
             transition: transform 1.1s cubic-bezier(.2, .8, .25, 1);
         }
 
+        @media(max-width:400px) {
+            .flip-inner {
+                height: 560px;
+            }
+
+            .card-face .h-full {
+                padding: 22px 18px !important;
+            }
+
+            .font-script.text-5xl {
+                font-size: 2.4rem;
+            }
+        }
+
         .flip-inner.flipped {
             transform: rotateY(180deg);
         }
@@ -899,7 +931,7 @@
             border: 1px solid rgba(201, 168, 106, .35);
             border-radius: 12px;
             padding: 14px 18px;
-            font-size: 15px;
+            font-size: 16px;
             outline: none;
             transition: all .3s;
             color: #2B2622;
@@ -919,6 +951,21 @@
             transition: all .3s;
             background: #fff;
             text-align: center;
+        }
+
+        @media(max-width:400px) {
+            .attend-card {
+                padding: 12px 8px;
+            }
+
+            .attend-card p.font-serif {
+                font-size: 13px;
+                line-height: 1.25;
+            }
+
+            .attend-card .text-xs {
+                font-size: 10px;
+            }
         }
 
         .attend-card.selected {
@@ -1102,6 +1149,91 @@
 
             .flip-inner {
                 height: 520px;
+            }
+
+            .wax-seal {
+                width: 66px;
+                height: 66px;
+            }
+
+            .seal-inner span {
+                font-size: 18px;
+            }
+
+            .seal-ring {
+                inset: -6px;
+            }
+
+            /* hero — script name overflows 320px at 60px */
+            header h1.font-script {
+                font-size: 3rem !important;
+                line-height: 1.05;
+            }
+
+            .hero-anim.text-6xl {
+                font-size: 2rem !important;
+            }
+
+            /* countdown — tighten boxes so 4 fit or wrap cleanly */
+            .count-box {
+                min-width: 68px;
+                padding: 12px 8px;
+                border-radius: 12px;
+            }
+
+            .count-num {
+                font-size: 22px;
+            }
+
+            .count-label {
+                font-size: 8px;
+                letter-spacing: .18em;
+            }
+
+            /* toast sits below floating buttons */
+            #toast {
+                bottom: 5.5rem !important;
+            }
+
+            /* schedule detail icons */
+            .timeline-dot {
+                width: 40px;
+                height: 40px;
+                font-size: 15px;
+            }
+
+            /* footer script heading */
+            footer .font-script.text-5xl {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media(max-width:400px) {
+            header h1.font-script {
+                font-size: 2.5rem !important;
+            }
+
+            .count-box {
+                min-width: 62px;
+                padding: 10px 6px;
+            }
+
+            .count-num {
+                font-size: 20px;
+            }
+
+            .envelope {
+                height: 200px;
+            }
+
+            .mini-names {
+                font-size: 20px;
+            }
+
+            .mini-date,
+            .mini-venue {
+                font-size: 9px;
+                letter-spacing: .2em;
             }
         }
     </style>
@@ -2368,9 +2500,13 @@
         function toast(msg) {
             const t = document.getElementById('toast');
             document.getElementById('toastMsg').textContent = msg;
+            const isMobile = window.innerWidth < 640;
             t.style.transform = 'translate(-50%,0)'; t.style.opacity = '1';
             clearTimeout(toastT);
-            toastT = setTimeout(() => { t.style.transform = 'translate(-50%,6rem)'; t.style.opacity = '0'; }, 2600);
+            toastT = setTimeout(() => {
+                t.style.transform = 'translate(-50%,' + (isMobile ? '6rem' : '6rem') + ')';
+                t.style.opacity = '0';
+            }, 2600);
         }
 
         /* ---------- HEART TRAIL (desktop) ---------- */

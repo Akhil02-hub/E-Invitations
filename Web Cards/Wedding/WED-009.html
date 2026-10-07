@@ -495,6 +495,7 @@
         /* ---------- Hero ---------- */
         .hero {
             position: relative;
+            min-height: 100vh;
             min-height: 100svh;
             display: flex;
             align-items: center;
@@ -934,7 +935,7 @@
             margin-top: clamp(2.85rem, 5.5vw, 4.35rem);
         }
 
-        .count-\boxed {
+        .count-box {
             position: relative;
             background: var(--paper);
             border: 1px solid var(--line);
@@ -1566,7 +1567,7 @@
         }
 
         /* lightbox */
-        .light\boxed {
+        .lightbox {
             position: fixed;
             inset: 0;
             z-index: 200;
@@ -1826,7 +1827,7 @@
             border-radius: 3px;
             padding: 1.42rem 1.12rem .62rem;
             color: #fff;
-            font-size: .965rem;
+            font-size: 16px;
             font-weight: 300;
             transition: border-color .42s var(--ease), background .42s var(--ease);
             outline: none;

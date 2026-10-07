@@ -619,6 +619,7 @@
 
         /* ============ HERO ============ */
         .hero {
+            min-height: 100vh;
             min-height: 100svh;
             display: grid;
             place-items: center;
@@ -663,6 +664,13 @@
             margin-bottom: 18px
         }
 
+        @media(max-width:520px) {
+            .hero-pre {
+                font-size: 10px;
+                letter-spacing: .18em
+            }
+        }
+
         .hero-names {
             font-family: var(--script);
             font-weight: 400;
@@ -705,6 +713,17 @@
             letter-spacing: .22em;
             text-transform: uppercase;
             color: var(--gold-bright)
+        }
+
+        @media(max-width:520px) {
+            .hero-date {
+                font-size: 13px;
+                letter-spacing: .12em
+            }
+
+            .hero-names .nm {
+                font-size: clamp(48px, 14vw, 92px)
+            }
         }
 
         .hero-place {
@@ -803,7 +822,8 @@
             display: flex;
             justify-content: center;
             align-items: baseline;
-            gap: clamp(14px, 5vw, 58px)
+            gap: clamp(14px, 5vw, 58px);
+            flex-wrap: wrap
         }
 
         .cd-cell b {
@@ -823,6 +843,25 @@
             letter-spacing: .34em;
             text-transform: uppercase;
             color: var(--gold)
+        }
+
+        @media(max-width:520px) {
+            .cd {
+                gap: 14px
+            }
+
+            .cd-sep {
+                display: none
+            }
+
+            .cd-cell b {
+                font-size: clamp(30px, 9vw, 42px)
+            }
+
+            .cd-cell span {
+                font-size: 9px;
+                letter-spacing: .16em
+            }
         }
 
         .cd-sep {
@@ -1353,7 +1392,7 @@
             border-bottom: 1px solid rgba(246, 239, 225, .3);
             color: var(--ivory);
             font-family: var(--sans);
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 300;
             padding: 8px 2px;
             outline: none;
@@ -1393,6 +1432,12 @@
             grid-template-columns: 1fr 1fr;
             gap: 14px;
             margin: 6px 0 26px
+        }
+
+        @media(max-width:400px) {
+            .opts {
+                grid-template-columns: 1fr
+            }
         }
 
         .opt input {
@@ -1476,6 +1521,26 @@
             color: var(--gold-bright)
         }
 
+        @media(max-width:560px) {
+            .back-script {
+                font-size: 30px;
+                line-height: 1.15;
+                word-break: break-word;
+                padding: 0 6px
+            }
+
+            .back-face-msg {
+                font-size: 16px;
+                padding: 0 6px;
+                max-width: 100%
+            }
+
+            .back-note {
+                letter-spacing: .14em;
+                font-size: 10px
+            }
+        }
+
         .back-face-msg {
             font-family: var(--serif);
             font-style: italic;
@@ -1556,6 +1621,51 @@
             letter-spacing: .22em;
             text-transform: uppercase;
             color: var(--ivory-faint)
+        }
+
+        @media(max-width:560px) {
+            .intro-kicker {
+                font-size: 10px;
+                letter-spacing: .18em;
+                padding: 0 16px
+            }
+
+            .intro-hint {
+                font-size: 10px;
+                letter-spacing: .14em;
+                padding: 0 16px;
+                margin-top: 26px
+            }
+
+            .hero-place {
+                font-size: 10px;
+                letter-spacing: .16em;
+                padding: 0 10px
+            }
+
+            .cd-title {
+                font-size: 10px;
+                letter-spacing: .22em
+            }
+
+            .f-note {
+                font-size: 10px;
+                letter-spacing: .12em;
+                padding: 0 12px;
+                line-height: 1.9
+            }
+
+            .flip {
+                min-height: 860px
+            }
+
+            .rsvp-shell {
+                perspective: 1200px
+            }
+
+            .face {
+                padding: 26px 22px
+            }
         }
 
         .f-heart {

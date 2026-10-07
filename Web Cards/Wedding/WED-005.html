@@ -85,6 +85,62 @@
             color: var(--gold);
         }
 
+        @media (max-width:560px) {
+            .eyebrow {
+                font-size: .65rem;
+                letter-spacing: .22em;
+            }
+
+            .hero-title {
+                font-size: clamp(2.5rem, 11vw, 4rem);
+            }
+
+            .hero-sub {
+                font-size: 1rem;
+            }
+
+            .invite .i-date {
+                font-size: .66rem;
+                letter-spacing: .2em;
+            }
+
+            .invite .i-top {
+                font-size: .56rem;
+                letter-spacing: .24em;
+            }
+
+            .invite .i-names {
+                font-size: 2rem;
+            }
+
+            .cd-num {
+                font-size: clamp(2rem, 11vw, 3rem);
+            }
+
+            .cd-label {
+                font-size: .6rem;
+                letter-spacing: .22em;
+            }
+
+            .tl-time {
+                font-size: .66rem;
+                letter-spacing: .22em;
+            }
+
+            .d-body h3 {
+                font-size: 1.5rem;
+            }
+
+            .f-names {
+                font-size: 2rem;
+            }
+
+            .f-bottom {
+                font-size: .66rem;
+                letter-spacing: .12em;
+            }
+        }
+
         .section {
             position: relative;
             padding: clamp(80px, 11vw, 150px) clamp(20px, 6vw, 80px);
@@ -441,6 +497,7 @@
         /* ---------- Hero ---------- */
         .hero {
             position: relative;
+            min-height: 100vh;
             min-height: 100svh;
             display: flex;
             align-items: center;
@@ -1377,6 +1434,9 @@
             font-size: .86rem;
             color: #5B4B39;
             line-height: 1.6;
+            min-width: 0;
+            overflow-wrap: anywhere;
+            word-break: break-word;
         }
 
         .rsvp-note .tx strong {
@@ -1425,7 +1485,7 @@
             border-radius: 10px;
             border: 1px solid rgba(176, 141, 87, .28);
             background: #FFFDF9;
-            font-size: .98rem;
+            font-size: 16px;
             font-weight: 300;
             transition: border-color .35s ease, box-shadow .35s ease, transform .35s ease;
             outline: none;

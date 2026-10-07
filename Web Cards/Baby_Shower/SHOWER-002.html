@@ -289,6 +289,49 @@
                 padding: 1.6rem 1.2rem
             }
         }
+
+        @media (max-width:420px) {
+            .card {
+                aspect-ratio: 3/4.6;
+            }
+
+            .face {
+                padding: 1.2rem 1rem;
+            }
+
+            .face .script.text-6xl {
+                font-size: 2.6rem;
+                line-height: 1.05;
+            }
+
+            .face .serif.text-3xl {
+                font-size: 1.4rem;
+            }
+
+            .face .serif.text-xl {
+                font-size: 1rem;
+            }
+
+            .face .text-5xl.float {
+                font-size: 2.25rem;
+            }
+
+            .face .mt-6 {
+                margin-top: .75rem;
+            }
+
+            .face .mt-5 {
+                margin-top: .65rem;
+            }
+
+            .face .space-y-5>*+* {
+                margin-top: .65rem;
+            }
+
+            .face .divider {
+                margin: .5rem auto;
+            }
+        }
     </style>
 </head>
 
@@ -306,12 +349,15 @@
                 <a href="#registry" class="hover:text-[#d4a55a] transition">Registry</a>
                 <a href="#rsvp" class="hover:text-[#d4a55a] transition">RSVP</a>
             </nav>
+            <div class="md:hidden flex items-center gap-2 text-xs font-semibold">
+                <a href="#details" class="chip !py-2 !px-3">Details</a>
+                <a href="#rsvp" class="btn !py-2 !px-4 !text-xs">RSVP</a>
+            </div>
             <a href="#rsvp" class="btn text-sm !py-2.5 !px-5">RSVP</a>
         </header>
 
         <!-- HERO -->
-        <section
-            class="max-w-6xl mx-auto px-6 pt-10 pb-20 md:pt-16 grid md:grid-cols-2 gap-12 items-center min-h-[92vh]">
+        <section id="hero" class="max-w-6xl mx-auto px-6 pt-10 pb-20 md:pt-16 grid md:grid-cols-2 gap-12 items-center">
             <div class="order-2 md:order-1 text-center md:text-left">
                 <p class="hint mb-3 reveal">You're invited to celebrate</p>
                 <h1 class="serif text-5xl sm:text-6xl lg:text-7xl leading-[1.05] reveal">
@@ -323,8 +369,7 @@
                 </p>
                 <div class="mt-8 flex flex-wrap gap-4 justify-center md:justify-start reveal">
                     <a href="#rsvp" class="btn">Count me in ✨</a>
-                    <button onclick="document.getElementById('card').classList.toggle('flipped')"
-                        class="chip !py-3.5 !px-6">Flip the card ↻</button>
+                    <button onclick="flipCard()" class="chip !py-3.5 !px-6">Flip the card ↻</button>
                 </div>
                 <p class="mt-6 text-sm text-[#9a8fb0] reveal">💡 Move your cursor over the card · tap to flip</p>
             </div>
@@ -472,11 +517,17 @@
                     </div>
                 </div>
                 <div class="grid grid-cols-3 gap-4 text-center">
-                    <div class="cd float">🧸<p class="hint mt-2">Plush</p>
+                    <div class="cd float">
+                        <div class="text-3xl">🧸</div>
+                        <p class="hint mt-2">Plush</p>
                     </div>
-                    <div class="cd float d1">📚<p class="hint mt-2">Books</p>
+                    <div class="cd float d1">
+                        <div class="text-3xl">📚</div>
+                        <p class="hint mt-2">Books</p>
                     </div>
-                    <div class="cd float d2">🧦<p class="hint mt-2">Tiny socks</p>
+                    <div class="cd float d2">
+                        <div class="text-3xl">🧦</div>
+                        <p class="hint mt-2">Tiny socks</p>
                     </div>
                 </div>
             </div>
@@ -606,7 +657,11 @@
             }
 
             const mouse = { x: 0, y: 0 }, target = { x: 0, y: 0 };
-            addEventListener('pointermove', e => { target.x = (e.clientX / innerWidth - .5) * 2; target.y = (e.clientY / innerHeight - .5) * 2; });
+            addEventListener('pointermove', e => {
+                if (e.pointerType !== 'mouse') return;
+                target.x = (e.clientX / innerWidth - .5) * 2;
+                target.y = (e.clientY / innerHeight - .5) * 2;
+            }, { passive: true });
             let scrollY = 0; addEventListener('scroll', () => scrollY = window.scrollY, { passive: true });
 
             const clock = new THREE.Clock();
@@ -643,6 +698,7 @@
             const scene = card.parentElement;
             let raf;
             scene.addEventListener('pointermove', e => {
+                if (e.pointerType !== 'mouse') return;
                 const r = card.getBoundingClientRect();
                 const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
                 const rx = (py - .5) * -18, ry = (px - .5) * 18;
@@ -653,7 +709,9 @@
                 });
             });
             scene.addEventListener('pointerleave', () => { card.style.transition = 'transform .9s cubic-bezier(.2,.8,.2,1)'; if (!card.classList.contains('flipped')) card.style.transform = 'rotateX(0) rotateY(0)'; });
-            card.addEventListener('click', () => { card.style.transition = 'transform .9s cubic-bezier(.2,.8,.2,1)'; card.style.transform = ''; card.classList.toggle('flipped'); });
+            const doFlip = () => { card.style.transition = 'transform .9s cubic-bezier(.2,.8,.2,1)'; card.style.transform = ''; card.classList.toggle('flipped'); };
+            card.addEventListener('click', doFlip);
+            window.flipCard = doFlip;
             // gentle idle sway
             let t0 = performance.now();
             (function idle() {

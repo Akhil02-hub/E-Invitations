@@ -27,6 +27,8 @@
             font-family: 'Cormorant Garamond', serif;
             background: var(--cream);
             color: var(--ink);
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
         }
 
         .font-script {
@@ -46,13 +48,20 @@
         }
 
         .tracking-wideish {
-            letter-spacing: .35em;
+            letter-spacing: .18em;
+        }
+
+        @media (min-width: 768px) {
+            .tracking-wideish {
+                letter-spacing: .35em;
+            }
         }
 
         /* Hero */
         .hero {
             position: relative;
             min-height: 100vh;
+            min-height: 100svh;
             background: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=80') center 30%/cover no-repeat;
         }
 
@@ -168,12 +177,32 @@
         }
 
         @media(max-width:767px) {
+            .hero-frame {
+                inset: 10px;
+            }
+
+            .hero-frame::after {
+                inset: 4px;
+            }
+
+            .divider .line {
+                width: 42px;
+            }
+
             .timeline::before {
-                left: 20px;
+                left: 14px;
             }
 
             .t-dot {
-                left: 20px;
+                left: 14px;
+            }
+
+            .polaroid {
+                padding: 10px 10px 14px;
+            }
+
+            .petal {
+                font-size: 12px !important;
             }
         }
 
@@ -265,15 +294,17 @@
     <header class="hero flex items-center justify-center text-center text-white">
         <div class="hero-frame"></div>
         <div class="relative z-10 px-6 pb-10">
-            <p class="tracking-wideish uppercase text-sm md:text-base mb-6 opacity-90">Together with their families</p>
-            <h1 class="font-script text-6xl md:text-8xl leading-tight drop-shadow-lg">Sophia <span
-                    class="text-4xl md:text-6xl align-middle heart-pulse">&</span> James</h1>
+            <p class="tracking-wideish uppercase text-xs sm:text-sm md:text-base mb-6 opacity-90 px-2">Together with
+                their families</p>
+            <h1 class="font-script text-4xl sm:text-6xl md:text-8xl leading-tight drop-shadow-lg">Sophia <span
+                    class="text-2xl sm:text-4xl md:text-6xl align-middle heart-pulse">&</span> James</h1>
             <p class="font-display italic text-lg md:text-2xl mt-6 opacity-95">request the pleasure of your company<br
                     class="hidden sm:block"> as they say “I do”</p>
-            <div class="mt-8 inline-block border-t border-b border-white/60 py-3 px-8">
-                <p class="font-display text-xl md:text-3xl tracking-widest">SEPTEMBER 20, 2025</p>
+            <div class="mt-8 inline-block border-t border-b border-white/60 py-3 px-4 sm:px-8">
+                <p class="font-display text-lg sm:text-xl md:text-3xl tracking-widest">SEPTEMBER 20, 2025</p>
             </div>
-            <p class="mt-4 tracking-wideish text-sm uppercase opacity-90">Rosewood Garden Estate · Napa Valley, CA</p>
+            <p class="mt-4 tracking-wideish text-xs sm:text-sm uppercase opacity-90 px-2">Rosewood Garden Estate · Napa
+                Valley, CA</p>
             <a href="#invite" class="mt-10 inline-block text-white/90 text-3xl animate-bounce"
                 aria-label="Scroll down">▾</a>
         </div>
@@ -293,22 +324,26 @@
 
         <div class="max-w-3xl mx-auto mt-14 reveal">
             <p class="uppercase tracking-wideish text-sm gold mb-6">Counting down to forever</p>
-            <div id="countdown" class="grid grid-cols-4 gap-3 md:gap-6">
-                <div class="count-box rounded-lg py-5 md:py-8">
-                    <div id="cd-days" class="count-num text-3xl md:text-5xl font-semibold gold">--</div>
-                    <div class="uppercase tracking-widest text-xs md:text-sm mt-2 text-neutral-500">Days</div>
+            <div id="countdown" class="grid grid-cols-4 gap-1.5 sm:gap-3 md:gap-6">
+                <div class="count-box rounded-lg py-3 sm:py-5 md:py-8">
+                    <div id="cd-days" class="count-num text-xl sm:text-3xl md:text-5xl font-semibold gold">--</div>
+                    <div class="uppercase tracking-widest text-[10px] sm:text-xs md:text-sm mt-2 text-neutral-500">Days
+                    </div>
                 </div>
-                <div class="count-box rounded-lg py-5 md:py-8">
-                    <div id="cd-hours" class="count-num text-3xl md:text-5xl font-semibold gold">--</div>
-                    <div class="uppercase tracking-widest text-xs md:text-sm mt-2 text-neutral-500">Hours</div>
+                <div class="count-box rounded-lg py-3 sm:py-5 md:py-8">
+                    <div id="cd-hours" class="count-num text-xl sm:text-3xl md:text-5xl font-semibold gold">--</div>
+                    <div class="uppercase tracking-widest text-[10px] sm:text-xs md:text-sm mt-2 text-neutral-500">Hours
+                    </div>
                 </div>
-                <div class="count-box rounded-lg py-5 md:py-8">
-                    <div id="cd-mins" class="count-num text-3xl md:text-5xl font-semibold gold">--</div>
-                    <div class="uppercase tracking-widest text-xs md:text-sm mt-2 text-neutral-500">Minutes</div>
+                <div class="count-box rounded-lg py-3 sm:py-5 md:py-8">
+                    <div id="cd-mins" class="count-num text-xl sm:text-3xl md:text-5xl font-semibold gold">--</div>
+                    <div class="uppercase tracking-widest text-[10px] sm:text-xs md:text-sm mt-2 text-neutral-500">
+                        Minutes</div>
                 </div>
-                <div class="count-box rounded-lg py-5 md:py-8">
-                    <div id="cd-secs" class="count-num text-3xl md:text-5xl font-semibold gold">--</div>
-                    <div class="uppercase tracking-widest text-xs md:text-sm mt-2 text-neutral-500">Seconds</div>
+                <div class="count-box rounded-lg py-3 sm:py-5 md:py-8">
+                    <div id="cd-secs" class="count-num text-xl sm:text-3xl md:text-5xl font-semibold gold">--</div>
+                    <div class="uppercase tracking-widest text-[10px] sm:text-xs md:text-sm mt-2 text-neutral-500">
+                        Seconds</div>
                 </div>
             </div>
         </div>
@@ -341,7 +376,7 @@
                 <p class="text-xl leading-relaxed mt-5 italic text-neutral-600">
                     “Whatever our souls are made of, his and mine are the same.” — Emily Brontë
                 </p>
-                <div class="mt-8 flex gap-8">
+                <div class="mt-8 flex flex-wrap gap-6 sm:gap-8">
                     <div>
                         <p class="font-display text-3xl gold">7</p>
                         <p class="uppercase tracking-widest text-xs text-neutral-500 mt-1">Years together</p>
@@ -481,13 +516,13 @@
 
     <!-- ============ RSVP ============ -->
     <section class="py-20 md:py-28 px-6 relative"
-        style="background:linear-gradient(rgba(30,22,14,.72),rgba(30,22,14,.72)), url('https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1600&q=80') center/cover fixed;">
+        style="background:linear-gradient(rgba(30,22,14,.72),rgba(30,22,14,.72)), url('https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1600&q=80') center/cover;">
         <div class="max-w-xl mx-auto text-center text-white reveal">
             <p class="font-script text-5xl">RSVP</p>
             <p class="mt-4 text-xl text-white/90">Kindly respond by <span class="italic">August 15, 2025</span></p>
 
             <form id="rsvpForm"
-                class="mt-10 bg-white/95 backdrop-blur rounded-2xl p-8 md:p-10 text-left text-neutral-800 shadow-2xl">
+                class="mt-10 bg-white/95 backdrop-blur rounded-2xl p-5 sm:p-8 md:p-10 text-left text-neutral-800 shadow-2xl">
                 <label class="block mb-5">
                     <span class="uppercase tracking-widest text-xs gold">Full Name</span>
                     <input required type="text" class="field mt-2 rounded-md" placeholder="Your name">
@@ -496,7 +531,7 @@
                     <span class="uppercase tracking-widest text-xs gold">Email</span>
                     <input required type="email" class="field mt-2 rounded-md" placeholder="you@example.com">
                 </label>
-                <div class="grid grid-cols-2 gap-4 mb-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
                     <label class="block">
                         <span class="uppercase tracking-widest text-xs gold">Attending?</span>
                         <select class="field mt-2 rounded-md">
@@ -561,7 +596,8 @@
         // ---- Floating petals ----
         const petalsWrap = document.getElementById('petals');
         const symbols = ['❀', '✿', '❁', '♥'];
-        for (let i = 0; i < 14; i++) {
+        const petalCount = window.innerWidth < 640 ? 7 : 14;
+        for (let i = 0; i < petalCount; i++) {
             const p = document.createElement('span');
             p.className = 'petal';
             p.textContent = symbols[Math.floor(Math.random() * symbols.length)];

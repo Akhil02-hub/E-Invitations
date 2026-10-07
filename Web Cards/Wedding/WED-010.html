@@ -52,6 +52,12 @@
             scroll-margin-top: 90px;
         }
 
+        /* hero height — svh fallback for iOS chrome */
+        #home {
+            min-height: 100vh;
+            min-height: 100svh;
+        }
+
         ::selection {
             background: rgba(184, 147, 90, 0.25);
         }
@@ -182,7 +188,11 @@
         }
 
         .card-shadow {
-            filter: drop-shadow(0 40px 60px rgba(110, 85, 50, 0.28));
+            /* filter breaks preserve-3d → use box-shadow on the faces instead */
+        }
+
+        .card-face {
+            box-shadow: 0 40px 60px rgba(110, 85, 50, 0.28);
         }
 
         /* ---------- Petals ---------- */
@@ -305,6 +315,28 @@
             padding: 22px 8px 26px;
         }
 
+        .countdown-box>div:first-child {
+            font-size: clamp(1.75rem, 8vw, 4.5rem);
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+
+        @media (max-width: 400px) {
+            .countdown-box {
+                padding: 14px 2px 18px;
+            }
+
+            .countdown-box>div:first-child {
+                font-size: 1.65rem;
+            }
+
+            .countdown-box>div:last-child {
+                font-size: 8px;
+                letter-spacing: .18em;
+                margin-top: 6px;
+            }
+        }
+
         .countdown-box::after {
             content: '';
             position: absolute;
@@ -364,7 +396,7 @@
             outline: none;
             transition: border-color 0.35s;
             font-family: 'Jost', sans-serif;
-            font-size: 15px;
+            font-size: 16px;
             color: #2E2A26;
         }
 
@@ -397,6 +429,13 @@
         }
 
         .radio-card:has(input:checked) {
+            border-color: #B8935A;
+            background: rgba(184, 147, 90, 0.09);
+            color: #B8935A;
+        }
+
+        /* fallback for browsers without :has() */
+        .radio-card.selected {
             border-color: #B8935A;
             background: rgba(184, 147, 90, 0.09);
             color: #B8935A;
@@ -480,6 +519,19 @@
             .btn-gold,
             .btn-outline {
                 padding: 15px 36px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            #home h1.font-script {
+                font-size: 54px;
+                line-height: 1.15;
+            }
+        }
+
+        @media (max-width: 340px) {
+            #home h1.font-script {
+                font-size: 48px;
             }
         }
     </style>
@@ -572,7 +624,7 @@
                         <div class="card-flip card-shadow" id="cardFlip">
 
                             <!-- CARD FRONT -->
-                            <div class="card-face w-[320px] sm:w-[380px] h-[520px] sm:h-[580px] bg-[#FCF9F3] relative">
+                            <div class="card-face w-[260px] sm:w-[380px] h-[460px] sm:h-[580px] bg-[#FCF9F3] relative">
                                 <div class="absolute inset-4 border border-gold/55"></div>
                                 <div class="absolute inset-[26px] border border-gold/25"></div>
                                 <!-- corner accents -->
@@ -623,7 +675,7 @@
 
                             <!-- CARD BACK -->
                             <div
-                                class="card-face card-back w-[320px] sm:w-[380px] h-[520px] sm:h-[580px] relative overflow-hidden">
+                                class="card-face card-back w-[260px] sm:w-[380px] h-[460px] sm:h-[580px] relative overflow-hidden">
                                 <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=900&auto=format&fit=crop"
                                     alt="Couple" class="absolute inset-0 w-full h-full object-cover">
                                 <div class="absolute inset-0 bg-[#2E2A26]/72"></div>
@@ -1115,6 +1167,19 @@
 
                 /* ---------- RSVP form ---------- */
                 var rsvpForm = document.getElementById('rsvpForm');
+
+                /* :has() fallback — toggle .selected class */
+                document.querySelectorAll('.radio-card input').forEach(function (radio) {
+                    radio.addEventListener('change', function () {
+                        document.querySelectorAll('.radio-card').forEach(function (c) {
+                            c.classList.remove('selected');
+                        });
+                        radio.closest('.radio-card').classList.add('selected');
+                    });
+                });
+                /* set initial state */
+                var checkedRadio = document.querySelector('.radio-card input:checked');
+                if (checkedRadio) checkedRadio.closest('.radio-card').classList.add('selected');
                 rsvpForm.addEventListener('submit', function (e) {
                     e.preventDefault();
                     var nameField = document.getElementById('guestName');
