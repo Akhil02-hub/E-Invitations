@@ -4,11 +4,10 @@ A collection of invitation templates by **Premium E-Invitation**, featuring thre
 =======
 # Premium E-Invitations — Invitation Templates
 
-# Live link :- https://premiumeinvitations.cc.cd/
+# Live link :- https://bloomyvite.de5.net/
 
 A collection of invitation templates by **A Akhil**, featuring three invitation formats:
 
-- **For free cards:-** https://premiumeinvitations.cc.cd/
 - 💌 **Digital Invitations (₹9 only)** — static invitation card designs
 - 🎬 **Animated Invitations** — motion-based invitation designs
 - 🌐 **Web Invitations** — interactive invitation websites
